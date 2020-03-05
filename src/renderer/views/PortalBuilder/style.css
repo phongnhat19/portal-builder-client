@@ -1,0 +1,44 @@
+.portal-container {
+  display: flex;
+  height: 100%;
+}
+
+.portal-list-container {
+  width: 15%;
+  border-right: 1px solid #C4C4C4;
+}
+
+.portal-preview {
+  width: 70%;
+}
+
+.widget-list-container {
+  width: 15%;
+  border-left: 1px solid #d8d5d5;
+}
+
+.portal-list-item {
+  width: 100%;
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.portal-list-item:hover {
+  cursor: pointer;
+  /* background-color: #C4C4C4; */
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #C4C4C4 !important;
+}
+
+.ant-menu-item {
+  margin: 0 !important;
+}
+
+.ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
+  border-right: none !important;
+}
