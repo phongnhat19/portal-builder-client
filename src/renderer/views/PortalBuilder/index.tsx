@@ -1,51 +1,82 @@
 import React, { useState } from 'react'
-import {RocketFilled} from '@ant-design/icons'
-import {Button, Typography, Menu} from 'antd'
 import WidgetList from './DefaultWidgetList'
 import './style.css'
 import PortalPreview from './PortalPreview'
-
-const {Text} = Typography
+import SideBar from './SideBar'
 
 const PortalBuilder = () => {
-  const [portalList, setPortalList] = useState([
+
+  const settingDomain = [
     {
-      name: 'Portal 1',
-      layout: {
-        type: 'Tab',
-        data: {}
-      }
+      key: '1',
+      profile: 'Profile 1',
+      domain: 'kimcuc-1.cybozu.com',
+      status: 'done'
     },
     {
-      name: 'Portal 2',
-      layout: {
-        type: 'Tab',
-        data: {}
-      }
+      key: '2',
+      profile: 'Profile 2',
+      domain: 'kimcuc-2.cybozu.com',
+      status: 'processing'
+    },
+    {
+      key: '3',
+      profile: 'Profile 3',
+      domain: 'kimcuc-3.cybozu.com',
+      status: 'unfulfilled'
+    }
+  ];
+
+  const [data, setData] = useState([
+    {
+      portal: {
+          name: 'Portal 1',
+          value: '1'
+        },
+      settingDomain: settingDomain
+    },
+    {
+      portal: {
+          name: 'Portal 2',
+          value: '2'
+        },
+      settingDomain: settingDomain
     }
   ])
 
-  const [selectedPortalIndex, setSelectedPortalIndex] = useState(0)
 
+  const [portalActive, setPortalActive] = useState(data[0].portal.value)
   return(
     <div className="portal-container">
       <div className="portal-list-container">
-        <Menu selectedKeys={[`portal-item-${selectedPortalIndex}`]}>
-          {
-            portalList.map((portal, index) => {
-              return(
-                <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-${index}`} onClick={() => {
-                  setSelectedPortalIndex(index)
-                }}>
-                  <span className="portal-list-item">
-                    <Text strong={selectedPortalIndex === index}>{portal.name}</Text>
-                    <Button type="primary" icon={<RocketFilled style={{marginRight: 0}} rotate={45}/>} />
-                  </span>
-                </Menu.Item>
-              );
+        <SideBar 
+          value = {portalActive}
+          data = {data}
+          onChange= {(item) => {setPortalActive(item.value)}} 
+          onDeploy= {(dataDeploy) => {
+            const newData = [...data];
+            newData.map(item => {
+              if (item.portal.value === dataDeploy.portal.value) {
+                return  item.settingDomain.map((domain) => {
+                  if (domain.key === dataDeploy.settingDomain.key) {
+                    domain.status = 'processing'
+                  }
+                  return domain
+              })
+              
+              }
             })
-          }
-        </Menu>
+            setData(newData)
+          }} 
+          onCreate= {() => {
+            const newList = [...data, {portal: {
+              name: `Portal ${data.length + 1}`,
+              value: `${data.length + 1}`
+            }, settingDomain}];
+            setData(newList);
+          }}
+          settingDomain= {settingDomain}
+        />
       </div>
       <div className="portal-preview">
         <PortalPreview />
