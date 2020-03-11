@@ -27,7 +27,7 @@ const CreateModal = ({isVisible= false, onClose, onCreate}: CreateModal) => {
     const onBtnTabClick = () => {
         setTabIconStyle(clickIconStyle)
         setGridIconStyle(normalIconStyle)
-        setPortalType('tab')
+        setPortalType('Tabs')
     }
     const onBtnGridClick = () => {
         setTabIconStyle(normalIconStyle)

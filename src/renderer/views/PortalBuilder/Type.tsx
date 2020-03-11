@@ -20,7 +20,7 @@ type DeployData = {
 type SideBarProps = {
     value?: string;
     items?: Portal[];
-    onChange?: (item: Portal) => void;
+    onChange?: (item: any) => void;
     onDeploy?: (data: DeploySetting) => void;
     onCreate?: (data: Portal) => void;
     dataTable?: ItemTable[], 

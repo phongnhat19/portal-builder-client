@@ -24,7 +24,7 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
                         setDeployModalVisible(true)
                         setDataSetting(item)
                     }
-                    onChange(portal)
+                    onChange(item)
                 }}>
                   <span className="portal-list-item">
                     <Text strong={value === portal.value}>{portal.name}</Text>
