@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import WidgetList from './DefaultWidgetList'
 import './style.css'
 import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
+import WidgetList, {Widget} from './Widget/WidgetList';
+import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@ant-design/icons';
 
 const PortalBuilder = () => {
 
@@ -86,6 +87,37 @@ const PortalBuilder = () => {
     }
   ])
 
+  const widgetList: Widget[] = [
+    {
+      icon: <BorderOutlined />,
+      name: 'Iframe',
+    }, {
+      icon: <Html5Outlined />,
+      name: 'HTML',
+    }, {
+      icon: <CalendarOutlined />,
+      name: 'Schedule',
+    }, {
+      icon: <MailOutlined />,
+      name: 'Gmail',
+    }
+  ]
+
+  const dragStart = (event: React.DragEvent<HTMLDivElement>) => {
+    const widgetName = (event.target as HTMLDivElement).getElementsByClassName('ant-card-grid ant-card-grid-hoverable')[0]
+    event.dataTransfer.setData("text", widgetName.textContent || '');
+  }
+
+  const dragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  }
+
+  const dropWidget = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    console.log('Target', event.target);
+    var keyWidget = event.dataTransfer.getData("text");
+    console.log('Result', keyWidget);
+  }
 
   const [portalActive, setPortalActive] = useState(data[0].portal.value)
   return (
@@ -122,11 +154,11 @@ const PortalBuilder = () => {
           settingDomain={settingDomain3}
         />
       </div>
-      <div className="portal-preview">
+      <div className="portal-preview" onDragOver={dragOver} onDrop={dropWidget}>
         <PortalPreview />
       </div>
       <div className="widget-list-container">
-        <WidgetList />
+        <WidgetList containers={widgetList} dragStart={dragStart} />
       </div>
     </div>
   )
