@@ -34,7 +34,7 @@ const PortalBuilder = () => {
           value: '1',
           type: 'tab'
         },
-      settingDomain: settingDomain
+      settingDomain: [...settingDomain]
     },
     {
       portal: {
@@ -42,12 +42,10 @@ const PortalBuilder = () => {
           value: '2',
           type: 'tab'
         },
-      settingDomain: settingDomain
+      settingDomain: [...settingDomain]
     }
   ]
   const [data, setData] = useState(initData)
-
-
   const [portalActive, setPortalActive] = useState(data[0].portal.value)
   return(
     <div className="portal-container">
@@ -57,22 +55,18 @@ const PortalBuilder = () => {
           data = {data}
           onChange= {(item) => {setPortalActive(item.value)}} 
           onDeploy= {(dataDeploy) => {
-            const newData = [...data];
-            newData.map(item => {
-              const copyItem = {...item};
-              
-              if (copyItem.portal.value === dataDeploy.portal.value) {
-                copyItem.settingDomain.map((domain) => {
+            let newData = [...data];
+            newData = newData.map(item => {
+              if (item.portal.value === dataDeploy.portal.value) {
+                item.settingDomain = item.settingDomain.map((domain) => {
                     const copyDomain = {...domain};
-                    
                     if (copyDomain.key === dataDeploy.settingDomain.key) {
                       copyDomain.status = 'processing'
                     }
-                    console.log(copyDomain);
                     return copyDomain
                 })
               }
-              return copyItem
+              return item
             })
             setData(newData)
           }} 
