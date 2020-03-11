@@ -27,22 +27,25 @@ const PortalBuilder = () => {
     }
   ];
 
-  const [data, setData] = useState([
+  const initData = [
     {
       portal: {
           name: 'Portal 1',
-          value: '1'
+          value: '1',
+          type: 'tab'
         },
       settingDomain: settingDomain
     },
     {
       portal: {
           name: 'Portal 2',
-          value: '2'
+          value: '2',
+          type: 'tab'
         },
       settingDomain: settingDomain
     }
-  ])
+  ]
+  const [data, setData] = useState(initData)
 
 
   const [portalActive, setPortalActive] = useState(data[0].portal.value)
@@ -56,23 +59,25 @@ const PortalBuilder = () => {
           onDeploy= {(dataDeploy) => {
             const newData = [...data];
             newData.map(item => {
-              if (item.portal.value === dataDeploy.portal.value) {
-                return  item.settingDomain.map((domain) => {
-                  if (domain.key === dataDeploy.settingDomain.key) {
-                    domain.status = 'processing'
-                  }
-                  return domain
-              })
+              const copyItem = {...item};
               
+              if (copyItem.portal.value === dataDeploy.portal.value) {
+                copyItem.settingDomain.map((domain) => {
+                    const copyDomain = {...domain};
+                    
+                    if (copyDomain.key === dataDeploy.settingDomain.key) {
+                      copyDomain.status = 'processing'
+                    }
+                    console.log(copyDomain);
+                    return copyDomain
+                })
               }
+              return copyItem
             })
             setData(newData)
           }} 
-          onCreate= {() => {
-            const newList = [...data, {portal: {
-              name: `Portal ${data.length + 1}`,
-              value: `${data.length + 1}`
-            }, settingDomain}];
+          onCreate= {(item) => {
+            const newList = [...data, {portal: item, settingDomain}];
             setData(newList);
           }}
           settingDomain= {settingDomain}
