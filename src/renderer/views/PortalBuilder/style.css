@@ -12,6 +12,17 @@
   width: 70%;
 }
 
+.portal-preview .portal-tabs-layout {
+  position: relative;
+}
+
+.portal-preview .portal-tabs-layout .portal-tabs-add {
+  position: absolute;
+  top: 10px;
+  right: 13px;
+  z-index: 1;
+}
+
 .widget-list-container {
   width: 15%;
   border-left: 1px solid #d8d5d5;
