@@ -3,10 +3,12 @@ import WidgetList from './DefaultWidgetList'
 import './style.css'
 import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
+import {Portal} from './Type'
+import {ItemTable} from '../PortalBuilder/DeployModal/Type'
 
 const PortalBuilder = () => {
 
-  const settingDomain = [
+  const settingDomain:ItemTable[]= [
     {
       key: '1',
       profile: 'Profile 1',
@@ -70,11 +72,10 @@ const PortalBuilder = () => {
             })
             setData(newData)
           }} 
-          onCreate= {(item) => {
+          onCreate= {(item: Portal) => {
             const newList = [...data, {portal: item, settingDomain}];
             setData(newList);
           }}
-          settingDomain= {settingDomain}
         />
       </div>
       <div className="portal-preview">
