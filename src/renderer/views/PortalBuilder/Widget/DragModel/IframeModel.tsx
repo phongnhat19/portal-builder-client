@@ -23,7 +23,7 @@ const IframeModel = ({isVisible= false, onClose, onSave}: IframeModel) => {
           })
       }}
     >
-        <div className="input-name">
+        <div className="input-url">
         <span>URL</span>
         <Input
           style={{marginLeft: '50px'}}

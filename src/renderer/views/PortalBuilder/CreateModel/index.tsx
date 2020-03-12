@@ -61,7 +61,7 @@ const CreateModal = ({isVisible= false, onClose, onCreate}: CreateModal) => {
         <div className="btn-type">
             <div>Choose Portal layout</div>
             <Button key="2" className="btn-tab-type" icon={<FileOutlined style={tabIconStyle} />} type="dashed" onClick={onBtnTabClick}></Button>
-            <Button key="3" className="btn-grid-type" icon={<TableOutlined style={gridIconStyle} />} type="dashed" onClick={onBtnGridClick}></Button>
+            <Button key="3" className="btn-grid-type" icon={<TableOutlined style={gridIconStyle} />} type="dashed" onClick={onBtnGridClick} disabled ></Button>
         </div>
     </Modal>
   )

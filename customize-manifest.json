@@ -1,0 +1,18 @@
+{
+    "app": "2",
+    "scope": "ADMIN",
+    "desktop": {
+        "js": [
+            "https://js.kintone.com/jquery/3.3.1/jquery.min.js"
+        ],
+        "css": [
+        ]
+    },
+    "mobile": {
+        "js": [
+            
+        ],
+        "css": [
+        ]
+    }
+}
