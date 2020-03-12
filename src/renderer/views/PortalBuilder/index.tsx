@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import './style.css'
 import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
-import WidgetList, {Widget} from './Widget/WidgetList';
-import {Portal} from './Type'
-import {ItemTable} from '../PortalBuilder/DeployModal/Type'
+import WidgetList, { Widget } from './Widget/WidgetList';
+import { Portal } from './Type'
+import { ItemTable } from '../PortalBuilder/DeployModal/Type'
 import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@ant-design/icons';
 
 const PortalBuilder = () => {
 
-  const settingDomain:ItemTable[]= [
+  const settingDomain: ItemTable[] = [
     {
       key: '1',
       profile: 'Profile 1',
@@ -96,7 +96,7 @@ const PortalBuilder = () => {
       }
     }
   ]
-  
+
   const [data, setData] = useState(initData)
   const [portalActive, setPortalActive] = useState(data[0])
   const [tabIndexPreview, setTabIndexPreview] = useState(0)
@@ -120,7 +120,7 @@ const PortalBuilder = () => {
     // const widgetName = (event.target as HTMLDivElement).getElementsByClassName('ant-card-grid ant-card-grid-hoverable')[0]
     // event.dataTransfer.setData("text", widgetName.textContent || '');
     // console.log(event);
-    
+
   }
 
   const dragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -138,32 +138,32 @@ const PortalBuilder = () => {
     setPortalActive(portalActiveCopy)
   }
 
-  return(
+  return (
     <div className="portal-container">
       <div className="portal-list-container">
-        <SideBar 
-          value = {portalActive.value}
-          data = {data}
-          onChange= {(item) => {console.log(item);
-           setPortalActive(item)
-          }} 
-          onDeploy= {(dataDeploy) => {
+        <SideBar
+          value={portalActive.value}
+          data={data}
+          onChange={(item) => {
+            setPortalActive(item)
+          }}
+          onDeploy={(dataDeploy) => {
             let newData = [...data];
             newData = newData.map(item => {
               if (item.value === dataDeploy.value) {
                 item.settingDomain = item.settingDomain.map((domain) => {
-                    const copyDomain = {...domain};
-                    if (copyDomain.key === dataDeploy.settingDomain.key) {
-                      copyDomain.status = 'processing'
-                    }
-                    return copyDomain
+                  const copyDomain = { ...domain };
+                  if (copyDomain.key === dataDeploy.settingDomain.key) {
+                    copyDomain.status = 'processing'
+                  }
+                  return copyDomain
                 })
               }
               return item
             })
             setData(newData)
-          }} 
-          onCreate= {(item: Portal) => {
+          }}
+          onCreate={(item: Portal) => {
             const layout = {
               type: item.type,
               props: {
@@ -189,10 +189,25 @@ const PortalBuilder = () => {
         />
       </div>
       <div className="portal-preview" onDragOver={dragOver} onDrop={dropWidget}>
-        <PortalPreview layout = {portalActive.layout} onTabPreview= {(index: number) => {
-          console.log(index);
-          setTabIndexPreview(index)
-        }}/>
+        <PortalPreview
+          onAddItemTabs={(item: any) => {
+            
+            const valueOfPortalAction: string = portalActive.value
+            const tmpData = [...data]
+            const newList: any = tmpData.map(tab => {
+              const tmpTab = {...tab}
+              if (tmpTab.value === valueOfPortalAction) {
+                tmpTab.layout.props.tabList.push(item)
+              }
+              return tmpTab;
+            })
+            setData(newList);
+          }}
+          layout={portalActive.layout}
+          onTabPreview={(index: number) => {
+            console.log(index);
+            setTabIndexPreview(index)
+          }} />
       </div>
       <div className="widget-list-container">
         <WidgetList containers={widgetList} onDragStart={dragStart} />

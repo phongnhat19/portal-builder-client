@@ -1,11 +1,13 @@
 import React from 'react'
 import TabsLayout from './layout/TabsLayout'
-const PortalPreview = ({layout = {}, onTabPreview = () => {}}: any) => {
-  return(
-    <div style={{display: 'flex', justifyContent:'center', paddingTop: '30px'}}>
-      <TabsLayout 
+const PortalPreview = ({ layout = {}, onTabPreview = () => { }, onAddItemTabs = (data: any) => { } }: any) => {
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '30px' }}>
+      <TabsLayout
+        onAddItem={onAddItemTabs}
         items={layout.props.tabList}
-        onSelectedTabItem = {onTabPreview}
+        onSelectedTabItem={onTabPreview}
       />
     </div>
   )

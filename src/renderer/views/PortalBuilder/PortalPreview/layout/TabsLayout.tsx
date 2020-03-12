@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Tabs} from '@kintone/kintone-ui-component';
-import QuickReport from './QuickReport'
+import { Tabs } from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 
@@ -20,29 +19,18 @@ type Props = {
   height: string
 }
 
-const TabsLayout = ({items = [], onSelectedTabItem = (tabIndex: number) => {}}: {
+const TabsLayout = ({ items = [], onSelectedTabItem = (tabIndex: number) => { }, onAddItem = (data: any) => { } }: {
   items?: Tabs[],
   onSelectedTabItem: (tabIndex: number) => void
+  onAddItem?: (data: any) => void
 }) => {
 
   const [selectedTab, setSelectedTab] = useState(0)
-  const [tabItems, setTabItems] = useState([
-    {
-      tabName: 'Company Location',
-      tabContent: <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC6NGlXCyiz7CbeJAb1RA6bUsWN6YWaK8Q&q=Centre+Point+Tower" style={{ width: '100%', height: '600px' }} />
-    },
-    {
-      tabName: 'Quick Report',
-      tabContent: <QuickReport />
-    },
-    {
-      tabName: 'Gmail',
-      tabContent: 'Gmail'
-    }
-  ])
+  const [tabItems, setTabItems] = useState([])
 
   useEffect(() => {
-    let dataItems:any = [];
+    let dataItems: any = [];
+    
     items.forEach(item => {
       let newItem = {
         tabName: item.tabName,
@@ -65,9 +53,10 @@ const TabsLayout = ({items = [], onSelectedTabItem = (tabIndex: number) => {}}: 
       dataItems = [...dataItems, newItem]
     })
     setTabItems(dataItems)
-  },[items])
+    setSelectedTab(dataItems.length - 1)
+  }, [items])
 
-  return(
+  return (
     <div className='portal-tabs-layout'>
       <Button
         type="default"
@@ -76,12 +65,21 @@ const TabsLayout = ({items = [], onSelectedTabItem = (tabIndex: number) => {}}: 
         onClick={() => {
           const item = {
             tabName: 'New Tab',
-            tabContent: 'New Tab'
+            tabContent: ''
           }
-          const newItems = [...tabItems, item];
+
+          const d = {
+            tabName: 'New Tab',
+            tabContent: {
+              type: "Widget",
+              name: "Iframe",
+              props: { url: "https://kenh14.vn/", width: "100%", height: "600px" }
+            }
+          }
+          onAddItem(d)
+          const newItems: any = [...tabItems, item];
           setTabItems(newItems)
-          setSelectedTab(newItems.length - 1)
-          }} />
+        }} />
       <Tabs
         items={tabItems}
         value={selectedTab}
