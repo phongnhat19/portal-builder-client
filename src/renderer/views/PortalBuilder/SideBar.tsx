@@ -12,9 +12,7 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
   const [deployModalVisible, setDeployModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
   const [dataSetting, setDataSetting] = useState (data[0])
-  // useEffect(() => {
 
-  // }[data])
   return(
       <div>
          <Menu selectedKeys={[`portal-item-${value}`]}>

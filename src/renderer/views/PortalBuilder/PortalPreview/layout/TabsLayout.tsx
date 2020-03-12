@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Tabs } from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import './style.css'
 
 type Tabs = {
   tabName: string,
@@ -19,10 +20,16 @@ type Props = {
   height: string
 }
 
-const TabsLayout = ({ items = [], onSelectedTabItem = (tabIndex: number) => { }, onAddItem = (data: any) => { } }: {
+const TabsLayout = ({
+  items = [],
+  onSelectedTabItem = (tabIndex: number) => { },
+  onAddItem = (data: any) => { },
+  onSubItem = (data: any) => { },
+}: {
   items?: Tabs[],
   onSelectedTabItem: (tabIndex: number) => void
   onAddItem?: (data: any) => void
+  onSubItem?: (data: any) => void
 }) => {
 
   const [selectedTab, setSelectedTab] = useState(0)
@@ -30,7 +37,6 @@ const TabsLayout = ({ items = [], onSelectedTabItem = (tabIndex: number) => { },
 
   useEffect(() => {
     let dataItems: any = [];
-    
     items.forEach(item => {
       let newItem = {
         tabName: item.tabName,
@@ -52,8 +58,8 @@ const TabsLayout = ({ items = [], onSelectedTabItem = (tabIndex: number) => { },
       }
       dataItems = [...dataItems, newItem]
     })
-    setTabItems(dataItems)
-    setSelectedTab(dataItems.length - 1)
+    // setSelectedTab(dataItems.length - 1);
+    setTabItems(dataItems);
   }, [items])
 
   return (
@@ -61,7 +67,7 @@ const TabsLayout = ({ items = [], onSelectedTabItem = (tabIndex: number) => { },
       <Button
         type="default"
         icon={<PlusCircleOutlined />}
-        className='portal-tabs-add'
+        className='portal-tabs-btn portal-tabs-btn-add'
         onClick={() => {
           const item = {
             tabName: 'New Tab',
@@ -78,6 +84,29 @@ const TabsLayout = ({ items = [], onSelectedTabItem = (tabIndex: number) => { },
           }
           onAddItem(d)
           const newItems: any = [...tabItems, item];
+          setTabItems(newItems)
+        }} />
+      <Button
+        type="default"
+        icon={<MinusCircleOutlined />}
+        className='portal-tabs-btn portal-tabs-btn-sub'
+        onClick={() => {
+          const newItems: any = [...tabItems]
+          newItems.splice(selectedTab, 1);
+          const tmpData: any = newItems.map((item: any) => {
+            if (item.tabName === 'New Tab') {
+              item = {
+                tabName: 'New Tab',
+                tabContent: {
+                  type: "Widget",
+                  name: "Iframe",
+                  props: { url: "https://kenh14.vn/", width: "100%", height: "600px" }
+                }
+              }
+            }
+            return item
+          })
+          onSubItem(tmpData)
           setTabItems(newItems)
         }} />
       <Tabs

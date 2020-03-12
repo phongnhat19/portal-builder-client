@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './style.css'
 import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
@@ -100,6 +100,7 @@ const PortalBuilder = () => {
   const [data, setData] = useState(initData)
   const [portalActive, setPortalActive] = useState(data[0])
   const [tabIndexPreview, setTabIndexPreview] = useState(0)
+
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
@@ -191,21 +192,35 @@ const PortalBuilder = () => {
       <div className="portal-preview" onDragOver={dragOver} onDrop={dropWidget}>
         <PortalPreview
           onAddItemTabs={(item: any) => {
-            
             const valueOfPortalAction: string = portalActive.value
             const tmpData = [...data]
             const newList: any = tmpData.map(tab => {
-              const tmpTab = {...tab}
+              const tmpTab = { ...tab }
               if (tmpTab.value === valueOfPortalAction) {
                 tmpTab.layout.props.tabList.push(item)
               }
+
+              return tmpTab;
+            })
+            setData(newList);
+          }}
+          onSubItemTabs={(listItems: any) => {
+            const valueOfPortalAction: string = portalActive.value
+            const tmpData = [...data]
+            const newList: any = tmpData.map(tab => {
+              const tmpTab = { ...tab }
+              if (tmpTab.value === valueOfPortalAction) {
+                tmpTab.layout.props.tabList = []
+                tmpTab.layout.props.tabList = listItems
+              }
+
               return tmpTab;
             })
             setData(newList);
           }}
           layout={portalActive.layout}
           onTabPreview={(index: number) => {
-            console.log(index);
+            // console.log(index);
             setTabIndexPreview(index)
           }} />
       </div>

@@ -1,6 +1,21 @@
 .kuc-table {
   width: 100%;
 }
+
 .kuc-input-text {
   width: 100%;
+}
+
+.portal-tabs-layout .portal-tabs-btn {
+  position: absolute;
+  top: 10px;
+  z-index: 1;
+}
+
+.portal-tabs-layout .portal-tabs-btn-sub {
+  right: 13px;
+}
+
+.portal-tabs-layout .portal-tabs-btn-add {
+  right: 55px;
 }

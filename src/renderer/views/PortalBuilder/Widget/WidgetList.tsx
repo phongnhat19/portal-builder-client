@@ -2,15 +2,6 @@ import React, { CSSProperties } from 'react'
 import { Card } from 'antd';
 import Widget from './Widget';
 
-const gridStyle: CSSProperties = {
-  width: '50%',
-  textAlign: 'center',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column'
-};
-
 type Widget = {
   name: string
   icon: any
