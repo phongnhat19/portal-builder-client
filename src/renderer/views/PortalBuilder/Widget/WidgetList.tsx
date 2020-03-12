@@ -1,6 +1,5 @@
 import React, { CSSProperties } from 'react'
 import { Card } from 'antd';
-import { BorderOutlined, Html5Outlined, CalendarOutlined, MailOutlined } from '@ant-design/icons'
 import Widget from './Widget';
 
 const gridStyle: CSSProperties = {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {RocketFilled, PlusCircleOutlined } from '@ant-design/icons'
 import {Button, Typography, Menu} from 'antd'
 import DeployModal from './DeployModal/DeployModal';
@@ -12,19 +12,21 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
   const [deployModalVisible, setDeployModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
   const [dataSetting, setDataSetting] = useState (data[0])
+  // useEffect(() => {
+
+  // }[data])
   return(
       <div>
          <Menu selectedKeys={[`portal-item-${value}`]}>
           {
-            data.map((item) => {
-            const portal = item.portal
+            data.map((portal) => {
               return(
                 <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-${portal.value}`} onClick={(e) => {
                     if (e.domEvent.target instanceof HTMLButtonElement) {
                         setDeployModalVisible(true)
-                        setDataSetting(item)
+                        setDataSetting(portal)
                     }
-                    onChange(item)
+                    onChange(portal)
                 }}>
                   <span className="portal-list-item">
                     <Text strong={value === portal.value}>{portal.name}</Text>
@@ -52,7 +54,9 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
           dataTable= {dataSetting.settingDomain}
           onDeploy = {(setting) => {
             onDeploy({
-                portal: dataSetting.portal,
+                name: dataSetting.name,
+                type: dataSetting.type,
+                value: dataSetting.value,
                 settingDomain: setting
             })
           }}

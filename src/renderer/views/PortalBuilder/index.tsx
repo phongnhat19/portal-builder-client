@@ -32,11 +32,9 @@ const PortalBuilder = () => {
 
   const initData = [
     {
-      portal: {
-          name: 'Portal 1',
-          value: '1',
-          type: 'Tabs'
-        },
+      name: 'Portal 1',
+      value: '1',
+      type: 'Tabs',
       settingDomain: [...settingDomain],
       layout: {
         type: 'Tabs',
@@ -66,11 +64,9 @@ const PortalBuilder = () => {
       }
     },
     {
-      portal: {
-          name: 'Portal 2',
-          value: '2',
-          type: 'Tabs'
-        },
+      name: 'Portal 2',
+      value: '2',
+      type: 'Tabs',
       settingDomain: [...settingDomain],
       layout: {
         type: 'Tabs',
@@ -132,7 +128,6 @@ const PortalBuilder = () => {
   }
 
   const dropWidget = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
     var keyWidget = event.dataTransfer.getData("text");
     const portalActiveCopy = portalActive;
     const activeLayout = portalActiveCopy.layout.props.tabList[tabIndexPreview];
@@ -142,18 +137,20 @@ const PortalBuilder = () => {
     console.log(portalActiveCopy);
     setPortalActive(portalActiveCopy)
   }
+
   return(
     <div className="portal-container">
       <div className="portal-list-container">
         <SideBar 
-          value = {portalActive.portal.value}
+          value = {portalActive.value}
           data = {data}
           onChange= {(item) => {console.log(item);
-           setPortalActive(item)}} 
+           setPortalActive(item)
+          }} 
           onDeploy= {(dataDeploy) => {
             let newData = [...data];
             newData = newData.map(item => {
-              if (item.portal.value === dataDeploy.portal.value) {
+              if (item.value === dataDeploy.value) {
                 item.settingDomain = item.settingDomain.map((domain) => {
                     const copyDomain = {...domain};
                     if (copyDomain.key === dataDeploy.settingDomain.key) {
@@ -181,7 +178,12 @@ const PortalBuilder = () => {
                 ]
               }
             }
-            const newList = [...data, {portal: item, settingDomain, layout}];
+            const newList = [...data, {
+              name: item.name,
+              value: item.name,
+              settingDomain,
+              layout
+            }];
             setData(newList);
           }}
         />

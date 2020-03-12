@@ -7,13 +7,17 @@ type Portal = {
 }
 // Data return when deploy a domain
 type DeploySetting = {
-    portal: Portal ;
+    name?: string;
+    value: string;
+    type: string;
     settingDomain: ItemTable
 }
 
 // Data to init deploy form
 type DeployData = {
-    portal: Portal ;
+    name?: string;
+    value: string;
+    type: string;
     settingDomain: ItemTable[]
 } 
 
