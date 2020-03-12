@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties, useState } from 'react'
 import { Card } from 'antd';
 import Widget from './Widget';
 
@@ -22,16 +22,17 @@ type WidgetList = {
 }
 
 const WidgetList = ({ containers = [], onDragStart = () => {} }: WidgetList) => {
-
   return (
-    <Card title="Default Widget">
-      {containers.map((item: Widget, index: number) => {
-        return <Widget name={item.name} icon={item.icon} dragStart={(event) => {
-          onDragStart(item); 
-          event.dataTransfer.setData("text", item.name);
-        }} key={index} />
-      })}
-    </Card>
+    <React.Fragment>
+      <Card title="Default Widget">
+        {containers.map((item: Widget, index: number) => {
+          return <Widget name={item.name} icon={item.icon} dragStart={(event) => {
+            onDragStart(item); 
+            event.dataTransfer.setData("text", item.name);
+          }} key={index} />
+        })}
+      </Card>
+    </React.Fragment>
   )
 }
 export {Widget}

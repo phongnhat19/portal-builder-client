@@ -5,6 +5,7 @@ import SideBar from './SideBar'
 import WidgetList, {Widget} from './Widget/WidgetList';
 import {Portal} from './Type'
 import {ItemTable} from '../PortalBuilder/DeployModal/Type'
+import IframeModel from './Widget/DragModel/IframeModel'
 import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@ant-design/icons';
 
 const PortalBuilder = () => {
@@ -100,6 +101,7 @@ const PortalBuilder = () => {
   const [data, setData] = useState(initData)
   const [portalActive, setPortalActive] = useState(data[0])
   const [tabIndexPreview, setTabIndexPreview] = useState(0)
+  const [isShowIframeModel, setShowIframeModel] = useState(false);
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
@@ -116,26 +118,25 @@ const PortalBuilder = () => {
     }
   ]
 
-  const dragStart = (event: any) => {
-    // const widgetName = (event.target as HTMLDivElement).getElementsByClassName('ant-card-grid ant-card-grid-hoverable')[0]
-    // event.dataTransfer.setData("text", widgetName.textContent || '');
-    // console.log(event);
-    
+  const dropWidget = () => {
+    setShowIframeModel(true)
   }
 
-  const dragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  }
+  const setDropWidgetData = (url: string) => {
+        let portal =  Object.assign({},portalActive)
+        const tabList = [...portal.layout.props.tabList]
+        
+        const activeLayout = {...tabList[tabIndexPreview]};
+        let tabContent = {...activeLayout.tabContent}
+        tabContent.props = Object.assign({},tabContent.props);
+        if (!tabContent.props) return;
+        tabContent.props.url = url
 
-  const dropWidget = (event: React.DragEvent<HTMLDivElement>) => {
-    var keyWidget = event.dataTransfer.getData("text");
-    const portalActiveCopy = portalActive;
-    const activeLayout = portalActiveCopy.layout.props.tabList[tabIndexPreview];
-    const propsLayout = activeLayout.tabContent.props;
-    if (!propsLayout) return;
-    propsLayout.url = "https://icons8.com/icons/set/grid"
-    console.log(portalActiveCopy);
-    setPortalActive(portalActiveCopy)
+        activeLayout.tabContent = tabContent
+        tabList[tabIndexPreview] = activeLayout
+        portal.layout.props.tabList = tabList
+
+        setPortalActive(portal)   
   }
 
   return(
@@ -188,14 +189,19 @@ const PortalBuilder = () => {
           }}
         />
       </div>
-      <div className="portal-preview" onDragOver={dragOver} onDrop={dropWidget}>
+      <div className="portal-preview" onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} onDrop={dropWidget}>
         <PortalPreview layout = {portalActive.layout} onTabPreview= {(index: number) => {
           console.log(index);
           setTabIndexPreview(index)
         }}/>
       </div>
       <div className="widget-list-container">
-        <WidgetList containers={widgetList} onDragStart={dragStart} />
+        <WidgetList containers={widgetList}/>
+        
+        <IframeModel isVisible = {isShowIframeModel} onClose={() => (setShowIframeModel(false) )} onSave={(item) => {
+          setDropWidgetData(item.url)
+          setShowIframeModel(false)
+        }}/>
       </div>
     </div>
   )

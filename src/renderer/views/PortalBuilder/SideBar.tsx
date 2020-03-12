@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {RocketFilled, PlusCircleOutlined } from '@ant-design/icons'
 import {Button, Typography, Menu} from 'antd'
 import DeployModal from './DeployModal/DeployModal';
@@ -12,9 +12,6 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
   const [deployModalVisible, setDeployModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
   const [dataSetting, setDataSetting] = useState (data[0])
-  // useEffect(() => {
-
-  // }[data])
   return(
       <div>
          <Menu selectedKeys={[`portal-item-${value}`]}>
