@@ -20,8 +20,9 @@ type Props = {
   height: string
 }
 
-const TabsLayout = ({items = []}: {
-  items?: Tabs[]
+const TabsLayout = ({items = [], onSelectedTabItem = (tabIndex: number) => {}}: {
+  items?: Tabs[],
+  onSelectedTabItem: (tabIndex: number) => void
 }) => {
 
   const [selectedTab, setSelectedTab] = useState(0)
@@ -73,16 +74,21 @@ const TabsLayout = ({items = []}: {
         icon={<PlusCircleOutlined />}
         className='portal-tabs-add'
         onClick={() => {
-          const items = {
+          const item = {
             tabName: 'New Tab',
             tabContent: 'New Tab'
           }
-          setTabItems([...tabItems, items])
+          const newItems = [...tabItems, item];
+          setTabItems(newItems)
+          setSelectedTab(newItems.length - 1)
           }} />
       <Tabs
         items={tabItems}
         value={selectedTab}
-        onClickTabItem={setSelectedTab}
+        onClickTabItem={(i) => {
+          setSelectedTab(i)
+          onSelectedTabItem(i)
+        }}
       />
     </div>
   )

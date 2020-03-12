@@ -103,6 +103,7 @@ const PortalBuilder = () => {
   
   const [data, setData] = useState(initData)
   const [portalActive, setPortalActive] = useState(data[0])
+  const [tabIndexPreview, setTabIndexPreview] = useState(0)
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
@@ -119,10 +120,10 @@ const PortalBuilder = () => {
     }
   ]
 
-  const dragStart = (event: React.DragEvent<HTMLDivElement>) => {
-    const widgetName = (event.target as HTMLDivElement).getElementsByClassName('ant-card-grid ant-card-grid-hoverable')[0]
-    event.dataTransfer.setData("text", widgetName.textContent || '');
-    console.log(event);
+  const dragStart = (event: any) => {
+    // const widgetName = (event.target as HTMLDivElement).getElementsByClassName('ant-card-grid ant-card-grid-hoverable')[0]
+    // event.dataTransfer.setData("text", widgetName.textContent || '');
+    // console.log(event);
     
   }
 
@@ -132,9 +133,14 @@ const PortalBuilder = () => {
 
   const dropWidget = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-    console.log('Target', event.target);
     var keyWidget = event.dataTransfer.getData("text");
-    console.log('Result', keyWidget);
+    const portalActiveCopy = portalActive;
+    const activeLayout = portalActiveCopy.layout.props.tabList[tabIndexPreview];
+    const propsLayout = activeLayout.tabContent.props;
+    if (!propsLayout) return;
+    propsLayout.url = "https://icons8.com/icons/set/grid"
+    console.log(portalActiveCopy);
+    setPortalActive(portalActiveCopy)
   }
   return(
     <div className="portal-container">
@@ -142,7 +148,8 @@ const PortalBuilder = () => {
         <SideBar 
           value = {portalActive.portal.value}
           data = {data}
-          onChange= {(item) => {setPortalActive(item)}} 
+          onChange= {(item) => {console.log(item);
+           setPortalActive(item)}} 
           onDeploy= {(dataDeploy) => {
             let newData = [...data];
             newData = newData.map(item => {
@@ -179,11 +186,14 @@ const PortalBuilder = () => {
           }}
         />
       </div>
-      <div className="portal-preview">
-        <PortalPreview layout = {portalActive.layout}/>
+      <div className="portal-preview" onDragOver={dragOver} onDrop={dropWidget}>
+        <PortalPreview layout = {portalActive.layout} onTabPreview= {(index: number) => {
+          console.log(index);
+          setTabIndexPreview(index)
+        }}/>
       </div>
       <div className="widget-list-container">
-        <WidgetList containers={widgetList} dragStart={dragStart} />
+        <WidgetList containers={widgetList} onDragStart={dragStart} />
       </div>
     </div>
   )

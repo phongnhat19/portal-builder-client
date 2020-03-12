@@ -17,15 +17,20 @@ type Widget = {
   icon: any
 }
 
-const WidgetList = ({ containers = [], dragStart }: {
+type WidgetList = {
   containers?: Array<Widget>,
-  dragStart?: (event: React.DragEvent<HTMLDivElement>) => void
-}) => {
+  onDragStart?: (item: Widget) => void
+}
+
+const WidgetList = ({ containers = [], onDragStart = () => {} }: WidgetList) => {
 
   return (
     <Card title="Default Widget">
       {containers.map((item: Widget, index: number) => {
-        return <Widget name={item.name} icon={item.icon} dragStart={dragStart} key={index} />
+        return <Widget name={item.name} icon={item.icon} dragStart={(event) => {
+          onDragStart(item); 
+          event.dataTransfer.setData("text", item.name);
+        }} key={index} />
       })}
     </Card>
   )
