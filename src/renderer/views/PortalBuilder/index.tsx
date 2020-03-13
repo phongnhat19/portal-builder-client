@@ -6,23 +6,12 @@ import WidgetList, {Widget} from './Widget/WidgetList';
 import {Portal} from './Type'
 import {ItemTable} from '../PortalBuilder/DeployModal/Type'
 import IframeModel from './Widget/DragModel/IframeModel'
+import {downloadFile, portalJs, portalCss} from './util'
 import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@ant-design/icons';
 
 const PortalBuilder = () => {
 
   const settingDomain:ItemTable[]= [
-    {
-      key: '1',
-      profile: 'Profile 1',
-      domain: 'kimcuc-1.cybozu.com',
-      status: 'done'
-    },
-    {
-      key: '2',
-      profile: 'Profile 2',
-      domain: 'kimcuc-2.cybozu.com',
-      status: 'processing'
-    },
     {
       key: '3',
       profile: 'Profile 3',
@@ -44,52 +33,8 @@ const PortalBuilder = () => {
             {
               tabName: 'Default Portal',
               tabContent: {
-                type: 'Widget',
+                type: 'DefaultPortal',
                 name: 'DefaultPortal'
-              }
-            },
-            {
-              tabName: 'Company Location',
-              tabContent: {
-                type: 'Widget',
-                name: 'Iframe',
-                props: {
-                  url: 'https://kenh14.vn/',
-                  width: '100%',
-                  height: '600px'
-                }
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      name: 'Portal 2',
-      value: '2',
-      type: 'Tabs',
-      settingDomain: [...settingDomain],
-      layout: {
-        type: 'Tabs',
-        props: {
-          tabList: [
-            {
-              tabName: 'Default Portal',
-              tabContent: {
-                type: 'Widget',
-                name: 'DefaultPortal'
-              }
-            },
-            {
-              tabName: 'Company Location',
-              tabContent: {
-                type: 'Widget',
-                name: 'Iframe',
-                props: {
-                  url: 'https://www.google.com/maps/embed/v1/place?key=AIzaSyC6NGlXCyiz7CbeJAb1RA6bUsWN6YWaK8Q&q=Centre+Point+Tower',
-                  width: '100%',
-                  height: '600px'
-                }
               }
             }
           ]
@@ -145,10 +90,11 @@ const PortalBuilder = () => {
         <SideBar 
           value = {portalActive.value}
           data = {data}
-          onChange= {(item) => {console.log(item);
+          onChange= {(item) => {
            setPortalActive(item)
+           setTabIndexPreview(0)
           }} 
-          onDeploy= {(dataDeploy) => {
+          onDeploy= {async (dataDeploy) => {
             let newData = [...data];
             newData = newData.map(item => {
               if (item.value === dataDeploy.value) {
@@ -163,6 +109,11 @@ const PortalBuilder = () => {
               return item
             })
             setData(newData)
+            
+            const template = portalJs.replace('PORTAL_CONFIG', `${JSON.stringify(portalActive.layout.props.tabList)}`)
+            
+            downloadFile('customPortalTemplate.min.js', template)
+            downloadFile('customPortalTemplate.min.css', portalCss)
           }} 
           onCreate= {(item: Portal) => {
             const layout = {
@@ -172,7 +123,7 @@ const PortalBuilder = () => {
                   {
                     tabName: 'Default Portal',
                     tabContent: {
-                      type: 'Widget',
+                      type: 'DefaultPortal',
                       name: 'DefaultPortal'
                     }
                   }
@@ -190,10 +141,26 @@ const PortalBuilder = () => {
         />
       </div>
       <div className="portal-preview" onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} onDrop={dropWidget}>
-        <PortalPreview layout = {portalActive.layout} onTabPreview= {(index: number) => {
-          console.log(index);
-          setTabIndexPreview(index)
-        }}/>
+        <PortalPreview 
+          layout = {portalActive.layout}
+          onTabPreview= {(index: number) => {
+            setTabIndexPreview(index)
+          }}
+          tabIndexPreview = {tabIndexPreview}
+          onAddItemTabs={(item: any) => {
+            const valueOfPortalAction: string = portalActive.value
+            const tmpData = [...data]
+            const newList: any = tmpData.map(tab => {
+              const tmpTab = { ...tab }
+              if (tmpTab.value === valueOfPortalAction) {
+                tmpTab.layout.props.tabList.push(item)
+              }
+
+              return tmpTab;
+            })
+            setData(newList);
+          }}
+        />
       </div>
       <div className="widget-list-container">
         <WidgetList containers={widgetList}/>

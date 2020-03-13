@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
-import QuickReport from './QuickReport'
 import { Button } from 'antd';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined , MinusCircleOutlined} from '@ant-design/icons';
+import './style.css'
 
 type Tabs = {
   tabName: string,
@@ -20,33 +20,25 @@ type Props = {
   height: string
 }
 
-const TabsLayout = ({items = [], onSelectedTabItem = (tabIndex: number) => {}}: {
+const TabsLayout = ({tabIndexPreview = 0, items = [], onSelectedTabItem = (tabIndex: number) => {},
+onAddItem = (data: any) => { },
+onSubItem = (data: any) => { },}: {
+  tabIndexPreview: any,
   items?: Tabs[],
-  onSelectedTabItem: (tabIndex: number) => void
+  onSelectedTabItem: (tabIndex: number) => void,
+  onAddItem?: (data: any) => void
+  onSubItem?: (data: any) => void
 }) => {
 
-  const [selectedTab, setSelectedTab] = useState(0)
-  const [tabItems, setTabItems] = useState([
-    {
-      tabName: 'Company Location',
-      tabContent: <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC6NGlXCyiz7CbeJAb1RA6bUsWN6YWaK8Q&q=Centre+Point+Tower" style={{ width: '100%', height: '600px' }} />
-    },
-    {
-      tabName: 'Quick Report',
-      tabContent: <QuickReport />
-    },
-    {
-      tabName: 'Gmail',
-      tabContent: 'Gmail'
-    }
-  ])
+  const [selectedTab, setSelectedTab] = useState(tabIndexPreview)
+  const [tabItems, setTabItems] = useState([])
 
   useEffect(() => {
     let dataItems:any = [];
     items.forEach(item => {
       let newItem = {
         tabName: item.tabName,
-        tabContent: '' as any
+        tabContent: 'This is kintone default Portal' as any
       }
       const tabContent = item.tabContent;
       if (!tabContent) return;
@@ -65,6 +57,8 @@ const TabsLayout = ({items = [], onSelectedTabItem = (tabIndex: number) => {}}: 
       dataItems = [...dataItems, newItem]
     })
     setTabItems(dataItems)
+    console.log(items, tabIndexPreview);
+    
   },[items])
 
   return(
@@ -72,16 +66,46 @@ const TabsLayout = ({items = [], onSelectedTabItem = (tabIndex: number) => {}}: 
       <Button
         type="default"
         icon={<PlusCircleOutlined />}
-        className='portal-tabs-add'
+        className='portal-tabs-btn portal-tabs-btn-add'
         onClick={() => {
           const item = {
             tabName: 'New Tab',
-            tabContent: 'New Tab'
+            tabContent: 'Please select widget'
           }
-          const newItems = [...tabItems, item];
+          const d = {
+            tabName: 'New Tab',
+            tabContent: {
+              type: "IframeWidget",
+              name: "Iframe",
+              props: { url: "", width: "100%", height: "600px" }
+            }
+          }
+          onAddItem(d)
+          const newItems: any = [...tabItems, item];
           setTabItems(newItems)
-          setSelectedTab(newItems.length - 1)
           }} />
+          <Button
+        type="default"
+        icon={<MinusCircleOutlined />}
+        className='portal-tabs-btn portal-tabs-btn-sub'
+        onClick={() => {
+          const newItems: any = [...tabItems]
+          newItems.splice(selectedTab, 1);
+          const tmpData: any = newItems.map((item: any) => {
+            if (item.tabName === 'New Tab') {
+              item = {
+                tabName: 'New Tab',
+                tabContent: {
+                  type: "Widget",
+                  name: "Iframe",
+                  props: { url: "", width: "100%", height: "600px" }
+                }
+              }
+            }
+            return item
+          })
+          onSubItem(tmpData)
+        }} />
       <Tabs
         items={tabItems}
         value={selectedTab}
