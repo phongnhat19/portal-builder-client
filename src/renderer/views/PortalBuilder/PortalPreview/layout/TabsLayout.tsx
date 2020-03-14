@@ -57,9 +57,9 @@ onSubItem = (data: any) => { },}: {
       dataItems = [...dataItems, newItem]
     })
     setTabItems(dataItems)
-    console.log(items, tabIndexPreview);
+    setSelectedTab(tabIndexPreview)
     
-  },[items])
+  },[items, tabIndexPreview])
 
   return(
     <div className='portal-tabs-layout'>
@@ -83,29 +83,26 @@ onSubItem = (data: any) => { },}: {
           onAddItem(d)
           const newItems: any = [...tabItems, item];
           setTabItems(newItems)
-          }} />
+          console.log(newItems);
+          
+          }} 
+      />
+        {tabItems.length > 1 &&
           <Button
-        type="default"
-        icon={<MinusCircleOutlined />}
-        className='portal-tabs-btn portal-tabs-btn-sub'
-        onClick={() => {
-          const newItems: any = [...tabItems]
-          newItems.splice(selectedTab, 1);
-          const tmpData: any = newItems.map((item: any) => {
-            if (item.tabName === 'New Tab') {
-              item = {
-                tabName: 'New Tab',
-                tabContent: {
-                  type: "Widget",
-                  name: "Iframe",
-                  props: { url: "", width: "100%", height: "600px" }
-                }
-              }
-            }
-            return item
-          })
-          onSubItem(tmpData)
-        }} />
+            type="default"
+            icon={<MinusCircleOutlined />}
+            className='portal-tabs-btn portal-tabs-btn-sub'
+            onClick={() => {
+              if (selectedTab === 0) return;
+
+              const newSelectedTab = selectedTab - 1;
+              onSelectedTabItem(newSelectedTab)
+              const newItems = [...items];
+              newItems.splice(selectedTab, 1)
+              onSubItem(newItems)
+            }} 
+          />
+        }
       <Tabs
         items={tabItems}
         value={selectedTab}

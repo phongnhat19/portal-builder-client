@@ -44,7 +44,7 @@ const PortalBuilder = () => {
   ]
   
   const [data, setData] = useState(initData)
-  const [portalActive, setPortalActive] = useState(data[0])
+  const [selectedPortal, setselectedPortal] = useState(0)
   const [tabIndexPreview, setTabIndexPreview] = useState(0)
   const [isShowIframeModel, setShowIframeModel] = useState(false);
   const widgetList: Widget[] = [
@@ -68,7 +68,7 @@ const PortalBuilder = () => {
   }
 
   const setDropWidgetData = (url: string) => {
-        let portal =  Object.assign({},portalActive)
+        let portal =  Object.assign({},data[selectedPortal])
         const tabList = [...portal.layout.props.tabList]
         
         const activeLayout = {...tabList[tabIndexPreview]};
@@ -80,18 +80,16 @@ const PortalBuilder = () => {
         activeLayout.tabContent = tabContent
         tabList[tabIndexPreview] = activeLayout
         portal.layout.props.tabList = tabList
-
-        setPortalActive(portal)   
   }
 
   return(
     <div className="portal-container">
       <div className="portal-list-container">
         <SideBar 
-          value = {portalActive.value}
+          value = {data[selectedPortal].value}
           data = {data}
-          onChange= {(item) => {
-           setPortalActive(item)
+          onChange= {(item, index) => {
+           setselectedPortal(index)
            setTabIndexPreview(0)
           }} 
           onDeploy= {async (dataDeploy) => {
@@ -110,7 +108,7 @@ const PortalBuilder = () => {
             })
             setData(newData)
             
-            const template = portalJs.replace('PORTAL_CONFIG', `${JSON.stringify(portalActive.layout.props.tabList)}`)
+            const template = portalJs.replace('PORTAL_CONFIG', `${JSON.stringify(data[selectedPortal].layout.props.tabList)}`)
             
             downloadFile('customPortalTemplate.min.js', template)
             downloadFile('customPortalTemplate.min.css', portalCss)
@@ -130,35 +128,45 @@ const PortalBuilder = () => {
                 ]
               }
             }
-            const newList = [...data, {
+            const newPortal = {
               name: item.name,
               value: item.name,
               settingDomain,
               layout
-            }];
+            };
+            const newList = [...data, newPortal];
             setData(newList);
+            
+            setselectedPortal(newList.length - 1)
+            setTabIndexPreview(0)
           }}
         />
       </div>
       <div className="portal-preview" onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} onDrop={dropWidget}>
         <PortalPreview 
-          layout = {portalActive.layout}
+          layout = {data[selectedPortal].layout}
           onTabPreview= {(index: number) => {
             setTabIndexPreview(index)
+            console.log(index);
+            
           }}
           tabIndexPreview = {tabIndexPreview}
           onAddItemTabs={(item: any) => {
-            const valueOfPortalAction: string = portalActive.value
+            console.log(data[selectedPortal]);
+            
+            const valueOfPortalAction: string = data[selectedPortal].value
             const tmpData = [...data]
             const newList: any = tmpData.map(tab => {
               const tmpTab = { ...tab }
               if (tmpTab.value === valueOfPortalAction) {
                 tmpTab.layout.props.tabList.push(item)
               }
-
               return tmpTab;
             })
             setData(newList);
+          }}
+          onSubItemTabs = {(layout) => {
+
           }}
         />
       </div>

@@ -16,14 +16,14 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
       <div>
          <Menu selectedKeys={[`portal-item-${value}`]}>
           {
-            data.map((portal) => {
+            data.map((portal, index) => {
               return(
                 <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-${portal.value}`} onClick={(e) => {
                     if (e.domEvent.target instanceof HTMLButtonElement) {
                         setDeployModalVisible(true)
                         setDataSetting(portal)
                     }
-                    onChange(portal)
+                    onChange(portal, index)
                 }}>
                   <span className="portal-list-item">
                     <Text strong={value === portal.value}>{portal.name}</Text>

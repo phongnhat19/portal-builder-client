@@ -7,16 +7,20 @@ const PortalPreview = ({
   onAddItemTabs = (data: any) => { },
   onSubItemTabs = (data: any) => { } }: any) => {
 
-  useEffect(() => {
-    console.log(layout);
-    
-  }, [layout])
   return(
     <div style={{display: 'flex', justifyContent:'center', paddingTop: '30px'}}>
       <TabsLayout 
         tabIndexPreview = {tabIndexPreview}
         onAddItem={onAddItemTabs}
-        onSubItem={onSubItemTabs}
+        onSubItem={(items) => {
+          const newLayout = {
+            ...layout,
+            props: {
+              tabList : [...items]
+            }
+          }
+          onSubItemTabs(newLayout)
+        }}
         items={layout.props.tabList}
         onSelectedTabItem = {onTabPreview}
       />
