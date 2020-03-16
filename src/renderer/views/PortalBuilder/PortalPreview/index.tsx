@@ -3,9 +3,9 @@ import TabsLayout from './layout/TabsLayout'
 const PortalPreview = ({ 
   tabIndexPreview = 0,
   layout = {},
-  onTabPreview = () => { },
-  onAddItemTabs = (data: any) => { },
-  onSubItemTabs = (data: any) => { } }: any) => {
+  onTabPreview = () => {},
+  onAddItemTabs = () => {},
+  onSubItemTabs = () => {} }: any) => {
 
   return(
     <div style={{display: 'flex', justifyContent:'center', paddingTop: '30px'}}>

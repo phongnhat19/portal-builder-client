@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, Form, Select, Button} from 'antd'
+import {Modal, Button} from 'antd'
 import TableCustom from './TableCustom'
 import {ItemTable} from './Type'
 

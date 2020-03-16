@@ -1,9 +1,20 @@
 
 import {ItemTable} from './DeployModal/Type'
+import {Tab, TabContentType} from './PortalPreview/Type'
+
+type Layout = {
+    type: string,
+    props: LayoutProps
+}
+type LayoutProps = {
+    tabList: Tab[]
+}
 type Portal = {
     name?: string;
     value: string;
-    type: string
+    type: string;
+    layout: Layout | {};
+    settingDomain?: any
 }
 // Data return when deploy a domain
 type DeploySetting = {
@@ -30,4 +41,4 @@ type SideBarProps = {
     dataTable?: ItemTable[], 
     data?: DeployData[]
   }
-export {Portal, DeployData, DeploySetting, SideBarProps}
+export {Portal, DeployData, DeploySetting, SideBarProps, Layout, TabContentType}

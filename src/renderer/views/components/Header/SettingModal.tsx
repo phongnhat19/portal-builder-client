@@ -1,7 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Modal, Form, Select, Input } from 'antd'
+import {ProfileContext} from '../../../ProfileContext'
 
 type ProfileSetting = {
+  profileId: string,
   name: string
   domain: string
   username: string
@@ -15,21 +17,6 @@ const formItemLayout = {
 
 const { Option } = Select
 
-const dataOfSelectProfile = [{
-  profileId: 'profile_1',
-  name: 'Minh 1',
-  domain: 'minh-sc-1.cybozu-dev.com',
-  username: 'minh1',
-  password: 'ahihi'
-},
-{
-  profileId: 'profile_2',
-  name: 'Minh 2',
-  domain: 'minh-sc-2.cybozu-dev.com',
-  username: 'minh2',
-  password: 'ahihi'
-}];
-
 const defaultValue = {
   name: '',
   domain: '',
@@ -37,14 +24,17 @@ const defaultValue = {
   password: ''
 }
 
-const SettingModal = ({ isVisible = false, onClose, saveSetting }: {
+const SettingModal = ({ isVisible = false, onClose }: {
   isVisible?: boolean
   onClose?: () => void
   saveSetting?: (settingData: any) => void
 }) => {
-
   const [form] = Form.useForm();
-
+  const [profiles, setProfiles] = useContext(ProfileContext);
+  useEffect(() => {
+    console.log(profiles);
+  })
+  
   return (
     <Modal
       title="Setting"
@@ -54,10 +44,24 @@ const SettingModal = ({ isVisible = false, onClose, saveSetting }: {
       onOk={() => {
         form
           .validateFields()
-          .then(values => {
-            console.log('Result: ', typeof values, values);
+          .then((values) => {
             form.resetFields();
-            saveSetting && saveSetting(values);
+            let newProfiles = [...profiles];
+            let isEditProfile = false;
+            newProfiles = newProfiles.map((profile) => {
+              if (profile.profileId === values.profileId) {
+                isEditProfile = true;
+                return values;
+              }
+              return profile;
+            })
+
+            if (!isEditProfile) {
+              values.profileId = values.name + Math.random()
+              newProfiles = [...profiles, values]
+            }
+            setProfiles(newProfiles)
+            
           })
           .catch(info => {
             console.log('Validate Failed:', info);
@@ -71,20 +75,21 @@ const SettingModal = ({ isVisible = false, onClose, saveSetting }: {
         initialValues={defaultValue}
       >
         <Form.Item
-          name="profile"
-          label="Profile"
+          name="profileId"
+          label="profileId"
           hasFeedback
         >
           <Select
             placeholder="Please select a Profile"
             onChange={(value) => {
-              const result = dataOfSelectProfile.filter(obj => obj.profileId === value)
-              console.log(result[0]);
-
+              const result = profiles.filter(obj => obj.profileId === value)
               form.setFieldsValue(result[0] || defaultValue)
             }}>
-            <Option value="profile_1">Profile 1</Option>
-            <Option value="profile_2">Profile 2</Option>
+              {
+                profiles.map((profile, i) => {
+                  return <Option key={i} value={profile.profileId}>{profile.name}</Option>
+                })
+              }
             <Option value="profile_add">Add new profile...</Option>
           </Select>
         </Form.Item>

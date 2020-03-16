@@ -3,7 +3,7 @@ import './style.css'
 import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
 import WidgetList, {Widget} from './Widget/WidgetList';
-import {Portal} from './Type'
+import {Portal, Layout, TabContentType} from './Type'
 import {ItemTable} from '../PortalBuilder/DeployModal/Type'
 import IframeModel from './Widget/DragModel/IframeModel'
 import {downloadFile, portalJs, portalCss} from './util'
@@ -20,7 +20,7 @@ const PortalBuilder = () => {
     }
   ];
 
-  const initData = [
+  const initData:Portal[] = [
     {
       name: 'Portal 1',
       value: '1',
@@ -33,7 +33,7 @@ const PortalBuilder = () => {
             {
               tabName: 'Default Portal',
               tabContent: {
-                type: 'DefaultPortal',
+                type: TabContentType.DEFAULT,
                 name: 'DefaultPortal'
               }
             }
@@ -75,7 +75,9 @@ const PortalBuilder = () => {
         let tabContent = {...activeLayout.tabContent}
         tabContent.props = Object.assign({},tabContent.props);
         if (!tabContent.props) return;
-        tabContent.props.url = url
+        tabContent.props.url = url;
+        tabContent.props.width = '100%'
+        tabContent.props.height = "600px"
 
         activeLayout.tabContent = tabContent
         tabList[tabIndexPreview] = activeLayout
@@ -145,15 +147,9 @@ const PortalBuilder = () => {
       <div className="portal-preview" onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} onDrop={dropWidget}>
         <PortalPreview 
           layout = {data[selectedPortal].layout}
-          onTabPreview= {(index: number) => {
-            setTabIndexPreview(index)
-            console.log(index);
-            
-          }}
+          onTabPreview= {(index: number) => {setTabIndexPreview(index)}}
           tabIndexPreview = {tabIndexPreview}
           onAddItemTabs={(item: any) => {
-            console.log(data[selectedPortal]);
-            
             const valueOfPortalAction: string = data[selectedPortal].value
             const tmpData = [...data]
             const newList: any = tmpData.map(tab => {
@@ -165,18 +161,24 @@ const PortalBuilder = () => {
             })
             setData(newList);
           }}
-          onSubItemTabs = {(layout) => {
-
+          onSubItemTabs = {(layout: Layout) => {
+            const newData = [...data]
+            newData[selectedPortal].layout = layout
+            setData(newData);
           }}
         />
       </div>
       <div className="widget-list-container">
         <WidgetList containers={widgetList}/>
         
-        <IframeModel isVisible = {isShowIframeModel} onClose={() => (setShowIframeModel(false) )} onSave={(item) => {
-          setDropWidgetData(item.url)
-          setShowIframeModel(false)
-        }}/>
+        <IframeModel 
+          isVisible = {isShowIframeModel} 
+          onClose={() => (setShowIframeModel(false) )}
+          onSave={(item) => {
+            setDropWidgetData(item.url)
+            setShowIframeModel(false)
+          }}
+        />
       </div>
     </div>
   )

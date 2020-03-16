@@ -2,33 +2,15 @@ import React, { useState, useEffect } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined} from '@ant-design/icons';
+import {TabsLayoutProps, TabContentType} from '../Type'
 import './style.css'
 
-type Tabs = {
-  tabName: string,
-  tabContent: {
-    type: 'Widget' | 'HTML' | 'string',
-    name?: string,
-    props?: Props,
-    value?: string
-  }
-}
-
-type Props = {
-  url: string,
-  width: string,
-  height: string
-}
-
-const TabsLayout = ({tabIndexPreview = 0, items = [], onSelectedTabItem = (tabIndex: number) => {},
-onAddItem = (data: any) => { },
-onSubItem = (data: any) => { },}: {
-  tabIndexPreview: any,
-  items?: Tabs[],
-  onSelectedTabItem: (tabIndex: number) => void,
-  onAddItem?: (data: any) => void
-  onSubItem?: (data: any) => void
-}) => {
+const TabsLayout = ({
+      tabIndexPreview = 0, items = [],
+      onSelectedTabItem = () => {},
+      onAddItem = () => {},
+      onSubItem = () => { }
+} : TabsLayoutProps) => {
 
   const [selectedTab, setSelectedTab] = useState(tabIndexPreview)
   const [tabItems, setTabItems] = useState([])
@@ -44,7 +26,10 @@ onSubItem = (data: any) => { },}: {
       if (!tabContent) return;
       switch (tabContent.name) {
         case 'Iframe':
-          if (!tabContent.props) return;
+          if (!tabContent.props) {
+            newItem.tabContent = 'Please drag Iframe to create new widget'
+            break;
+          };
           const style = {
             width: tabContent.props.width,
             height: tabContent.props.height
@@ -58,7 +43,6 @@ onSubItem = (data: any) => { },}: {
     })
     setTabItems(dataItems)
     setSelectedTab(tabIndexPreview)
-    
   },[items, tabIndexPreview])
 
   return(
@@ -68,24 +52,16 @@ onSubItem = (data: any) => { },}: {
         icon={<PlusCircleOutlined />}
         className='portal-tabs-btn portal-tabs-btn-add'
         onClick={() => {
-          const item = {
-            tabName: 'New Tab',
-            tabContent: 'Please select widget'
-          }
-          const d = {
+          const tab = {
             tabName: 'New Tab',
             tabContent: {
-              type: "IframeWidget",
-              name: "Iframe",
-              props: { url: "", width: "100%", height: "600px" }
+              type: TabContentType.IFRAME,
+              name: "Iframe"
             }
           }
-          onAddItem(d)
-          const newItems: any = [...tabItems, item];
-          setTabItems(newItems)
-          console.log(newItems);
-          
-          }} 
+          onAddItem(tab)
+          onSelectedTabItem(tabItems.length)
+        }} 
       />
         {tabItems.length > 1 &&
           <Button

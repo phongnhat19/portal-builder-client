@@ -44,7 +44,8 @@ const CreateModal = ({isVisible= false, onClose, onCreate}: CreateModal) => {
           onCreate({
               name: portalName,
               type: portalType,
-              value: portalName + Math.random()
+              value: portalName + Math.random(),
+              layout: {}
           })
       }}
     >
