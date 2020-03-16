@@ -6,6 +6,7 @@ import WidgetList, {Widget} from './Widget/WidgetList';
 import {Portal, Layout, TabContentType} from './Type'
 import IframeModel from './Widget/DragModel/IframeModel'
 import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@ant-design/icons';
+import {ipcRenderer} from 'electron'
 
 const PortalBuilder = () => {
 
@@ -83,28 +84,9 @@ const PortalBuilder = () => {
           }} 
           onDeploy= {async (dataDeploy) => {
             console.log(dataDeploy);
-            
+            ipcRenderer.send('request-to-kintone', dataDeploy)
           }} 
           onCreate= {(item: Portal) => {
-            // const layout: Layout = {
-            //   type: item.layout.type,
-            //   props: {
-            //     tabList: [
-            //       {
-            //         tabName: 'Default Portal',
-            //         tabContent: {
-            //           type: TabContentType.DEFAULT,
-            //           name: 'DefaultPortal'
-            //         }
-            //       }
-            //     ]
-            //   }
-            // }
-            // const newPortal: Portal = {
-            //   name: item.name,
-            //   value: item.name!,
-            //   layout
-            // };
             const newList = [...data, item];
             setData(newList);
             
