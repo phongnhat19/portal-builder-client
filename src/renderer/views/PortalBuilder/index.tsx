@@ -39,16 +39,19 @@ const PortalBuilder = () => {
     {
       icon: <BorderOutlined />,
       name: 'Iframe',
-    }, {
+    }, 
+    {
       icon: <Html5Outlined />,
       name: 'HTML',
-    }, {
+    }, 
+    {
       icon: <CalendarOutlined />,
       name: 'Schedule',
-    }, {
-      icon: <MailOutlined />,
-      name: 'Gmail',
-    }
+    }, 
+    // {
+    //   icon: <MailOutlined />,
+    //   name: 'Gmail',
+    // }
   ]
 
   const dropWidget = () => {
