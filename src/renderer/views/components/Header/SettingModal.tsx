@@ -1,14 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Modal, Form, Select, Input } from 'antd'
-import {ProfileContext} from '../../../ProfileContext'
-
-type ProfileSetting = {
-  profileId: string,
-  name: string
-  domain: string
-  username: string
-  password: string
-}
+import {ProfileContext, Profile} from '../../../App'
 
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -30,10 +22,7 @@ const SettingModal = ({ isVisible = false, onClose }: {
   saveSetting?: (settingData: any) => void
 }) => {
   const [form] = Form.useForm();
-  const [profiles, setProfiles] = useContext(ProfileContext);
-  useEffect(() => {
-    console.log(profiles);
-  })
+  const {profiles, setProfiles} = useContext(ProfileContext);
   
   return (
     <Modal
@@ -51,14 +40,14 @@ const SettingModal = ({ isVisible = false, onClose }: {
             newProfiles = newProfiles.map((profile) => {
               if (profile.profileId === values.profileId) {
                 isEditProfile = true;
-                return values;
+                return values as Profile;
               }
               return profile;
             })
 
             if (!isEditProfile) {
               values.profileId = values.name + Math.random()
-              newProfiles = [...profiles, values]
+              newProfiles = [...profiles, values as Profile]
             }
             setProfiles(newProfiles)
             
