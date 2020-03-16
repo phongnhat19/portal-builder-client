@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined} from '@ant-design/icons';
-import {TabsLayoutProps, TabContentType} from '../Type'
-import './style.css'
+import {TabsLayoutProps, TabContentType} from '../../Type'
+import '../style.css'
 
 const TabsLayout = ({
       tabIndexPreview = 0, items = [],
