@@ -4,6 +4,7 @@ import {Button, Typography, Menu} from 'antd'
 import DeployModal from './DeployModal/DeployModal';
 import CreateModal from './CreateModel';
 import {SideBarProps} from './Type'
+import {ipcRenderer} from 'electron'
 import './style.css'
 
 const {Text} = Typography
@@ -50,9 +51,8 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
           onClose={() => setDeployModalVisible(false)}
           onDeploy = {(setting) => {
             onDeploy({
-                name: dataSetting.name,
-                type: dataSetting.type,
-                value: dataSetting.value
+              name: dataSetting.name,
+              value: dataSetting.value
             })
           }}
         />

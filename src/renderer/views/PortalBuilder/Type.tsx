@@ -18,7 +18,6 @@ type Portal = {
 type DeploySetting = {
     name?: string;
     value: string;
-    type: string;
 }
 
 // Data to init deploy form
