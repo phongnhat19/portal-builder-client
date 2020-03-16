@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import TabsLayout from './layout/TabsLayout'
 const PortalPreview = ({ 
   tabIndexPreview = 0,
