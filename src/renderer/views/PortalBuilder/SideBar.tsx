@@ -48,7 +48,6 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
         <DeployModal 
           isVisible={deployModalVisible} 
           onClose={() => setDeployModalVisible(false)}
-          dataTable= {dataSetting.settingDomain}
           onDeploy = {(setting) => {
             onDeploy({
                 name: dataSetting.name,

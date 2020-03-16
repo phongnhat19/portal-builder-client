@@ -95,25 +95,8 @@ const PortalBuilder = () => {
            setTabIndexPreview(0)
           }} 
           onDeploy= {async (dataDeploy) => {
-            let newData = [...data];
-            newData = newData.map(item => {
-              if (item.value === dataDeploy.value) {
-                item.settingDomain = item.settingDomain.map((domain) => {
-                    const copyDomain = {...domain};
-                    if (copyDomain.key === dataDeploy.settingDomain.key) {
-                      copyDomain.status = 'processing'
-                    }
-                    return copyDomain
-                })
-              }
-              return item
-            })
-            setData(newData)
+            console.log(dataDeploy);
             
-            const template = portalJs.replace('PORTAL_CONFIG', `${JSON.stringify(data[selectedPortal].layout.props.tabList)}`)
-            
-            downloadFile('customPortalTemplate.min.js', template)
-            downloadFile('customPortalTemplate.min.css', portalCss)
           }} 
           onCreate= {(item: Portal) => {
             const layout = {
