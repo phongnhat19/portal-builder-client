@@ -52,8 +52,7 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
             onDeploy({
                 name: dataSetting.name,
                 type: dataSetting.type,
-                value: dataSetting.value,
-                settingDomain: setting
+                value: dataSetting.value
             })
           }}
         />

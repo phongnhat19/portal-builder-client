@@ -14,14 +14,12 @@ type Portal = {
     value: string;
     type: string;
     layout: Layout | {};
-    settingDomain?: any
 }
 // Data return when deploy a domain
 type DeploySetting = {
     name?: string;
     value: string;
     type: string;
-    settingDomain: ItemTable
 }
 
 // Data to init deploy form
@@ -29,7 +27,6 @@ type DeployData = {
     name?: string;
     value: string;
     type: string;
-    settingDomain: ItemTable[]
 } 
 
 type SideBarProps = {

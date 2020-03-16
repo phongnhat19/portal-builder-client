@@ -11,21 +11,11 @@ import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@
 
 const PortalBuilder = () => {
 
-  const settingDomain:ItemTable[]= [
-    {
-      key: '3',
-      profile: 'Profile 3',
-      domain: 'kimcuc-3.cybozu.com',
-      status: 'unfulfilled'
-    }
-  ];
-
   const initData:Portal[] = [
     {
       name: 'Portal 1',
       value: '1',
       type: 'Tabs',
-      settingDomain: [...settingDomain],
       layout: {
         type: 'Tabs',
         props: {
@@ -116,7 +106,6 @@ const PortalBuilder = () => {
             const newPortal = {
               name: item.name,
               value: item.name,
-              settingDomain,
               layout
             };
             const newList = [...data, newPortal];
