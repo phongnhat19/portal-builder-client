@@ -12,8 +12,7 @@ type LayoutProps = {
 type Portal = {
     name?: string;
     value: string;
-    type: string;
-    layout: Layout | {};
+    layout: Layout;
 }
 // Data return when deploy a domain
 type DeploySetting = {
@@ -26,7 +25,6 @@ type DeploySetting = {
 type DeployData = {
     name?: string;
     value: string;
-    type: string;
 } 
 
 type SideBarProps = {

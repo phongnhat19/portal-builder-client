@@ -1,8 +1,9 @@
 import React, {CSSProperties, useState} from 'react'
 import {Modal, Input, Button} from 'antd'
 import {TableOutlined, FileOutlined} from '@ant-design/icons'
-import {Portal} from '../Type'
+import {Portal, Layout} from '../Type'
 import './style.css'
+import { TabContentType } from '../PortalPreview/Type'
 
 type CreateModal = {
   isVisible: boolean
@@ -41,12 +42,24 @@ const CreateModal = ({isVisible= false, onClose, onCreate}: CreateModal) => {
       okText="Create"
       onCancel={onClose}
       onOk={() => {
-          onCreate({
-              name: portalName,
-              type: portalType,
-              value: portalName + Math.random(),
-              layout: {}
-          })
+        onCreate({
+          name: portalName,
+          value: portalName + Math.random(),
+          layout: {
+            type: portalType,
+            props: {
+              tabList: [
+                {
+                  tabName: 'Default Portal',
+                  tabContent: {
+                    type: TabContentType.DEFAULT,
+                    name: 'DefaultPortal'
+                  }
+                }
+              ]
+            }
+          } as Layout
+        })
       }}
     >
         <div className="input-name">

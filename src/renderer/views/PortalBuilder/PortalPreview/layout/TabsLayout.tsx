@@ -9,7 +9,7 @@ const TabsLayout = ({
       tabIndexPreview = 0, items = [],
       onSelectedTabItem = () => {},
       onAddItem = () => {},
-      onSubItem = () => { }
+      onRemoveItem = () => { }
 } : TabsLayoutProps) => {
 
   const [selectedTab, setSelectedTab] = useState(tabIndexPreview)
@@ -73,9 +73,7 @@ const TabsLayout = ({
 
               const newSelectedTab = selectedTab - 1;
               onSelectedTabItem(newSelectedTab)
-              const newItems = [...items];
-              newItems.splice(selectedTab, 1)
-              onSubItem(newItems)
+              onRemoveItem(selectedTab)
             }} 
           />
         }
