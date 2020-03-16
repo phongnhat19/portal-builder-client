@@ -6,7 +6,6 @@ type ItemTable = {
     status: 'done' | 'processing' | 'unfulfilled'
 }
 type DeployTable = {
-    items: ItemTable[],
     onDeploy?: (data: ItemTable) => void
 }
 

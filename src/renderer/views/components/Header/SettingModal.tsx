@@ -1,7 +1,9 @@
-import React from 'react'
-import {Modal, Form, Select, Input} from 'antd'
+import React, { useContext, useEffect } from 'react'
+import { Modal, Form, Select, Input } from 'antd'
+import {ProfileContext} from '../../../ProfileContext'
 
 type ProfileSetting = {
+  profileId: string,
   name: string
   domain: string
   username: string
@@ -13,17 +15,27 @@ const formItemLayout = {
   wrapperCol: { span: 18 },
 };
 
-const {Option} = Select
+const { Option } = Select
 
-const SettingModal = ({isVisible = false, onClose, saveSetting}: {
+const defaultValue = {
+  name: '',
+  domain: '',
+  username: '',
+  password: ''
+}
+
+const SettingModal = ({ isVisible = false, onClose }: {
   isVisible?: boolean
   onClose?: () => void
   saveSetting?: (settingData: any) => void
 }) => {
-
   const [form] = Form.useForm();
-
-  return(
+  const [profiles, setProfiles] = useContext(ProfileContext);
+  useEffect(() => {
+    console.log(profiles);
+  })
+  
+  return (
     <Modal
       title="Setting"
       visible={isVisible}
@@ -32,9 +44,24 @@ const SettingModal = ({isVisible = false, onClose, saveSetting}: {
       onOk={() => {
         form
           .validateFields()
-          .then(values => {
+          .then((values) => {
             form.resetFields();
-            saveSetting && saveSetting(values);
+            let newProfiles = [...profiles];
+            let isEditProfile = false;
+            newProfiles = newProfiles.map((profile) => {
+              if (profile.profileId === values.profileId) {
+                isEditProfile = true;
+                return values;
+              }
+              return profile;
+            })
+
+            if (!isEditProfile) {
+              values.profileId = values.name + Math.random()
+              newProfiles = [...profiles, values]
+            }
+            setProfiles(newProfiles)
+            
           })
           .catch(info => {
             console.log('Validate Failed:', info);
@@ -45,45 +72,54 @@ const SettingModal = ({isVisible = false, onClose, saveSetting}: {
         {...formItemLayout}
         form={form}
         name="form_in_modal"
-        // initialValues={{ modifier: 'public' }}
+        initialValues={defaultValue}
       >
         <Form.Item
-          name="profile"
-          label="Profile"
+          name="profileId"
+          label="profileId"
           hasFeedback
         >
-          <Select placeholder="Please select a Profile">
-            <Option value="profile_1">Profile 1</Option>
-            <Option value="profile_2">Profile 2</Option>
+          <Select
+            placeholder="Please select a Profile"
+            onChange={(value) => {
+              const result = profiles.filter(obj => obj.profileId === value)
+              form.setFieldsValue(result[0] || defaultValue)
+            }}>
+              {
+                profiles.map((profile, i) => {
+                  return <Option key={i} value={profile.profileId}>{profile.name}</Option>
+                })
+              }
+            <Option value="profile_add">Add new profile...</Option>
           </Select>
         </Form.Item>
-        <Form.Item 
-          name="name" 
-          label="Name" 
+        <Form.Item
+          name="name"
+          label="Name"
           rules={[{ required: true, message: 'Please input your profile name!' }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item 
-          name="domain" 
-          label="Domain" 
+        <Form.Item
+          name="domain"
+          label="Domain"
           rules={[{ required: true, message: 'Please input your kintone domain!' }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item 
-          name="username" 
-          label="Username" 
+        <Form.Item
+          name="username"
+          label="Username"
           rules={[{ required: true, message: 'Please input your kintone username!' }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item 
-          name="password" 
-          label="Password" 
+        <Form.Item
+          name="password"
+          label="Password"
           rules={[{ required: true, message: 'Please input your kintone password!' }]}
         >
-          <Input />
+          <Input.Password />
         </Form.Item>
       </Form>
     </Modal>

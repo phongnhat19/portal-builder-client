@@ -2,51 +2,28 @@ import React, {useState} from 'react'
 import {RocketFilled, PlusCircleOutlined } from '@ant-design/icons'
 import {Button, Typography, Menu} from 'antd'
 import DeployModal from './DeployModal/DeployModal';
-import {ItemTable} from './DeployModal/Type'
+import CreateModal from './CreateModel';
+import {SideBarProps} from './Type'
 import './style.css'
 
 const {Text} = Typography
 
-type item = {
-    name?: string;
-    value: string
-  }
-
-  type DeployData = {
-    portal: item ;
-    settingDomain: ItemTable[]
-  } 
-  type DeploySetting = {
-    portal: item ;
-    settingDomain: ItemTable
-  }
-
-type SideBarProps = {
-    value?: string;
-    items?: item[];
-    onChange?: (item: item) => void;
-    onDeploy?: (data: DeploySetting) => void;
-    onCreate?: () => void;
-    dataTable?: ItemTable[], 
-    data?: DeployData[]
-  }
-
 const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, }: SideBarProps) => {
-  const [modalVisible, setModalVisible] = useState(false)
+  const [deployModalVisible, setDeployModalVisible] = useState(false)
+  const [createModalVisible, setCreateModalVisible] = useState(false)
   const [dataSetting, setDataSetting] = useState (data[0])
   return(
       <div>
          <Menu selectedKeys={[`portal-item-${value}`]}>
           {
-            data.map((item) => {
-            const portal = item.portal
+            data.map((portal, index) => {
               return(
                 <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-${portal.value}`} onClick={(e) => {
                     if (e.domEvent.target instanceof HTMLButtonElement) {
-                        setModalVisible(true)
-                        setDataSetting(item)
+                        setDeployModalVisible(true)
+                        setDataSetting(portal)
                     }
-                    onChange(portal)
+                    onChange(portal, index)
                 }}>
                   <span className="portal-list-item">
                     <Text strong={value === portal.value}>{portal.name}</Text>
@@ -57,7 +34,9 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
             })
           }
           {
-            <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-create`} onClick={onCreate}>
+            <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-create`} onClick={() => {
+              setCreateModalVisible(true)
+            }}>
               <span className="sidebar-add-btn" >
                 <PlusCircleOutlined />
                 <Text>New Portal</Text>
@@ -67,21 +46,25 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
         </Menu>
 
         <DeployModal 
-        isVisible={modalVisible} 
-        onClose={() => setModalVisible(false)}
-        dataTable= {dataSetting.settingDomain}
-        onDeploy = {(setting) => {
-          console.log({
-            portal: dataSetting.portal,
-            settingDomain: setting
-        });
-          
+          isVisible={deployModalVisible} 
+          onClose={() => setDeployModalVisible(false)}
+          onDeploy = {(setting) => {
             onDeploy({
-                portal: dataSetting.portal,
-                settingDomain: setting
+                name: dataSetting.name,
+                type: dataSetting.type,
+                value: dataSetting.value
             })
-        }}
-      />
+          }}
+        />
+
+        <CreateModal 
+          isVisible={createModalVisible} 
+          onClose={() => setCreateModalVisible(false)}
+          onCreate = {(data) => {
+            setCreateModalVisible(false)
+            onCreate(data)
+          }}
+        />
        </div>
   )
 }
