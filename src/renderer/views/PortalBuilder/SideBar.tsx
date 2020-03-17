@@ -48,11 +48,8 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
         <DeployModal 
           isVisible={deployModalVisible} 
           onClose={() => setDeployModalVisible(false)}
-          onDeploy = {(setting) => {
-            onDeploy({
-              name: dataSetting.name,
-              value: dataSetting.value
-            })
+          onDeploy = {(profile) => {
+            onDeploy(profile)
           }}
         />
 

@@ -1,12 +1,12 @@
 import React from 'react'
 import {Modal, Button} from 'antd'
 import TableCustom from './TableCustom'
-import {ItemTable} from './Type'
+import {Profile} from '../../../App'
 
 type DeployModal = {
   isVisible: boolean
   onClose?: () => void
-  onDeploy: (data: ItemTable) => void
+  onDeploy: (data: Profile) => void
 }
 
 const DeployModal = ({isVisible = false, onClose, onDeploy}: DeployModal) => {

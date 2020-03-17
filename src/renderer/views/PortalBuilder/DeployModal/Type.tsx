@@ -1,4 +1,5 @@
 import{ CSSProperties } from 'react';
+import {Profile} from '../../../App'
 type ItemTable = {
     key: number | string,
     profile: string,
@@ -6,7 +7,7 @@ type ItemTable = {
     status: 'done' | 'processing' | 'unfulfilled'
 }
 type DeployTable = {
-    onDeploy?: (data: ItemTable) => void
+    onDeploy?: (data: Profile) => void
 }
 
 const doneBtnStyle:CSSProperties = {
