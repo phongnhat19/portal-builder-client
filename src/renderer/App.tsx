@@ -22,16 +22,16 @@ const App = () => {
     {
       profileId: 'profile_2',
       name: 'Minh 2',
-      domain: 'vuhuykhanh-3.cybozu-dev.com',
-      username: 'cybozu',
-      password: 'cybozu'
+      domain: '123@domain',
+      username: '123',
+      password: '123'
     },
     {
       profileId: 'profile_1',
       name: 'Minh 1',
-      domain: 'minh-sc-1.cybozu-dev.com',
-      username: 'minh1',
-      password: 'ahihi'
+      domain: '123@domain',
+      username: '21',
+      password: '22'
     }
   ])
 
