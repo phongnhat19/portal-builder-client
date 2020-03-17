@@ -21,7 +21,7 @@ const preparePortalCustomFiles = (files: any, jsKey: any, cssKey: any) => {
   return files;
 }
 
-const prepareSettingToUpdate = (scripts: any, jsKey: string, cssKey: string) => {
+const prepareSettingToUpdate = (scripts: any, jsKey: string, cssKey: string, fileNames: string[]) => {
   let files: any = {
     "DESKTOP": [],
     "MOBILE": [],
@@ -29,7 +29,9 @@ const prepareSettingToUpdate = (scripts: any, jsKey: string, cssKey: string) => 
     "MOBILE_CSS": []
   };
 
-  scripts.map((script: any) => {
+  scripts.filter((script: any) => {
+    return fileNames.indexOf(script.name) == -1
+  }).map((script: any) => {
     return {
       type: script.type,
       contentId: script.contentId,
@@ -94,7 +96,10 @@ const deployPortalToKintone = (data: any) => {
   const profile = data.profile
   const portal = data.portal
 
-  let jsFile = fs.readFileSync(path.join(__dirname, '../../dist/customPortalTemplate.min.js'), 'utf8');
+  const jsFileName = 'customPortalTemplate.min.js'
+  const cssFileName = 'customPortalTemplate.css'
+
+  let jsFile = fs.readFileSync(path.join(__dirname, `../../dist/${jsFileName}`), 'utf8');
   jsFile = jsFile.replace('PORTAL_CONFIG', JSON.stringify(portal) + ';')
   
   const fileData = new stream.Readable()
@@ -102,10 +107,10 @@ const deployPortalToKintone = (data: any) => {
   fileData.push(null) 
 
   const jsFormData = new FormData();
-  jsFormData.append("file", fileData, 'customPortalTemplate.min.js');
+  jsFormData.append("file", fileData, jsFileName);
 
   const cssFormData = new FormData();
-  cssFormData.append("file", fs.createReadStream(path.join(__dirname, '../../dist/customPortalTemplate.css')), 'customPortalTemplate.css');
+  cssFormData.append("file", fs.createReadStream(path.join(__dirname, `../../dist/${cssFileName}`)), cssFileName);
 
   const allRequests = [
     uploadFile(profile, jsFormData),
@@ -118,7 +123,7 @@ const deployPortalToKintone = (data: any) => {
     const cssKey = resp[1].data.result.fileKey;
     const systemSetting = resp[2].data.result;
     const scripts = systemSetting.scripts;
-    return prepareSettingToUpdate(scripts, jsKey, cssKey);
+    return prepareSettingToUpdate(scripts, jsKey, cssKey, [jsFileName, cssFileName]);
   }).then((setting) => {
     return updateSetting(profile, setting)
   }).then((resp) => {
