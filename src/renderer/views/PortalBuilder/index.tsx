@@ -8,15 +8,11 @@ import {ItemTable} from '../PortalBuilder/DeployModal/Type'
 import IframeModel from './Widget/IframeWidget/IframeModal'
 import {downloadFile, portalJs, portalCss} from './util'
 import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@ant-design/icons';
+import IframeModal from './Widget/IframeWidget/IframeModal';
 
 const DataWidgetContext = createContext({
   dataWidgets: [] as Portal[],
   setWidgets: (dataWidgets: Portal[]) => {}
-});
-
-const DataWidgetSettingsContext = createContext({
-  dataWidgetSettings: [] as any,
-  setWidgetSettings: (dataWidgetSettings: any) => {}
 });
 
 const PortalBuilder = () => {
@@ -46,8 +42,7 @@ const PortalBuilder = () => {
   const [data, setData] = useState(initData)
   const [selectedPortal, setselectedPortal] = useState(0)
   const [tabIndexPreview, setTabIndexPreview] = useState(0)
-  // const [isShowIframeModel, setShowIframeModel] = useState(false);
-  const [iframeURL, setIframeURL] = useState('')
+  const [isShowIframeModel, setShowIframeModel] = useState(false);
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
@@ -65,12 +60,7 @@ const PortalBuilder = () => {
   ]
 
   const dropWidget = () => {
-    // setShowIframeModel(true)
-    console.log('aa', iframeURL);
-    
-    setDropWidgetData(iframeURL)
-    // setShowIframeModel(true)
-    
+    setShowIframeModel(true)
   }
 
   const setDropWidgetData = (url: string) => {
@@ -89,14 +79,10 @@ const PortalBuilder = () => {
         activeLayout.tabContent = tabContent
         tabList[tabIndexPreview] = activeLayout
         portal.layout.props.tabList = tabList
-        let newData = JSON.parse(JSON.stringify(data))
-        newData[selectedPortal] = portal
-        setData(newData)
   }
 
   return(
     <DataWidgetContext.Provider value = {{dataWidgets: data, setWidgets: setData}} >
-    <DataWidgetSettingsContext.Provider value={{dataWidgetSettings: iframeURL, setWidgetSettings: setIframeURL}}>
     <div className="portal-container">
       <div className="portal-list-container">
         <SideBar 
@@ -164,21 +150,19 @@ const PortalBuilder = () => {
       </div>
       <div className="widget-list-container">
         <WidgetList containers={widgetList}/>
-        
-        {/* <IframeModel 
+        <IframeModal 
           isVisible = {isShowIframeModel} 
           onClose={() => (setShowIframeModel(false) )}
           onSave={(item) => {
             setDropWidgetData(item.url)
             setShowIframeModel(false)
           }}
-        /> */}
+        />
       </div>
     </div>
-    </DataWidgetSettingsContext.Provider>
     </DataWidgetContext.Provider>
   )
 }
 
-export {DataWidgetContext, DataWidgetSettingsContext}
+export {DataWidgetContext}
 export default PortalBuilder

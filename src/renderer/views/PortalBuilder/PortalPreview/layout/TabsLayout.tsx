@@ -4,7 +4,7 @@ import { Button, Dropdown, Menu, message } from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined, SettingOutlined, DeleteOutlined, FormOutlined} from '@ant-design/icons';
 import {TabsLayoutProps, TabContentType} from '../Type'
 import './style.css'
-import { DataWidgetContext, WidgetSettingsContext } from '../..';
+import { DataWidgetContext } from '../..';
 import { Portal } from '../../Type';
 import IframeWidget from '../../Widget/IframeWidget';
 
@@ -60,7 +60,6 @@ const TabsLayout = ({
             height: tabContent.props.height
           }
           newItem.tabContent = <IframeWidget 
-            isVisible={tabContent.props.showSettingModal}
             style={style} 
             tabContent={tabContent} 
             onClickMenuWidgetSettings={onClickMenuWidgetSettings} 

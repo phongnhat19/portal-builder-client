@@ -5,22 +5,22 @@ import './style.css'
 type IframeModal = {
   isVisible: boolean
   onSave: (item: { url: string }) => void
+  onClose?: () => void
 }
 
-const IframeModal = ({ isVisible = false, onSave }: IframeModal) => {
+const IframeModal = ({ isVisible = false, onClose, onSave }: IframeModal) => {
   const [url, setUrl] = useState('')
-  const [isVisibleModal, setVisibleModal] = useState(isVisible)
+
   return (
     <Modal
       title="Iframe setting"
-      visible={isVisibleModal}
+      visible={isVisible}
       okText="Save"
-      onCancel={() => setVisibleModal(false)}
+      onCancel={onClose}
       onOk={() => {
         onSave({
           url: url
         })
-        setVisibleModal(false)
       }}
     >
       <div className="input-url">
