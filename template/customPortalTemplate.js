@@ -1,3 +1,5 @@
+  import {Tabs} from '@kintone/kintone-ui-component/esm/js'
+
   const configs = PORTAL_CONFIG
 
   function createDefaultPortalContent() {
@@ -27,12 +29,14 @@
   }
 
   function createTabContent(content) {
-    let tabContent;
+    let tabContent = '';
     switch (content.type) {
       case 'DefaultPortal':
         tabContent = createDefaultPortalContent();
         break;
       case 'IframeWidget':
+        if (!content.props) break;
+
         tabContent = createIframeItemContent(content.props);
         break;
       case 'HTMLWidget':
@@ -60,7 +64,7 @@
       tabItems.push(createTabItem(item.tabName, item.tabContent));
     });
 
-    return new kintoneUIComponent.Tabs({ items: tabItems });
+    return new Tabs({ items: tabItems });
   }
 
   kintone.events.on('portal.show', function (event) {

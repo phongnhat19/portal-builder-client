@@ -5,22 +5,6 @@ import path from 'path'
 import FormData from 'form-data';
 import stream from 'stream'
 
-const preparePortalCustomFiles = (files: any, jsKey: any, cssKey: any) => {
-  const kintoneUIComponentJsLink = 'https://unpkg.com/@kintone/kintone-ui-component@0.6.0/dist/kintone-ui-component.min.js';
-  if (files["DESKTOP"].indexOf(kintoneUIComponentJsLink) === -1) {
-    files["DESKTOP"].push(kintoneUIComponentJsLink);
-  }
-  files["DESKTOP"].push(jsKey);
-
-  const kintoneUIComponentCSSLink = 'https://unpkg.com/@kintone/kintone-ui-component@0.6.0/dist/kintone-ui-component.min.css';
-  if (files["DESKTOP_CSS"].indexOf(kintoneUIComponentCSSLink) === -1) {
-    files["DESKTOP_CSS"].push(kintoneUIComponentCSSLink);
-  }
-  files["DESKTOP_CSS"].push(cssKey);
-
-  return files;
-}
-
 const prepareSettingToUpdate = (scripts: any, jsKey: string, cssKey: string, fileNames: string[]) => {
   let files: any = {
     "DESKTOP": [],
@@ -41,7 +25,8 @@ const prepareSettingToUpdate = (scripts: any, jsKey: string, cssKey: string, fil
     files[script.type].push(script.contentUrl ? script.contentUrl : script.contentId);
   });
 
-  files = preparePortalCustomFiles(files, jsKey, cssKey)
+  files["DESKTOP"].push(jsKey);
+  files["DESKTOP_CSS"].push(cssKey);
 
   return {
     "jsScope": "ALL",
