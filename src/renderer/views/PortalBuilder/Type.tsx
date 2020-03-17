@@ -12,21 +12,18 @@ type LayoutProps = {
 type Portal = {
     name?: string;
     value: string;
-    type: string;
-    layout: Layout | {};
+    layout: Layout;
 }
 // Data return when deploy a domain
 type DeploySetting = {
     name?: string;
     value: string;
-    type: string;
 }
 
 // Data to init deploy form
 type DeployData = {
     name?: string;
     value: string;
-    type: string;
 } 
 
 type SideBarProps = {

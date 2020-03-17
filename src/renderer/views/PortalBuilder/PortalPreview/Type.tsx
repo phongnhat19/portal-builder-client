@@ -23,7 +23,7 @@ type TabsLayoutProps = {
     items?: Tab[],
     onSelectedTabItem: (tabIndex: number) => void,
     onAddItem?: (data: Tab) => void
-    onSubItem?: (data: Tab[]) => void
+    onRemoveItem?: (index: number) => void
 }
 
 export {TabContentType, Tab, TabProps, TabsLayoutProps}

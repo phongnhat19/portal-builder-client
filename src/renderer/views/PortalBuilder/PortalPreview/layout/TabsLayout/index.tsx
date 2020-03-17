@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
-import { Button, Dropdown, Menu, message } from 'antd';
-import { PlusCircleOutlined , MinusCircleOutlined, SettingOutlined, DeleteOutlined, FormOutlined} from '@ant-design/icons';
-import {TabsLayoutProps, TabContentType} from '../Type'
-import './style.css'
-import { DataWidgetContext } from '../..';
-import { Portal } from '../../Type';
-import IframeWidget from '../../Widget/IframeWidget';
+import { Button} from 'antd';
+import { PlusCircleOutlined , MinusCircleOutlined} from '@ant-design/icons';
+import '../style.css'
+import { Portal, TabContentType } from '../../../Type';
+import { TabsLayoutProps } from '../../Type';
+import IframeWidget from '../../../Widget/IframeWidget';
+import { DataWidgetContext } from '../../..';
 
 const TabsLayout = ({
       tabIndexPreview = 0, items = [],
       onSelectedTabItem = () => {},
       onAddItem = () => {},
-      onSubItem = () => { },
+      onRemoveItem = () => { }
 } : TabsLayoutProps) => {
 
   const [selectedTab, setSelectedTab] = useState(tabIndexPreview)
@@ -102,9 +102,7 @@ const TabsLayout = ({
 
               const newSelectedTab = selectedTab - 1;
               onSelectedTabItem(newSelectedTab)
-              const newItems = [...items];
-              newItems.splice(selectedTab, 1)
-              onSubItem(newItems)
+              onRemoveItem(selectedTab)
             }} 
           />
         }

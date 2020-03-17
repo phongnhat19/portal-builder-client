@@ -51,9 +51,8 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
           onClose={() => setDeployModalVisible(false)}
           onDeploy = {(setting) => {
             onDeploy({
-                name: dataSetting.name,
-                type: dataSetting.type,
-                value: dataSetting.value
+              name: dataSetting.name,
+              value: dataSetting.value
             })
           }}
         />

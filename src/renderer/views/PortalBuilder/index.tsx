@@ -1,14 +1,12 @@
-import React, { useState, useContext, createContext } from 'react'
+import React, { useState, createContext } from 'react'
 import './style.css'
 import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
 import WidgetList, {Widget} from './Widget/WidgetList';
 import {Portal, Layout, TabContentType} from './Type'
-import {ItemTable} from '../PortalBuilder/DeployModal/Type'
-import IframeModel from './Widget/IframeWidget/IframeModal'
-import {downloadFile, portalJs, portalCss} from './util'
-import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@ant-design/icons';
+import { BorderOutlined, CalendarOutlined, Html5Outlined } from '@ant-design/icons';
 import IframeModal from './Widget/IframeWidget/IframeModal';
+import { ipcRenderer } from 'electron';
 
 const DataWidgetContext = createContext({
   dataWidgets: [] as Portal[],
@@ -21,7 +19,6 @@ const PortalBuilder = () => {
     {
       name: 'Portal 1',
       value: '1',
-      type: 'Tabs',
       layout: {
         type: 'Tabs',
         props: {
@@ -47,16 +44,19 @@ const PortalBuilder = () => {
     {
       icon: <BorderOutlined />,
       name: 'Iframe',
-    }, {
+    }, 
+    {
       icon: <Html5Outlined />,
       name: 'HTML',
-    }, {
+    }, 
+    {
       icon: <CalendarOutlined />,
       name: 'Schedule',
-    }, {
-      icon: <MailOutlined />,
-      name: 'Gmail',
-    }
+    }, 
+    // {
+    //   icon: <MailOutlined />,
+    //   name: 'Gmail',
+    // }
   ]
 
   const dropWidget = () => {
@@ -94,29 +94,10 @@ const PortalBuilder = () => {
           }} 
           onDeploy= {async (dataDeploy) => {
             console.log(dataDeploy);
-            
+            ipcRenderer.send('request-to-kintone', dataDeploy)
           }} 
           onCreate= {(item: Portal) => {
-            const layout = {
-              type: item.type,
-              props: {
-                tabList: [
-                  {
-                    tabName: 'Default Portal',
-                    tabContent: {
-                      type: 'DefaultPortal',
-                      name: 'DefaultPortal'
-                    }
-                  }
-                ]
-              }
-            }
-            const newPortal = {
-              name: item.name,
-              value: item.name,
-              layout
-            };
-            const newList = [...data, newPortal];
+            const newList = [...data, item];
             setData(newList);
             
             setselectedPortal(newList.length - 1)
@@ -141,8 +122,8 @@ const PortalBuilder = () => {
             })
             setData(newList);
           }}
-          onSubItemTabs = {(layout: Layout) => {
-            const newData = [...data]
+          onRemoveItemTabs = {(layout: Layout) => {
+            const newData = JSON.parse(JSON.stringify(data))
             newData[selectedPortal].layout = layout
             setData(newData);
           }}
