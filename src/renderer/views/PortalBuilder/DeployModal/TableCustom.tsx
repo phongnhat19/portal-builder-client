@@ -8,8 +8,8 @@ const TableCustom = ({ data, onDeploy = () => {}}: DeployTable) => {
   const columns = [
     {
       title: 'Profile',
-      dataIndex: 'profileId',
-      key: 'profileId'
+      dataIndex: 'name',
+      key: 'name'
     },
     {
       title: 'Domain',
