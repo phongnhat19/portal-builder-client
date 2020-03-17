@@ -18,7 +18,7 @@ const ProfileContext = createContext({
 });
 
 const App = () => {
-  const [profileList, setProfileList] = useState([
+  let initProfiles = [
     {
       profileId: 'profile_2',
       name: 'Minh 2',
@@ -33,8 +33,14 @@ const App = () => {
       username: '21',
       password: '22'
     }
-  ])
-
+  ]
+  const storageProfile = window.localStorage.getItem('profiles')
+  
+  if (storageProfile !== null) {
+    initProfiles = JSON.parse(storageProfile);
+  }
+  const [profileList, setProfileList] = useState(initProfiles)
+  
   return (
     <Router>
       <ProfileContext.Provider value = {{profiles: profileList, setProfiles: setProfileList}} >

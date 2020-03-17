@@ -9,7 +9,7 @@ import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@
 
 const PortalBuilder = () => {
 
-  const initData:Portal[] = [
+  let initData:Portal[] = [
     {
       name: 'Portal 1',
       value: '1',
@@ -29,6 +29,11 @@ const PortalBuilder = () => {
       }
     }
   ]
+  
+  const storagePortal = window.localStorage.getItem('portal')
+  if (storagePortal !== null) {
+    initData = JSON.parse(storagePortal);
+  }
   
   const [data, setData] = useState(initData)
   const [selectedPortal, setselectedPortal] = useState(0)
@@ -72,6 +77,8 @@ const PortalBuilder = () => {
         activeLayout.tabContent = tabContent
         tabList[tabIndexPreview] = activeLayout
         portal.layout.props.tabList = tabList
+        
+        window.localStorage.setItem("portal", JSON.stringify(data))
   }
 
   return(
@@ -88,9 +95,10 @@ const PortalBuilder = () => {
           onCreate= {(item: Portal) => {
             const newList = [...data, item];
             setData(newList);
-            
             setselectedPortal(newList.length - 1)
             setTabIndexPreview(0)
+            
+            window.localStorage.setItem("portal", JSON.stringify(newList))
           }}
           selectedPortal = {selectedPortal}
         />
@@ -110,12 +118,16 @@ const PortalBuilder = () => {
               }
               return tmpTab;
             })
+
             setData(newList);
+            window.localStorage.setItem("portal", JSON.stringify(newList))
           }}
           onRemoveItemTabs = {(layout: Layout) => {
             const newData = JSON.parse(JSON.stringify(data))
             newData[selectedPortal].layout = layout
+
             setData(newData);
+            window.localStorage.setItem("portal", JSON.stringify(newData))
           }}
         />
       </div>
