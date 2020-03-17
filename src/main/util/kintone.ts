@@ -5,19 +5,6 @@ import path from 'path'
 import FormData from 'form-data';
 import stream from 'stream'
 
-const uploadFile = (setting: any, formData: any) => {
-  const passwordAuth = Buffer.from(`${setting.username}:${setting.password}`).toString('base64');
-  return axios({
-      method: 'POST',
-      url: `https://${setting.domain}/k/api/blob/upload.json?_lc=en_US`,
-      data: formData,
-      headers: { 
-        'Content-Type' : formData.getHeaders()['content-type'],
-        'X-Cybozu-Authorization': passwordAuth
-      }
-    });
-};
-
 const preparePortalCustomFiles = (files: any, jsKey: any, cssKey: any) => {
   const kintoneUIComponentJsLink = 'https://unpkg.com/@kintone/kintone-ui-component@0.6.0/dist/kintone-ui-component.min.js';
   if (files["DESKTOP"].indexOf(kintoneUIComponentJsLink) === -1) {
@@ -32,19 +19,6 @@ const preparePortalCustomFiles = (files: any, jsKey: any, cssKey: any) => {
   files["DESKTOP_CSS"].push(cssKey);
 
   return files;
-}
-
-const getSystemSetting = (setting: any) => {
-  const passwordAuth = Buffer.from(`${setting.username}:${setting.password}`).toString('base64');
-  return axios({
-    method: 'POST',
-    url: `https://${setting.domain}/k/api/js/getSystemSetting.json?_lc=en_US`,
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Cybozu-Authorization': passwordAuth
-    },
-    data: {}
-  });
 }
 
 const prepareSettingToUpdate = (scripts: any, jsKey: string, cssKey: string) => {
@@ -77,6 +51,33 @@ const prepareSettingToUpdate = (scripts: any, jsKey: string, cssKey: string) => 
     ]
   };
 }
+
+const uploadFile = (setting: any, formData: any) => {
+  const passwordAuth = Buffer.from(`${setting.username}:${setting.password}`).toString('base64');
+  return axios({
+      method: 'POST',
+      url: `https://${setting.domain}/k/api/blob/upload.json?_lc=en_US`,
+      data: formData,
+      headers: { 
+        'Content-Type' : formData.getHeaders()['content-type'],
+        'X-Cybozu-Authorization': passwordAuth
+      }
+    });
+};
+
+const getSystemSetting = (setting: any) => {
+  const passwordAuth = Buffer.from(`${setting.username}:${setting.password}`).toString('base64');
+  return axios({
+    method: 'POST',
+    url: `https://${setting.domain}/k/api/js/getSystemSetting.json?_lc=en_US`,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Cybozu-Authorization': passwordAuth
+    },
+    data: {}
+  });
+}
+
 const updateSetting = (profile: any, setting: any) => {
   const passwordAuth = Buffer.from(`${profile.username}:${profile.password}`).toString('base64');
   return axios({
@@ -117,7 +118,6 @@ const deployPortalToKintone = (data: any) => {
     const cssKey = resp[1].data.result.fileKey;
     const systemSetting = resp[2].data.result;
     const scripts = systemSetting.scripts;
-  
     return prepareSettingToUpdate(scripts, jsKey, cssKey);
   }).then((setting) => {
     return updateSetting(profile, setting)
