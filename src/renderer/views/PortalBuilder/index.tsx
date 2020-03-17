@@ -6,7 +6,6 @@ import WidgetList, {Widget} from './Widget/WidgetList';
 import {Portal, Layout, TabContentType} from './Type'
 import IframeModel from './Widget/DragModel/IframeModel'
 import { BorderOutlined, CalendarOutlined, MailOutlined, Html5Outlined } from '@ant-design/icons';
-import {ipcRenderer} from 'electron'
 
 const PortalBuilder = () => {
 
@@ -85,10 +84,7 @@ const PortalBuilder = () => {
            setselectedPortal(index)
            setTabIndexPreview(0)
           }} 
-          onDeploy= {async (dataDeploy) => {
-            console.log(dataDeploy);
-            ipcRenderer.send('request-to-kintone', dataDeploy)
-          }} 
+          onDeploy= { (profile, index) => {}} 
           onCreate= {(item: Portal) => {
             const newList = [...data, item];
             setData(newList);
@@ -96,6 +92,7 @@ const PortalBuilder = () => {
             setselectedPortal(newList.length - 1)
             setTabIndexPreview(0)
           }}
+          selectedPortal = {selectedPortal}
         />
       </div>
       <div className="portal-preview" onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} onDrop={dropWidget}>

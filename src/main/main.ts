@@ -1,9 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import {deployPortalToKintone} from './util/kintone'
-import axios from 'axios'
-import FormData from 'form-data';
-import fs from 'fs'
-import path from 'path'
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.

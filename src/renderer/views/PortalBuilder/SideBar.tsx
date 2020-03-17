@@ -8,10 +8,10 @@ import './style.css'
 
 const {Text} = Typography
 
-const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, }: SideBarProps) => {
+const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0 }: SideBarProps) => {
   const [deployModalVisible, setDeployModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
-  const [dataSetting, setDataSetting] = useState (data[0])
+
   return(
       <div>
          <Menu selectedKeys={[`portal-item-${value}`]}>
@@ -21,7 +21,6 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
                 <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-${portal.value}`} onClick={(e) => {
                     if (e.domEvent.target instanceof HTMLButtonElement) {
                         setDeployModalVisible(true)
-                        setDataSetting(portal)
                     }
                     onChange(portal, index)
                 }}>
@@ -48,9 +47,8 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
         <DeployModal 
           isVisible={deployModalVisible} 
           onClose={() => setDeployModalVisible(false)}
-          onDeploy = {(profile) => {
-            onDeploy(profile)
-          }}
+          onDeploy = {onDeploy}
+          portal = {data[selectedPortal]}
         />
 
         <CreateModal 

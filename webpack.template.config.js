@@ -1,5 +1,4 @@
 const rules = require('./webpack.rules');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const libraryName = 'customPortalTemplate'
 const templateUMD = {

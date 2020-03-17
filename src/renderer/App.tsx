@@ -22,9 +22,9 @@ const App = () => {
     {
       profileId: 'profile_2',
       name: 'Minh 2',
-      domain: 'minh-sc-2.cybozu-dev.com',
-      username: 'minh2',
-      password: 'ahihi'
+      domain: 'vuhuykhanh-3.cybozu-dev.com',
+      username: 'cybozu',
+      password: 'cybozu'
     },
     {
       profileId: 'profile_1',

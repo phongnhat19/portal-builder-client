@@ -7,7 +7,8 @@ type ItemTable = {
     status: 'done' | 'processing' | 'unfulfilled'
 }
 type DeployTable = {
-    onDeploy?: (data: Profile) => void
+    data: any
+    onDeploy?: (profile: Profile, index: number) => void
 }
 
 const doneBtnStyle:CSSProperties = {

@@ -27,7 +27,7 @@ const preparePortalCustomFiles = (files: any, jsKey: any, cssKey: any) => {
 
   const kintoneUIComponentCSSLink = 'https://unpkg.com/@kintone/kintone-ui-component@0.6.0/dist/kintone-ui-component.min.css';
   if (files["DESKTOP_CSS"].indexOf(kintoneUIComponentCSSLink) === -1) {
-    files["DESKTOP"].push(kintoneUIComponentCSSLink);
+    files["DESKTOP_CSS"].push(kintoneUIComponentCSSLink);
   }
   files["DESKTOP_CSS"].push(cssKey);
 
@@ -94,7 +94,7 @@ const deployPortalToKintone = (data: any) => {
   const portal = data.portal
 
   let jsFile = fs.readFileSync(path.join(__dirname, '../../dist/customPortalTemplate.min.js'), 'utf8');
-  jsFile.replace('PORTAL_CONFIG', portal)
+  jsFile = jsFile.replace('PORTAL_CONFIG', JSON.stringify(portal) + ';')
   
   const fileData = new stream.Readable()
   fileData.push(jsFile)
