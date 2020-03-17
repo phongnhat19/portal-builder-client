@@ -16,6 +16,7 @@ type TabProps = {
     url: string,
     width: string,
     height: string
+    showSettingModal: boolean
 }
 type TabsLayoutProps = {
     tabIndexPreview: number,

@@ -1,19 +1,44 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
-import { Button } from 'antd';
-import { PlusCircleOutlined , MinusCircleOutlined} from '@ant-design/icons';
+import { Button, Dropdown, Menu, message } from 'antd';
+import { PlusCircleOutlined , MinusCircleOutlined, SettingOutlined, DeleteOutlined, FormOutlined} from '@ant-design/icons';
 import {TabsLayoutProps, TabContentType} from '../Type'
 import './style.css'
+import { DataWidgetContext, WidgetSettingsContext } from '../..';
+import { Portal } from '../../Type';
+import IframeWidget from '../../Widget/IframeWidget';
 
 const TabsLayout = ({
       tabIndexPreview = 0, items = [],
       onSelectedTabItem = () => {},
       onAddItem = () => {},
-      onSubItem = () => { }
+      onSubItem = () => { },
 } : TabsLayoutProps) => {
 
   const [selectedTab, setSelectedTab] = useState(tabIndexPreview)
   const [tabItems, setTabItems] = useState([])
+  const {dataWidgets, setWidgets} = useContext(DataWidgetContext)
+
+  const onClickMenuWidgetSettings = (e :any) =>  {
+    if (e.key === 'remove-widget') {
+      let removedWidgets: Portal[] =  JSON.parse(JSON.stringify(dataWidgets)) 
+      for (const key in removedWidgets) {
+        if (removedWidgets.hasOwnProperty(key)) {
+          let tabList = removedWidgets[key].layout.props.tabList;
+          tabList = tabList.map((tab: any, index: number) => {
+            if(index === selectedTab){
+              delete tab.tabContent['props']
+          }
+          return tab;
+        })
+        }
+      }
+      setWidgets(removedWidgets)
+    }
+    if (e.key === 'config-widget') {
+      
+    }
+  }
 
   useEffect(() => {
     let dataItems:any = [];
@@ -34,7 +59,12 @@ const TabsLayout = ({
             width: tabContent.props.width,
             height: tabContent.props.height
           }
-          newItem.tabContent = <iframe src={tabContent.props.url} style={style} />
+          newItem.tabContent = <IframeWidget 
+            isVisible={tabContent.props.showSettingModal}
+            style={style} 
+            tabContent={tabContent} 
+            onClickMenuWidgetSettings={onClickMenuWidgetSettings} 
+            />
           break
         default:
           break;
@@ -87,6 +117,7 @@ const TabsLayout = ({
           onSelectedTabItem(i)
         }}
       />
+      
     </div>
   )
 }
