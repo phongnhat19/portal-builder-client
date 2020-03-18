@@ -96,7 +96,7 @@ const TabsLayout = ({
           showSettingInit: true,
           url: "",
           width: "100%",
-          height: "600px"
+          height: "82vh"
         }
       }
       setPortalList(portalList)
@@ -143,7 +143,7 @@ const TabsLayout = ({
         value={selectedTab}
         onClickTabItem={setSelectedTab}
       />
-      
+
     </div>
   )
 }
