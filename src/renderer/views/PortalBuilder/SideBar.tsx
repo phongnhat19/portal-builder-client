@@ -8,14 +8,14 @@ import './style.css'
 
 const {Text} = Typography
 
-const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0 }: SideBarProps) => {
+const SideBar = ({value, items = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0 }: SideBarProps) => {
   const [deployModalVisible, setDeployModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
   return(
       <div>
          <Menu selectedKeys={[`portal-item-${value}`]}>
           {
-            data.map((portal, index) => {
+            items.map((portal, index) => {
               return(
                 <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-${portal.value}`} onClick={(e) => {
                     if (e.domEvent.target instanceof HTMLButtonElement) {
@@ -47,7 +47,7 @@ const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, on
           isVisible={deployModalVisible} 
           onClose={() => setDeployModalVisible(false)}
           onDeploy = {onDeploy}
-          portal = {data[selectedPortal]}
+          portal = {items[selectedPortal]}
         />
 
         <CreateModal 

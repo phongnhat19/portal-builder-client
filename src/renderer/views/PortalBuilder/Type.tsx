@@ -34,7 +34,6 @@ type SideBarProps = {
     onDeploy?: (data: Profile, index: number) => void;
     onCreate?: (data: Portal) => void;
     dataTable?: ItemTable[], 
-    data?: DeployData[],
     selectedPortal?: number
   }
 export {Portal, DeployData, DeploySetting, SideBarProps, Layout, TabContentType}
