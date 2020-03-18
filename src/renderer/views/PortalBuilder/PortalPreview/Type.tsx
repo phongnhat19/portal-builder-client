@@ -1,5 +1,5 @@
 enum TabContentType {
-    IFRAME = 'IframeWidget',
+    IFRAME = 'Iframe',
     HTML = 'HTML',
     DEFAULT = 'DefaultPortal'
 }
@@ -16,12 +16,12 @@ type TabProps = {
     url: string,
     width: string,
     height: string
-    showSettingModal: boolean
+    showSettingInit?: boolean
 }
 type TabsLayoutProps = {
-    tabIndexPreview: number,
+    // tabIndexPreview: number,
     items?: Tab[],
-    onSelectedTabItem: (tabIndex: number) => void,
+    // onSelectedTabItem: (tabIndex: number) => void,
     onAddItem?: (data: Tab) => void
     onRemoveItem?: (index: number) => void
 }

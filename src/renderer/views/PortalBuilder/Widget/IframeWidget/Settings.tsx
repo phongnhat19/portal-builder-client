@@ -2,17 +2,18 @@ import React from 'react';
 import { Dropdown, Button, Menu } from 'antd';
 import { SettingOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
 
-const SettingsIframeWidget = ({ onClickMenuWidgetSettings = () => { } }: {
-  onClickMenuWidgetSettings?: (event: any) => void;
+const SettingsIframeWidget = ({ onRemove, showSetting }: {
+  onRemove?: () => void;
+  showSetting?: () => void
 }) => {
   
   const menu = (
-    <Menu onClick={onClickMenuWidgetSettings}>
-      <Menu.Item key="remove-widget">
+    <Menu>
+      <Menu.Item key="remove-widget" onClick={onRemove}>
         <DeleteOutlined />
         Remove widget
       </Menu.Item>
-      <Menu.Item key="config-widget">
+      <Menu.Item key="config-widget" onClick={showSetting}>
         <FormOutlined />
         Config widget
       </Menu.Item>

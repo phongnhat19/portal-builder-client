@@ -4,44 +4,34 @@ import { Button} from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined} from '@ant-design/icons';
 import '../style.css'
 import { Portal, TabContentType } from '../../../Type';
-import { TabsLayoutProps } from '../../Type';
+import { TabsLayoutProps, TabProps } from '../../Type';
 import IframeWidget from '../../../Widget/IframeWidget';
-import { DataWidgetContext } from '../../..';
+import { PortalContext } from '../../..';
 
 const TabsLayout = ({
-      tabIndexPreview = 0, items = [],
-      onSelectedTabItem = () => {},
-      onAddItem = () => {},
-      onRemoveItem = () => { }
+  items = [],
+  onAddItem = () => {},
+  onRemoveItem = () => { }
 } : TabsLayoutProps) => {
 
-  const [selectedTab, setSelectedTab] = useState(tabIndexPreview)
-  const [tabItems, setTabItems] = useState([])
-  const {dataWidgets, setWidgets} = useContext(DataWidgetContext)
+  const [selectedTab, setSelectedTab] = useState(0)
+  const [tabItems, setTabItems] = useState([] as any[])
+  const {portalList, setPortalList, selectedPortal} = useContext(PortalContext)
 
-  const onClickMenuWidgetSettings = (e :any) =>  {
-    if (e.key === 'remove-widget') {
-      let removedWidgets: Portal[] =  JSON.parse(JSON.stringify(dataWidgets)) 
-      for (const key in removedWidgets) {
-        if (removedWidgets.hasOwnProperty(key)) {
-          let tabList = removedWidgets[key].layout.props.tabList;
-          tabList = tabList.map((tab: any, index: number) => {
-            if(index === selectedTab){
-              delete tab.tabContent['props']
-          }
-          return tab;
-        })
-        }
-      }
-      setWidgets(removedWidgets)
-    }
-    if (e.key === 'config-widget') {
-      
-    }
+  const removeWidget = () => {
+    const tabList = portalList[selectedPortal].layout.props.tabList
+    delete tabList[selectedTab].tabContent['props']
+    setPortalList(portalList)
+  }
+
+  const updateWidget = (newProps: TabProps) => {
+    const tabList = portalList[selectedPortal].layout.props.tabList
+    tabList[selectedTab].tabContent.props = newProps
+    setPortalList(portalList)
   }
 
   useEffect(() => {
-    let dataItems:any = [];
+    let dataItems = [] as any[];
     items.forEach(item => {
       let newItem = {
         tabName: item.tabName,
@@ -49,20 +39,25 @@ const TabsLayout = ({
       }
       const tabContent = item.tabContent;
       if (!tabContent) return;
-      switch (tabContent.name) {
-        case 'Iframe':
+      switch (tabContent.type) {
+        case TabContentType.IFRAME:
           if (!tabContent.props) {
             newItem.tabContent = 'Please drag Iframe to create new widget'
             break;
           };
-          const style = {
-            width: tabContent.props.width,
-            height: tabContent.props.height
-          }
-          newItem.tabContent = <IframeWidget 
-            style={style} 
-            tabContent={tabContent} 
-            onClickMenuWidgetSettings={onClickMenuWidgetSettings} 
+          newItem.tabContent = 
+            <IframeWidget 
+              url={tabContent.props.url}
+              width={tabContent.props.width}
+              height={tabContent.props.height}
+              showSettingInit={tabContent.props.showSettingInit}
+              onRemove={removeWidget}
+              onSaveSetting={({url}) => {
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+                currentProps.url = url
+                currentProps.showSettingInit = false;
+                updateWidget(currentProps)
+              }}
             />
           break
         default:
@@ -71,11 +66,33 @@ const TabsLayout = ({
       dataItems = [...dataItems, newItem]
     })
     setTabItems(dataItems)
-    setSelectedTab(tabIndexPreview)
-  },[items, tabIndexPreview])
+  },[items])
+
+  const dropWidget = (tabIndex: number) => {
+
+    const currentTab = portalList[selectedPortal].layout.props.tabList[tabIndex]
+
+    if (currentTab.tabContent.type !== TabContentType.DEFAULT){
+      currentTab.tabContent = {
+        type: TabContentType.IFRAME,
+        name: 'New Tab',
+        props: {
+          showSettingInit: true,
+          url: "",
+          width: "100%",
+          height: "600px"
+        }
+      }
+      setPortalList(portalList)
+    } 
+  }
 
   return(
-    <div className='portal-tabs-layout'>
+    <div 
+      className='portal-tabs-layout'
+      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} 
+      onDrop={() => dropWidget(selectedTab)}
+    >
       <Button
         type="default"
         icon={<PlusCircleOutlined />}
@@ -89,7 +106,6 @@ const TabsLayout = ({
             }
           }
           onAddItem(tab)
-          onSelectedTabItem(tabItems.length)
         }} 
       />
         {tabItems.length > 1 &&
@@ -101,7 +117,7 @@ const TabsLayout = ({
               if (selectedTab === 0) return;
 
               const newSelectedTab = selectedTab - 1;
-              onSelectedTabItem(newSelectedTab)
+              setSelectedTab(newSelectedTab)
               onRemoveItem(selectedTab)
             }} 
           />
@@ -111,7 +127,6 @@ const TabsLayout = ({
         value={selectedTab}
         onClickTabItem={(i) => {
           setSelectedTab(i)
-          onSelectedTabItem(i)
         }}
       />
       

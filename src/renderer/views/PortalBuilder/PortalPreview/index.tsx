@@ -1,24 +1,29 @@
 import React from 'react'
 import TabsLayout from './layout/TabsLayout'
+import {Layout} from '../Type'
+
 const PortalPreview = ({ 
-  tabIndexPreview = 0,
-  layout = {},
-  onTabPreview = () => {},
-  onAddItemTabs = () => {},
-  onRemoveItemTabs = () => {} }: any) => {
+  layout,
+  onAddTabs = (item: any) => {},
+  onRemoveTabs = (layout: Layout) => {} 
+}: {
+  layout: Layout,
+  onAddTabs: (item: any) => void,
+  onRemoveTabs: (layout: Layout) => void
+}) => {
 
   return(
     <div style={{display: 'flex', justifyContent:'center', paddingTop: '30px'}}>
       <TabsLayout 
-        tabIndexPreview = {tabIndexPreview}
-        onAddItem={onAddItemTabs}
+        // selectedTab={selectedTab}
+        onAddItem={onAddTabs}
         onRemoveItem={(index) => {
           const newLayout = JSON.parse(JSON.stringify(layout))
           newLayout.props.tabList.splice(index, 1)
-          onRemoveItemTabs(newLayout)
+          onRemoveTabs(newLayout)
         }}
         items={layout.props.tabList}
-        onSelectedTabItem = {onTabPreview}
+        // onSelectedTabItem = {(index: number) => {setTabIndexPreview(index)}}
       />
     </div>
   )
