@@ -1,5 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import {requestToKintone} from './util/kintone'
+import {deployPortalToKintone} from './util/kintone'
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -63,8 +63,10 @@ app.on('activate', () => {
 
 // Event listener for kintone
 ipcMain.on('request-to-kintone', (event: Electron.IpcMainEvent, arg: any) => {
-  console.log(
-    arg
-  );
-  requestToKintone()
+  return deployPortalToKintone(arg).then(() => {
+    event.reply('kintone-reply', {status: 'done', index: arg.index})
+    return event;
+  }).catch(err => {
+    event.reply('kintone-reply', {status: 'error', index: arg.index})
+  })
 })

@@ -1,19 +1,19 @@
-import React, { useContext, useState, useEffect, Context} from 'react';
+import React, {useState, useEffect} from 'react';
 import 'antd/dist/antd.css';
-import {ProfileContext} from '../../../App'
-import { Table, Button  } from 'antd';
+import { Table, Button, Alert  } from 'antd';
 import { CheckOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import {DeployTable, doneBtnStyle, deployBtnStyle} from './Type'
 
-const TableCustom = ({ onDeploy = () => {}}: DeployTable) => {
-
-  const {profiles} = useContext(ProfileContext);
-
+const TableCustom = ({ data, onDeploy = () => {}}: DeployTable) => {
+  const [profiles, setProfiles] = useState(data)
+  useEffect(()=> {
+    setProfiles(data)
+  },[data])
   const columns = [
     {
       title: 'Profile',
-      dataIndex: 'profile',
-      key: 'profile'
+      dataIndex: 'name',
+      key: 'name'
     },
     {
       title: 'Domain',
@@ -23,11 +23,24 @@ const TableCustom = ({ onDeploy = () => {}}: DeployTable) => {
     {
       title: '',
       key: 'status',
-      render: (data: any) => (
+      render: (profile: any) => (
         <div>
-            {(data.status === 'unfulfilled' || !data.status) && <Button type="primary" onClick = {() => {onDeploy(data)}}>Deploy</Button>}
-            {data.status === 'done' && <Button style={doneBtnStyle} icon={<CheckOutlined />} disabled ghost>Done</Button>}
-            {data.status === 'processing' && <Button style={deployBtnStyle} disabled icon={<ClockCircleOutlined />} ghost>Deploying</Button>}
+            {(profile.status === 'unfulfilled' || profile.status === 'error' || !profile.status) && <Button type="primary" onClick = {() => {
+              let index = 0;
+              const newProfile = [...profiles]
+              profiles.forEach((item: any, i: number) => {
+                if (profile.profileId === item.profileId) {
+                  index = i;
+                  newProfile[i].status = 'processing'
+                }
+              });
+              setProfiles(newProfile)
+              onDeploy(profile, index)
+
+            }}>Deploy</Button>}
+            {profile.status === 'error' && <Alert message="Error occurs" type="error" />}
+            {profile.status === 'done' && <Button style={doneBtnStyle} icon={<CheckOutlined />} disabled ghost>Done</Button>}
+            {profile.status === 'processing' && <Button style={deployBtnStyle} disabled icon={<ClockCircleOutlined />} ghost>Deploying</Button>}
         </div>
       ),
     },

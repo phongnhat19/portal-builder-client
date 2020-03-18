@@ -5,7 +5,6 @@ import SideBar from './SideBar'
 import WidgetList, {Widget} from './Widget/WidgetList';
 import {Portal, Layout, TabContentType} from './Type'
 import { BorderOutlined, CalendarOutlined, Html5Outlined } from '@ant-design/icons';
-import { ipcRenderer } from 'electron';
 
 const PortalContext = createContext({
   portalList: [] as Portal[],
@@ -16,10 +15,9 @@ const PortalContext = createContext({
 
 const PortalBuilder = () => {
 
-  const initData:Portal[] = [
+  let initData:Portal[] = [
     {
       name: 'Portal 1',
-      value: '1',
       layout: {
         type: 'Tabs',
         props: {
@@ -36,6 +34,11 @@ const PortalBuilder = () => {
       }
     }
   ]
+  
+  const storagePortal = window.localStorage.getItem('portal')
+  if (storagePortal !== null) {
+    initData = JSON.parse(storagePortal);
+  }
   
   const [data, setData] = useState(initData)
   const [selectedPortal, setSelectedPortal] = useState(0)
@@ -58,11 +61,13 @@ const PortalBuilder = () => {
 
   const setPortalList = (newPortalList: Portal[]) => {
     setData(JSON.parse(JSON.stringify(newPortalList)))
+    window.localStorage.setItem("portal", JSON.stringify(newPortalList))
   }
 
   const updatePortal = (newPortal: Portal, portalIndex: number) => {
     data[portalIndex] = newPortal
     setData(JSON.parse(JSON.stringify(data)))
+    window.localStorage.setItem("portal", JSON.stringify(data))
   }
 
   return(
@@ -75,19 +80,17 @@ const PortalBuilder = () => {
       <div className="portal-container">
         <div className="portal-list-container">
           <SideBar 
-            value = {data[selectedPortal].value}
-            data = {data}
+            selectedPortal = {selectedPortal}
+            items = {data}
             onChange= {(item, index) => {
-            setSelectedPortal(index)
-            setTabIndexPreview(0)
+              setSelectedPortal(index)
+              setTabIndexPreview(0)
             }} 
-            onDeploy= {async (dataDeploy) => {
-              console.log(dataDeploy);
-              ipcRenderer.send('request-to-kintone', dataDeploy)
-            }} 
+            onDeploy= {async (dataDeploy) => {}} 
             onCreate= {(item: Portal) => {
               const newList = [...data, item];
               setData(newList);
+              window.localStorage.setItem("portal", JSON.stringify(newList))
               
               setSelectedPortal(newList.length - 1)
               setTabIndexPreview(0)
@@ -98,21 +101,15 @@ const PortalBuilder = () => {
           <PortalPreview 
             layout = {data[selectedPortal].layout}
             onAddTabs={(item: any) => {
-              const valueOfPortalAction: string = data[selectedPortal].value
-              const tmpData: Portal[] = JSON.parse(JSON.stringify(data))
-              const newList: any = tmpData.map(tab => {
-                const tmpTab = { ...tab }
-                if (tmpTab.value === valueOfPortalAction) {
-                  tmpTab.layout.props.tabList.push(item)
-                }
-                return tmpTab;
-              })
-              setData(newList);
+              data[selectedPortal].layout.props.tabList.push(item)
+              setPortalList(data);
+              // window.localStorage.setItem("portal", JSON.stringify(data))
             }}
             onRemoveTabs = {(layout: Layout) => {
               const newData = JSON.parse(JSON.stringify(data))
               newData[selectedPortal].layout = layout
               setData(newData);
+              window.localStorage.setItem("portal", JSON.stringify(newData))
             }}
           />
         </div>

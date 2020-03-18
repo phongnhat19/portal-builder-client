@@ -50,6 +50,7 @@ const SettingModal = ({ isVisible = false, onClose }: {
               newProfiles = [...profiles, values as Profile]
             }
             setProfiles(newProfiles)
+            window.localStorage.setItem("profiles", JSON.stringify(newProfiles))
             
           })
           .catch(info => {

@@ -14,8 +14,7 @@ const PortalPreview = ({
 
   return(
     <div style={{display: 'flex', justifyContent:'center', paddingTop: '30px'}}>
-      <TabsLayout 
-        // selectedTab={selectedTab}
+      <TabsLayout
         onAddItem={onAddTabs}
         onRemoveItem={(index) => {
           const newLayout = JSON.parse(JSON.stringify(layout))
@@ -23,7 +22,6 @@ const PortalPreview = ({
           onRemoveTabs(newLayout)
         }}
         items={layout.props.tabList}
-        // onSelectedTabItem = {(index: number) => {setTabIndexPreview(index)}}
       />
     </div>
   )
