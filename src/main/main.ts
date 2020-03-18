@@ -64,8 +64,9 @@ app.on('activate', () => {
 // Event listener for kintone
 ipcMain.on('request-to-kintone', (event: Electron.IpcMainEvent, arg: any) => {
   return deployPortalToKintone(arg).then(() => {
-     return event.returnValue = 'success'
+    event.reply('kintone-reply', {status: 'done', index: arg.index})
+    return event;
   }).catch(err => {
-    return event.returnValue = 'err'
+    event.reply('kintone-reply', {status: 'error', index: arg.index})
   })
 })

@@ -30,7 +30,7 @@ module.exports = rules = [
       }]
   },
   {
-      test: /\.(scss)$/,
+      test: /\.(scss|css)$/,
       use: ["style-loader", "css-loader", "sass-loader"],
   },
   {
@@ -47,11 +47,4 @@ module.exports = rules = [
           name: "[path][name].[ext]",
       },
   },
-  {
-    test: /\.css$/,
-    use: [
-      { loader: "style-loader" },
-      { loader: "css-loader" }
-    ]
-  }
 ];

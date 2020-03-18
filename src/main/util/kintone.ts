@@ -113,9 +113,7 @@ const deployPortalToKintone = (data: any) => {
     return updateSetting(profile, setting)
   }).then((resp) => {
     return resp.data
-  }).catch((error) => {
-    console.log(error);
-  });
+  })
 }
 
 export {

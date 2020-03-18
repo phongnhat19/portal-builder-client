@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import 'antd/dist/antd.css';
-import { Table, Button  } from 'antd';
+import { Table, Button, Alert  } from 'antd';
 import { CheckOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import {DeployTable, doneBtnStyle, deployBtnStyle} from './Type'
 
 const TableCustom = ({ data, onDeploy = () => {}}: DeployTable) => {
+  const [profiles, setProfiles] = useState(data)
+  useEffect(()=> {
+    setProfiles(data)
+  },[data])
   const columns = [
     {
       title: 'Profile',
@@ -21,23 +25,27 @@ const TableCustom = ({ data, onDeploy = () => {}}: DeployTable) => {
       key: 'status',
       render: (profile: any) => (
         <div>
-            {(profile.status === 'unfulfilled' || !profile.status) && <Button type="primary" onClick = {() => {
+            {(profile.status === 'unfulfilled' || profile.status === 'error' || !profile.status) && <Button type="primary" onClick = {() => {
               let index = 0;
-              data.forEach((item: any, i: number) => {
+              const newProfile = [...profiles]
+              profiles.forEach((item: any, i: number) => {
                 if (profile.profileId === item.profileId) {
                   index = i;
+                  newProfile[i].status = 'processing'
                 }
               });
+              setProfiles(newProfile)
               onDeploy(profile, index)
 
-            }}> {data.status}Deploy</Button>}
+            }}>Deploy</Button>}
+            {profile.status === 'error' && <Alert message="Error occurs" type="error" />}
             {profile.status === 'done' && <Button style={doneBtnStyle} icon={<CheckOutlined />} disabled ghost>Done</Button>}
             {profile.status === 'processing' && <Button style={deployBtnStyle} disabled icon={<ClockCircleOutlined />} ghost>Deploying</Button>}
         </div>
       ),
     },
   ];
-  return (<Table columns={columns} dataSource={data}/>)
+  return (<Table columns={columns} dataSource={profiles}/>)
 }
 
 export default TableCustom

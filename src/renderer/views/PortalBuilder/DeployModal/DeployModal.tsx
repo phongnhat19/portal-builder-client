@@ -49,14 +49,13 @@ const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: 
       data = {newProfiles}
       onDeploy = {(profile: Profile, index: number) => {
         onDeploy(profile, index)
-        const dataDeploy = {profile, portal: portal.layout.props.tabList}
+        const dataDeploy = {profile, portal: portal.layout.props.tabList, index: index}
         let profilesCopy = [...newProfiles]
-        profilesCopy[index].status = 'unfulfilled'
-        setNewProfiles(profilesCopy);
-        
-         ipcRenderer.sendSync('request-to-kintone', dataDeploy);
-         profilesCopy[index].status = 'done'
+        ipcRenderer.send('request-to-kintone', dataDeploy)
+        ipcRenderer.on('kintone-reply', (event, response) => {
+          profilesCopy[response.index].status = response.status
          setNewProfiles(profilesCopy);
+        })
       }}
       />
     </Modal>

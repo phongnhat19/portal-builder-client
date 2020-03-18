@@ -12,7 +12,15 @@ const templateUMD = {
         globalObject: `(typeof self !== 'undefined' ? self : this)`
     },
     module: {
-        rules
+        rules: [
+            {
+                    test: /\.css$/,
+                    use: [
+                      { loader: "style-loader" },
+                      { loader: "css-loader" }
+                    ]
+                  }
+        ]
     }
 }
 
