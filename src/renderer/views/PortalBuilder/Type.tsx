@@ -11,8 +11,7 @@ type LayoutProps = {
     tabList: Tab[]
 }
 type Portal = {
-    name?: string;
-    value: string;
+    name: string;
     layout: Layout;
 }
 // Data return when deploy a domain
@@ -28,7 +27,7 @@ type DeployData = {
 } 
 
 type SideBarProps = {
-    value?: string;
+    value?: number;
     items?: Portal[];
     onChange?: (item: any, index: number) => void;
     onDeploy?: (data: Profile, index: number) => void;

@@ -31,6 +31,10 @@ const TabsLayout = ({
   }
 
   useEffect(() => {
+    setSelectedTab(items.length - 1)
+  }, [items.length])
+
+  useEffect(() => {
     let dataItems = [] as any[];
     items.forEach(item => {
       let newItem = {
@@ -65,6 +69,7 @@ const TabsLayout = ({
       }
       dataItems = [...dataItems, newItem]
     })
+
     setTabItems(dataItems)
   },[items])
 
@@ -125,9 +130,7 @@ const TabsLayout = ({
       <Tabs
         items={tabItems}
         value={selectedTab}
-        onClickTabItem={(i) => {
-          setSelectedTab(i)
-        }}
+        onClickTabItem={setSelectedTab}
       />
       
     </div>

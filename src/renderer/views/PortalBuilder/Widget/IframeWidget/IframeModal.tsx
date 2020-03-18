@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Modal, Input } from 'antd'
+import { Modal, Input, Row, Col } from 'antd'
 import './style.css'
 
 type IframeModal = {
@@ -23,15 +23,19 @@ const IframeModal = ({ isVisible = false, onClose, onSave }: IframeModal) => {
         })
       }}
     >
-      <div className="input-url">
-        <span>URL</span>
-        <Input
-          style={{ marginLeft: '50px' }}
-          value={url}
-          onChange={(e) => { setUrl(e.target.value) }}
-          placeholder="Input URL"
-        />
-      </div>
+      <Row>
+        <Col span={4}>
+          <strong>URL</strong>
+        </Col>
+        <Col span={20}>
+          <Input
+            value={url}
+            onChange={(e) => { setUrl(e.target.value) }}
+            placeholder="Input URL"
+          />
+        </Col>
+      </Row>
+      
     </Modal>
   )
 }

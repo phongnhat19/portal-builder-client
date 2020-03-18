@@ -18,7 +18,6 @@ const PortalBuilder = () => {
   let initData:Portal[] = [
     {
       name: 'Portal 1',
-      value: '1',
       layout: {
         type: 'Tabs',
         props: {
@@ -81,11 +80,11 @@ const PortalBuilder = () => {
       <div className="portal-container">
         <div className="portal-list-container">
           <SideBar 
-            value = {data[selectedPortal].value}
-            data = {data}
+            selectedPortal = {selectedPortal}
+            items = {data}
             onChange= {(item, index) => {
-            setSelectedPortal(index)
-            setTabIndexPreview(0)
+              setSelectedPortal(index)
+              setTabIndexPreview(0)
             }} 
             onDeploy= {async (dataDeploy) => {}} 
             onCreate= {(item: Portal) => {
@@ -102,17 +101,9 @@ const PortalBuilder = () => {
           <PortalPreview 
             layout = {data[selectedPortal].layout}
             onAddTabs={(item: any) => {
-              const valueOfPortalAction: string = data[selectedPortal].value
-              const tmpData: Portal[] = JSON.parse(JSON.stringify(data))
-              const newList: any = tmpData.map(tab => {
-                const tmpTab = { ...tab }
-                if (tmpTab.value === valueOfPortalAction) {
-                  tmpTab.layout.props.tabList.push(item)
-                }
-                return tmpTab;
-              })
-              setData(newList);
-              window.localStorage.setItem("portal", JSON.stringify(newList))
+              data[selectedPortal].layout.props.tabList.push(item)
+              setPortalList(data);
+              // window.localStorage.setItem("portal", JSON.stringify(data))
             }}
             onRemoveTabs = {(layout: Layout) => {
               const newData = JSON.parse(JSON.stringify(data))

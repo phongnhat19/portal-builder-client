@@ -8,23 +8,23 @@ import './style.css'
 
 const {Text} = Typography
 
-const SideBar = ({value, items = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0 }: SideBarProps) => {
+const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0 }: SideBarProps) => {
   const [deployModalVisible, setDeployModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
   return(
       <div>
-         <Menu selectedKeys={[`portal-item-${value}`]}>
+         <Menu selectedKeys={[`portal-item-${selectedPortal}`]}>
           {
             items.map((portal, index) => {
               return(
-                <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-${portal.value}`} onClick={(e) => {
+                <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-${index}`} onClick={(e) => {
                     if (e.domEvent.target instanceof HTMLButtonElement) {
-                        setDeployModalVisible(true)
+                      setDeployModalVisible(true)
                     }
                     onChange(portal, index)
                 }}>
                   <span className="portal-list-item">
-                    <Text strong={value === portal.value}>{portal.name}</Text>
+                    <Text strong={selectedPortal === index}>{portal.name}</Text>
                     <Button type="primary" icon={<RocketFilled style={{marginRight: 0}} rotate={45}/>} />
                   </span>
                 </Menu.Item>
