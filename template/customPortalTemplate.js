@@ -34,7 +34,7 @@
       case 'DefaultPortal':
         tabContent = createDefaultPortalContent();
         break;
-      case 'IframeWidget':
+      case 'Iframe':
         if (!content.props) break;
 
         tabContent = createIframeItemContent(content.props);

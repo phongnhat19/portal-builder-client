@@ -19,14 +19,20 @@ const TableCustom = ({ data, onDeploy = () => {}}: DeployTable) => {
     {
       title: '',
       key: 'status',
-      render: (data: any) => (
+      render: (profile: any) => (
         <div>
-            {(data.status === 'unfulfilled' || !data.status) && <Button type="primary" onClick = {() => {
+            {(profile.status === 'unfulfilled' || !profile.status) && <Button type="primary" onClick = {() => {
               let index = 0;
-              onDeploy(data, index)
-            }}> Deploy</Button>}
-            {data.status === 'done' && <Button  type="primary" style={doneBtnStyle} icon={<CheckOutlined />} disabled ghost>Done</Button>}
-            {data.status === 'processing' && <Button style={deployBtnStyle} disabled icon={<ClockCircleOutlined />} ghost>Deploying</Button>}
+              data.forEach((item: any, i: number) => {
+                if (profile.profileId === item.profileId) {
+                  index = i;
+                }
+              });
+              onDeploy(profile, index)
+
+            }}> {data.status}Deploy</Button>}
+            {profile.status === 'done' && <Button style={doneBtnStyle} icon={<CheckOutlined />} disabled ghost>Done</Button>}
+            {profile.status === 'processing' && <Button style={deployBtnStyle} disabled icon={<ClockCircleOutlined />} ghost>Deploying</Button>}
         </div>
       ),
     },

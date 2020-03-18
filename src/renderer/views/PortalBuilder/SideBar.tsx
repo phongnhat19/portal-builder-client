@@ -11,7 +11,6 @@ const {Text} = Typography
 const SideBar = ({value, data = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0 }: SideBarProps) => {
   const [deployModalVisible, setDeployModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
-
   return(
       <div>
          <Menu selectedKeys={[`portal-item-${value}`]}>
