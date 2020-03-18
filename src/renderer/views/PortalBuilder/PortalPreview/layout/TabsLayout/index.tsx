@@ -9,6 +9,7 @@ import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
 import confirm from 'antd/lib/modal/confirm';
 import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT } from './constant';
+import TabConfigModal from './TabConfigModal';
 
 const TabsLayout = ({
   items = [],
@@ -19,6 +20,7 @@ const TabsLayout = ({
   const [selectedTab, setSelectedTab] = useState(0)
   const [tabItems, setTabItems] = useState([] as any[])
   const {portalList, setPortalList, selectedPortal} = useContext(PortalContext)
+  const [isShowTabConfigModal, showTabConfigModal] = useState(false)
 
   const removeWidget = () => {
     confirm({
@@ -114,14 +116,7 @@ const TabsLayout = ({
         icon={<PlusCircleOutlined />}
         className='portal-tabs-btn portal-tabs-btn-add'
         onClick={() => {
-          const tab = {
-            tabName: 'New Tab',
-            tabContent: {
-              type: TabContentType.IFRAME,
-              name: "Iframe"
-            }
-          }
-          onAddItem(tab)
+          showTabConfigModal(true)
         }} 
       />
         {tabItems.length > 1 &&
@@ -131,7 +126,6 @@ const TabsLayout = ({
             className='portal-tabs-btn portal-tabs-btn-sub'
             onClick={() => {
               if (selectedTab === 0) return;
-
               const newSelectedTab = selectedTab - 1;
               setSelectedTab(newSelectedTab)
               onRemoveItem(selectedTab)
@@ -143,7 +137,21 @@ const TabsLayout = ({
         value={selectedTab}
         onClickTabItem={setSelectedTab}
       />
-
+      <TabConfigModal 
+        isVisible={isShowTabConfigModal}
+        onClose={()=> showTabConfigModal(false)}
+        onSave={(name) => {
+          const tab = {
+            tabName: name,
+            tabContent: {
+              type: TabContentType.IFRAME,
+              name: "Iframe"
+            }
+          }
+          onAddItem(tab)
+          showTabConfigModal(false)
+        }}
+      />
     </div>
   )
 }
