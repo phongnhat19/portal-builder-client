@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
 import { Button} from 'antd';
-import { PlusCircleOutlined , MinusCircleOutlined} from '@ant-design/icons';
+import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import '../style.css'
-import { Portal, TabContentType } from '../../../Type';
+import { TabContentType } from '../../../Type';
 import { TabsLayoutProps, TabProps } from '../../Type';
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
+import confirm from 'antd/lib/modal/confirm';
+import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT } from './constant';
 
 const TabsLayout = ({
   items = [],
@@ -19,10 +21,19 @@ const TabsLayout = ({
   const {portalList, setPortalList, selectedPortal} = useContext(PortalContext)
 
   const removeWidget = () => {
-    const tabList = portalList[selectedPortal].layout.props.tabList
-    delete tabList[selectedTab].tabContent['props']
-    setPortalList(portalList)
-  }
+    confirm({
+      title: CONFIRM_DELETE.TITLE,
+      icon: <ExclamationCircleOutlined />,
+      okText: CONFIRM_DELETE.BUTTON_OK,
+      okType: 'danger',
+      cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
+      onOk() {
+        const tabList = portalList[selectedPortal].layout.props.tabList
+        delete tabList[selectedTab].tabContent['props']
+        setPortalList(portalList)
+      }
+  })
+}
 
   const updateWidget = (newProps: TabProps) => {
     const tabList = portalList[selectedPortal].layout.props.tabList
@@ -39,14 +50,14 @@ const TabsLayout = ({
     items.forEach(item => {
       let newItem = {
         tabName: item.tabName,
-        tabContent: 'This is kintone default Portal' as any
+        tabContent: PORTAL_DEFAULT.TAB_CONTENT_INIT as any
       }
       const tabContent = item.tabContent;
       if (!tabContent) return;
       switch (tabContent.type) {
         case TabContentType.IFRAME:
           if (!tabContent.props) {
-            newItem.tabContent = 'Please drag Iframe to create new widget'
+            newItem.tabContent = IFRAME_WIDGET.TAB_CONTENT_INIT
             break;
           };
           newItem.tabContent = 
