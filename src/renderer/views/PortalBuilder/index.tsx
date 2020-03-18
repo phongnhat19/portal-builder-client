@@ -10,7 +10,8 @@ const PortalContext = createContext({
   portalList: [] as Portal[],
   selectedPortal: 0,
   setPortalList: (newPortalList: Portal[]) => {},
-  updatePortal: (newPortal: Portal, portalIndex: number) => {}
+  updatePortal: (newPortal: Portal, portalIndex: number) => {},
+  removePortal: (portalIndex: number) => {}
 });
 
 const PortalBuilder = () => {
@@ -42,8 +43,7 @@ const PortalBuilder = () => {
   
   const [data, setData] = useState(initData)
   const [selectedPortal, setSelectedPortal] = useState(0)
-  const [tabIndexPreview, setTabIndexPreview] = useState(0)
-  // const [isShowIframeModel, setShowIframeModel] = useState(false);
+
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
@@ -70,46 +70,49 @@ const PortalBuilder = () => {
     window.localStorage.setItem("portal", JSON.stringify(data))
   }
 
+  const removePortal = (portalIndex: number) => {
+    data.splice(portalIndex, 1)
+    setSelectedPortal(data.length - 1)
+    setData(JSON.parse(JSON.stringify(data)))
+    window.localStorage.setItem("portal", JSON.stringify(data))
+  }
+  let selectedIndex = selectedPortal > data.length - 1 ? data.length - 1 : selectedPortal
+
   return(
     <PortalContext.Provider value = {{
       portalList: data, 
       setPortalList, 
       selectedPortal,
-      updatePortal
+      updatePortal,
+      removePortal
     }} >
       <div className="portal-container">
         <div className="portal-list-container">
           <SideBar 
-            selectedPortal = {selectedPortal}
+            selectedPortal = {selectedIndex}
             items = {data}
             onChange= {(item, index) => {
               setSelectedPortal(index)
-              setTabIndexPreview(0)
             }} 
             onDeploy= {async (dataDeploy) => {}} 
             onCreate= {(item: Portal) => {
-              const newList = [...data, item];
-              setData(newList);
-              window.localStorage.setItem("portal", JSON.stringify(newList))
+              data.push(item)
+              setPortalList(data);
               
-              setSelectedPortal(newList.length - 1)
-              setTabIndexPreview(0)
+              setSelectedPortal(data.length - 1)
             }}
           />
         </div>
         <div className="portal-preview">
           <PortalPreview 
-            layout = {data[selectedPortal].layout}
+            layout = {data[selectedIndex].layout}
             onAddTabs={(item: any) => {
               data[selectedPortal].layout.props.tabList.push(item)
               setPortalList(data);
-              // window.localStorage.setItem("portal", JSON.stringify(data))
             }}
             onRemoveTabs = {(layout: Layout) => {
-              const newData = JSON.parse(JSON.stringify(data))
-              newData[selectedPortal].layout = layout
-              setData(newData);
-              window.localStorage.setItem("portal", JSON.stringify(newData))
+              data[selectedPortal].layout = layout
+              setPortalList(data);
             }}
           />
         </div>
