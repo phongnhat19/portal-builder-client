@@ -5,7 +5,7 @@ import path from 'path'
 import FormData from 'form-data';
 import stream from 'stream'
 
-const prepareSettingToUpdate = (scripts: any, jsKey: string, cssKey: string, fileNames: string[]) => {
+const prepareSettingToUpdate = (scripts: any[], jsKey: string, cssKey: string, fileNames: string[]) => {
   let files: any = {
     "DESKTOP": [],
     "MOBILE": [],
