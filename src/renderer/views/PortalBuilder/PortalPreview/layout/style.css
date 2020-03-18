@@ -24,3 +24,7 @@
 .portal-tabs-layout .portal-tabs-btn-settings {
   right: 30px;
 }
+
+.portal-tabs-layout .kuc-tabs-tab-contents {
+  height: 85vh;
+}
