@@ -34,5 +34,5 @@ type SideBarProps = {
     onCreate?: (data: Portal) => void;
     dataTable?: ItemTable[], 
     selectedPortal?: number
-  }
+}
 export {Portal, DeployData, DeploySetting, SideBarProps, Layout, TabContentType}
