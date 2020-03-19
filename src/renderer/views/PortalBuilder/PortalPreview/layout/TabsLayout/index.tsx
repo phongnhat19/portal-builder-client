@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
-import { Button} from 'antd';
+import { Button } from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import '../style.css'
 import { TabContentType } from '../../../Type';
@@ -19,6 +19,7 @@ const TabsLayout = ({
 } : TabsLayoutProps) => {
 
   const [selectedTab, setSelectedTab] = useState(0)
+  const [inited, setInited] = useState(false)
   const [tabItems, setTabItems] = useState([] as any[])
   const {portalList, setPortalList, selectedPortal} = useContext(PortalContext)
   const [isShowTabConfigModal, showTabConfigModal] = useState(false)
@@ -31,6 +32,7 @@ const TabsLayout = ({
       okType: 'danger',
       cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
       onOk() {
+        // console.log(selectedTab)
         const tabList = portalList[selectedPortal].layout.props.tabList
         delete tabList[selectedTab].tabContent['props']
         setPortalList(portalList)
@@ -45,7 +47,12 @@ const TabsLayout = ({
   }
 
   useEffect(() => {
-    setSelectedTab(items.length - 1)
+    if (inited) {
+      setSelectedTab(items.length - 1)
+    } else {
+      setInited(true)
+    }
+    // selectedTab !=0 && inited && setSelectedTab(items.length - 1)
   }, [items.length])
 
   useEffect(() => {
@@ -107,20 +114,15 @@ const TabsLayout = ({
     setTabItems(dataItems)
   },[items])
 
-  const dropWidget = (tabIndex: number) => {
+  const dropWidget = (tabIndex: number, type: TabContentType, props: any) => {
 
     const currentTab = portalList[selectedPortal].layout.props.tabList[tabIndex]
 
     if (currentTab.tabContent.type !== TabContentType.DEFAULT){
       currentTab.tabContent = {
-        type: TabContentType.IFRAME,
+        type: type,
         name: 'New Tab',
-        props: {
-          showSettingInit: true,
-          url: "",
-          width: "100%",
-          height: "82vh"
-        }
+        props
       }
       setPortalList(portalList)
     } 
@@ -130,7 +132,19 @@ const TabsLayout = ({
     <div 
       className='portal-tabs-layout'
       onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} 
-      onDrop={() => dropWidget(selectedTab)}
+      onDrop={(e) => {
+        let props: any
+        const type = e.dataTransfer.getData("text") as TabContentType
+        if (type === TabContentType.IFRAME) {
+          props = {
+            showSettingInit: true,
+            url: "",
+            width: "100%",
+            height: "82vh"
+          }
+        }
+        props && dropWidget(selectedTab, type, props)
+      }}
     >
       <Button
         type="default"

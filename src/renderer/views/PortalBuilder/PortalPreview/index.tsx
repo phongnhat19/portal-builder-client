@@ -7,22 +7,26 @@ const PortalPreview = ({
   onAddTabs = (item: any) => {},
   onRemoveTabs = (layout: Layout) => {} 
 }: {
-  layout: Layout,
+  layout?: Layout,
   onAddTabs: (item: any) => void,
   onRemoveTabs: (layout: Layout) => void
 }) => {
 
   return(
     <div style={{display: 'flex', justifyContent:'center', paddingTop: '30px'}}>
-      <TabsLayout
-        onAddItem={onAddTabs}
-        onRemoveItem={(index) => {
-          const newLayout = JSON.parse(JSON.stringify(layout))
-          newLayout.props.tabList.splice(index, 1)
-          onRemoveTabs(newLayout)
-        }}
-        items={layout.props.tabList}
-      />
+      {
+        layout &&
+        <TabsLayout
+          onAddItem={onAddTabs}
+          onRemoveItem={(index) => {
+            const newLayout = JSON.parse(JSON.stringify(layout))
+            newLayout.props.tabList.splice(index, 1)
+            onRemoveTabs(newLayout)
+          }}
+          items={layout.props.tabList}
+        />
+      }
+      
     </div>
   )
 }
