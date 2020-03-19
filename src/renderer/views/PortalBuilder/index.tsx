@@ -105,7 +105,7 @@ const PortalBuilder = () => {
         </div>
         <div className="portal-preview">
           <PortalPreview 
-            layout = {data[selectedIndex].layout}
+            layout = {data.length > 0 ? data[selectedIndex].layout : undefined}
             onAddTabs={(item: any) => {
               data[selectedPortal].layout.props.tabList.push(item)
               setPortalList(data);

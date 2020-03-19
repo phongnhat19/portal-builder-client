@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
-import { Button} from 'antd';
+import { Button } from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import '../style.css'
 import { TabContentType } from '../../../Type';
@@ -30,6 +30,7 @@ const TabsLayout = ({
       okType: 'danger',
       cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
       onOk() {
+        // console.log(selectedTab)
         const tabList = portalList[selectedPortal].layout.props.tabList
         delete tabList[selectedTab].tabContent['props']
         setPortalList(portalList)
@@ -44,6 +45,8 @@ const TabsLayout = ({
   }
 
   useEffect(() => {
+    
+    // selectedTab !=0 && 
     setSelectedTab(items.length - 1)
   }, [items.length])
 

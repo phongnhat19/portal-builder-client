@@ -51,7 +51,7 @@ const SettingModal = ({ isVisible = false, onClose }: {
             }
             setProfiles(newProfiles)
             window.localStorage.setItem("profiles", JSON.stringify(newProfiles))
-            
+            onClose && onClose()
           })
           .catch(info => {
             console.log('Validate Failed:', info);
@@ -66,7 +66,7 @@ const SettingModal = ({ isVisible = false, onClose }: {
       >
         <Form.Item
           name="profileId"
-          label="profileId"
+          label="Profile"
           hasFeedback
         >
           <Select
