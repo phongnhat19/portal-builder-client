@@ -18,22 +18,7 @@ const ProfileContext = createContext({
 });
 
 const App = () => {
-  let initProfiles = [
-    {
-      profileId: 'profile_2',
-      name: 'Minh 2',
-      domain: '123@domain',
-      username: '123',
-      password: '123'
-    },
-    {
-      profileId: 'profile_1',
-      name: 'Minh 1',
-      domain: '123@domain',
-      username: '21',
-      password: '22'
-    }
-  ]
+  let initProfiles = []
   const storageProfile = window.localStorage.getItem('profiles')
   
   if (storageProfile !== null) {
