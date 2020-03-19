@@ -15,7 +15,8 @@ type Tab = {
 type TabProps = {
     url: string,
     width: string,
-    height: string
+    height: string,
+    htmlString: string,
     showSettingInit?: boolean
 }
 type TabsLayoutProps = {

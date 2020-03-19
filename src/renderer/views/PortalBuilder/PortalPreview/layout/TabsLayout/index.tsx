@@ -8,8 +8,9 @@ import { TabsLayoutProps, TabProps } from '../../Type';
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
 import confirm from 'antd/lib/modal/confirm';
-import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT } from './constant';
+import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT, HTML_WIDGET } from './constant';
 import TabConfigModal from './TabConfigModal';
+import HTMLWidget from '../../../Widget/HTMLWidget';
 
 const TabsLayout = ({
   items = [],
@@ -76,7 +77,27 @@ const TabsLayout = ({
                 updateWidget(currentProps)
               }}
             />
-          break
+          break;
+
+        case TabContentType.HTML:
+          if (!tabContent.props) {
+            newItem.tabContent = HTML_WIDGET.TAB_CONTENT_INIT
+            break;
+          };
+          newItem.tabContent = 
+            <HTMLWidget 
+              htmlString={tabContent.props.htmlString}
+              width={tabContent.props.width}
+              height={tabContent.props.height}
+              showSettingInit={tabContent.props.showSettingInit}
+              onRemove={removeWidget}
+              onSaveSetting={({htmlString}) => {
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+                currentProps.htmlString = htmlString
+                currentProps.showSettingInit = false;
+                updateWidget(currentProps)
+              }}
+            />
         default:
           break;
       }
