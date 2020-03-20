@@ -1,5 +1,5 @@
 {
-  "name": "portal-builder-client",
+  "name": "kintone-portal-builder-client",
   "version": "1.0.0",
   "description": "",
   "main": "./.webpack/main",
@@ -24,7 +24,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "river_tour_client"
+            "name": "Kintone Portal Builder"
           }
         },
         {
@@ -44,7 +44,7 @@
         {
           "name": "@electron-forge/maker-dmg",
           "config": {
-            "background": "../something_random.png",
+            "background": "./public/kintone.png",
             "format": "ULFO"
           }
         }

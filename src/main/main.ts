@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import {deployPortalToKintone} from './util/kintone'
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
@@ -18,7 +19,8 @@ const createWindow = () => {
     width: 1366,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    icon: 'public/kintone.png'
   });
 
   // and load the index.html of the app.
