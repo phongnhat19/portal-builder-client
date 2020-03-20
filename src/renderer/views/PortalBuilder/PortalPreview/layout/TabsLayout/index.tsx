@@ -4,12 +4,13 @@ import { Button } from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import '../style.css'
 import { TabContentType } from '../../../Type';
-import { TabsLayoutProps, TabProps, Tab } from '../../Type';
+import { TabsLayoutProps, IframeWidgetProps, HTMLWidgetProps, Tab } from '../../Type';
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
 import confirm from 'antd/lib/modal/confirm';
-import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT } from './constant';
+import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT, HTML_WIDGET } from './constant';
 import TabConfigModal from './TabConfigModal';
+import HTMLWidget from '../../../Widget/HTMLWidget';
 
 const TabsLayout = ({
   items = [],
@@ -37,13 +38,14 @@ const TabsLayout = ({
           if (!tabContent.props) {
             newItem.tabContent = IFRAME_WIDGET.TAB_CONTENT_INIT
             break;
-          };
+          }
+          const tabContentIframe = tabContent.props as IframeWidgetProps;
           newItem.tabContent = 
             <IframeWidget 
-              url={tabContent.props.url}
-              width={tabContent.props.width}
-              height={tabContent.props.height}
-              showSettingInit={tabContent.props.showSettingInit}
+              url={tabContentIframe.url}
+              width={tabContentIframe.width}
+              height={tabContentIframe.height}
+              showSettingInit={tabContentIframe.showSettingInit}
               onRemove={removeWidget}
               onSaveSetting={({url}) => {
                 let currentProps = JSON.parse(JSON.stringify(tabContent.props))
@@ -52,7 +54,28 @@ const TabsLayout = ({
                 updateWidget(currentProps)
               }}
             />
-          break
+          break;
+
+        case TabContentType.HTML:
+          if (!tabContent.props) {
+            newItem.tabContent = HTML_WIDGET.TAB_CONTENT_INIT
+            break;
+          };
+          const tabContentHTML = tabContent.props as HTMLWidgetProps;
+          newItem.tabContent = 
+            <HTMLWidget 
+              htmlString={tabContentHTML.htmlString}
+              width={tabContentHTML.width}
+              height={tabContentHTML.height}
+              showSettingInit={tabContentHTML.showSettingInit}
+              onRemove={removeWidget}
+              onSaveSetting={({htmlString}) => {
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+                currentProps.htmlString = htmlString
+                currentProps.showSettingInit = false;
+                updateWidget(currentProps)
+              }}
+            />
         default:
           break;
       }
@@ -77,7 +100,7 @@ const TabsLayout = ({
     })
   }
 
-  const updateWidget = (newProps: TabProps) => {
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps) => {
     const tabList = portalList[selectedPortal].layout.props.tabList
     tabList[selectedTab].tabContent.props = newProps
     setPortalList(portalList)
@@ -120,6 +143,13 @@ const TabsLayout = ({
           props = {
             showSettingInit: true,
             url: "",
+            width: "100%",
+            height: "82vh"
+          }
+        } else if (type === TabContentType.HTML) {
+          props = {
+            showSettingInit: true,
+            htmlString: "",
             width: "100%",
             height: "82vh"
           }
