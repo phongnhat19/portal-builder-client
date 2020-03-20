@@ -143,6 +143,14 @@ const TabsLayout = ({
             height: "82vh"
           }
         }
+        if (type === TabContentType.HTML) {
+          props = {
+            showSettingInit: true,
+            htmlString: "",
+            width: "100%",
+            height: "82vh"
+          }
+        }
         props && dropWidget(selectedTab, type, props)
       }}
     >

@@ -22,7 +22,11 @@ const HTMLWidget = ({ htmlString, width, height, showSettingInit = false, onRemo
   return (
     <React.Fragment>
       <SettingsIframeWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
-      <div style={{width, height}} dangerouslySetInnerHTML={createMarkupHTMLWidget(htmlString)} />;
+      <div 
+        onDrop={(event)=>event.stopPropagation()} 
+        style={{width, height}} 
+        dangerouslySetInnerHTML={createMarkupHTMLWidget(htmlString)} 
+      />
       <HTMLModal
         isVisible={showSetting}
         onClose={() => (setShowSetting(false))}
