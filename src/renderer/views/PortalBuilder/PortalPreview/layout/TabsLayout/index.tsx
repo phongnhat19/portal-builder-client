@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import '../style.css'
 import { TabContentType } from '../../../Type';
-import { TabsLayoutProps, IframeWidgetProps, HTMLWidgetProps } from '../../Type';
+import { TabsLayoutProps, IframeWidgetProps, HTMLWidgetProps, Tab } from '../../Type';
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
 import confirm from 'antd/lib/modal/confirm';
@@ -24,40 +24,9 @@ const TabsLayout = ({
   const {portalList, setPortalList, selectedPortal} = useContext(PortalContext)
   const [isShowTabConfigModal, showTabConfigModal] = useState(false)
 
-  const removeWidget = () => {
-    confirm({
-      title: CONFIRM_DELETE.TITLE,
-      icon: <ExclamationCircleOutlined />,
-      okText: CONFIRM_DELETE.BUTTON_OK,
-      okType: 'danger',
-      cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
-      onOk() {
-        // console.log(selectedTab)
-        const tabList = portalList[selectedPortal].layout.props.tabList
-        delete tabList[selectedTab].tabContent['props']
-        setPortalList(portalList)
-      }
-  })
-}
-
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps) => {
-    const tabList = portalList[selectedPortal].layout.props.tabList
-    tabList[selectedTab].tabContent.props = newProps
-    setPortalList(portalList)
-  }
-
-  useEffect(() => {
-    if (inited) {
-      setSelectedTab(items.length - 1)
-    } else {
-      setInited(true)
-    }
-    // selectedTab !=0 && inited && setSelectedTab(items.length - 1)
-  }, [items.length])
-
-  useEffect(() => {
+  const buildTabItems = (initItems: Tab[]) => {
     let dataItems = [] as any[];
-    items.forEach(item => {
+    initItems.forEach(item => {
       let newItem = {
         tabName: item.tabName,
         tabContent: PORTAL_DEFAULT.TAB_CONTENT_INIT as any
@@ -113,8 +82,41 @@ const TabsLayout = ({
       dataItems = [...dataItems, newItem]
     })
 
-    setTabItems(dataItems)
-  },[items])
+    return dataItems
+  }
+
+  const removeWidget = () => {
+    confirm({
+      title: CONFIRM_DELETE.TITLE,
+      icon: <ExclamationCircleOutlined />,
+      okText: CONFIRM_DELETE.BUTTON_OK,
+      okType: 'danger',
+      cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
+      onOk() {
+        const tabList = portalList[selectedPortal].layout.props.tabList
+        delete tabList[selectedTab].tabContent['props']
+        setPortalList(portalList)
+      }
+    })
+  }
+
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps) => {
+    const tabList = portalList[selectedPortal].layout.props.tabList
+    tabList[selectedTab].tabContent.props = newProps
+    setPortalList(portalList)
+  }
+
+  useEffect(() => {
+    if (inited) {
+      setSelectedTab(items.length - 1)
+    } else {
+      setInited(true)
+    }
+  }, [items.length])
+
+  useEffect(() => {
+    setTabItems(buildTabItems(items))
+  },[items, selectedTab])
 
   const dropWidget = (tabIndex: number, type: TabContentType, props: any) => {
 
