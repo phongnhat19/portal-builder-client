@@ -9,6 +9,7 @@ import confirm from 'antd/lib/modal/confirm';
 import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT, HTML_WIDGET } from './constant';
 import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../../Widget/HTMLWidget';
+import ScheduleWidget from '../../../Widget/ScheduleWidget';
 
 const tabContentType = {
   IFRAME: 'Iframe',
@@ -86,6 +87,10 @@ const TabsLayout = ({
                 updateWidget(currentProps)
               }}
             />
+          break;
+        case tabContentType.SCHEDULE:
+          newItem.tabContent = <ScheduleWidget />
+          break;
         default:
           break;
       }
@@ -162,6 +167,11 @@ const TabsLayout = ({
             htmlString: "",
             width: "100%",
             height: "82vh"
+          }
+        } else if (type === tabContentType.SCHEDULE) {
+          props = {
+            showSettingInit: true,
+            defaultView: 'week'
           }
         }
         props && dropWidget(selectedTab, type, props)

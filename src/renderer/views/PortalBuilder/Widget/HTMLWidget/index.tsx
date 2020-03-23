@@ -10,7 +10,6 @@ const HTMLWidget = ({ htmlString, width, height, showSettingInit = false, onRemo
   showSettingInit?: boolean
   onRemove?: () => void;
   onSaveSetting?: ({ htmlString }: { htmlString: string }) => void
-
 }) => {
 
   const [showSetting, setShowSetting] = useState(showSettingInit)
