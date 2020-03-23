@@ -32,6 +32,7 @@ type SideBarProps = {
     onChange?: (item: any, index: number) => void;
     onDeploy?: (data: Profile, index: number) => void;
     onCreate?: (data: Portal) => void;
+    onSaveRename?: (item: { name: string }) => void
     dataTable?: ItemTable[], 
     selectedPortal?: number
 }

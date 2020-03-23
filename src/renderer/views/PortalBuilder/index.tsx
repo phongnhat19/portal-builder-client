@@ -101,6 +101,10 @@ const PortalBuilder = () => {
               
               setSelectedPortal(data.length - 1)
             }}
+            onSaveRename={(item) => {
+              data[selectedPortal].name = item.name;
+              setPortalList(data);
+            }}
           />
         </div>
         <div className="portal-preview">
