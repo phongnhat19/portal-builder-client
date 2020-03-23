@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
-import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
+import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined, HighlightOutlined} from '@ant-design/icons';
 import '../style.css'
 import { TabContentType } from '../../../Type';
 import { TabsLayoutProps, IframeWidgetProps, HTMLWidgetProps, Tab } from '../../Type';
@@ -19,6 +19,7 @@ const TabsLayout = ({
 } : TabsLayoutProps) => {
 
   const [selectedTab, setSelectedTab] = useState(0)
+  const [isShowTabNameModal, showTabNameModal] = useState(false)
   const [inited, setInited] = useState(false)
   const [tabItems, setTabItems] = useState([] as any[])
   const {portalList, setPortalList, selectedPortal} = useContext(PortalContext)
@@ -165,6 +166,16 @@ const TabsLayout = ({
           showTabConfigModal(true)
         }} 
       />
+      {selectedTab !== 0 &&
+        <Button
+          type="default"
+          icon={<HighlightOutlined />}
+          className='portal-tabs-btn portal-tabs-btn-edit-name'
+          onClick={() => {
+            showTabNameModal(true)
+          }} 
+        />  
+      }
         {tabItems.length > 1 &&
           <Button
             type="default"
@@ -196,6 +207,17 @@ const TabsLayout = ({
           }
           onAddItem(tab)
           showTabConfigModal(false)
+        }}
+      />
+      <TabConfigModal 
+        tabName={items[selectedTab].tabName}
+        isVisible={isShowTabNameModal}
+        onClose={()=> showTabNameModal(false)}
+        onSave={(name) => {
+          const portalListClone = JSON.parse(JSON.stringify(portalList))
+          portalListClone[selectedPortal].layout.props.tabList[selectedTab].tabName = name
+          setPortalList(portalListClone)
+          showTabNameModal(false)
         }}
       />
     </div>
