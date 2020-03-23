@@ -42,7 +42,11 @@
       case 'HTMLWidget':
         tabContent = createHTMLItemContent(content.props);
         break;
-
+      
+      case 'Schedule':
+        tabContent = createHTMLItemContent(content.props);
+        break;
+        
       default:
         tabContent = '';
     }
