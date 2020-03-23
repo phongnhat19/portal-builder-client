@@ -31,7 +31,6 @@ const PortalConfigNameModal = ({ portalName, isVisible = false, onClose, onSave 
           <strong>Name</strong>
         </Col>
         <Col span={20}>
-          {console.log(name)}
           <Input
             value={name}
             onChange={(e) => { setName(e.target.value) }}
