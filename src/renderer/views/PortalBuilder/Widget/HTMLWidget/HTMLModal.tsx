@@ -3,13 +3,11 @@ import { Modal, Input, Row, Col } from 'antd'
 
 const { TextArea } = Input;
 
-type HTMLModal = {
+const HTMLModal = ({ isVisible = false, onClose, onSave }: {
   isVisible: boolean
   onSave: (item: { htmlString: string }) => void
   onClose?: () => void
-}
-
-const HTMLModal = ({ isVisible = false, onClose, onSave }: HTMLModal) => {
+}) => {
   const [htmlString, setHTMLString] = useState('')
 
   return (

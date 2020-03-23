@@ -1,6 +1,5 @@
 import React from 'react'
 import TabsLayout from './layout/TabsLayout'
-import {Layout} from '../Type'
 
 const PortalPreview = ({ 
   layout,
@@ -18,7 +17,7 @@ const PortalPreview = ({
         layout &&
         <TabsLayout
           onAddItem={onAddTabs}
-          onRemoveItem={(index) => {
+          onRemoveItem={(index: number) => {
             const newLayout = JSON.parse(JSON.stringify(layout))
             newLayout.props.tabList.splice(index, 1)
             onRemoveTabs(newLayout)

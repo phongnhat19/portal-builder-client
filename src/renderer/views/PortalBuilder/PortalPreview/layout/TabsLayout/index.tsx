@@ -3,8 +3,6 @@ import {Tabs} from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined, HighlightOutlined} from '@ant-design/icons';
 import '../style.css'
-import { TabContentType } from '../../../Type';
-import { TabsLayoutProps, IframeWidgetProps, HTMLWidgetProps, Tab } from '../../Type';
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
 import confirm from 'antd/lib/modal/confirm';
@@ -12,11 +10,22 @@ import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT, HTML_WIDGET } from './co
 import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../../Widget/HTMLWidget';
 
+const tabContentType = {
+  IFRAME: 'Iframe',
+  HTML: 'HTML',
+  SCHEDULE: 'Schedule',
+  DEFAULT: 'DefaultPortal'
+};
+
 const TabsLayout = ({
   items = [],
   onAddItem = () => {},
   onRemoveItem = () => { }
-} : TabsLayoutProps) => {
+} : {
+  items?: Tab[],
+  onAddItem?: (data: Tab) => void
+  onRemoveItem?: (index: number) => void
+}) => {
 
   const [selectedTab, setSelectedTab] = useState(0)
   const [isShowTabNameModal, showTabNameModal] = useState(false)
@@ -35,7 +44,7 @@ const TabsLayout = ({
       const tabContent = item.tabContent;
       if (!tabContent) return;
       switch (tabContent.type) {
-        case TabContentType.IFRAME:
+        case tabContentType.IFRAME:
           if (!tabContent.props) {
             newItem.tabContent = IFRAME_WIDGET.TAB_CONTENT_INIT
             break;
@@ -57,7 +66,7 @@ const TabsLayout = ({
             />
           break;
 
-        case TabContentType.HTML:
+        case tabContentType.HTML:
           if (!tabContent.props) {
             newItem.tabContent = HTML_WIDGET.TAB_CONTENT_INIT
             break;
@@ -123,7 +132,7 @@ const TabsLayout = ({
 
     const currentTab = portalList[selectedPortal].layout.props.tabList[tabIndex]
 
-    if (currentTab.tabContent.type !== TabContentType.DEFAULT){
+    if (currentTab.tabContent.type !== tabContentType.DEFAULT){
       currentTab.tabContent = {
         type: type,
         name: 'New Tab',
@@ -140,14 +149,14 @@ const TabsLayout = ({
       onDrop={(e) => {
         let props: any
         const type = e.dataTransfer.getData("text") as TabContentType
-        if (type === TabContentType.IFRAME) {
+        if (type === tabContentType.IFRAME) {
           props = {
             showSettingInit: true,
             url: "",
             width: "100%",
             height: "82vh"
           }
-        } else if (type === TabContentType.HTML) {
+        } else if (type === tabContentType.HTML) {
           props = {
             showSettingInit: true,
             htmlString: "",
@@ -201,7 +210,7 @@ const TabsLayout = ({
           const tab = {
             tabName: name,
             tabContent: {
-              type: TabContentType.IFRAME,
+              type: tabContentType.IFRAME as TabContentType,
               name: "Iframe"
             }
           }

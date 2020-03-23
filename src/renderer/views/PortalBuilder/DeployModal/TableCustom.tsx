@@ -2,9 +2,12 @@ import React, {useState, useEffect} from 'react';
 import 'antd/dist/antd.css';
 import { Table, Button, Alert  } from 'antd';
 import { CheckOutlined, ClockCircleOutlined } from '@ant-design/icons';
-import {DeployTable, doneBtnStyle, deployBtnStyle} from './Type'
+import {doneBtnStyle, deployBtnStyle} from './constant'
 
-const TableCustom = ({ data, onDeploy = () => {}}: DeployTable) => {
+const TableCustom = ({ data, onDeploy = () => {}}: {
+  data: any
+  onDeploy?: (profile: Profile, index: number) => void
+}) => {
   const [profiles, setProfiles] = useState(data)
   useEffect(()=> {
     setProfiles(data)

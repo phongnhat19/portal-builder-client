@@ -1,27 +1,11 @@
-import React, { CSSProperties, useState } from 'react'
+import React from 'react'
 import { Card } from 'antd';
 import Widget from './Widget';
 
-const gridStyle: CSSProperties = {
-  width: '50%',
-  textAlign: 'center',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column'
-};
-
-type Widget = {
-  name: string
-  icon: any
-}
-
-type WidgetList = {
+const WidgetList = ({ containers = [], onDragStart = () => {} }: {
   containers?: Array<Widget>,
   onDragStart?: (item: Widget) => void
-}
-
-const WidgetList = ({ containers = [], onDragStart = () => {} }: WidgetList) => {
+}) => {
   return (
     <React.Fragment>
       <Card title="Default Widget">

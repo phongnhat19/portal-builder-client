@@ -1,39 +1,37 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Modal, Input, Row, Col } from 'antd'
 
-
-const TabConfigModal = ({ tabName = '', isVisible = false, onClose, onSave }: {
-  tabName?: string
+const PortalConfigNameModal = ({ portalName, isVisible = false, onClose, onSave }: {
+  portalName: string
   isVisible: boolean
-  onSave: (name: string) => void
+  onSave: (item: { name: string }) => void
   onClose?: () => void
 }) => {
-  const [name, setName] = useState(tabName)
-
-  useEffect(() => {
-    setName(tabName)
-  }, [tabName])
+  
+  const [name, setName] = useState(portalName)
 
   return (
     <Modal
-      title="Tab setting"
+      title="Portal Setting"
       visible={isVisible}
       okText="Save"
       onCancel={onClose}
       onOk={() => {
-        onSave(name)
-        setName('')
+        onSave({
+          name: name
+        })
+        setName('');
       }}
     >
       <Row>
         <Col span={4}>
-          <strong>Tab Name</strong>
+          <strong>Name</strong>
         </Col>
         <Col span={20}>
           <Input
             value={name}
             onChange={(e) => { setName(e.target.value) }}
-            placeholder="Input Tab Name"
+            placeholder="Input Portal Name"
           />
         </Col>
       </Row>
@@ -42,4 +40,4 @@ const TabConfigModal = ({ tabName = '', isVisible = false, onClose, onSave }: {
   )
 }
 
-export default TabConfigModal
+export default PortalConfigNameModal

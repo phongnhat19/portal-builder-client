@@ -1,17 +1,13 @@
 import React, {CSSProperties, useState} from 'react'
 import {Modal, Input, Button} from 'antd'
 import {TableOutlined, FileOutlined} from '@ant-design/icons'
-import {Portal, Layout} from '../Type'
 import './style.css'
-import { TabContentType } from '../PortalPreview/Type'
 
-type CreateModal = {
+const CreateModal = ({isVisible= false, onClose, onCreate}: {
   isVisible: boolean
   onClose?: () => void
   onCreate: (item: Portal) => void
-}
-
-const CreateModal = ({isVisible= false, onClose, onCreate}: CreateModal) => {
+}) => {
     const [portalType, setPortalType] = useState('tab')
     const [portalName, setPortalName] = useState('')
 
@@ -44,7 +40,6 @@ const CreateModal = ({isVisible= false, onClose, onCreate}: CreateModal) => {
       onOk={() => {
         onCreate({
           name: portalName,
-          // value: portalName + Math.random(),
           layout: {
             type: portalType,
             props: {
