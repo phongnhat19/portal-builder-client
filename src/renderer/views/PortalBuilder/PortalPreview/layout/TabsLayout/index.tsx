@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
-import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined, HighlightOutlined} from '@ant-design/icons';
+import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined, EditOutlined} from '@ant-design/icons';
 import '../style.css'
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
@@ -178,7 +178,7 @@ const TabsLayout = ({
       {selectedTab !== 0 &&
         <Button
           type="default"
-          icon={<HighlightOutlined />}
+          icon={<EditOutlined />}
           className='portal-tabs-btn portal-tabs-btn-edit-name'
           onClick={() => {
             showTabNameModal(true)
