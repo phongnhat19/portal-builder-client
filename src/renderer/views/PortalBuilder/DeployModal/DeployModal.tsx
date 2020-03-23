@@ -2,18 +2,14 @@ import React, {useContext, useState, useEffect} from 'react'
 import {ProfileContext} from '../../../App'
 import {Modal, Button} from 'antd'
 import TableCustom from './TableCustom'
-import {Profile} from '../../../App'
-import {Portal} from '../../PortalBuilder/Type'
 import {ipcRenderer} from 'electron'
 
-type DeployModal = {
+const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: {
   isVisible: boolean
   onClose?: () => void
   onDeploy: (data: Profile, index: number) => void
   portal: Portal
-}
-
-const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: DeployModal) => {
+}) => {
   const {profiles} = useContext(ProfileContext);
   const [newProfiles, setNewProfiles] = useState([] as any)
   useEffect(() => {

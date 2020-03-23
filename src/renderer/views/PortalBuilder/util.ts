@@ -1,4 +1,3 @@
-
 const downloadFile = (filename: string, text: any) => {
     var pom = document.createElement('a');
     pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));

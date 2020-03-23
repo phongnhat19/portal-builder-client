@@ -3,7 +3,6 @@ import {RocketFilled, PlusCircleOutlined, DeleteOutlined } from '@ant-design/ico
 import {Button, Typography, Menu, Popconfirm} from 'antd'
 import DeployModal from './DeployModal/DeployModal';
 import CreateModal from './CreateModel';
-import {SideBarProps} from './Type'
 import './style.css'
 import {PortalContext} from './index'
 import PortalConfigNameModal from './PortalConfigModal/PortalConfigNameModal';
@@ -12,7 +11,16 @@ const {Text} = Typography
 
 const CONFIRM_DELETE_PORTAL = "Are you sure to delete this portal ? This action CAN NOT be reverted."
 
-const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0, onSaveRename = ()=> {} }: SideBarProps) => {
+const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0, onSaveRename = ()=> {} }: {
+  value?: number;
+  items?: Portal[];
+  onChange?: (item: any, index: number) => void;
+  onDeploy?: (data: Profile, index: number) => void;
+  onCreate?: (data: Portal) => void;
+  onSaveRename?: (item: { name: string }) => void
+  dataTable?: ItemTable[], 
+  selectedPortal?: number
+}) => {
   const [deployModalVisible, setDeployModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
   const [editNameModalVisible, setNameModalVisible] = useState(false)
@@ -49,28 +57,27 @@ const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate
                             onSaveRename(item)
                           }}
                         />
-                      <span>
-                        <Button 
-                          type="primary" 
-                          icon={<RocketFilled style={{marginRight: 0}} rotate={45}/>} 
-                          onClick={() => {
-                            setDeployModalVisible(true)
-                          }}
-                        />
-                        <Popconfirm
-                          placement="bottomLeft"
-                          title={CONFIRM_DELETE_PORTAL}
-                          onConfirm={() => removePortal(index)}
-                          okText="Yes"
-                          cancelText="No"
-                        >
+                        <span>
                           <Button 
-                            type="danger" 
-                            icon={<DeleteOutlined style={{marginRight: 0}} />} 
-                            // onClick={() => removePortal(index)}
+                            type="primary" 
+                            icon={<RocketFilled style={{marginRight: 0}} rotate={45}/>} 
+                            onClick={() => {
+                              setDeployModalVisible(true)
+                            }}
                           />
-                        </Popconfirm>
-                      </span>
+                          <Popconfirm
+                            placement="bottomLeft"
+                            title={CONFIRM_DELETE_PORTAL}
+                            onConfirm={() => removePortal(index)}
+                            okText="Yes"
+                            cancelText="No"
+                          >
+                            <Button 
+                              type="danger" 
+                              icon={<DeleteOutlined style={{marginRight: 0}} />} 
+                            />
+                          </Popconfirm>
+                        </span>
                       </React.Fragment>
                     }
                   </span>

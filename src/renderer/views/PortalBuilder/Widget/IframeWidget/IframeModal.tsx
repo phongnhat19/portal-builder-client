@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import { Modal, Input, Row, Col } from 'antd'
 import './style.css'
 
-type IframeModal = {
+const IframeModal = ({ isVisible = false, onClose, onSave }: {
   isVisible: boolean
   onSave: (item: { url: string }) => void
   onClose?: () => void
-}
-
-const IframeModal = ({ isVisible = false, onClose, onSave }: IframeModal) => {
+}) => {
   const [url, setUrl] = useState('')
 
   return (

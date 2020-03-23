@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Modal, Form, Select, Input } from 'antd'
-import {ProfileContext, Profile} from '../../../App'
+import {ProfileContext} from '../../../App'
 
 const formItemLayout = {
   labelCol: { span: 6 },

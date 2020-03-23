@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { Modal, Input, Row, Col } from 'antd'
 
-type TabConfigModal = {
+const TabConfigModal = ({ isVisible = false, onClose, onSave }: {
   isVisible: boolean
   onSave: (name: string) => void
   onClose?: () => void
-}
-
-const TabConfigModal = ({ isVisible = false, onClose, onSave }: TabConfigModal) => {
+}) => {
   const [name, setName] = useState('')
 
   return (

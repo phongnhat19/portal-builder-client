@@ -1,17 +1,14 @@
 import React, { useState } from 'react'
 import { Modal, Input, Row, Col } from 'antd'
 
-type PortalConfigNameModal = {
+const PortalConfigNameModal = ({ portalName, isVisible = false, onClose, onSave }: {
   portalName: string
   isVisible: boolean
   onSave: (item: { name: string }) => void
   onClose?: () => void
-}
-
-const PortalConfigNameModal = ({ portalName, isVisible = false, onClose, onSave }: PortalConfigNameModal) => {
+}) => {
   
   const [name, setName] = useState(portalName)
-
 
   return (
     <Modal

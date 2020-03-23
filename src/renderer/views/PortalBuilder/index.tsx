@@ -2,8 +2,7 @@ import React, { useState, createContext } from 'react'
 import './style.css'
 import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
-import WidgetList, {Widget} from './Widget/WidgetList';
-import {Portal, Layout, TabContentType} from './Type'
+import WidgetList from './Widget/WidgetList';
 import { BorderOutlined, CalendarOutlined, Html5Outlined } from '@ant-design/icons';
 
 const PortalContext = createContext({
@@ -13,6 +12,13 @@ const PortalContext = createContext({
   updatePortal: (newPortal: Portal, portalIndex: number) => {},
   removePortal: (portalIndex: number) => {}
 });
+
+const tabContentType = {
+  IFRAME: 'Iframe',
+  HTML: 'HTML',
+  SCHEDULE: 'Schedule',
+  DEFAULT: 'DefaultPortal'
+};
 
 const PortalBuilder = () => {
 
@@ -26,7 +32,7 @@ const PortalBuilder = () => {
             {
               tabName: 'Default Portal',
               tabContent: {
-                type: TabContentType.DEFAULT,
+                type: tabContentType.DEFAULT as TabContentType,
                 name: 'DefaultPortal'
               }
             }
@@ -47,11 +53,11 @@ const PortalBuilder = () => {
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
-      name: TabContentType.IFRAME,
+      name: tabContentType.IFRAME,
     }, 
     {
       icon: <Html5Outlined />,
-      name: TabContentType.HTML,
+      name: tabContentType.HTML,
     }, 
     {
       icon: <CalendarOutlined />,
