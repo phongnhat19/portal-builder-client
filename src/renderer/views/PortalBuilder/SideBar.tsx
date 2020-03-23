@@ -6,14 +6,16 @@ import CreateModal from './CreateModel';
 import {SideBarProps} from './Type'
 import './style.css'
 import {PortalContext} from './index'
+import PortalConfigNameModal from './PortalConfigModal/PortalConfigNameModal';
 
 const {Text} = Typography
 
 const CONFIRM_DELETE_PORTAL = "Are you sure to delete this portal ? This action CAN NOT be reverted."
 
-const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0 }: SideBarProps) => {
+const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate = () => {}, selectedPortal = 0, onSaveRename = ()=> {} }: SideBarProps) => {
   const [deployModalVisible, setDeployModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
+  const [editNameModalVisible, setNameModalVisible] = useState(false)
 
   const {removePortal} = useContext(PortalContext)
 
@@ -26,10 +28,27 @@ const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate
                 <Menu.Item style={{display: 'flex', padding: 0}} key={`portal-item-${index}`} onClick={(_) => {
                     onChange(portal, index)
                 }}>
-                  <span className="portal-list-item">
+                  <span 
+                    className="portal-list-item" 
+                    onDoubleClick={() => {
+                      if (selectedPortal === index) {
+                        setNameModalVisible(true)
+                      }
+                    }}
+                  >
                     <Text strong={selectedPortal === index}>{portal.name}</Text>
                     {
                       selectedPortal === index &&
+                      <React.Fragment>
+                        <PortalConfigNameModal 
+                          portalName={portal.name}
+                          isVisible={editNameModalVisible}
+                          onClose={() => setNameModalVisible(false)}
+                          onSave = {(item) => {
+                            setNameModalVisible(false)
+                            onSaveRename(item)
+                          }}
+                        />
                       <span>
                         <Button 
                           type="primary" 
@@ -52,6 +71,7 @@ const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate
                           />
                         </Popconfirm>
                       </span>
+                      </React.Fragment>
                     }
                   </span>
                 </Menu.Item>
