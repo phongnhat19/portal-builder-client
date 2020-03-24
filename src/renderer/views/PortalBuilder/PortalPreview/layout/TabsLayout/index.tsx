@@ -6,7 +6,7 @@ import '../style.css'
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
 import confirm from 'antd/lib/modal/confirm';
-import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT, HTML_WIDGET, SCHEDULE_WIDGET } from './constant';
+import { CONFIRM_DELETE, PORTAL_DEFAULT, EMPTY_TAB_CONTENT } from './constant';
 import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../../Widget/HTMLWidget';
 import ScheduleWidget from '../../../Widget/ScheduleWidget';
@@ -16,7 +16,8 @@ const tabContentType = {
   IFRAME: 'Iframe',
   HTML: 'HTML',
   SCHEDULE: 'Schedule',
-  DEFAULT: 'DefaultPortal'
+  DEFAULT: 'DefaultPortal',
+  EMPTY: 'Empty'
 };
 
 const TabsLayout = ({
@@ -48,7 +49,7 @@ const TabsLayout = ({
       switch (tabContent.type) {
         case tabContentType.IFRAME:
           if (!tabContent.props) {
-            newItem.tabContent = IFRAME_WIDGET.TAB_CONTENT_INIT
+            // newItem.tabContent = IFRAME_WIDGET.TAB_CONTENT_INIT
             break;
           }
           const tabContentIframe = tabContent.props as IframeWidgetProps;
@@ -70,7 +71,7 @@ const TabsLayout = ({
 
         case tabContentType.HTML:
           if (!tabContent.props) {
-            newItem.tabContent = HTML_WIDGET.TAB_CONTENT_INIT
+            // newItem.tabContent = HTML_WIDGET.TAB_CONTENT_INIT
             break;
           };
           const tabContentHTML = tabContent.props as HTMLWidgetProps;
@@ -91,7 +92,7 @@ const TabsLayout = ({
           break;
         case tabContentType.SCHEDULE:
           if (!tabContent.props) {
-            newItem.tabContent = SCHEDULE_WIDGET.TAB_CONTENT_INIT
+            // newItem.tabContent = SCHEDULE_WIDGET.TAB_CONTENT_INIT
             break;
           };
           const tabContentSchedule = tabContent.props as ScheduleWidgetProps;
@@ -107,6 +108,8 @@ const TabsLayout = ({
             }} 
           />
           break;
+        case tabContentType.EMPTY:
+          newItem.tabContent = EMPTY_TAB_CONTENT
         default:
           break;
       }
@@ -125,7 +128,8 @@ const TabsLayout = ({
       cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
       onOk() {
         const tabList = portalList[selectedPortal].layout.props.tabList
-        delete tabList[selectedTab].tabContent['props']
+        tabList[selectedTab].tabContent.type = tabContentType.EMPTY as TabContentType
+        delete tabList[selectedTab].tabContent.props
         setPortalList(portalList)
       }
     })
@@ -236,8 +240,7 @@ const TabsLayout = ({
           const tab = {
             tabName: name,
             tabContent: {
-              type: tabContentType.IFRAME as TabContentType,
-              name: "Iframe"
+              type: tabContentType.EMPTY as TabContentType
             }
           }
           onAddItem(tab)
