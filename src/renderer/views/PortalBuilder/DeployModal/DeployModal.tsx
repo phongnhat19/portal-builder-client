@@ -48,10 +48,14 @@ const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: 
         const dataDeploy = {profile, portal: portal.layout.props.tabList, index: index}
         let profilesCopy = [...newProfiles]
         ipcRenderer.send('request-to-kintone', dataDeploy)
-        ipcRenderer.on('kintone-reply', (event, response) => {
+
+        const listener = (event: Electron.IpcRendererEvent, response: any) => {
           profilesCopy[response.index].status = response.status
-         setNewProfiles(profilesCopy);
-        })
+          setNewProfiles(profilesCopy);
+          ipcRenderer.removeListener('kintone-reply', listener)
+        }
+
+        ipcRenderer.on('kintone-reply', listener)
       }}
       />
     </Modal>
