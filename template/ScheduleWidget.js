@@ -3,6 +3,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import axios from 'axios'
 import '@fullcalendar/core/main.css';
+import '@fullcalendar/daygrid/main.css';
+import '@fullcalendar/timegrid/main.css';
 
 const getGaroonUserID = () => {
   return axios({
@@ -39,30 +41,38 @@ const getScheduleByUserID = (userID) => {
 }
 
 const createScheduleWidget = (props) => {
+  const calendarEl = document.createElement('div')
+  calendarEl.style.backgroundColor = '#FFFFFF'
+  calendarEl.style.padding = '5px'
+  let calendar = new Calendar(calendarEl, {
+    header: {
+      left: '',
+      center: 'title',
+      right: `prev,next timeGridDay, timeGridWeek`
+    },
+    plugins: [ dayGridPlugin, timeGridPlugin ],
+    defaultView: props.defaultView || 'dayGridWeek',
+    events: []
+  });
+
   getGaroonUserID()
     .then(getScheduleByUserID)
     .then((eventList) => {
-      const calendarEl = document.createElement('div')
-
-      let calendar = new Calendar(calendarEl, {
-        plugins: [ dayGridPlugin, timeGridPlugin ],
-        defaultView: props.defaultView || 'dayGridWeek',
-        events: eventList.map((event) => {
-          return {
-            id: event.id,
-            title: event.subject,
-            start: new Date(event.start.dateTime),
-            end: new Date(event.end.dateTime)
-          }
+      eventList.forEach((event) => {
+        calendar.addEvent({
+          id: event.id,
+          title: event.subject,
+          start: new Date(event.start.dateTime),
+          end: new Date(event.end.dateTime),
+          allDay: event.isAllDay
         })
-      });
-
+      })
       calendar.render();
-
-      return calendarEl
     }).catch((err) => {
       console.error(err)
     })
+
+  return calendarEl
 }
 
 export {createScheduleWidget}
