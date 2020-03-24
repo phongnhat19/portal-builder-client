@@ -33,10 +33,10 @@ const ScheduleWidget = ({ onSaveSetting, defaultView = SCHEDULE_VIEW.FULL_CALEND
         defaultView={typeView}
         events={
           [{
-            title: 'event3',
+            title: 'SAMPLE APPOINTMENT',
             start: new Date('2020-03-24T09:00:00'),
             end: new Date('2020-03-24T11:00:00'),
-            url: 'https://github.com/fullcalendar/fullcalendar',
+            // url: 'https://github.com/fullcalendar/fullcalendar',
           }]
         }
       />
