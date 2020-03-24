@@ -34,8 +34,8 @@ const ScheduleWidget = ({ onSaveSetting, defaultView = SCHEDULE_VIEW.FULL_CALEND
         events={
           [{
             title: 'SAMPLE APPOINTMENT',
-            start: new Date('2020-03-24T09:00:00'),
-            end: new Date('2020-03-24T11:00:00'),
+            start: (new Date()).setHours(9),
+            end: (new Date()).setHours(11),
             // url: 'https://github.com/fullcalendar/fullcalendar',
           }]
         }
