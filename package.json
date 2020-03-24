@@ -1,7 +1,7 @@
 {
-  "name": "kintone-portal-builder-client",
-  "version": "1.0.0",
-  "description": "",
+  "name": "kintone-portal-builder",
+  "version": "0.1.0",
+  "description": "Kintone Portal Builder",
   "main": "./.webpack/main",
   "scripts": {
     "start": "electron-forge start",
