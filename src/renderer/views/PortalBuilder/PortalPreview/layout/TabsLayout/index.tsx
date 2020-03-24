@@ -6,10 +6,11 @@ import '../style.css'
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
 import confirm from 'antd/lib/modal/confirm';
-import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT, HTML_WIDGET } from './constant';
+import { CONFIRM_DELETE, IFRAME_WIDGET, PORTAL_DEFAULT, HTML_WIDGET, SCHEDULE_WIDGET } from './constant';
 import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../../Widget/HTMLWidget';
 import ScheduleWidget from '../../../Widget/ScheduleWidget';
+import { SCHEDULE_VIEW } from '../../../Widget/ScheduleWidget/constant';
 
 const tabContentType = {
   IFRAME: 'Iframe',
@@ -89,7 +90,22 @@ const TabsLayout = ({
             />
           break;
         case tabContentType.SCHEDULE:
-          newItem.tabContent = <ScheduleWidget />
+          if (!tabContent.props) {
+            newItem.tabContent = SCHEDULE_WIDGET.TAB_CONTENT_INIT
+            break;
+          };
+          const tabContentSchedule = tabContent.props as ScheduleWidgetProps;
+          newItem.tabContent = 
+          <ScheduleWidget 
+            defaultView={tabContentSchedule.defaultView}  
+            onRemove={removeWidget}
+            onSaveSetting={({defaultView}) => {
+              let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+              currentProps.defaultView = defaultView
+              currentProps.showSettingInit = false;
+              updateWidget(currentProps)
+            }} 
+          />
           break;
         default:
           break;
@@ -115,7 +131,7 @@ const TabsLayout = ({
     })
   }
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps) => {
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | ScheduleWidgetProps) => {
     const tabList = portalList[selectedPortal].layout.props.tabList
     tabList[selectedTab].tabContent.props = newProps
     setPortalList(portalList)
@@ -171,7 +187,7 @@ const TabsLayout = ({
         } else if (type === tabContentType.SCHEDULE) {
           props = {
             showSettingInit: true,
-            defaultView: 'week'
+            defaultView: SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME
           }
         }
         props && dropWidget(selectedTab, type, props)

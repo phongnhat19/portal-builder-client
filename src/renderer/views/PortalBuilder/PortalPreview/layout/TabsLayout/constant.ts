@@ -7,6 +7,9 @@ const CONFIRM_DELETE = {
 const IFRAME_WIDGET = {
   TAB_CONTENT_INIT: 'Please drag Iframe to create new widget'
 }
+const SCHEDULE_WIDGET = {
+  TAB_CONTENT_INIT: 'Please drag Schedule to create new widget'
+}
 const HTML_WIDGET = {
   TAB_CONTENT_INIT: 'Please drag HTML to create new widget'
 }
@@ -18,5 +21,6 @@ export {
   CONFIRM_DELETE,
   IFRAME_WIDGET,
   HTML_WIDGET,
+  SCHEDULE_WIDGET,
   PORTAL_DEFAULT,
 }
