@@ -1,4 +1,5 @@
   import {Tabs} from '@kintone/kintone-ui-component/esm/js'
+import { createScheduleWidget } from './ScheduleWidget';
 
   const configs = PORTAL_CONFIG
 
@@ -44,7 +45,7 @@
         break;
       
       case 'Schedule':
-        tabContent = createHTMLItemContent(content.props);
+        tabContent = createScheduleWidget(content.props);
         break;
         
       default:

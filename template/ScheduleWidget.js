@@ -1,5 +1,6 @@
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import axios from 'axios'
 import '@fullcalendar/core/main.css';
 
@@ -44,8 +45,8 @@ const createScheduleWidget = (props) => {
       const calendarEl = document.createElement('div')
 
       let calendar = new Calendar(calendarEl, {
-        plugins: [ dayGridPlugin ],
-        defaultView: 'dayGridWeek',
+        plugins: [ dayGridPlugin, timeGridPlugin ],
+        defaultView: props.defaultView || 'dayGridWeek',
         events: eventList.map((event) => {
           return {
             id: event.id,
