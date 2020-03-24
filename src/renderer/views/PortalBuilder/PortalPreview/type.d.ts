@@ -2,7 +2,8 @@ declare enum TabContentType {
   IFRAME = 'Iframe',
   HTML = 'HTML',
   SCHEDULE = 'Schedule',
-  DEFAULT = 'DefaultPortal'
+  DEFAULT = 'DefaultPortal',
+  EMPTY = 'Empty'
 }
 
 declare type Tab = {
@@ -10,7 +11,7 @@ declare type Tab = {
   tabContent: {
     type: TabContentType,
     name?: string,
-    props?: IframeWidgetProps | HTMLWidgetProps,
+    props?: IframeWidgetProps | HTMLWidgetProps | ScheduleWidgetProps,
     value?: string
   }
 }
