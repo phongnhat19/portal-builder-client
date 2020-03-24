@@ -2,7 +2,8 @@ declare enum TabContentType {
   IFRAME = 'Iframe',
   HTML = 'HTML',
   SCHEDULE = 'Schedule',
-  DEFAULT = 'DefaultPortal'
+  DEFAULT = 'DefaultPortal',
+  EMPTY = 'Empty'
 }
 
 declare type Tab = {
