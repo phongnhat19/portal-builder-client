@@ -4,19 +4,14 @@ const CONFIRM_DELETE = {
   BUTTON_CANCEL: 'No'
 }
 
-const IFRAME_WIDGET = {
-  TAB_CONTENT_INIT: 'Please drag Iframe to create new widget'
-}
-const HTML_WIDGET = {
-  TAB_CONTENT_INIT: 'Please drag HTML to create new widget'
-}
+const EMPTY_TAB_CONTENT = 'Drop widget here'
+
 const PORTAL_DEFAULT = {
   TAB_CONTENT_INIT: 'This is kintone default Portal'
 }
 
 export {
   CONFIRM_DELETE,
-  IFRAME_WIDGET,
-  HTML_WIDGET,
   PORTAL_DEFAULT,
+  EMPTY_TAB_CONTENT
 }
