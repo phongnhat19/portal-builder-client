@@ -24,7 +24,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Kintone Portal Builder"
+            "name": "kintone-portal-builder"
           }
         },
         {
