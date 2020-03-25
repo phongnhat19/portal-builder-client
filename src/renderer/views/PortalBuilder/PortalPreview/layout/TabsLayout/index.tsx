@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import {Tabs} from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
 import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined, EditOutlined} from '@ant-design/icons';
-import '../style.css'
+import './style.css'
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
 import confirm from 'antd/lib/modal/confirm';
@@ -21,13 +21,9 @@ const tabContentType = {
 };
 
 const TabsLayout = ({
-  items = [],
-  onAddItem = () => {},
-  onRemoveItem = () => { }
+  items = []
 } : {
-  items?: Tab[],
-  onAddItem?: (data: Tab) => void
-  onRemoveItem?: (index: number) => void
+  items?: Tab[]
 }) => {
 
   const [selectedTab, setSelectedTab] = useState(0)
@@ -49,7 +45,6 @@ const TabsLayout = ({
       switch (tabContent.type) {
         case tabContentType.IFRAME:
           if (!tabContent.props) {
-            // newItem.tabContent = IFRAME_WIDGET.TAB_CONTENT_INIT
             break;
           }
           const tabContentIframe = tabContent.props as IframeWidgetProps;
@@ -71,7 +66,6 @@ const TabsLayout = ({
 
         case tabContentType.HTML:
           if (!tabContent.props) {
-            // newItem.tabContent = HTML_WIDGET.TAB_CONTENT_INIT
             break;
           };
           const tabContentHTML = tabContent.props as HTMLWidgetProps;
@@ -92,7 +86,6 @@ const TabsLayout = ({
           break;
         case tabContentType.SCHEDULE:
           if (!tabContent.props) {
-            // newItem.tabContent = SCHEDULE_WIDGET.TAB_CONTENT_INIT
             break;
           };
           const tabContentSchedule = tabContent.props as ScheduleWidgetProps;
@@ -224,7 +217,11 @@ const TabsLayout = ({
               if (selectedTab === 0) return;
               const newSelectedTab = selectedTab - 1;
               setSelectedTab(newSelectedTab)
-              onRemoveItem(selectedTab)
+
+              const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout))
+              newLayout.props.tabList.splice(selectedTab, 1)
+              portalList[selectedPortal].layout = newLayout
+              setPortalList(portalList);
             }} 
           />
         }
@@ -243,7 +240,8 @@ const TabsLayout = ({
               type: tabContentType.EMPTY as TabContentType
             }
           }
-          onAddItem(tab)
+          portalList[selectedPortal].layout.props.tabList.push(tab)
+          setPortalList(portalList);
           showTabConfigModal(false)
         }}
       />

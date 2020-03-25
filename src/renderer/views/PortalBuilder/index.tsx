@@ -20,13 +20,18 @@ const tabContentType = {
   DEFAULT: 'DefaultPortal'
 };
 
+const LAYOUT_TYPE = {
+  TAB: 'Tabs',
+  GRID: 'Grid'
+}
+
 const PortalBuilder = () => {
 
   let initData:Portal[] = [
     {
       name: 'Portal 1',
       layout: {
-        type: 'Tabs',
+        type: LAYOUT_TYPE.TAB as LayoutType,
         props: {
           tabList: [
             {
@@ -116,14 +121,6 @@ const PortalBuilder = () => {
         <div className="portal-preview">
           <PortalPreview 
             layout = {data.length > 0 ? data[selectedIndex].layout : undefined}
-            onAddTabs={(item: any) => {
-              data[selectedPortal].layout.props.tabList.push(item)
-              setPortalList(data);
-            }}
-            onRemoveTabs = {(layout: Layout) => {
-              data[selectedPortal].layout = layout
-              setPortalList(data);
-            }}
           />
         </div>
         <div className="widget-list-container">
@@ -134,5 +131,5 @@ const PortalBuilder = () => {
   )
 }
 
-export {PortalContext}
+export {PortalContext, LAYOUT_TYPE}
 export default PortalBuilder

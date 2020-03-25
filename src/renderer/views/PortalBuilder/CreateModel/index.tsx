@@ -2,6 +2,7 @@ import React, {CSSProperties, useState} from 'react'
 import {Modal, Input, Button} from 'antd'
 import {TableOutlined, FileOutlined} from '@ant-design/icons'
 import './style.css'
+import { LAYOUT_TYPE } from '..'
 
 const CreateModal = ({isVisible= false, onClose, onCreate}: {
   isVisible: boolean
@@ -24,12 +25,12 @@ const CreateModal = ({isVisible= false, onClose, onCreate}: {
     const onBtnTabClick = () => {
         setTabIconStyle(clickIconStyle)
         setGridIconStyle(normalIconStyle)
-        setPortalType('Tabs')
+        setPortalType(LAYOUT_TYPE.TAB)
     }
     const onBtnGridClick = () => {
         setTabIconStyle(normalIconStyle)
         setGridIconStyle(clickIconStyle)
-        setPortalType('grid')
+        setPortalType(LAYOUT_TYPE.GRID)
     }
   return(
     <Modal
@@ -38,21 +39,25 @@ const CreateModal = ({isVisible= false, onClose, onCreate}: {
       okText="Create"
       onCancel={onClose}
       onOk={() => {
+        let defaultProps = {}
+        if (portalType === LAYOUT_TYPE.TAB) {
+          defaultProps = {
+            tabList: [
+              {
+                tabName: 'Default Portal',
+                tabContent: {
+                  type: TabContentType.DEFAULT,
+                  name: 'DefaultPortal'
+                }
+              }
+            ]
+          }
+        }
         onCreate({
           name: portalName,
           layout: {
             type: portalType,
-            props: {
-              tabList: [
-                {
-                  tabName: 'Default Portal',
-                  tabContent: {
-                    type: TabContentType.DEFAULT,
-                    name: 'DefaultPortal'
-                  }
-                }
-              ]
-            }
+            props: defaultProps
           } as Layout
         })
       }}
@@ -70,7 +75,7 @@ const CreateModal = ({isVisible= false, onClose, onCreate}: {
         <div className="btn-type">
             <div>Choose Portal layout</div>
             <Button key="2" className="btn-tab-type" icon={<FileOutlined style={tabIconStyle} />} type="dashed" onClick={onBtnTabClick}></Button>
-            <Button key="3" className="btn-grid-type" icon={<TableOutlined style={gridIconStyle} />} type="dashed" onClick={onBtnGridClick} disabled ></Button>
+            <Button key="3" className="btn-grid-type" icon={<TableOutlined style={gridIconStyle} />} type="dashed" onClick={onBtnGridClick} ></Button>
         </div>
     </Modal>
   )
