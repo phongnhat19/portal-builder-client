@@ -18,7 +18,7 @@ const PortalPreview = ({
       )
     } else if (layout!.type === LAYOUT_TYPE.GRID) {
       return (
-        <GridLayout />
+        <GridLayout items={layout!.props.rows} />
       )
     }
   }

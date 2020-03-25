@@ -5,7 +5,7 @@ declare enum LayoutType {
 
 declare type Layout = {
     type: LayoutType,
-    props: TabLayoutProps
+    props: TabLayout | GridLayout
 }
 
 declare type Portal = {
