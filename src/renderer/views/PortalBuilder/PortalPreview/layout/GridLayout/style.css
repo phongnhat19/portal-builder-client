@@ -1,0 +1,14 @@
+.grid-layout {
+    border-style: dashed;
+    min-width: 100%;
+    min-height: 85vh;
+}
+
+.grid-layout .grid-layout-row {
+    border-style: dotted;
+    min-height: 10vh;
+}
+
+.grid-layout-container {
+    width: 65vw;
+}
