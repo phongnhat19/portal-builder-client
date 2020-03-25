@@ -1,3 +1,3 @@
-declare type TabLayoutProps = {
+declare type TabLayout = {
   tabList: Tab[]
 }
