@@ -40,12 +40,10 @@ const GridLayout = ({ items = [] }: {
               key={i}
               rowIndex={i}
               onRemoveGridRow={() => {
-                if (items.length > 1) {
-                  const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout))
-                  newLayout.props.rows.splice(i, 1)
-                  portalList[selectedPortal].layout = newLayout
-                  setPortalList(portalList);
-                }
+                const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout))
+                newLayout.props.rows.splice(i, 1)
+                portalList[selectedPortal].layout = newLayout
+                setPortalList(portalList);
               }}
               onAddBlock={() => {
                 const newBlock = {
@@ -57,12 +55,10 @@ const GridLayout = ({ items = [] }: {
                 setPortalList(portalList);
               }}
               onRemoveBlock={({ removedIndex }) => {
-                if (items.length > 1) {
-                  const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout))
-                  newLayout.props.rows[i].blocks.splice(removedIndex, 1)
-                  portalList[selectedPortal].layout = newLayout
-                  setPortalList(portalList);
-                }
+                const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout))
+                newLayout.props.rows[i].blocks.splice(removedIndex, 1)
+                portalList[selectedPortal].layout = newLayout
+                setPortalList(portalList);
               }}
             />
           })}

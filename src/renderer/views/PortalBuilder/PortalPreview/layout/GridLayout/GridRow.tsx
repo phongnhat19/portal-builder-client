@@ -21,28 +21,25 @@ const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemov
           onClick={onAddBlock}
         >Add Block
         </Button>
-        
-        {length !== 1 &&
-          <Popconfirm
-            title="Are you sure to delete this row?"
-            onConfirm={onRemoveGridRow}
-            okText="Yes"
-            cancelText="No"
+
+        <Popconfirm
+          title="Are you sure to delete this row?"
+          onConfirm={onRemoveGridRow}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button
+            type="danger"
+            icon={<MinusCircleOutlined />}
+            size="small"
           >
-            <Button
-              type="danger"
-              icon={<MinusCircleOutlined />}
-              size="small"
-            >
-              Remove Row
+            Remove Row
             </Button>
-          </Popconfirm>
-        }
+        </Popconfirm>
       </Row>
       <div className='grid-blocks-container'>
         {gridRowItem!.blocks.map((block, index) => {
           return <GridBlock
-            length={gridRowItem!.blocks.length}
             content={block.content}
             width={block.width}
             key={`block-${index}`}
