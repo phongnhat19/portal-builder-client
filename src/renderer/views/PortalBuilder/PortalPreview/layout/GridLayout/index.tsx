@@ -35,7 +35,20 @@ const GridLayout = ({ items = [] }: {
       <div style={{height: '85vh', overflow: 'auto'}}>
         <div className='grid-layout'>
           {items.map((item, i) => {
-            return <GridRow gridRowItem={item} key={i} rowIndex={i} />
+            return <GridRow
+              length={items.length}
+              gridRowItem={item}
+              key={i}
+              rowIndex={i}
+              onRemoveGridRow={() => {
+                if (items.length > 1) {
+                  const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout))
+                  newLayout.props.rows.splice(i, 1)
+                  portalList[selectedPortal].layout = newLayout
+                  setPortalList(portalList);
+                }
+              }}
+            />
           })}
         </div>
       </div>
