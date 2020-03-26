@@ -25,7 +25,7 @@ const GridBlock = ({ style, content, width, rowIndex, blockIndex, onRemoveBlock,
     <div style={finalStyle} className="grid-block">
       {length !== 1 &&
         <Popconfirm
-          title="Are you sure delete this task?"
+          title="Are you sure delete this block?"
           onConfirm={onRemoveBlock}
           okText="Yes"
           cancelText="No"
