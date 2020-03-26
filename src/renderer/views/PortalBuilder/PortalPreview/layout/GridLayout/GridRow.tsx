@@ -3,17 +3,25 @@ import { Row, Button, Popconfirm } from 'antd';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import GridBlock from './GridBlock';
 
-const GridRowItem = ({ length, gridRowItem, rowIndex, onRemoveGridRow }: {
+const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemoveGridRow }: {
   gridRowItem?: GridRow,
-  length?: number,
-  rowIndex: number,
+  rowIndex: number
+  onRemoveBlock: (item: { removedIndex: number }) => void
+  onAddBlock?: () => void
   onRemoveGridRow?: () => void
 }) => {
 
   return (
     <div className='grid-layout-row'>
-      <Row justify="space-between" style={{marginBottom: '15px'}}>
-        <Button type="primary" icon={<PlusCircleOutlined />} size="small">Add Block</Button>
+      <Row justify="space-between" style={{ marginBottom: '15px' }}>
+        <Button
+          type="primary"
+          icon={<PlusCircleOutlined />}
+          size="small"
+          onClick={onAddBlock}
+        >Add Block
+        </Button>
+        
         {length !== 1 &&
           <Popconfirm
             title="Are you sure to delete this row?"
@@ -31,9 +39,23 @@ const GridRowItem = ({ length, gridRowItem, rowIndex, onRemoveGridRow }: {
           </Popconfirm>
         }
       </Row>
-      {gridRowItem!.blocks.map((block, index) => {
-        return <GridBlock content={block.content} width={block.width} key={`block-${index}`} rowIndex={rowIndex} blockIndex={index} />
-      })}
+      <div className='grid-blocks-container'>
+        {gridRowItem!.blocks.map((block, index) => {
+          return <GridBlock
+            length={gridRowItem!.blocks.length}
+            content={block.content}
+            width={block.width}
+            key={`block-${index}`}
+            rowIndex={rowIndex}
+            blockIndex={index}
+            onRemoveBlock={() => {
+              onRemoveBlock({
+                removedIndex: index
+              })
+            }}
+          />
+        })}
+      </div>
     </div>
 
   )

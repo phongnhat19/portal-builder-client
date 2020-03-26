@@ -14,12 +14,12 @@ const templateUMD = {
     module: {
         rules: [
             {
-                    test: /\.css$/,
-                    use: [
-                      { loader: "style-loader" },
-                      { loader: "css-loader" }
-                    ]
-                  }
+                test: /\.css$/,
+                use: [
+                    { loader: "style-loader" },
+                    { loader: "css-loader" }
+                ]
+            }
         ]
     }
 }
