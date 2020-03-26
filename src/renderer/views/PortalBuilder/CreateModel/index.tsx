@@ -57,7 +57,7 @@ const CreateModal = ({ isVisible = false, onClose, onCreate }: {
             rows: [
               {
                 blocks: [{
-                  content: 1,
+                  content: 'Grid Block',
                   width: 20
                 }],
                 align: 'top',

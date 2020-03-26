@@ -1,12 +1,27 @@
 .grid-layout {
-    border-style: dashed;
+    border: 1px solid #3091c9;
+    background-color: #dbf2ff;
     min-width: 100%;
     min-height: 85vh;
+    padding: 15px
 }
 
 .grid-layout .grid-layout-row {
-    border-style: dotted;
+    border: 1px solid #e3a871;
+    background-color: #facfa7;
     min-height: 10vh;
+    padding: 15px
+}
+
+.grid-layout-row:not(:first-child) {
+    margin-top: 15px
+}
+
+.grid-block {
+    border: 1px solid #6bd1a4;
+    background-color: #8ef5c8;
+    padding: 15px;
+    min-height: 100px;
 }
 
 .grid-layout-container {

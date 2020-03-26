@@ -3,7 +3,7 @@ import './style.css'
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { PortalContext } from '../../..';
-import GridRowItem from './GridRow';
+import GridRow from './GridRow';
 
 const GridLayout = ({ items = [] }: {
   items?: GridRow[]
@@ -16,6 +16,7 @@ const GridLayout = ({ items = [] }: {
       <Button
         type="primary"
         icon={<PlusCircleOutlined />}
+        style={{marginBottom: '15px'}}
         onClick={() => {
           const sampleRow = {
             blocks: [{
@@ -24,17 +25,19 @@ const GridLayout = ({ items = [] }: {
             }],
             align: 'top',
             justify: 'start'
-          }
-          portalList[selectedPortal].layout.props.rows.push(sampleRow)
+          } as GridRow
+          const props = portalList[selectedPortal].layout.props as GridLayout
+          props.rows.push(sampleRow)
           setPortalList(portalList);
         }}>
         Add Row
-        </Button>
-      <div className='grid-layout'>
-        Grid Layout
-        {items.map((item, i) => {
-          return <GridRowItem gridRowItem={item} key={i} />
-        })}
+      </Button>
+      <div style={{height: '85vh', overflow: 'auto'}}>
+        <div className='grid-layout'>
+          {items.map((item, i) => {
+            return <GridRow gridRowItem={item} key={i} rowIndex={i} />
+          })}
+        </div>
       </div>
     </div>
   )

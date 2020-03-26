@@ -1,5 +1,3 @@
-import { CSSProperties, ReactElement } from "react"
-
 declare type GridBlock = {
   style?: CSSProperties
   content: ReactElement | string | number
