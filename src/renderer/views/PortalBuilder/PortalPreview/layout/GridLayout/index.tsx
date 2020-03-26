@@ -16,7 +16,7 @@ const GridLayout = ({ items = [] }: {
       <Button
         type="primary"
         icon={<PlusCircleOutlined />}
-        style={{marginBottom: '15px'}}
+        style={{ marginBottom: '15px' }}
         onClick={() => {
           const sampleRow = {
             blocks: [{
@@ -32,10 +32,13 @@ const GridLayout = ({ items = [] }: {
         }}>
         Add Row
       </Button>
-      <div style={{height: '85vh', overflow: 'auto'}}>
+      <div style={{ height: '85vh', overflow: 'auto' }}>
         <div className='grid-layout'>
           {items.map((item, i) => {
             return <GridRow
+              gridRowItem={item}
+              key={i}
+              rowIndex={i}
               onAddBlock={() => {
                 const newBlock = {
                   content: 1,
@@ -45,9 +48,14 @@ const GridLayout = ({ items = [] }: {
                 props.rows[i].blocks.push(newBlock)
                 setPortalList(portalList);
               }}
-              gridRowItem={item}
-              key={i}
-              rowIndex={i}
+              onRemoveBlock={({ removedIndex }) => {
+                if (items.length > 1) {
+                  const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout))
+                  newLayout.props.rows[i].blocks.splice(removedIndex, 1)
+                  portalList[selectedPortal].layout = newLayout
+                  setPortalList(portalList);
+                }
+              }}
             />
           })}
         </div>

@@ -3,9 +3,10 @@ import { Row, Button } from 'antd';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import GridBlock from './GridBlock';
 
-const GridRowItem = ({ gridRowItem, rowIndex, onAddBlock }: {
+const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock }: {
   gridRowItem?: GridRow,
-  rowIndex: number,
+  rowIndex: number
+  onRemoveBlock: (item: { removedIndex: number }) => void
   onAddBlock?: () => void
 }) => {
 
@@ -24,7 +25,19 @@ const GridRowItem = ({ gridRowItem, rowIndex, onAddBlock }: {
       </Row>
       <div className='grid-blocks-container'>
         {gridRowItem!.blocks.map((block, index) => {
-          return <GridBlock content={block.content} width={block.width} key={`block-${index}`} rowIndex={rowIndex} blockIndex={index} />
+          return <GridBlock
+            length={gridRowItem!.blocks.length}
+            content={block.content}
+            width={block.width}
+            key={`block-${index}`}
+            rowIndex={rowIndex}
+            blockIndex={index}
+            onRemoveBlock={() => {
+              onRemoveBlock({
+                removedIndex: index
+              })
+            }}
+          />
         })}
       </div>
     </div>
