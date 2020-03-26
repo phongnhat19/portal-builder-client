@@ -27,3 +27,7 @@
 .grid-layout-container {
     width: 65vw;
 }
+
+.grid-layout .grid-blocks-container {
+    display: flex;
+}

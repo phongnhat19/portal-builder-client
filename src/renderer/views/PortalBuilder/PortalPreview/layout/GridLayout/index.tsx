@@ -35,7 +35,20 @@ const GridLayout = ({ items = [] }: {
       <div style={{height: '85vh', overflow: 'auto'}}>
         <div className='grid-layout'>
           {items.map((item, i) => {
-            return <GridRow gridRowItem={item} key={i} rowIndex={i} />
+            return <GridRow
+              onAddBlock={() => {
+                const newBlock = {
+                  content: 1,
+                  width: 20
+                }
+                const props = portalList[selectedPortal].layout.props as GridLayout
+                props.rows[i].blocks.push(newBlock)
+                setPortalList(portalList);
+              }}
+              gridRowItem={item}
+              key={i}
+              rowIndex={i}
+            />
           })}
         </div>
       </div>
