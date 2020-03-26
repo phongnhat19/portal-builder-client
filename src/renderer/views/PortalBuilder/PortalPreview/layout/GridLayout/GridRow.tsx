@@ -1,13 +1,14 @@
 import React from 'react'
-import { Row, Button } from 'antd';
+import { Row, Button, Popconfirm } from 'antd';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import GridBlock from './GridBlock';
 
-const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock }: {
+const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemoveGridRow }: {
   gridRowItem?: GridRow,
   rowIndex: number
   onRemoveBlock: (item: { removedIndex: number }) => void
   onAddBlock?: () => void
+  onRemoveGridRow?: () => void
 }) => {
 
   return (
@@ -18,15 +19,27 @@ const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock }: {
           icon={<PlusCircleOutlined />}
           size="small"
           onClick={onAddBlock}
+        >Add Block
+        </Button>
+
+        <Popconfirm
+          title="Are you sure to delete this row?"
+          onConfirm={onRemoveGridRow}
+          okText="Yes"
+          cancelText="No"
         >
-          Add Block
-          </Button>
-        <Button type="danger" icon={<MinusCircleOutlined />} size="small">Remove Row</Button>
+          <Button
+            type="danger"
+            icon={<MinusCircleOutlined />}
+            size="small"
+          >
+            Remove Row
+            </Button>
+        </Popconfirm>
       </Row>
       <div className='grid-blocks-container'>
         {gridRowItem!.blocks.map((block, index) => {
           return <GridBlock
-            length={gridRowItem!.blocks.length}
             content={block.content}
             width={block.width}
             key={`block-${index}`}
