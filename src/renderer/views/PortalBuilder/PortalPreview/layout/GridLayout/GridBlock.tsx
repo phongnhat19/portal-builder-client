@@ -1,7 +1,7 @@
 import React, { CSSProperties, ReactElement } from 'react'
 import './style.css'
 import { MinusCircleOutlined } from '@ant-design/icons';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, Row } from 'antd';
 
 const GridBlock = ({ style, content, width, rowIndex, blockIndex, onRemoveBlock, length }: {
   style?: CSSProperties
@@ -23,22 +23,26 @@ const GridBlock = ({ style, content, width, rowIndex, blockIndex, onRemoveBlock,
 
   return(
     <div style={finalStyle} className="grid-block">
-      {length !== 1 &&
-        <Popconfirm
-          title="Are you sure delete this block?"
-          onConfirm={onRemoveBlock}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button
-            type="danger"
-            icon={<MinusCircleOutlined />}
-            size="small"
-          >Remove Block
+      <Row>
+        {length !== 1 &&
+          <Popconfirm
+            title="Are you sure to delete this block?"
+            onConfirm={onRemoveBlock}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button
+              type="danger"
+              icon={<MinusCircleOutlined />}
+              size="small"
+            >Remove Block
           </Button>
-        </Popconfirm>
-      }
-      {content}
+          </Popconfirm>
+        }
+      </Row>
+      <Row>
+        {content}
+      </Row>
     </div>
   )
 }
