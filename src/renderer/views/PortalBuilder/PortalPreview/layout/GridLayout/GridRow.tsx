@@ -16,7 +16,7 @@ const GridRowItem = ({ length, gridRowItem, rowIndex, onRemoveGridRow }: {
         <Button type="primary" icon={<PlusCircleOutlined />} size="small">Add Block</Button>
         {length !== 1 &&
           <Popconfirm
-            title="Are you sure delete this task?"
+            title="Are you sure to delete this row?"
             onConfirm={onRemoveGridRow}
             okText="Yes"
             cancelText="No"
