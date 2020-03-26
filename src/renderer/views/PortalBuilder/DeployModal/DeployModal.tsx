@@ -45,7 +45,7 @@ const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: 
       data = {newProfiles}
       onDeploy = {(profile: Profile, index: number) => {
         onDeploy(profile, index)
-        const dataDeploy = {profile, portal: portal.layout.props.tabList, index: index}
+        const dataDeploy = {profile, portal: (portal.layout.props as TabLayout).tabList, index: index}
         let profilesCopy = [...newProfiles]
         ipcRenderer.send('request-to-kintone', dataDeploy)
 
