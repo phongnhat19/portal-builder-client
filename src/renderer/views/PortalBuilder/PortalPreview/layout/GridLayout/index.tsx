@@ -20,7 +20,7 @@ const GridLayout = ({ items = [] }: {
         onClick={() => {
           const sampleRow = {
             blocks: [{
-              content: 1,
+              content: 'Widget',
               width: 20
             }],
             align: 'top',
@@ -47,7 +47,7 @@ const GridLayout = ({ items = [] }: {
               }}
               onAddBlock={() => {
                 const newBlock = {
-                  content: 1,
+                  content: 'Widget',
                   width: 20
                 }
                 const props = portalList[selectedPortal].layout.props as GridLayout
