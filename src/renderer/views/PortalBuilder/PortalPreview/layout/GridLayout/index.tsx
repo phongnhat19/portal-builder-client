@@ -20,7 +20,7 @@ const GridLayout = ({ items = [] }: {
         onClick={() => {
           const sampleRow = {
             blocks: [{
-              content: 1,
+              content: 'Widget',
               width: 20
             }],
             align: 'top',
@@ -47,7 +47,7 @@ const GridLayout = ({ items = [] }: {
               }}
               onAddBlock={() => {
                 const newBlock = {
-                  content: 1,
+                  content: 'Widget',
                   width: 20
                 }
                 const props = portalList[selectedPortal].layout.props as GridLayout
@@ -58,6 +58,11 @@ const GridLayout = ({ items = [] }: {
                 const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout))
                 newLayout.props.rows[i].blocks.splice(removedIndex, 1)
                 portalList[selectedPortal].layout = newLayout
+                setPortalList(portalList);
+              }}
+              onResizeWidthBlock={({blockIndex, width }) => {
+                const props = portalList[selectedPortal].layout.props as GridLayout
+                props.rows[i].blocks[blockIndex].width = width
                 setPortalList(portalList);
               }}
             />

@@ -1,15 +1,16 @@
-import React, { CSSProperties, ReactElement } from 'react'
+import React, { CSSProperties, ReactElement, useRef } from 'react'
 import './style.css'
 import { MinusCircleOutlined } from '@ant-design/icons';
 import { Button, Popconfirm, Row } from 'antd';
 
-const GridBlock = ({ style, content, width, rowIndex, blockIndex, onRemoveBlock }: {
+const GridBlock = ({ style, content, width, rowIndex, blockIndex, onRemoveBlock, onResizeWidth }: {
   style?: CSSProperties
   content: ReactElement | string | number
   width: number
   rowIndex: number
   blockIndex: number
   onRemoveBlock?: () => void
+  onResizeWidth: (item: {width: number}) => void
 }) => {
 
   let finalStyle:CSSProperties = {
@@ -20,8 +21,12 @@ const GridBlock = ({ style, content, width, rowIndex, blockIndex, onRemoveBlock 
     finalStyle = {...finalStyle, ...style}
   }
 
+  const blockRef = useRef<HTMLDivElement>(null)
+  
   return(
-    <div style={finalStyle} className="grid-block">
+    <div ref={blockRef} style={finalStyle} className="grid-block" onMouseUp={() => {
+      onResizeWidth({width: blockRef.current!.offsetWidth})
+    }}>
       <Row>
         <Popconfirm
           title="Are you sure to delete this block?"

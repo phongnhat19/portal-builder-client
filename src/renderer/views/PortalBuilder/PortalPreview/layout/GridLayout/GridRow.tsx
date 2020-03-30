@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Row, Button, Popconfirm } from 'antd';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import GridBlock from './GridBlock';
 
-const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemoveGridRow }: {
+const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemoveGridRow, onResizeWidthBlock }: {
   gridRowItem?: GridRow,
   rowIndex: number
   onRemoveBlock: (item: { removedIndex: number }) => void
   onAddBlock?: () => void
   onRemoveGridRow?: () => void
+  onResizeWidthBlock: (item: { blockIndex: number, width: number }) => void
 }) => {
+
+  const rowRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className='grid-layout-row'>
@@ -37,7 +40,7 @@ const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemov
             </Button>
         </Popconfirm>
       </Row>
-      <div className='grid-blocks-container'>
+      <div className='grid-blocks-container' ref={rowRef}>
         {gridRowItem!.blocks.map((block, index) => {
           return <GridBlock
             content={block.content}
@@ -48,6 +51,15 @@ const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemov
             onRemoveBlock={() => {
               onRemoveBlock({
                 removedIndex: index
+              })
+            }}
+            onResizeWidth={(item) => {
+              const rowWidth: number = rowRef.current!.offsetWidth
+              const percentageConversionWidth: number = (item.width / rowWidth * 100)
+              const roundDecimalTwoPlaces: number = Math.round(percentageConversionWidth * 100) / 100
+              onResizeWidthBlock({
+                blockIndex: index,
+                width: roundDecimalTwoPlaces
               })
             }}
           />
