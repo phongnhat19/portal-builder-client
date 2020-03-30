@@ -60,6 +60,11 @@ const GridLayout = ({ items = [] }: {
                 portalList[selectedPortal].layout = newLayout
                 setPortalList(portalList);
               }}
+              onResizeWidthBlock={({blockIndex, width }) => {
+                const props = portalList[selectedPortal].layout.props as GridLayout
+                props.rows[i].blocks[blockIndex].width = width
+                setPortalList(portalList);
+              }}
             />
           })}
         </div>
