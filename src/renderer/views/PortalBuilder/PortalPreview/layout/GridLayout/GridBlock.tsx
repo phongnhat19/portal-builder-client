@@ -84,7 +84,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         currentContentBlock =
           <IframeWidget
             url={blockContentIframe.url}
-            // width={blockContentIframe.width}
+            width={`${blockContentIframe.width}%`}
             // height={blockContentIframe.height}
             showSettingInit={blockContentIframe.showSettingInit}
             onRemove={removeWidget}
@@ -105,7 +105,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         currentContentBlock =
           <HTMLWidget
             htmlString={blockContentHTML.htmlString}
-            // width={blockContentHTML.width}
+            width={`${blockContentHTML.width}%`}
             // height={blockContentHTML.height}
             showSettingInit={blockContentHTML.showSettingInit}
             onRemove={removeWidget}
@@ -124,6 +124,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         const blockContentSchedule = currentBlock.content as ScheduleWidgetProps;
         currentContentBlock =
           <ScheduleWidget
+            width={`${blockContentSchedule.width}%`}
             defaultView={blockContentSchedule.defaultView}
             onRemove={removeWidget}
             onSaveSetting={({ defaultView }) => {
@@ -162,16 +163,19 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
           props = {
             showSettingInit: true,
             url: "",
+            width: 100
           }
         } else if (type === CONTENT_TYPE.HTML) {
           props = {
             showSettingInit: true,
             htmlString: "",
+            width: 100
           }
         } else if (type === CONTENT_TYPE.SCHEDULE) {
           props = {
             showSettingInit: true,
-            defaultView: SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME
+            defaultView: SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME,
+            width: 100
           }
         }
         props && dropWidget(rowIndex, blockIndex, type, props)
@@ -192,7 +196,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
           </Button>
         </Popconfirm>
       </Row>
-      <Row>
+      <Row className='grid-block-position-relative'>
         {blockContent}
       </Row>
     </div>
