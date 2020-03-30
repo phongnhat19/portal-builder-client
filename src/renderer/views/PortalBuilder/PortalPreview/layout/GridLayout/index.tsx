@@ -4,6 +4,7 @@ import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { PortalContext } from '../../..';
 import GridRow from './GridRow';
+import { CONTENT_TYPE } from '../../../Widget/constant';
 
 const GridLayout = ({ items = [] }: {
   items?: GridRow[]
@@ -20,7 +21,7 @@ const GridLayout = ({ items = [] }: {
         onClick={() => {
           const sampleRow = {
             blocks: [{
-              content: 'Widget',
+              type: CONTENT_TYPE.EMPTY as ContentType,
               width: 20
             }],
             align: 'top',
@@ -46,8 +47,8 @@ const GridLayout = ({ items = [] }: {
                 setPortalList(portalList);
               }}
               onAddBlock={() => {
-                const newBlock = {
-                  content: 'Widget',
+                const newBlock: GridBlock = {
+                  type: CONTENT_TYPE.EMPTY as ContentType,
                   width: 20
                 }
                 const props = portalList[selectedPortal].layout.props as GridLayout
