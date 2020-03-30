@@ -6,19 +6,12 @@ import './style.css'
 import IframeWidget from '../../../Widget/IframeWidget';
 import { PortalContext } from '../../..';
 import confirm from 'antd/lib/modal/confirm';
-import { CONFIRM_DELETE, PORTAL_DEFAULT, EMPTY_TAB_CONTENT } from './constant';
+import { CONFIRM_DELETE, PORTAL_DEFAULT, EMPTY_WIDGET_CONTENT } from './constant';
 import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../../Widget/HTMLWidget';
 import ScheduleWidget from '../../../Widget/ScheduleWidget';
 import { SCHEDULE_VIEW } from '../../../Widget/ScheduleWidget/constant';
-
-const tabContentType = {
-  IFRAME: 'Iframe',
-  HTML: 'HTML',
-  SCHEDULE: 'Schedule',
-  DEFAULT: 'DefaultPortal',
-  EMPTY: 'Empty'
-};
+import { CONTENT_TYPE } from '../../../Widget/constant';
 
 const TabsLayout = ({
   items = []
@@ -43,7 +36,7 @@ const TabsLayout = ({
       const tabContent = item.tabContent;
       if (!tabContent) return;
       switch (tabContent.type) {
-        case tabContentType.IFRAME:
+        case CONTENT_TYPE.IFRAME:
           if (!tabContent.props) {
             break;
           }
@@ -64,7 +57,7 @@ const TabsLayout = ({
             />
           break;
 
-        case tabContentType.HTML:
+        case CONTENT_TYPE.HTML:
           if (!tabContent.props) {
             break;
           };
@@ -84,7 +77,7 @@ const TabsLayout = ({
               }}
             />
           break;
-        case tabContentType.SCHEDULE:
+        case CONTENT_TYPE.SCHEDULE:
           if (!tabContent.props) {
             break;
           };
@@ -101,8 +94,8 @@ const TabsLayout = ({
             }} 
           />
           break;
-        case tabContentType.EMPTY:
-          newItem.tabContent = EMPTY_TAB_CONTENT
+        case CONTENT_TYPE.EMPTY:
+          newItem.tabContent = EMPTY_WIDGET_CONTENT
         default:
           break;
       }
@@ -120,8 +113,8 @@ const TabsLayout = ({
       okType: 'danger',
       cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
       onOk() {
-        const tabList = portalList[selectedPortal].layout.props.tabList
-        tabList[selectedTab].tabContent.type = tabContentType.EMPTY as TabContentType
+        const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList
+        tabList[selectedTab].tabContent.type = CONTENT_TYPE.EMPTY as ContentType
         delete tabList[selectedTab].tabContent.props
         setPortalList(portalList)
       }
@@ -129,7 +122,7 @@ const TabsLayout = ({
   }
 
   const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | ScheduleWidgetProps) => {
-    const tabList = portalList[selectedPortal].layout.props.tabList
+    const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList
     tabList[selectedTab].tabContent.props = newProps
     setPortalList(portalList)
   }
@@ -146,11 +139,11 @@ const TabsLayout = ({
     setTabItems(buildTabItems(items))
   },[items, selectedTab])
 
-  const dropWidget = (tabIndex: number, type: TabContentType, props: any) => {
+  const dropWidget = (tabIndex: number, type: ContentType, props: any) => {
 
-    const currentTab = portalList[selectedPortal].layout.props.tabList[tabIndex]
+    const currentTab = (portalList[selectedPortal].layout.props as TabLayout).tabList[tabIndex]
 
-    if (currentTab.tabContent.type !== tabContentType.DEFAULT){
+    if (currentTab.tabContent.type !== CONTENT_TYPE.DEFAULT){
       currentTab.tabContent = {
         type: type,
         name: 'New Tab',
@@ -166,22 +159,22 @@ const TabsLayout = ({
       onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} 
       onDrop={(e) => {
         let props: any
-        const type = e.dataTransfer.getData("text") as TabContentType
-        if (type === tabContentType.IFRAME) {
+        const type = e.dataTransfer.getData("text") as ContentType
+        if (type === CONTENT_TYPE.IFRAME) {
           props = {
             showSettingInit: true,
             url: "",
             width: "100%",
             height: "82vh"
           }
-        } else if (type === tabContentType.HTML) {
+        } else if (type === CONTENT_TYPE.HTML) {
           props = {
             showSettingInit: true,
             htmlString: "",
             width: "100%",
             height: "82vh"
           }
-        } else if (type === tabContentType.SCHEDULE) {
+        } else if (type === CONTENT_TYPE.SCHEDULE) {
           props = {
             showSettingInit: true,
             defaultView: SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME
@@ -237,10 +230,10 @@ const TabsLayout = ({
           const tab = {
             tabName: name,
             tabContent: {
-              type: tabContentType.EMPTY as TabContentType
+              type: CONTENT_TYPE.EMPTY as ContentType
             }
-          }
-          portalList[selectedPortal].layout.props.tabList.push(tab)
+          } as Tab
+          (portalList[selectedPortal].layout.props as TabLayout).tabList.push(tab)
           setPortalList(portalList);
           showTabConfigModal(false)
         }}

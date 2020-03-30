@@ -4,6 +4,7 @@ import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
 import WidgetList from './Widget/WidgetList';
 import { BorderOutlined, CalendarOutlined, Html5Outlined } from '@ant-design/icons';
+import { CONTENT_TYPE } from './Widget/constant';
 
 const PortalContext = createContext({
   portalList: [] as Portal[],
@@ -12,13 +13,6 @@ const PortalContext = createContext({
   updatePortal: (newPortal: Portal, portalIndex: number) => {},
   removePortal: (portalIndex: number) => {}
 });
-
-const tabContentType = {
-  IFRAME: 'Iframe',
-  HTML: 'HTML',
-  SCHEDULE: 'Schedule',
-  DEFAULT: 'DefaultPortal'
-};
 
 const LAYOUT_TYPE = {
   TAB: 'Tabs',
@@ -37,7 +31,7 @@ const PortalBuilder = () => {
             {
               tabName: 'Default Portal',
               tabContent: {
-                type: tabContentType.DEFAULT as TabContentType,
+                type: CONTENT_TYPE.DEFAULT as ContentType,
                 name: 'DefaultPortal'
               }
             }
@@ -58,15 +52,15 @@ const PortalBuilder = () => {
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
-      name: tabContentType.IFRAME,
+      name: CONTENT_TYPE.IFRAME,
     }, 
     {
       icon: <Html5Outlined />,
-      name: tabContentType.HTML,
+      name: CONTENT_TYPE.HTML,
     }, 
     {
       icon: <CalendarOutlined />,
-      name: tabContentType.SCHEDULE
+      name: CONTENT_TYPE.SCHEDULE
     }
   ]
 

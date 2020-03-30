@@ -1,7 +1,8 @@
 declare type GridBlock = {
   style?: CSSProperties
-  content: ReactElement | string | number
+  content?: IframeWidgetProps | HTMLWidgetProps | ScheduleWidgetProps
   width: number
+  type?: ContentType
 }
 
 declare enum GridRowAlign {

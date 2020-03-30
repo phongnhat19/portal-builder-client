@@ -3,6 +3,7 @@ import { Modal, Input, Button } from 'antd'
 import { TableOutlined, FileOutlined } from '@ant-design/icons'
 import './style.css'
 import { LAYOUT_TYPE } from '..'
+import { CONTENT_TYPE } from '../Widget/constant';
 
 const CreateModal = ({ isVisible = false, onClose, onCreate }: {
   isVisible: boolean
@@ -46,7 +47,7 @@ const CreateModal = ({ isVisible = false, onClose, onCreate }: {
               {
                 tabName: 'Default Portal',
                 tabContent: {
-                  type: TabContentType.DEFAULT,
+                  type: CONTENT_TYPE.DEFAULT,
                   name: 'DefaultPortal'
                 }
               }
@@ -57,7 +58,7 @@ const CreateModal = ({ isVisible = false, onClose, onCreate }: {
             rows: [
               {
                 blocks: [{
-                  content: 'Grid Block',
+                  type: CONTENT_TYPE.EMPTY,
                   width: 20
                 }],
                 align: 'top',
