@@ -1,4 +1,4 @@
-  import {Tabs} from '@kintone/kintone-ui-component/esm/js'
+import {Tabs} from '@kintone/kintone-ui-component/esm/js'
 import { createScheduleWidget } from './ScheduleWidget';
 
   const configs = PORTAL_CONFIG
@@ -24,7 +24,7 @@ import { createScheduleWidget } from './ScheduleWidget';
 
   function createHTMLItemContent(props) {
     const htmlEl = document.createElement('div');
-    htmlEl.innerHTML = props.src;
+    htmlEl.innerHTML = props.htmlString;
 
     return htmlEl;
   }
@@ -40,7 +40,7 @@ import { createScheduleWidget } from './ScheduleWidget';
 
         tabContent = createIframeItemContent(content.props);
         break;
-      case 'HTMLWidget':
+      case 'HTML':
         tabContent = createHTMLItemContent(content.props);
         break;
       
