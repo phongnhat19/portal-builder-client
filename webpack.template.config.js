@@ -1,5 +1,3 @@
-const rules = require('./webpack.rules');
-
 const libraryName = 'customPortalTemplate'
 const templateUMD = {
     mode: 'production',
