@@ -3,7 +3,6 @@ import {ProfileContext} from '../../../App'
 import {Modal, Button} from 'antd'
 import TableCustom from './TableCustom'
 import {ipcRenderer} from 'electron'
-import { LAYOUT_TYPE } from '..';
 
 const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: {
   isVisible: boolean
@@ -51,7 +50,7 @@ const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: 
             portal: portal, 
             index: index 
           }
-          
+
           let profilesCopy = [...newProfiles]
           ipcRenderer.send('request-to-kintone', dataDeploy)
 

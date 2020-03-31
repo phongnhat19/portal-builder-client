@@ -1,11 +1,8 @@
 import { createTabs } from './Layout/Tab';
+import { createGridsLayout } from './Layout/Grid';
+import { LAYOUT_TYPE } from './resource/constant';
 
 const portalConfig = PORTAL_CONFIG
-
-const LAYOUT_TYPE = {
-  TABS: 'Tabs',
-  GRID: 'Grid'
-}
 
 kintone.events.on('portal.show', function (event) {
   const portalSpaceEl = kintone.portal.getContentSpaceElement();
@@ -15,10 +12,8 @@ kintone.events.on('portal.show', function (event) {
     portalSpaceEl.appendChild(tabs.render());
   } else if (portalConfig.layout.type === LAYOUT_TYPE.GRID) {
     // Build grid layout
-    console.log('Hello');
-    const test = document.createElement('h1')
-    test.textContent = 'HELLLO'
-    portalSpaceEl.appendChild(test);
+    const gridLayout = createGridsLayout(portalConfig.layout.props.rows)
+    portalSpaceEl.appendChild(gridLayout);
   }
 
   return event;
