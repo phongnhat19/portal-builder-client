@@ -3,6 +3,7 @@ import {ProfileContext} from '../../../App'
 import {Modal, Button} from 'antd'
 import TableCustom from './TableCustom'
 import {ipcRenderer} from 'electron'
+import { LAYOUT_TYPE } from '..';
 
 const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: {
   isVisible: boolean
@@ -19,7 +20,7 @@ const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: 
       return newProfile;
     })
     setNewProfiles(profilesCopy)
-    
+
   },[profiles])
 
   const handleCloseModel = () => {
@@ -41,22 +42,39 @@ const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: 
         <Button key="1" type="danger" onClick={handleCloseModel}>Close</Button>
       ]}
     >
-     <TableCustom 
-      data = {newProfiles}
-      onDeploy = {(profile: Profile, index: number) => {
-        onDeploy(profile, index)
-        const dataDeploy = {profile, portal: (portal.layout.props as TabLayout).tabList, index: index}
-        let profilesCopy = [...newProfiles]
-        ipcRenderer.send('request-to-kintone', dataDeploy)
+      <TableCustom
+        data={newProfiles}
+        onDeploy={(profile: Profile, index: number) => {
+          onDeploy(profile, index)
+          let dataDeploy
+          if (portal.layout.type === LAYOUT_TYPE.TAB) {
+            dataDeploy = { 
+              profile, 
+              type: LAYOUT_TYPE.TAB,
+              portal: (portal.layout.props as TabLayout).tabList, 
+              index: index 
+            }
+          } else if (portal.layout.type === LAYOUT_TYPE.GRID) {
+            dataDeploy = { 
+              profile, 
+              type: LAYOUT_TYPE.GRID,
+              portal: (portal.layout.props as GridLayout).rows, 
+              index: index 
+            }
+          }
+          console.log(dataDeploy);
+          
+        //   let profilesCopy = [...newProfiles]
+        //   ipcRenderer.send('request-to-kintone', dataDeploy)
 
-        const listener = (event: Electron.IpcRendererEvent, response: any) => {
-          profilesCopy[response.index].status = response.status
-          setNewProfiles(profilesCopy);
-          ipcRenderer.removeListener('kintone-reply', listener)
-        }
+        //   const listener = (event: Electron.IpcRendererEvent, response: any) => {
+        //     profilesCopy[response.index].status = response.status
+        //     setNewProfiles(profilesCopy);
+        //     ipcRenderer.removeListener('kintone-reply', listener)
+        //   }
 
-        ipcRenderer.on('kintone-reply', listener)
-      }}
+        //   ipcRenderer.on('kintone-reply', listener)
+        }}
       />
     </Modal>
   )
