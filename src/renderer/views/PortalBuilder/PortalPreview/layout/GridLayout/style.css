@@ -11,11 +11,12 @@
     background-color: #facfa7;
     min-height: 10vh;
     padding: 15px;
+    margin-bottom: 15px;
 }
 
-.grid-layout-row:not(:first-child) {
+/* .grid-layout-row:not(:first-child) {
     margin-top: 15px
-}
+} */
 
 .grid-block {
     border: 1px solid #6bd1a4;
@@ -66,7 +67,7 @@
 }
 
 .grid-layout .grid-block .grid-layout-btn-remove {
-    left: 0px;
-    top: 0px;
+    right: 5px;
+    top: 5px;
     z-index: 1
 }

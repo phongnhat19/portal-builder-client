@@ -189,8 +189,9 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
           cancelText="No"
         >
           <Button
-            shape="circle"
+            // shape="circle"
             type="danger"
+            size="small"
             icon={<CloseOutlined />}
             className="grid-layout-btn-remove"
             onMouseUp={(event) => { event.stopPropagation() }}

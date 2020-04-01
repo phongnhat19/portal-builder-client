@@ -59,7 +59,7 @@ const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemov
           type="dashed"
           icon={<PlusCircleOutlined />}
           className="grid-layout-btn-add"
-          style={{ minHeight: '100px', width: '20%' }}
+          style={{ minHeight: '100px', width: '20%', backgroundColor: '#8ef5c8', borderColor: '#6bd1a4' }}
           onClick={onAddBlock}
         ></Button>
       </div>
