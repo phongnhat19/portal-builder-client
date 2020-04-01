@@ -1,14 +1,14 @@
 .grid-layout {
-    border: 1px solid #3091c9;
-    background-color: #dbf2ff;
+    border: 1px solid #b9e6ff;
+    background-color: #ecf8ff;
     min-width: 100%;
     min-height: 85vh;
     padding: 15px
 }
 
 .grid-layout .grid-layout-row {
-    border: 1px solid #e3a871;
-    background-color: #facfa7;
+    border: 1px solid #fce0c7;
+    background-color: #fef2e7;
     min-height: 10vh;
     padding: 15px;
     margin-bottom: 15px;
@@ -19,8 +19,8 @@
 } */
 
 .grid-block {
-    border: 1px solid #6bd1a4;
-    background-color: #8ef5c8;
+    border: 1px solid #ace5cc;
+    background-color: #ecfdf6;
     padding: 15px;
     min-height: 100px;
     overflow: auto;

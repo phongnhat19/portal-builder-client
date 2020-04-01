@@ -54,7 +54,7 @@ const GridLayout = ({ items = [] }: {
             type="dashed"
             icon={<PlusCircleOutlined />}
             className="grid-layout-btn-add"
-            style={{ width: '100%', minHeight: '100px', backgroundColor: '#facfa7', borderColor: '#e3a871' }}
+            style={{ width: '100%', minHeight: '100px', backgroundColor: '#fef2e7', borderColor: '#fce0c7' }}
             onClick={() => {
               const sampleRow = {
                 blocks: [{

@@ -7,3 +7,7 @@
 .grid-layout .grid-row .grid-block {
     height: auto;
 }
+
+.grid-layout .grid-row .grid-block .grid-block-content {
+    margin: 10px;
+}
