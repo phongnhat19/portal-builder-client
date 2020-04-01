@@ -10,7 +10,7 @@
     border: 1px solid #e3a871;
     background-color: #facfa7;
     min-height: 10vh;
-    padding: 15px
+    padding: 15px;
 }
 
 .grid-layout-row:not(:first-child) {
@@ -36,12 +36,37 @@
     max-width: 100%;
 }
 
-.grid-layout .grid-block-position-relative {
+.grid-layout .grid-block-position-relative, .grid-layout .grid-layout-row, .grid-layout .grid-layout-row .grid-block {
     position: relative;
 }
-.grid-layout .portal-tabs-btn {
+
+.grid-layout .grid-block-position-relative {
+    padding-top: 5%;
+}
+
+.grid-layout .portal-tabs-btn, .grid-layout .grid-layout-btn-remove {
     position: absolute;
 }
+
 .grid-layout .portal-tabs-btn-settings {
     right: 0px;
+}
+
+.grid-layout .grid-layout-btn-add-row {
+    min-height: 10vh;
+}
+
+.grid-layout .grid-layout-btn-add.ant-btn-icon-only {
+    font-size: 40px !important;
+}
+
+.grid-layout .grid-layout-btn-remove {
+    right: -15px;
+    top: -10px;
+}
+
+.grid-layout .grid-block .grid-layout-btn-remove {
+    left: 0px;
+    top: 0px;
+    z-index: 1
 }

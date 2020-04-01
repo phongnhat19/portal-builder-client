@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { Row, Button, Popconfirm } from 'antd';
-import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import GridBlock from './GridBlock';
 
 const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemoveGridRow, onResizeWidthBlock }: {
@@ -17,14 +17,6 @@ const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemov
   return (
     <div className='grid-layout-row'>
       <Row justify="space-between" style={{ marginBottom: '15px' }}>
-        <Button
-          type="primary"
-          icon={<PlusCircleOutlined />}
-          size="small"
-          onClick={onAddBlock}
-        >Add Block
-        </Button>
-
         <Popconfirm
           title="Are you sure to delete this row?"
           onConfirm={onRemoveGridRow}
@@ -32,12 +24,11 @@ const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemov
           cancelText="No"
         >
           <Button
+            shape="circle"
             type="danger"
-            icon={<MinusCircleOutlined />}
-            size="small"
-          >
-            Remove Row
-            </Button>
+            icon={<CloseOutlined />}
+            className="grid-layout-btn-remove"
+          ></Button>
         </Popconfirm>
       </Row>
       <div className='grid-blocks-container' ref={rowRef}>
@@ -64,6 +55,13 @@ const GridRowItem = ({ gridRowItem, rowIndex, onRemoveBlock, onAddBlock, onRemov
             }}
           />
         })}
+        <Button
+          type="dashed"
+          icon={<PlusCircleOutlined />}
+          className="grid-layout-btn-add"
+          style={{ minHeight: '100px', width: '20%' }}
+          onClick={onAddBlock}
+        ></Button>
       </div>
     </div>
 

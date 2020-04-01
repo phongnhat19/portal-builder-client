@@ -14,25 +14,6 @@ const GridLayout = ({ items = [] }: {
 
   return (
     <div className='grid-layout-container'>
-      <Button
-        type="primary"
-        icon={<PlusCircleOutlined />}
-        style={{ marginBottom: '15px' }}
-        onClick={() => {
-          const sampleRow = {
-            blocks: [{
-              type: CONTENT_TYPE.EMPTY as ContentType,
-              width: 20
-            }],
-            align: 'top',
-            justify: 'start'
-          } as GridRow
-          const props = portalList[selectedPortal].layout.props as GridLayout
-          props.rows.push(sampleRow)
-          setPortalList(portalList);
-        }}>
-        Add Row
-      </Button>
       <div style={{ height: '85vh', overflow: 'auto' }}>
         <div className='grid-layout'>
           {items.map((item, i) => {
@@ -61,13 +42,33 @@ const GridLayout = ({ items = [] }: {
                 portalList[selectedPortal].layout = newLayout
                 setPortalList(portalList);
               }}
-              onResizeWidthBlock={({blockIndex, width }) => {
+              onResizeWidthBlock={({ blockIndex, width }) => {
                 const props = portalList[selectedPortal].layout.props as GridLayout
                 props.rows[i].blocks[blockIndex].width = width
                 setPortalList(portalList);
               }}
             />
           })}
+
+          <Button
+            type="dashed"
+            icon={<PlusCircleOutlined />}
+            className="grid-layout-btn-add"
+            style={{ width: '100%', minHeight: '100px' }}
+            onClick={() => {
+              const sampleRow = {
+                blocks: [{
+                  type: CONTENT_TYPE.EMPTY as ContentType,
+                  width: 20
+                }],
+                align: 'top',
+                justify: 'start'
+              } as GridRow
+              const props = portalList[selectedPortal].layout.props as GridLayout
+              props.rows.push(sampleRow)
+              setPortalList(portalList);
+            }}
+          ></Button>
         </div>
       </div>
     </div>
