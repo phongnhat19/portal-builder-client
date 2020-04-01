@@ -46,10 +46,10 @@ function createTabItem(name, content) {
   };
 };
 
-function createTabs(configs) {
+function createTabs(tabList) {
   const tabItems = [];
 
-  configs.forEach(function (item) {
+  tabList.forEach(function (item) {
     tabItems.push(createTabItem(item.tabName, item.tabContent));
   });
 

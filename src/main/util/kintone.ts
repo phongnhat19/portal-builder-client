@@ -90,7 +90,8 @@ const deployPortalToKintone = (data: any) => {
   }
   
   let jsFile = fs.readFileSync(isDev ? JS_PATH.DEV : JS_PATH.PRODUCTION, 'utf8')
-  jsFile = jsFile.replace('PORTAL_CONFIG', JSON.stringify(portal) + ';')
+  const jsString = JSON.stringify(portal).replace(/\"/g, '\'')
+  jsFile = jsFile.replace('PORTAL_CONFIG', jsString)
   
   const fileData = new stream.Readable()
   fileData.push(jsFile)
