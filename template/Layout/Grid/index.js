@@ -36,7 +36,9 @@ const createGridBlock = (block) => {
 }
 
 const createBlockContent = (block) => {
+  let blockContentEl = document.createElement('div');
   let blockContent = document.createElement('div');
+  blockContentEl.className = 'grid-block-content'
 
   switch (block.type) {
     case 'Iframe':
@@ -53,7 +55,8 @@ const createBlockContent = (block) => {
       break;
   }
 
-  return blockContent;
+  blockContentEl.appendChild(blockContent)
+  return blockContentEl;
 }
 
 export { createGridsLayout }

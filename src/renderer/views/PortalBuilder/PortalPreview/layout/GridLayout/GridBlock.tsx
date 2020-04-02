@@ -1,6 +1,6 @@
 import React, { CSSProperties, useRef, useContext, useState, useEffect } from 'react'
 import './style.css'
-import { MinusCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Popconfirm, Row } from 'antd';
 import { PortalContext } from '../../..';
 import { SCHEDULE_VIEW } from '../../../Widget/ScheduleWidget/constant';
@@ -189,11 +189,12 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
           cancelText="No"
         >
           <Button
+            shape="circle"
             type="danger"
-            icon={<MinusCircleOutlined />}
-            size="small"
-          >Remove Block
-          </Button>
+            icon={<CloseOutlined />}
+            className="grid-layout-btn-remove"
+            onMouseUp={(event) => { event.stopPropagation() }}
+          ></Button>
         </Popconfirm>
       </Row>
       <Row className='grid-block-position-relative'>
