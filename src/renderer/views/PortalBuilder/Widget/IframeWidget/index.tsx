@@ -18,6 +18,7 @@ const IframeWidget = ({ url, width, height, showSettingInit = false, onRemove, o
       <SettingsIframeWidget onRemove={onRemove} showSetting={()=>setShowSetting(true)} />
       <iframe src={url} style={{width, height}} />
       <IframeModal 
+        defaultUrl={url}
         isVisible = {showSetting} 
         onClose={() => (setShowSetting(false) )}
         onSave={(item) => {

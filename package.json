@@ -19,7 +19,12 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "extraResource": [
+          "./dist/customPortalTemplate.min.js",
+          "./dist/customPortalTemplate.css"
+        ]
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
@@ -110,6 +115,7 @@
     "@types/react-router-dom": "^5.1.3",
     "antd": "^4.0.1",
     "axios": "^0.19.2",
+    "electron-is-dev": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
     "form-data": "^3.0.0",
     "puppeteer": "^2.1.1",

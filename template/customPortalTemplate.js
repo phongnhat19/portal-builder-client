@@ -1,82 +1,20 @@
-  import {Tabs} from '@kintone/kintone-ui-component/esm/js'
-import { createScheduleWidget } from './ScheduleWidget';
+import { createTabs } from './Layout/Tab';
+import { createGridsLayout } from './Layout/Grid';
+import { LAYOUT_TYPE } from './resource/constant';
 
-  const configs = PORTAL_CONFIG
+const portalConfig = PORTAL_CONFIG
 
-  function createDefaultPortalContent() {
-    const portalSpaceEl = kintone.portal.getContentSpaceElement();
-    const defaultPortalBodyEl = portalSpaceEl.nextSibling;
+kintone.events.on('portal.show', function (event) {
+  const portalSpaceEl = kintone.portal.getContentSpaceElement();
 
-    const containerEl = document.createElement('div');
-    containerEl.appendChild(defaultPortalBodyEl);
-
-    return containerEl;
-  }
-
-  function createIframeItemContent(props) {
-    const iframeEl = document.createElement('iframe');
-    iframeEl.src = props.url;
-    iframeEl.style.width = props.width;
-    iframeEl.style.height = props.height;
-
-    return iframeEl;
-  }
-
-  function createHTMLItemContent(props) {
-    const htmlEl = document.createElement('div');
-    htmlEl.innerHTML = props.src;
-
-    return htmlEl;
-  }
-
-  function createTabContent(content) {
-    let tabContent = '';
-    switch (content.type) {
-      case 'DefaultPortal':
-        tabContent = createDefaultPortalContent();
-        break;
-      case 'Iframe':
-        if (!content.props) break;
-
-        tabContent = createIframeItemContent(content.props);
-        break;
-      case 'HTMLWidget':
-        tabContent = createHTMLItemContent(content.props);
-        break;
-      
-      case 'Schedule':
-        tabContent = createScheduleWidget(content.props);
-        break;
-        
-      default:
-        tabContent = '';
-    }
-
-    return tabContent;
-  }
-
-  function createTabItem(name, content) {
-    return {
-      tabName: name,
-      tabContent: createTabContent(content)
-    };
-  };
-
-  function createTabs() {
-    const tabItems = [];
-
-    configs.forEach(function (item) {
-      tabItems.push(createTabItem(item.tabName, item.tabContent));
-    });
-
-    return new Tabs({ items: tabItems });
-  }
-
-  kintone.events.on('portal.show', function (event) {
-    const portalSpaceEl = kintone.portal.getContentSpaceElement();
-
-    const tabs = createTabs();
+  if (portalConfig.layout.type === LAYOUT_TYPE.TABS) {
+    const tabs = createTabs(portalConfig.layout.props.tabList);
     portalSpaceEl.appendChild(tabs.render());
+  } else if (portalConfig.layout.type === LAYOUT_TYPE.GRID) {
+    // Build grid layout
+    const gridLayout = createGridsLayout(portalConfig.layout.props.rows)
+    portalSpaceEl.appendChild(gridLayout);
+  }
 
-    return event;
-  });
+  return event;
+});

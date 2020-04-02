@@ -4,7 +4,7 @@ const CONFIRM_DELETE = {
   BUTTON_CANCEL: 'No'
 }
 
-const EMPTY_TAB_CONTENT = 'Drop widget here'
+const EMPTY_WIDGET_CONTENT = 'Drop widget here'
 
 const PORTAL_DEFAULT = {
   TAB_CONTENT_INIT: 'This is kintone default Portal'
@@ -13,5 +13,5 @@ const PORTAL_DEFAULT = {
 export {
   CONFIRM_DELETE,
   PORTAL_DEFAULT,
-  EMPTY_TAB_CONTENT
+  EMPTY_WIDGET_CONTENT
 }

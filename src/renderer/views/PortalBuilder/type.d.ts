@@ -1,6 +1,11 @@
+declare enum LayoutType {
+  TAB = 'Tabs',
+  GRID = 'Grid'
+}
+
 declare type Layout = {
-    type: string,
-    props: TabLayoutProps
+    type: LayoutType,
+    props: TabLayout | GridLayout
 }
 
 declare type Portal = {

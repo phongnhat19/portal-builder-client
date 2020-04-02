@@ -1,9 +1,9 @@
-
 import axios from 'axios'
 import fs from 'fs'
 import path from 'path'
 import FormData from 'form-data';
 import stream from 'stream'
+import isDev from 'electron-is-dev';
 
 const prepareSettingToUpdate = (scripts: any[], jsKey: string, cssKey: string, fileNames: string[]) => {
   let files: any = {
@@ -84,8 +84,14 @@ const deployPortalToKintone = (data: any) => {
   const jsFileName = 'customPortalTemplate.min.js'
   const cssFileName = 'customPortalTemplate.css'
 
-  let jsFile = fs.readFileSync(path.join(__dirname, `../../dist/${jsFileName}`), 'utf8');
-  jsFile = jsFile.replace('PORTAL_CONFIG', JSON.stringify(portal) + ';')
+  const JS_PATH = {
+    DEV: path.join(__dirname, `../../dist/${jsFileName}`),
+    PRODUCTION: path.resolve(__dirname, `../../../${jsFileName}`)
+  }
+  
+  let jsFile = fs.readFileSync(isDev ? JS_PATH.DEV : JS_PATH.PRODUCTION, 'utf8')
+  const jsString = JSON.stringify(portal).replace(/\"/g, '\'')
+  jsFile = jsFile.replace('PORTAL_CONFIG', jsString)
   
   const fileData = new stream.Readable()
   fileData.push(jsFile)
@@ -95,7 +101,13 @@ const deployPortalToKintone = (data: any) => {
   jsFormData.append("file", fileData, jsFileName);
 
   const cssFormData = new FormData();
-  cssFormData.append("file", fs.createReadStream(path.join(__dirname, `../../dist/${cssFileName}`)), cssFileName);
+
+  const CSS_PATH = {
+    DEV: path.join(__dirname, `../../dist/${cssFileName}`),
+    PRODUCTION: path.resolve(__dirname, `../../../${cssFileName}`)
+  }
+
+  cssFormData.append("file", fs.createReadStream(isDev ? CSS_PATH.DEV : CSS_PATH.PRODUCTION), cssFileName);
 
   const allRequests = [
     uploadFile(profile, jsFormData),
@@ -113,6 +125,9 @@ const deployPortalToKintone = (data: any) => {
     return updateSetting(profile, setting)
   }).then((resp) => {
     return resp.data
+  }).catch((err) => {
+    console.error(err)
+    throw err
   })
 }
 

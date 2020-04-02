@@ -1,5 +1,3 @@
-const rules = require('./webpack.rules');
-
 const libraryName = 'customPortalTemplate'
 const templateUMD = {
     mode: 'production',
@@ -14,12 +12,12 @@ const templateUMD = {
     module: {
         rules: [
             {
-                    test: /\.css$/,
-                    use: [
-                      { loader: "style-loader" },
-                      { loader: "css-loader" }
-                    ]
-                  }
+                test: /\.css$/,
+                use: [
+                    { loader: "style-loader" },
+                    { loader: "css-loader" }
+                ]
+            }
         ]
     }
 }

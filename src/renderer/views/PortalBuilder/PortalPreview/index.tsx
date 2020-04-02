@@ -1,29 +1,34 @@
 import React from 'react'
 import TabsLayout from './layout/TabsLayout'
+import {LAYOUT_TYPE} from '../index'
+import GridLayout from './layout/GridLayout'
 
 const PortalPreview = ({ 
-  layout,
-  onAddTabs = (item: any) => {},
-  onRemoveTabs = (layout: Layout) => {} 
+  layout
 }: {
-  layout?: Layout,
-  onAddTabs: (item: any) => void,
-  onRemoveTabs: (layout: Layout) => void
+  layout?: Layout
 }) => {
+
+  const renderLayout = () => {
+    if (layout!.type === LAYOUT_TYPE.TAB) {
+      const props = layout!.props as TabLayout
+      return (
+        <TabsLayout
+          items={props.tabList}
+        />
+      )
+    } else if (layout!.type === LAYOUT_TYPE.GRID) {
+      const props = layout!.props as GridLayout
+      return (
+        <GridLayout items={props.rows} />
+      )
+    }
+  }
 
   return(
     <div style={{display: 'flex', justifyContent:'center', paddingTop: '30px'}}>
       {
-        layout &&
-        <TabsLayout
-          onAddItem={onAddTabs}
-          onRemoveItem={(index: number) => {
-            const newLayout = JSON.parse(JSON.stringify(layout))
-            newLayout.props.tabList.splice(index, 1)
-            onRemoveTabs(newLayout)
-          }}
-          items={layout.props.tabList}
-        />
+        layout && renderLayout()
       }
       
     </div>

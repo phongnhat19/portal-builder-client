@@ -4,6 +4,7 @@ import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
 import WidgetList from './Widget/WidgetList';
 import { BorderOutlined, CalendarOutlined, Html5Outlined } from '@ant-design/icons';
+import { CONTENT_TYPE } from './Widget/constant';
 
 const PortalContext = createContext({
   portalList: [] as Portal[],
@@ -13,12 +14,10 @@ const PortalContext = createContext({
   removePortal: (portalIndex: number) => {}
 });
 
-const tabContentType = {
-  IFRAME: 'Iframe',
-  HTML: 'HTML',
-  SCHEDULE: 'Schedule',
-  DEFAULT: 'DefaultPortal'
-};
+const LAYOUT_TYPE = {
+  TAB: 'Tabs',
+  GRID: 'Grid'
+}
 
 const PortalBuilder = () => {
 
@@ -26,13 +25,13 @@ const PortalBuilder = () => {
     {
       name: 'Portal 1',
       layout: {
-        type: 'Tabs',
+        type: LAYOUT_TYPE.TAB as LayoutType,
         props: {
           tabList: [
             {
               tabName: 'Default Portal',
               tabContent: {
-                type: tabContentType.DEFAULT as TabContentType,
+                type: CONTENT_TYPE.DEFAULT as ContentType,
                 name: 'DefaultPortal'
               }
             }
@@ -53,15 +52,15 @@ const PortalBuilder = () => {
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
-      name: tabContentType.IFRAME,
+      name: CONTENT_TYPE.IFRAME,
     }, 
     {
       icon: <Html5Outlined />,
-      name: tabContentType.HTML,
+      name: CONTENT_TYPE.HTML,
     }, 
     {
       icon: <CalendarOutlined />,
-      name: tabContentType.SCHEDULE
+      name: CONTENT_TYPE.SCHEDULE
     }
   ]
 
@@ -116,14 +115,6 @@ const PortalBuilder = () => {
         <div className="portal-preview">
           <PortalPreview 
             layout = {data.length > 0 ? data[selectedIndex].layout : undefined}
-            onAddTabs={(item: any) => {
-              data[selectedPortal].layout.props.tabList.push(item)
-              setPortalList(data);
-            }}
-            onRemoveTabs = {(layout: Layout) => {
-              data[selectedPortal].layout = layout
-              setPortalList(data);
-            }}
           />
         </div>
         <div className="widget-list-container">
@@ -134,5 +125,5 @@ const PortalBuilder = () => {
   )
 }
 
-export {PortalContext}
+export {PortalContext, LAYOUT_TYPE}
 export default PortalBuilder

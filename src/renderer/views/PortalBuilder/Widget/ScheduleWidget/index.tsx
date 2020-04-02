@@ -10,10 +10,12 @@ import '@fullcalendar/timegrid/main.css';
 import SettingsIframeWidget from '../IframeWidget/Settings';
 import ScheduleModal from './ScheduleModal';
 
-const ScheduleWidget = ({ onSaveSetting, defaultView = SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME, onRemove, showSettingInit = false }: {
+const ScheduleWidget = ({ onSaveSetting, width, height, defaultView = SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME, onRemove, showSettingInit = false }: {
   defaultView?: string
   onRemove?: () => void
   showSettingInit?: boolean
+  width?: string | number
+  height?: string | number
   onSaveSetting?: ({ defaultView }: { defaultView: string }) => void
 }) => {
 
@@ -21,7 +23,7 @@ const ScheduleWidget = ({ onSaveSetting, defaultView = SCHEDULE_VIEW.FULL_CALEND
   const [typeView, setTypeView] = useState(defaultView)
   
   return (
-    <React.Fragment>
+    <div style={{width, height}}>
       <SettingsIframeWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
       <FullCalendar
         header={{
@@ -49,8 +51,7 @@ const ScheduleWidget = ({ onSaveSetting, defaultView = SCHEDULE_VIEW.FULL_CALEND
           onSaveSetting && onSaveSetting({ defaultView: item.defaultView })
           setShowSetting(false)
         }} />
-
-    </React.Fragment>
+    </div>
   )
 }
 

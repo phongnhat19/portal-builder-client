@@ -19,7 +19,7 @@ const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: 
       return newProfile;
     })
     setNewProfiles(profilesCopy)
-    
+
   },[profiles])
 
   const handleCloseModel = () => {
@@ -41,22 +41,27 @@ const DeployModal = ({isVisible = false, onClose = () => {}, onDeploy, portal}: 
         <Button key="1" type="danger" onClick={handleCloseModel}>Close</Button>
       ]}
     >
-     <TableCustom 
-      data = {newProfiles}
-      onDeploy = {(profile: Profile, index: number) => {
-        onDeploy(profile, index)
-        const dataDeploy = {profile, portal: portal.layout.props.tabList, index: index}
-        let profilesCopy = [...newProfiles]
-        ipcRenderer.send('request-to-kintone', dataDeploy)
+      <TableCustom
+        data={newProfiles}
+        onDeploy={(profile: Profile, index: number) => {
+          onDeploy(profile, index)
+          const dataDeploy = { 
+            profile,
+            portal: portal, 
+            index: index 
+          }
 
-        const listener = (event: Electron.IpcRendererEvent, response: any) => {
-          profilesCopy[response.index].status = response.status
-          setNewProfiles(profilesCopy);
-          ipcRenderer.removeListener('kintone-reply', listener)
-        }
+          let profilesCopy = [...newProfiles]
+          ipcRenderer.send('request-to-kintone', dataDeploy)
 
-        ipcRenderer.on('kintone-reply', listener)
-      }}
+          const listener = (event: Electron.IpcRendererEvent, response: any) => {
+            profilesCopy[response.index].status = response.status
+            setNewProfiles(profilesCopy);
+            ipcRenderer.removeListener('kintone-reply', listener)
+          }
+
+          ipcRenderer.on('kintone-reply', listener)
+        }}
       />
     </Modal>
   )
