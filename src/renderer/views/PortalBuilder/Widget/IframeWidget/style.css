@@ -2,3 +2,6 @@
     display: inline-flex;
     font-weight: bold;
 }
+.widget-iframe-row{
+    padding-top: 15px;
+}
