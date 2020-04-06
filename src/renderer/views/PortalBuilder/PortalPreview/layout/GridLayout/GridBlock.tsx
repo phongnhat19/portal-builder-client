@@ -84,13 +84,15 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         currentContentBlock =
           <IframeWidget
             url={blockContentIframe.url}
-            width={`${blockContentIframe.width}%`}
-            // height={blockContentIframe.height}
+            width={blockContentIframe.width}
+            height={blockContentIframe.height}
             showSettingInit={blockContentIframe.showSettingInit}
             onRemove={removeWidget}
-            onSaveSetting={({ url }) => {
+            onSaveSetting={({ url, width, height }) => {
               let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
               currentProps.url = url
+              currentProps.width = width
+              currentProps.height = height
               currentProps.showSettingInit = false;
               updateWidget(currentProps)
             }}
@@ -163,7 +165,8 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
           props = {
             showSettingInit: true,
             url: "",
-            width: 100
+            width: '100%',
+            height: '100%'
           }
         } else if (type === CONTENT_TYPE.HTML) {
           props = {
