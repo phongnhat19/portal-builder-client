@@ -6,9 +6,9 @@ import interactionPlugin from '@fullcalendar/interaction'
 import '@fullcalendar/core/main.css';
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
-import { SCHEDULE_VIEW } from './constant';
+import { SCHEDULER_VIEW } from './constant';
 
-const Schedule = ({defaultView}: {
+const Scheduler = ({defaultView}: {
   defaultView?: string
 }) => {
 
@@ -16,7 +16,7 @@ const Schedule = ({defaultView}: {
     <div style={{backgroundColor: '#FFFFFF'}}>
       <FullCalendar
         header={{
-          left: `prev,next ${SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME}, ${SCHEDULE_VIEW.FULL_CALENDAR_WEEK_TIME}`,
+          left: `prev,next ${SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME}, ${SCHEDULER_VIEW.FULL_CALENDAR_WEEK_TIME}`,
           center: 'title',
           right: ''
         }}
@@ -35,4 +35,4 @@ const Schedule = ({defaultView}: {
   )
 }
 
-export default Schedule
+export default Scheduler

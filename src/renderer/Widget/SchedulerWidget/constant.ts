@@ -1,4 +1,4 @@
-const SCHEDULE_VIEW = {
+const SCHEDULER_VIEW = {
   WEEK_VIEW: 'week',
   DAY_VIEW: 'day',
   FULL_CALENDAR_WEEK_TIME: 'timeGridWeek',
@@ -6,5 +6,5 @@ const SCHEDULE_VIEW = {
 }
 
 export {
-  SCHEDULE_VIEW
+  SCHEDULER_VIEW
 }

@@ -60,7 +60,7 @@ const PortalBuilder = () => {
     }, 
     {
       icon: <CalendarOutlined />,
-      name: CONTENT_TYPE.SCHEDULE
+      name: CONTENT_TYPE.SCHEDULER
     }
   ]
 

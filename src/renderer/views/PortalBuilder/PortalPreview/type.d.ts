@@ -11,7 +11,7 @@ declare type Tab = {
   tabContent: {
     type: ContentType,
     name?: string,
-    props?: IframeWidgetProps | HTMLWidgetProps | ScheduleWidgetProps,
+    props?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps,
     value?: string
   }
 }

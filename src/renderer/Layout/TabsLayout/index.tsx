@@ -9,8 +9,8 @@ import confirm from 'antd/lib/modal/confirm';
 import { CONFIRM_DELETE, PORTAL_DEFAULT, EMPTY_WIDGET_CONTENT } from './constant';
 import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../Widget/HTMLWidget';
-import ScheduleWidget from '../../Widget/ScheduleWidget';
-import { SCHEDULE_VIEW } from '../../Widget/ScheduleWidget/constant';
+import SchedulerWidget from '../../Widget/SchedulerWidget';
+import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
 
 const TabsLayout = ({
@@ -79,13 +79,13 @@ const TabsLayout = ({
               }}
             />
           break;
-        case CONTENT_TYPE.SCHEDULE:
+        case CONTENT_TYPE.SCHEDULER:
           if (!tabContent.props) {
             break;
           };
-          const tabContentSchedule = tabContent.props as ScheduleWidgetProps;
+          const tabContentSchedule = tabContent.props as SchedulerWidgetProps;
           newItem.tabContent = 
-          <ScheduleWidget 
+          <SchedulerWidget 
             defaultView={tabContentSchedule.defaultView}  
             onRemove={removeWidget}
             onSaveSetting={({defaultView}) => {
@@ -123,7 +123,7 @@ const TabsLayout = ({
     })
   }
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | ScheduleWidgetProps) => {
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps) => {
     const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList
     tabList[selectedTab].tabContent.props = newProps
     setPortalList(portalList)
@@ -176,10 +176,10 @@ const TabsLayout = ({
             width: "100%",
             height: "82vh"
           }
-        } else if (type === CONTENT_TYPE.SCHEDULE) {
+        } else if (type === CONTENT_TYPE.SCHEDULER) {
           props = {
             showSettingInit: true,
-            defaultView: SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME
+            defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
           }
         }
         props && dropWidget(selectedTab, type, props)

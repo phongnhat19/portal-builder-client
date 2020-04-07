@@ -4,14 +4,14 @@ import { Row } from 'antd';
 
 import IframeWidget from '../../../Widget/IframeWidget/renderer';
 import HTMLWidget from '../../../Widget/HTMLWidget/renderer';
-import ScheduleWidget from '../../../Widget/ScheduleWidget/renderer';
+import SchedulerWidget from '../../../Widget/SchedulerWidget/renderer';
 import { EMPTY_WIDGET_CONTENT } from '../../TabsLayout/constant';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 
 const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = undefined, width }: {
   style?: CSSProperties
   type?: ContentType
-  content?: IframeWidgetProps | HTMLWidgetProps | ScheduleWidgetProps
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps
   width: number
 }) => {
 
@@ -49,10 +49,10 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
             width={`${blockContentHTML.width}%`}
           />
         break;
-      case CONTENT_TYPE.SCHEDULE:
-        const blockContentSchedule = content as ScheduleWidgetProps;
+      case CONTENT_TYPE.SCHEDULER:
+        const blockContentSchedule = content as SchedulerWidgetProps;
         currentContentBlock =
-          <ScheduleWidget
+          <SchedulerWidget
             defaultView={blockContentSchedule.defaultView}
           />
         break;

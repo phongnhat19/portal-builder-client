@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { SCHEDULE_VIEW } from './constant';
+import { SCHEDULER_VIEW } from './constant';
 import SettingsIframeWidget from '../IframeWidget/Settings';
 import ScheduleModal from './ScheduleModal';
 import Schedule from './renderer'
 
-const ScheduleWidget = ({ onSaveSetting, width, height, defaultView = SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME, onRemove, showSettingInit = false }: {
+const SchedulerWidget = ({ onSaveSetting, width, height, defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, onRemove, showSettingInit = false }: {
   defaultView?: string
   onRemove?: () => void
   showSettingInit?: boolean
@@ -35,4 +35,4 @@ const ScheduleWidget = ({ onSaveSetting, width, height, defaultView = SCHEDULE_V
   )
 }
 
-export default ScheduleWidget
+export default SchedulerWidget

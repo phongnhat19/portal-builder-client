@@ -1,7 +1,7 @@
 export const CONTENT_TYPE = {
     IFRAME: 'Iframe',
     HTML: 'HTML',
-    SCHEDULE: 'Schedule',
+    SCHEDULER: 'Scheduler',
     DEFAULT: 'DefaultPortal',
     EMPTY: 'Empty'
 };

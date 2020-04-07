@@ -3,17 +3,17 @@ import '../style.css'
 import { ExclamationCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Popconfirm, Row } from 'antd';
 import { PortalContext } from '../../../views/PortalBuilder';
-import { SCHEDULE_VIEW } from '../../../Widget/ScheduleWidget/constant';
+import { SCHEDULER_VIEW } from '../../../Widget/SchedulerWidget/constant';
 import IframeWidget from '../../../Widget/IframeWidget';
 import HTMLWidget from '../../../Widget/HTMLWidget';
-import ScheduleWidget from '../../../Widget/ScheduleWidget';
+import ScheduleWidget from '../../../Widget/SchedulerWidget';
 import { EMPTY_WIDGET_CONTENT, CONFIRM_DELETE } from '../../TabsLayout/constant';
 import confirm from 'antd/lib/modal/confirm';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 
 const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, onRemoveBlock, onResizeWidth }: {
   style?: CSSProperties
-  content?: IframeWidgetProps | HTMLWidgetProps | ScheduleWidgetProps
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps
   width: number
   rowIndex: number
   blockIndex: number
@@ -44,7 +44,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
     }
   }
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | ScheduleWidgetProps) => {
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps) => {
     const gridLayout = portalList[selectedPortal].layout.props as GridLayout
     const currentBlock = gridLayout.rows[rowIndex].blocks[blockIndex]
     currentBlock.content = newProps
@@ -119,11 +119,11 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             }}
           />
         break;
-      case CONTENT_TYPE.SCHEDULE:
+      case CONTENT_TYPE.SCHEDULER:
         if (!currentBlock.content) {
           break;
         };
-        const blockContentSchedule = currentBlock.content as ScheduleWidgetProps;
+        const blockContentSchedule = currentBlock.content as SchedulerWidgetProps;
         currentContentBlock =
           <ScheduleWidget
             width={`${blockContentSchedule.width}%`}
@@ -174,10 +174,10 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             htmlString: "",
             width: 100
           }
-        } else if (type === CONTENT_TYPE.SCHEDULE) {
+        } else if (type === CONTENT_TYPE.SCHEDULER) {
           props = {
             showSettingInit: true,
-            defaultView: SCHEDULE_VIEW.FULL_CALENDAR_DAY_TIME,
+            defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME,
             width: 100
           }
         }

@@ -4,7 +4,7 @@ import './style.css'
 import Iframe from '../../Widget/IframeWidget/renderer';
 import { EMPTY_WIDGET_CONTENT } from './constant';
 import HTML from '../../Widget/HTMLWidget/renderer';
-import Schedule from '../../Widget/ScheduleWidget/renderer';
+import Schedule from '../../Widget/SchedulerWidget/renderer';
 import { CONTENT_TYPE } from '../../Widget/constant';
 
 let portalSpaceEl: HTMLElement
@@ -52,11 +52,11 @@ const TabsLayout = ({
               height={tabContentHTML.height}
             />
           break;
-        case CONTENT_TYPE.SCHEDULE:
+        case CONTENT_TYPE.SCHEDULER:
           if (!tabContent.props) {
             break;
           };
-          const tabContentSchedule = tabContent.props as ScheduleWidgetProps;
+          const tabContentSchedule = tabContent.props as SchedulerWidgetProps;
           newItem.tabContent = 
           <Schedule
             defaultView={tabContentSchedule.defaultView}

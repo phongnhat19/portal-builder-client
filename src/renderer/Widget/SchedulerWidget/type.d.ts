@@ -1,4 +1,4 @@
-declare type ScheduleWidgetProps = {
+declare type SchedulerWidgetProps = {
   width: string,
   height: string,
   defaultView: string,
