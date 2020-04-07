@@ -1,7 +1,13 @@
+const path = require('path');
+
+function srcPaths(src) {
+    return path.join(__dirname, src);
+}
+
 const libraryName = 'customPortalTemplate'
 const templateUMD = {
-    mode: 'production',
-    entry: __dirname + '/template/customPortalTemplate.js',
+    mode: 'development',
+    entry: __dirname + '/src/template/customPortalTemplate.tsx',
     output: {
         path:  __dirname + '/dist',
         filename: libraryName + '.min.js',
@@ -12,13 +18,32 @@ const templateUMD = {
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: [
-                    { loader: "style-loader" },
-                    { loader: "css-loader" }
-                ]
+                test: /\.tsx?$/,
+                exclude: /(node_modules|.webpack)/,
+                loaders: [
+                    {
+                        loader: 'babel-loader'
+                    },
+                    {
+                    loader: 'ts-loader',
+                    options: {
+                        transpileOnly: true
+                    }
+                }]
+            },
+            {
+                test: /\.(scss|css)$/,
+                use: ["style-loader", "css-loader", "sass-loader"],
             }
         ]
+    },
+    resolve: {
+        alias: {
+            '@main': srcPaths('src/main'),
+            '@models': srcPaths('src/models'),
+            '@renderer': srcPaths('src/renderer')
+        },
+        extensions: ['.js', '.ts', '.tsx', '.jsx', '.json']
     }
 }
 

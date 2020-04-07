@@ -2,9 +2,9 @@ import React, { useState, createContext } from 'react'
 import './style.css'
 import PortalPreview from './PortalPreview'
 import SideBar from './SideBar'
-import WidgetList from './Widget/WidgetList';
+import WidgetList from '../../Widget/WidgetList';
 import { BorderOutlined, CalendarOutlined, Html5Outlined } from '@ant-design/icons';
-import { CONTENT_TYPE } from './Widget/constant';
+import { CONTENT_TYPE } from '../../Widget/constant';
 
 const PortalContext = createContext({
   portalList: [] as Portal[],

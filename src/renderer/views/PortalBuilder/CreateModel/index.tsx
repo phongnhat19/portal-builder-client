@@ -3,7 +3,7 @@ import { Modal, Input, Button } from 'antd'
 import { TableOutlined, FileOutlined } from '@ant-design/icons'
 import './style.css'
 import { LAYOUT_TYPE } from '..'
-import { CONTENT_TYPE } from '../Widget/constant';
+import { CONTENT_TYPE } from '../../../Widget/constant';
 
 const CreateModal = ({ isVisible = false, onClose, onCreate }: {
   isVisible: boolean

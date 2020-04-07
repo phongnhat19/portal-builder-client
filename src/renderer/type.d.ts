@@ -5,3 +5,5 @@ declare type Profile = {
   username: string,
   password: string
 }
+
+declare let kintone: any;

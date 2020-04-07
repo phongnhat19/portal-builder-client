@@ -1,7 +1,7 @@
 import React from 'react'
-import TabsLayout from './layout/TabsLayout'
+import TabsLayout from '../../../Layout/TabsLayout'
 import {LAYOUT_TYPE} from '../index'
-import GridLayout from './layout/GridLayout'
+import GridLayout from '../../../Layout/GridLayout'
 
 const PortalPreview = ({ 
   layout
@@ -14,7 +14,7 @@ const PortalPreview = ({
       const props = layout!.props as TabLayout
       return (
         <TabsLayout
-          items={props.tabList}
+          tabList={props.tabList}
         />
       )
     } else if (layout!.type === LAYOUT_TYPE.GRID) {
