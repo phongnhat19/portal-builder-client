@@ -78,7 +78,7 @@ const IframeModal = ({ defaultUrl = '',
             <InputNumber value={heightValue} onChange={(value: any) => setHeightValue(value)} />
             <Select style={{ width: '60px' }} defaultValue={heightUnit} onChange={(e) => setHeightUnit(e)}>
               <Option value="px">px</Option>
-              <Option value="vw">vw</Option>
+              <Option value="vh">vh</Option>
               <Option value="%">%</Option>
             </Select>
           </Input.Group>
