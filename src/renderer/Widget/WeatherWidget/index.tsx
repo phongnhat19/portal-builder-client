@@ -31,9 +31,9 @@ const WeatherWidget = ({
 
   useEffect(() => {
   }, [unitTemp, openWeatherMapAPIKey, weatherCity])
-  
+
   return (
-    <div>
+    <div style={{ width, height }} className='widget-weather'>
       <SettingsIframeWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
       <WeatherModal
         defaultAPIKey={openWeatherMapAPIKey}
@@ -46,10 +46,8 @@ const WeatherWidget = ({
           setShowSetting(false)
         }}
       />
-      <div style={{ width, height }} className='widget-weather'>
-        <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
-      </div>
-    </div>
+      <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
+    </div >
   )
 }
 

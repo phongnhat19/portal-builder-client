@@ -75,3 +75,13 @@
     height: 20px;
     font-size: 10px !important;
 }
+
+.grid-layout .grid-layout-row .grid-block .widget-weather {
+    background-color: #6495ED;
+    padding: 20px;
+}
+
+.grid-layout .grid-layout-row .grid-block .styles_simpleReactWeather__3uy4l {
+    font-size: 20px;
+    min-height: 0px !important
+}

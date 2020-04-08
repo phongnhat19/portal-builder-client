@@ -36,10 +36,10 @@
 
 .portal-tabs-layout .kuc-tabs-tab-contents .styles_simpleReactWeather__3uy4l {
   font-size: 30px;
+  min-height: 0px !important
 }
 
 .portal-tabs-layout .kuc-tabs-tab-contents .widget-weather {
   background-color: #6495ED;
-  padding-top: 3%;
-  padding-left: 3%;
+  padding: 3%;
 }
