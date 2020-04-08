@@ -1,6 +1,6 @@
 import React from 'react'
 import TabsLayout from '../../../Layout/TabsLayout'
-import {LAYOUT_TYPE} from '../index'
+import {LAYOUT_TYPE} from '../../../Layout/constant'
 import GridLayout from '../../../Layout/GridLayout'
 
 const PortalPreview = ({ 

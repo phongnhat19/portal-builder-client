@@ -5,6 +5,7 @@ import SideBar from './SideBar'
 import WidgetList from '../../Widget/WidgetList';
 import { BorderOutlined, CalendarOutlined, Html5Outlined } from '@ant-design/icons';
 import { CONTENT_TYPE } from '../../Widget/constant';
+import {LAYOUT_TYPE} from '../../Layout/constant'
 
 const PortalContext = createContext({
   portalList: [] as Portal[],
@@ -13,11 +14,6 @@ const PortalContext = createContext({
   updatePortal: (newPortal: Portal, portalIndex: number) => {},
   removePortal: (portalIndex: number) => {}
 });
-
-const LAYOUT_TYPE = {
-  TAB: 'Tabs',
-  GRID: 'Grid'
-}
 
 const PortalBuilder = () => {
 
@@ -125,5 +121,5 @@ const PortalBuilder = () => {
   )
 }
 
-export {PortalContext, LAYOUT_TYPE}
+export {PortalContext}
 export default PortalBuilder

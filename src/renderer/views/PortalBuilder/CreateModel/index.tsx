@@ -2,7 +2,7 @@ import React, { CSSProperties, useState } from 'react'
 import { Modal, Input, Button } from 'antd'
 import { TableOutlined, FileOutlined } from '@ant-design/icons'
 import './style.css'
-import { LAYOUT_TYPE } from '..'
+import { LAYOUT_TYPE } from '../../../Layout/constant'
 import { CONTENT_TYPE } from '../../../Widget/constant';
 
 const CreateModal = ({ isVisible = false, onClose, onCreate }: {
