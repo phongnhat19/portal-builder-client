@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import {Tabs} from '@kintone/kintone-ui-component';
+import { Tabs } from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
-import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined, EditOutlined} from '@ant-design/icons';
+import { PlusCircleOutlined, MinusCircleOutlined, ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
 import './style.css'
 import IframeWidget from '../../Widget/IframeWidget';
 import { PortalContext } from '../../views/PortalBuilder';
@@ -10,6 +10,7 @@ import { CONFIRM_DELETE, PORTAL_DEFAULT, EMPTY_WIDGET_CONTENT } from './constant
 import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../Widget/HTMLWidget';
 import SchedulerWidget from '../../Widget/SchedulerWidget';
+import WeatherWidget from '../../Widget/WeatherWidget/index';
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
 
@@ -41,8 +42,8 @@ const TabsLayout = ({
             break;
           }
           const tabContentIframe = tabContent.props as IframeWidgetProps;
-          newItem.tabContent = 
-            <IframeWidget 
+          newItem.tabContent =
+            <IframeWidget
               url={tabContentIframe.url}
               width={tabContentIframe.width}
               height={tabContentIframe.height}
@@ -64,8 +65,8 @@ const TabsLayout = ({
             break;
           };
           const tabContentHTML = tabContent.props as HTMLWidgetProps;
-          newItem.tabContent = 
-            <HTMLWidget 
+          newItem.tabContent =
+            <HTMLWidget
               htmlString={tabContentHTML.htmlString}
               width={tabContentHTML.width}
               height={tabContentHTML.height}
@@ -84,17 +85,23 @@ const TabsLayout = ({
             break;
           };
           const tabContentSchedule = tabContent.props as SchedulerWidgetProps;
-          newItem.tabContent = 
-          <SchedulerWidget 
-            defaultView={tabContentSchedule.defaultView}  
-            onRemove={removeWidget}
-            onSaveSetting={({defaultView}) => {
-              let currentProps = JSON.parse(JSON.stringify(tabContent.props))
-              currentProps.defaultView = defaultView
-              currentProps.showSettingInit = false;
-              updateWidget(currentProps)
-            }} 
-          />
+          newItem.tabContent =
+            <SchedulerWidget
+              defaultView={tabContentSchedule.defaultView}
+              onRemove={removeWidget}
+              onSaveSetting={({defaultView}) => {
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+                currentProps.defaultView = defaultView
+                currentProps.showSettingInit = false;
+                updateWidget(currentProps)
+              }}
+            />
+          break;
+        case CONTENT_TYPE.WEATHER:
+          if (!tabContent.props)
+            break;
+          // const tabContentWeather = tabContent.props as any
+          newItem.tabContent = <WeatherWidget />
           break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
@@ -152,13 +159,13 @@ const TabsLayout = ({
         props
       }
       setPortalList(portalList)
-    } 
+    }
   }
 
   return(
-    <div 
+    <div
       className='portal-tabs-layout'
-      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} 
+      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}}
       onDrop={(e) => {
         let props: any
         const type = e.dataTransfer.getData("text") as ContentType
@@ -181,6 +188,12 @@ const TabsLayout = ({
             showSettingInit: true,
             defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
           }
+        } else if (type === CONTENT_TYPE.WEATHER) {
+          props = {
+            showSettingInit: true,
+            width: "100%",
+            height: "82vh"
+          }
         }
         props && dropWidget(selectedTab, type, props)
       }}
@@ -191,7 +204,7 @@ const TabsLayout = ({
         className='portal-tabs-btn portal-tabs-btn-add'
         onClick={() => {
           showTabConfigModal(true)
-        }} 
+        }}
       />
       {selectedTab !== 0 &&
         <Button
@@ -200,8 +213,8 @@ const TabsLayout = ({
           className='portal-tabs-btn portal-tabs-btn-edit-name'
           onClick={() => {
             showTabNameModal(true)
-          }} 
-        />  
+          }}
+        />
       }
       {tabItems.length > 1 &&
         <Button
@@ -217,7 +230,7 @@ const TabsLayout = ({
             newLayout.props.tabList.splice(selectedTab, 1)
             portalList[selectedPortal].layout = newLayout
             setPortalList(portalList);
-          }} 
+          }}
         />
       }
       <Tabs
@@ -225,7 +238,7 @@ const TabsLayout = ({
         value={selectedTab}
         onClickTabItem={setSelectedTab}
       />
-      <TabConfigModal 
+      <TabConfigModal
         isVisible={isShowTabConfigModal}
         onClose={()=> showTabConfigModal(false)}
         onSave={(name) => {
@@ -240,7 +253,7 @@ const TabsLayout = ({
           showTabConfigModal(false)
         }}
       />
-      <TabConfigModal 
+      <TabConfigModal
         tabName={tabList[selectedTab].tabName}
         isVisible={isShowTabNameModal}
         onClose={()=> showTabNameModal(false)}
