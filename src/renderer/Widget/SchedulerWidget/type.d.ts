@@ -4,3 +4,11 @@ declare type SchedulerWidgetProps = {
   defaultView: string,
   showSettingInit?: boolean
 }
+
+declare type SchedulerEvent = {
+  id: string,
+  title: string,
+  start: Date,
+  end: Date,
+  allDay: boolean
+}

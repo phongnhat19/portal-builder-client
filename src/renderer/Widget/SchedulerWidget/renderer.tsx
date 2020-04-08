@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -7,10 +7,17 @@ import '@fullcalendar/core/main.css';
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 import { SCHEDULER_VIEW } from './constant';
+import {getSchedulerEvent} from './service'
 
 const Scheduler = ({defaultView}: {
   defaultView?: string
 }) => {
+
+  const [events, setEvents] = useState([] as SchedulerEvent[])
+
+  useEffect(() => {
+    getSchedulerEvent().then(setEvents)
+  }, [])
 
   return(
     <div style={{backgroundColor: '#FFFFFF'}}>
@@ -22,14 +29,7 @@ const Scheduler = ({defaultView}: {
         }}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         defaultView={defaultView}
-        events={
-          [{
-            title: 'SAMPLE APPOINTMENT',
-            start: (new Date()).setHours(9),
-            end: (new Date()).setHours(11),
-            // url: 'https://github.com/fullcalendar/fullcalendar',
-          }]
-        }
+        events={events}
       />
     </div>
   )
