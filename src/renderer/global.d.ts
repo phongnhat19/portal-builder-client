@@ -1,1 +1,1 @@
-declare module 'react-weather';
+declare module 'simple-react-weather';

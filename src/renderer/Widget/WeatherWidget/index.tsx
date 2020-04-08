@@ -1,38 +1,54 @@
 import React, { useState, useEffect } from 'react'
-// import SettingsIframeWidget from '../IframeWidget/Settings';
-import { OpenWeatherMap } from 'react-weather'
+import Weather from 'simple-react-weather'
+import SettingsIframeWidget from '../IframeWidget/Settings';
+import WeatherModal from './WeatherModal';
+import './style.css'
 
-const WeatherWidget = ({ onSaveSetting, width, height, onRemove, showSettingInit = false }: {
-  onRemove?: () => void
+const WeatherWidget = ({
+  onSaveSetting,
+  onRemove,
+  width,
+  height,
+  showSettingInit = false,
+  unitTemp = 'C',
+  weatherCity = '',
+  openWeatherMapAPIKey = ''
+}: {
   showSettingInit?: boolean
   width?: string | number
   height?: string | number
-  onSaveSetting?: ({ defaultView }: { defaultView: string }) => void
+  unitTemp?: string
+  weatherCity?: string
+  openWeatherMapAPIKey?: string
+
+  onRemove?: () => void
+  onSaveSetting?: ({ unitTemp, weatherCity, openWeatherMapAPIKey }: {
+    unitTemp: string, weatherCity: string, openWeatherMapAPIKey: string
+  }) => void
 }) => {
 
-  // const [showSetting, setShowSetting] = useState(showSettingInit)
-  // const [weatherCityText, setWeatherCityText] = useState('ho chi minh')
-  // const weather = `http://api.openweathermap.org/data/2.5/weather?q=${weatherCityText}&appid=484aef51bbd57a72e3e8546ca208f7ad`
-  // const [weatherData, setWeatherData] = useState('')
+  const [showSetting, setShowSetting] = useState(showSettingInit)
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const weatherAPI: any = await Promise.all([fetch(weather)])
-  //       const weatherDataAPI: any = await Promise.all([weatherAPI[0].json()])
-
-  //       console.log('API', weatherDataAPI[0]);
-  //       setWeatherData(weatherDataAPI[0])
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })()
-  // }, [])
-
+  useEffect(() => {
+  }, [unitTemp, openWeatherMapAPIKey, weatherCity])
+  
   return (
-    <div style={{ width, height }}>
-      {/* <SettingsIframeWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} /> */}
-      <OpenWeatherMap city={'Ho Chi Minh'} country={'VN'} appid={'484aef51bbd57a72e3e8546ca208f7ad'} />
+    <div>
+      <SettingsIframeWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
+      <WeatherModal
+        defaultAPIKey={openWeatherMapAPIKey}
+        defaultCity={weatherCity}
+        defaultUnit={unitTemp}
+        isVisible={showSetting}
+        onClose={() => (setShowSetting(false))}
+        onSave={(item) => {
+          onSaveSetting && onSaveSetting({ unitTemp: item.unit, weatherCity: item.city, openWeatherMapAPIKey: item.apiKey })
+          setShowSetting(false)
+        }}
+      />
+      <div style={{ width, height }} className='widget-weather'>
+        <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
+      </div>
     </div>
   )
 }

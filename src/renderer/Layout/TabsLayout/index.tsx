@@ -13,6 +13,7 @@ import SchedulerWidget from '../../Widget/SchedulerWidget';
 import WeatherWidget from '../../Widget/WeatherWidget/index';
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
+import { WEATHER_UNIT } from '../../Widget/WeatherWidget/constant';
 
 const TabsLayout = ({
   tabList = []
@@ -100,8 +101,25 @@ const TabsLayout = ({
         case CONTENT_TYPE.WEATHER:
           if (!tabContent.props)
             break;
-          // const tabContentWeather = tabContent.props as any
-          newItem.tabContent = <WeatherWidget />
+          const tabContentWeather = tabContent.props as WeatherWidgetProps
+          newItem.tabContent =
+            <WeatherWidget
+              width={tabContentWeather.width}
+              height={tabContentWeather.height}
+              showSettingInit={tabContentWeather.showSettingInit}
+              unitTemp={tabContentWeather.unitTemp}
+              openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
+              weatherCity={tabContentWeather.weatherCity}
+              onRemove={removeWidget}
+              onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey }) => {
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+                currentProps.unitTemp = unitTemp;
+                currentProps.weatherCity = weatherCity;
+                currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
+                currentProps.showSettingInit = false;
+                updateWidget(currentProps);
+              }}
+            />
           break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
@@ -130,7 +148,7 @@ const TabsLayout = ({
     })
   }
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps) => {
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
     const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList
     tabList[selectedTab].tabContent.props = newProps
     setPortalList(portalList)
@@ -192,7 +210,10 @@ const TabsLayout = ({
           props = {
             showSettingInit: true,
             width: "100%",
-            height: "82vh"
+            height: "82vh",
+            unitTemp: WEATHER_UNIT.CELCIUS,
+            weatherCity: '',
+            openWeatherMapAPIKey: ''
           }
         }
         props && dropWidget(selectedTab, type, props)

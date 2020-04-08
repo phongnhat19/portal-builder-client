@@ -33,3 +33,13 @@
 .portal-tabs-layout .kuc-tabs-tab-contents {
   min-height: 85vh;
 }
+
+.portal-tabs-layout .kuc-tabs-tab-contents .styles_simpleReactWeather__3uy4l {
+  font-size: 30px;
+}
+
+.portal-tabs-layout .kuc-tabs-tab-contents .widget-weather {
+  background-color: #6495ED;
+  padding-top: 3%;
+  padding-left: 3%;
+}
