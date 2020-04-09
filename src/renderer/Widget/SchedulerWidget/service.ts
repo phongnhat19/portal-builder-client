@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const getGaroonUserID: () => Promise<string> = () => {
   return axios({
@@ -11,11 +11,11 @@ const getGaroonUserID: () => Promise<string> = () => {
     params: {
       name: kintone.getLoginUser().name
     }
-  }).then(function(resp) {
-    if (!resp.data.users || resp.data.users.length === 0) return ''
-    return resp.data.users[0].id
-  })
-}
+  }).then((resp) => {
+    if (!resp.data.users || resp.data.users.length === 0) return '';
+    return resp.data.users[0].id;
+  });
+};
 
 const getScheduleByUserID = (userID: string) => {
   return axios({
@@ -29,10 +29,10 @@ const getScheduleByUserID = (userID: string) => {
       targetType: 'user',
       target: userID
     }
-  }).then(function(resp) {
+  }).then((resp) => {
     return resp.data.events;
-  })
-}
+  });
+};
 
 const getSchedulerEvent: () => Promise<SchedulerEvent[]> = () => {
   return getGaroonUserID()
@@ -45,9 +45,9 @@ const getSchedulerEvent: () => Promise<SchedulerEvent[]> = () => {
           start: new Date(event.start.dateTime),
           end: new Date(event.end.dateTime),
           allDay: event.isAllDay
-        }
-      })
-    })
-}
+        };
+      });
+    });
+};
 
-export {getSchedulerEvent}
+export {getSchedulerEvent};
