@@ -1,5 +1,5 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import {deployPortalToKintone} from './util/kintone'
+import {app, BrowserWindow, ipcMain} from 'electron';
+import {deployPortalToKintone} from './util/kintone';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 
@@ -66,9 +66,9 @@ app.on('activate', () => {
 // Event listener for kintone
 ipcMain.on('request-to-kintone', (event: Electron.IpcMainEvent, arg: any) => {
   return deployPortalToKintone(arg).then(() => {
-    event.reply('kintone-reply', {status: 'done', index: arg.index})
+    event.reply('kintone-reply', {status: 'done', index: arg.index});
     return event;
   }).catch(err => {
-    event.reply('kintone-reply', {status: 'error', index: arg.index})
-  })
-})
+    event.reply('kintone-reply', {status: 'error', index: arg.index});
+  });
+});

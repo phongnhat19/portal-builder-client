@@ -1,4 +1,4 @@
 export const LAYOUT_TYPE = {
-    TABS: 'Tabs',
-    GRID: 'Grid'
-}
+  TABS: 'Tabs',
+  GRID: 'Grid'
+};

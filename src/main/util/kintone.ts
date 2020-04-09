@@ -1,55 +1,55 @@
-import axios from 'axios'
-import fs from 'fs'
-import path from 'path'
+import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
 import FormData from 'form-data';
-import stream from 'stream'
+import stream from 'stream';
 import isDev from 'electron-is-dev';
 
 const prepareSettingToUpdate = (scripts: any[], jsKey: string, cssKey: string, fileNames: string[]) => {
-  let files: any = {
-    "DESKTOP": [],
-    "MOBILE": [],
-    "DESKTOP_CSS": [],
-    "MOBILE_CSS": []
+  const files: any = {
+    'DESKTOP': [],
+    'MOBILE': [],
+    'DESKTOP_CSS': [],
+    'MOBILE_CSS': []
   };
 
   scripts.filter((script: any) => {
-    return fileNames.indexOf(script.name) == -1
+    return fileNames.indexOf(script.name) === -1;
   }).map((script: any) => {
     return {
       type: script.type,
       contentId: script.contentId,
       contentUrl: script.contentUrl
-    }
+    };
   }).forEach((script: any) => {
     files[script.type].push(script.contentUrl ? script.contentUrl : script.contentId);
   });
 
-  files["DESKTOP"].push(jsKey);
-  files["DESKTOP_CSS"].push(cssKey);
+  files.DESKTOP.push(jsKey);
+  files.DESKTOP_CSS.push(cssKey);
 
   return {
-    "jsScope": "ALL",
-    "jsFiles": [
-      { "jsType": "DESKTOP", "fileKeys": files["DESKTOP"] },
-      { "jsType": "MOBILE", "fileKeys": files["MOBILE"] },
-      { "jsType": "DESKTOP_CSS", "fileKeys": files["DESKTOP_CSS"] },
-      { "jsType": "MOBILE_CSS", "fileKeys": files["MOBILE_CSS"] }
+    'jsScope': 'ALL',
+    'jsFiles': [
+      {'jsType': 'DESKTOP', 'fileKeys': files.DESKTOP},
+      {'jsType': 'MOBILE', 'fileKeys': files.MOBILE},
+      {'jsType': 'DESKTOP_CSS', 'fileKeys': files.DESKTOP_CSS},
+      {'jsType': 'MOBILE_CSS', 'fileKeys': files.MOBILE_CSS}
     ]
   };
-}
+};
 
 const uploadFile = (setting: any, formData: any) => {
   const passwordAuth = Buffer.from(`${setting.username}:${setting.password}`).toString('base64');
   return axios({
-      method: 'POST',
-      url: `https://${setting.domain}/k/api/blob/upload.json?_lc=en_US`,
-      data: formData,
-      headers: { 
-        'Content-Type' : formData.getHeaders()['content-type'],
-        'X-Cybozu-Authorization': passwordAuth
-      }
-    });
+    method: 'POST',
+    url: `https://${setting.domain}/k/api/blob/upload.json?_lc=en_US`,
+    data: formData,
+    headers: {
+      'Content-Type': formData.getHeaders()['content-type'],
+      'X-Cybozu-Authorization': passwordAuth
+    }
+  });
 };
 
 const getSystemSetting = (setting: any) => {
@@ -63,7 +63,7 @@ const getSystemSetting = (setting: any) => {
     },
     data: {}
   });
-}
+};
 
 const updateSetting = (profile: any, setting: any) => {
   const passwordAuth = Buffer.from(`${profile.username}:${profile.password}`).toString('base64');
@@ -75,39 +75,39 @@ const updateSetting = (profile: any, setting: any) => {
     },
     data: setting
   });
-}
+};
 
 const deployPortalToKintone = (data: any) => {
-  const profile = data.profile
-  const portal = data.portal
+  const profile = data.profile;
+  const portal = data.portal;
 
-  const jsFileName = 'customPortalTemplate.min.js'
-  const cssFileName = 'customPortalTemplate.css'
+  const jsFileName = 'customPortalTemplate.min.js';
+  const cssFileName = 'customPortalTemplate.css';
 
   const JS_PATH = {
     DEV: path.join(__dirname, `../../dist/${jsFileName}`),
     PRODUCTION: path.resolve(__dirname, `../../../${jsFileName}`)
-  }
-  
-  let jsFile = fs.readFileSync(isDev ? JS_PATH.DEV : JS_PATH.PRODUCTION, 'utf8')
-  const jsString = JSON.stringify(portal).replace(/\"/g, '\'')
-  jsFile = jsFile.replace('PORTAL_CONFIG', jsString)
-  
-  const fileData = new stream.Readable()
-  fileData.push(jsFile)
-  fileData.push(null) 
+  };
+
+  let jsFile = fs.readFileSync(isDev ? JS_PATH.DEV : JS_PATH.PRODUCTION, 'utf8');
+  const jsString = JSON.stringify(portal).replace(/"/g, '\'');
+  jsFile = jsFile.replace('PORTAL_CONFIG', jsString);
+
+  const fileData = new stream.Readable();
+  fileData.push(jsFile);
+  fileData.push(null);
 
   const jsFormData = new FormData();
-  jsFormData.append("file", fileData, jsFileName);
+  jsFormData.append('file', fileData, jsFileName);
 
   const cssFormData = new FormData();
 
   const CSS_PATH = {
     DEV: path.join(__dirname, `../../dist/${cssFileName}`),
     PRODUCTION: path.resolve(__dirname, `../../../${cssFileName}`)
-  }
+  };
 
-  cssFormData.append("file", fs.createReadStream(isDev ? CSS_PATH.DEV : CSS_PATH.PRODUCTION), cssFileName);
+  cssFormData.append('file', fs.createReadStream(isDev ? CSS_PATH.DEV : CSS_PATH.PRODUCTION), cssFileName);
 
   const allRequests = [
     uploadFile(profile, jsFormData),
@@ -122,15 +122,15 @@ const deployPortalToKintone = (data: any) => {
     const scripts = systemSetting.scripts;
     return prepareSettingToUpdate(scripts, jsKey, cssKey, [jsFileName, cssFileName]);
   }).then((setting) => {
-    return updateSetting(profile, setting)
+    return updateSetting(profile, setting);
   }).then((resp) => {
-    return resp.data
+    return resp.data;
   }).catch((err) => {
-    console.error(err)
-    throw err
-  })
-}
+    console.error(err);
+    throw err;
+  });
+};
 
 export {
   deployPortalToKintone
-}
+};

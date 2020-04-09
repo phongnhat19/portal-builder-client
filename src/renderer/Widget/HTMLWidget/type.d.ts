@@ -1,6 +1,6 @@
 declare type HTMLWidgetProps = {
-  width: string,
-  height: string,
-  htmlString: string,
-  showSettingInit?: boolean
+  width: string;
+  height: string;
+  htmlString: string;
+  showSettingInit?: boolean;
 }
