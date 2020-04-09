@@ -6,7 +6,6 @@ declare type WeatherWidgetProps = {
     weatherCity?: string
     openWeatherMapAPIKey?: string
     type?: string
-    data?: FullWeatherProps
 }
 
 declare type FullWeatherProps = {

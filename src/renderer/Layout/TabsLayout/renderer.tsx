@@ -74,7 +74,6 @@ const TabsLayout = ({
               unitTemp={tabContentWeather.unitTemp}
               weatherCity={tabContentWeather.weatherCity}
               openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
-              data={tabContentWeather.data}
               type={tabContentWeather.type}
             />
           break;

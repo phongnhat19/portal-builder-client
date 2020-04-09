@@ -111,16 +111,14 @@ const TabsLayout = ({
               unitTemp={tabContentWeather.unitTemp}
               openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
               weatherCity={tabContentWeather.weatherCity}
-              data={tabContentWeather.data}
               onRemove={removeWidget}
-              onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type, data}) => {
+              onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
                 let currentProps = JSON.parse(JSON.stringify(tabContent.props))
                 currentProps.unitTemp = unitTemp;
                 currentProps.weatherCity = weatherCity;
                 currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
                 currentProps.showSettingInit = false;
                 currentProps.type = type;
-                currentProps.data = data;
                 updateWidget(currentProps);
               }}
             />
@@ -218,8 +216,7 @@ const TabsLayout = ({
             unitTemp: WEATHER_UNIT.CELCIUS,
             weatherCity: '',
             openWeatherMapAPIKey: '',
-            type: WEATHER_TYPE.SIMPLE,
-            data: {}
+            type: WEATHER_TYPE.SIMPLE
           }
         }
         props && dropWidget(selectedTab, type, props)

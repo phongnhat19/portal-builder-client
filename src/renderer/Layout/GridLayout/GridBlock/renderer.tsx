@@ -1,5 +1,4 @@
 import React, { CSSProperties, useState, useEffect } from 'react'
-import './style.css'
 import { Row } from 'antd';
 
 import IframeWidget from '../../../Widget/IframeWidget/renderer';
@@ -66,7 +65,6 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
               unitTemp={blockContentWeather.unitTemp}
               weatherCity={blockContentWeather.weatherCity}
               openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
-              data={blockContentWeather.data}
               type={blockContentWeather.type}
             />
           break;

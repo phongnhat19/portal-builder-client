@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Weather from 'simple-react-weather'
 import { WEATHER_TYPE } from './constant';
 import { Row, Col } from 'antd';
@@ -10,12 +10,6 @@ const WeatherComponent = ({
   weatherCity = '',
   openWeatherMapAPIKey = '',
   type = WEATHER_TYPE.SIMPLE,
-  data = {
-    description: '',
-    humidity: '',
-    windSpeed: '',
-    cloud: ''
-  }
 }: {
   width?: string | number
   height?: string | number
@@ -23,8 +17,35 @@ const WeatherComponent = ({
   weatherCity?: string
   openWeatherMapAPIKey?: string
   type?: string
-  data?: FullWeatherProps
 }) => {
+
+  const [weatherData, setWeatherData] = useState({
+    description: '',
+    humidity: '',
+    windSpeed: '',
+    cloud: ''
+  })
+
+  const weather = `https://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${openWeatherMapAPIKey}`
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (weatherCity !== '' && openWeatherMapAPIKey !== '') {
+          const weatherAPI: any = await Promise.all([fetch(weather)])
+          const weatherDataAPI: any = await Promise.all([weatherAPI[0].json()])
+          setWeatherData({
+            description: weatherDataAPI[0].weather[0].description,
+            humidity: `${weatherDataAPI[0].main.humidity} %`,
+            windSpeed: `${weatherDataAPI[0].wind.speed} meter/sec`,
+            cloud: `${weatherDataAPI[0].clouds.all} %`
+          })
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })()
+  }, [weatherCity, openWeatherMapAPIKey, unitTemp, type])
 
   return (
     <div style={{ width, height }} className='widget-weather'>
@@ -32,14 +53,14 @@ const WeatherComponent = ({
         <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
         :
         <Row style={{ display: 'flex' }}>
-          <Col span={10}>
+          <Col style={{ width: '20%' }}>
             <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
           </Col>
-          <Col span={14} className='widget-full-weather'>
-            <p><strong>weather:</strong> {data.description}</p>
-            <p><strong>humidity:</strong> {data.humidity}</p>
-            <p><strong>wind speed:</strong> {data.windSpeed}</p>
-            <p><strong>cloud:</strong> {data.cloud}</p>
+          <Col className='widget-full-weather'>
+            <p><strong>weather:</strong> {weatherData.description}</p>
+            <p><strong>humidity:</strong> {weatherData.humidity}</p>
+            <p><strong>wind speed:</strong> {weatherData.windSpeed}</p>
+            <p><strong>cloud:</strong> {weatherData.cloud}</p>
           </Col>
         </Row>
       }

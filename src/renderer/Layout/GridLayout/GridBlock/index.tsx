@@ -145,7 +145,6 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         currentContentBlock =
           <WeatherWidget
             type={blockContentWeather.type}
-            data={blockContentWeather.data}
             width={blockContentWeather.width}
             height={blockContentWeather.height}
             showSettingInit={blockContentWeather.showSettingInit}
@@ -153,14 +152,13 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
             weatherCity={blockContentWeather.weatherCity}
             onRemove={removeWidget}
-            onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type, data}) => {
+            onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
               let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
               currentProps.unitTemp = unitTemp;
               currentProps.weatherCity = weatherCity;
               currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
               currentProps.showSettingInit = false;
               currentProps.type = type;
-              currentProps.data = data;
               updateWidget(currentProps);
             }}
           />
@@ -216,8 +214,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             unitTemp: WEATHER_UNIT.CELCIUS,
             weatherCity: '',
             openWeatherMapAPIKey: '',
-            type: WEATHER_TYPE.SIMPLE,
-            data: {}
+            type: WEATHER_TYPE.SIMPLE
           }
         }
         props && dropWidget(rowIndex, blockIndex, type, props)
