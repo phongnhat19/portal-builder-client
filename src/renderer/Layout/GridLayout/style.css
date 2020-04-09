@@ -85,3 +85,8 @@
     font-size: 20px;
     min-height: 0px !important
 }
+
+.grid-layout .grid-layout-row .grid-block .widget-weather .widget-full-weather {
+    text-transform: uppercase;
+    color: white;
+  }

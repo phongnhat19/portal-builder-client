@@ -10,7 +10,7 @@ import ScheduleWidget from '../../../Widget/SchedulerWidget';
 import { EMPTY_WIDGET_CONTENT, CONFIRM_DELETE } from '../../TabsLayout/constant';
 import confirm from 'antd/lib/modal/confirm';
 import { CONTENT_TYPE } from '../../../Widget/constant';
-import { WEATHER_UNIT } from '../../../Widget/WeatherWidget/constant';
+import { WEATHER_UNIT, WEATHER_TYPE } from '../../../Widget/WeatherWidget/constant';
 import WeatherWidget from '../../../Widget/WeatherWidget';
 
 const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, onRemoveBlock, onResizeWidth }: {
@@ -144,6 +144,8 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         const blockContentWeather = currentBlock.content as WeatherWidgetProps
         currentContentBlock =
           <WeatherWidget
+            type={blockContentWeather.type}
+            data={blockContentWeather.data}
             width={blockContentWeather.width}
             height={blockContentWeather.height}
             showSettingInit={blockContentWeather.showSettingInit}
@@ -151,12 +153,14 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
             weatherCity={blockContentWeather.weatherCity}
             onRemove={removeWidget}
-            onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey }) => {
+            onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type, data}) => {
               let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
               currentProps.unitTemp = unitTemp;
               currentProps.weatherCity = weatherCity;
               currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
               currentProps.showSettingInit = false;
+              currentProps.type = type;
+              currentProps.data = data;
               updateWidget(currentProps);
             }}
           />
@@ -211,7 +215,9 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             height: '100%',
             unitTemp: WEATHER_UNIT.CELCIUS,
             weatherCity: '',
-            openWeatherMapAPIKey: ''
+            openWeatherMapAPIKey: '',
+            type: WEATHER_TYPE.SIMPLE,
+            data: {}
           }
         }
         props && dropWidget(rowIndex, blockIndex, type, props)

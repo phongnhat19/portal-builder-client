@@ -1,6 +1,6 @@
 .grid-layout {
   /* min-width: 100%; */
-  min-height: 85vh; 
+  min-height: 85vh;
   padding: 15px
 }
 
@@ -66,4 +66,9 @@
   min-width: 15px !important;
   height: 20px;
   font-size: 10px !important;
+}
+
+.grid-layout .grid-layout-row .grid-block .widget-weather .widget-full-weather {
+  text-transform: uppercase;
+  color: white;
 }

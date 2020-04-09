@@ -3,6 +3,8 @@ import Weather from 'simple-react-weather'
 import SettingsIframeWidget from '../IframeWidget/Settings';
 import WeatherModal from './WeatherModal';
 import './style.css'
+import { WEATHER_TYPE } from './constant';
+import FullWeather from './FullWeather';
 
 const WeatherWidget = ({
   onSaveSetting,
@@ -12,7 +14,14 @@ const WeatherWidget = ({
   showSettingInit = false,
   unitTemp = 'C',
   weatherCity = '',
-  openWeatherMapAPIKey = ''
+  openWeatherMapAPIKey = '',
+  type = WEATHER_TYPE.SIMPLE,
+  data = {
+    description: '',
+    humidity: '',
+    windSpeed: '',
+    cloud: ''
+  }
 }: {
   showSettingInit?: boolean
   width?: string | number
@@ -20,17 +29,37 @@ const WeatherWidget = ({
   unitTemp?: string
   weatherCity?: string
   openWeatherMapAPIKey?: string
+  type?: string
+  data?: FullWeatherProps
 
   onRemove?: () => void
-  onSaveSetting?: ({ unitTemp, weatherCity, openWeatherMapAPIKey }: {
-    unitTemp: string, weatherCity: string, openWeatherMapAPIKey: string
+  onSaveSetting?: ({ unitTemp, weatherCity, openWeatherMapAPIKey, type, data }: {
+    unitTemp: string, weatherCity: string, openWeatherMapAPIKey: string, type: string,
+    data?: FullWeatherProps
   }) => void
 }) => {
 
   const [showSetting, setShowSetting] = useState(showSettingInit)
+  const [weatherData, setWeatherData] = useState(data)
+
+  const weather = `http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${openWeatherMapAPIKey}`
 
   useEffect(() => {
-  }, [unitTemp, openWeatherMapAPIKey, weatherCity])
+    (async () => {
+      try {
+        const weatherAPI: any = await Promise.all([fetch(weather)])
+        const weatherDataAPI: any = await Promise.all([weatherAPI[0].json()])
+        setWeatherData({
+          description: weatherDataAPI[0].weather[0].description,
+          humidity: `${weatherDataAPI[0].main.humidity} %`,
+          windSpeed: `${weatherDataAPI[0].wind.speed} meter/sec`,
+          cloud: `${weatherDataAPI[0].clouds.all} %`
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    })()
+  }, [unitTemp, openWeatherMapAPIKey, weatherCity, type])
 
   return (
     <div style={{ width, height }} className='widget-weather'>
@@ -39,14 +68,31 @@ const WeatherWidget = ({
         defaultAPIKey={openWeatherMapAPIKey}
         defaultCity={weatherCity}
         defaultUnit={unitTemp}
+        defaultType={type}
         isVisible={showSetting}
         onClose={() => (setShowSetting(false))}
         onSave={(item) => {
-          onSaveSetting && onSaveSetting({ unitTemp: item.unit, weatherCity: item.city, openWeatherMapAPIKey: item.apiKey })
+          onSaveSetting && onSaveSetting({
+            unitTemp: item.unit,
+            weatherCity: item.city,
+            openWeatherMapAPIKey: item.apiKey,
+            type: item.type,
+            data: weatherData
+          })
           setShowSetting(false)
         }}
       />
-      <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
+      {
+        type === WEATHER_TYPE.SIMPLE ?
+          <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
+          :
+          <FullWeather
+            openWeatherMapAPIKey={openWeatherMapAPIKey}
+            unitTemp={unitTemp}
+            weatherCity={weatherCity}
+            weatherData={weatherData}
+          />
+      }
     </div >
   )
 }

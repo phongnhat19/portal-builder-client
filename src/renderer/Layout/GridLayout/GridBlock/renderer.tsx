@@ -66,6 +66,8 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
               unitTemp={blockContentWeather.unitTemp}
               weatherCity={blockContentWeather.weatherCity}
               openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
+              data={blockContentWeather.data}
+              type={blockContentWeather.type}
             />
           break;
       case CONTENT_TYPE.EMPTY:

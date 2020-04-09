@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
 import { Modal, Row, Col, Radio, Input } from 'antd'
-import { WEATHER_UNIT } from './constant';
+import { WEATHER_UNIT, WEATHER_TYPE } from './constant';
 
-const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, defaultUnit, defaultAPIKey }: {
+const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, defaultUnit, defaultAPIKey, defaultType }: {
   defaultCity: string
   defaultUnit: string
   defaultAPIKey: string
+  defaultType: string
   isVisible: boolean
-  onSave: (item: { city: string, unit: string, apiKey: string }) => void
+  onSave: (item: { city: string, unit: string, apiKey: string, type: string }) => void
   onClose?: () => void
 }) => {
 
   const [city, setCity] = useState(defaultCity)
   const [weatherUnit, setWeatherUnit] = useState(defaultUnit)
   const [apiKey, setApiKey] = useState(defaultAPIKey)
+  const [type, setType] = useState(defaultType)
 
   return (
     <Modal
@@ -26,10 +28,22 @@ const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, default
           city,
           apiKey,
           unit: weatherUnit,
+          type,
         })
       }}
     >
       <Row>
+        <Col span={4}>
+          <strong>Type show</strong>
+        </Col>
+        <Col span={20}>
+          <Radio.Group onChange={(e) => { setType(e.target.value) }} defaultValue={type}>
+            <Radio.Button value={WEATHER_TYPE.SIMPLE}>{WEATHER_TYPE.SIMPLE}</Radio.Button>
+            <Radio.Button value={WEATHER_TYPE.FULL_INFO}>{WEATHER_TYPE.FULL_INFO}</Radio.Button>
+          </Radio.Group>
+        </Col>
+      </Row>
+      <Row className='widget-config-weather'>
         <Col span={4}>
           <strong>Unit</strong>
         </Col>

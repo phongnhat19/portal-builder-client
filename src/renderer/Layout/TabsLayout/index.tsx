@@ -13,7 +13,7 @@ import SchedulerWidget from '../../Widget/SchedulerWidget';
 import WeatherWidget from '../../Widget/WeatherWidget/index';
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
-import { WEATHER_UNIT } from '../../Widget/WeatherWidget/constant';
+import { WEATHER_UNIT, WEATHER_TYPE } from '../../Widget/WeatherWidget/constant';
 
 const TabsLayout = ({
   tabList = []
@@ -104,19 +104,23 @@ const TabsLayout = ({
           const tabContentWeather = tabContent.props as WeatherWidgetProps
           newItem.tabContent =
             <WeatherWidget
+              type={tabContentWeather.type}
               width={tabContentWeather.width}
               height={tabContentWeather.height}
               showSettingInit={tabContentWeather.showSettingInit}
               unitTemp={tabContentWeather.unitTemp}
               openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
               weatherCity={tabContentWeather.weatherCity}
+              data={tabContentWeather.data}
               onRemove={removeWidget}
-              onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey }) => {
+              onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type, data}) => {
                 let currentProps = JSON.parse(JSON.stringify(tabContent.props))
                 currentProps.unitTemp = unitTemp;
                 currentProps.weatherCity = weatherCity;
                 currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
                 currentProps.showSettingInit = false;
+                currentProps.type = type;
+                currentProps.data = data;
                 updateWidget(currentProps);
               }}
             />
@@ -213,7 +217,9 @@ const TabsLayout = ({
             height: "82vh",
             unitTemp: WEATHER_UNIT.CELCIUS,
             weatherCity: '',
-            openWeatherMapAPIKey: ''
+            openWeatherMapAPIKey: '',
+            type: WEATHER_TYPE.SIMPLE,
+            data: {}
           }
         }
         props && dropWidget(selectedTab, type, props)
