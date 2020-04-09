@@ -3,5 +3,6 @@ export const CONTENT_TYPE = {
     HTML: 'HTML',
     SCHEDULER: 'Scheduler',
     DEFAULT: 'DefaultPortal',
-    EMPTY: 'Empty'
+    EMPTY: 'Empty',
+    NOTIFY: 'Notify'
 };

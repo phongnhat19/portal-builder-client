@@ -5,6 +5,7 @@ import { Row } from 'antd';
 import IframeWidget from '../../../Widget/IframeWidget/renderer';
 import HTMLWidget from '../../../Widget/HTMLWidget/renderer';
 import SchedulerWidget from '../../../Widget/SchedulerWidget/renderer';
+import Notify from '../../../Widget/NotifyWidget/'
 import { EMPTY_WIDGET_CONTENT } from '../../TabsLayout/constant';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 
@@ -56,6 +57,9 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
             defaultView={blockContentSchedule.defaultView}
           />
         break;
+        case CONTENT_TYPE.NOTIFY:
+          currentContentBlock = <Notify />
+          break;
       case CONTENT_TYPE.EMPTY:
         currentContentBlock = ''
       default:

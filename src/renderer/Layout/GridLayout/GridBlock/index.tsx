@@ -7,6 +7,7 @@ import { SCHEDULER_VIEW } from '../../../Widget/SchedulerWidget/constant';
 import IframeWidget from '../../../Widget/IframeWidget';
 import HTMLWidget from '../../../Widget/HTMLWidget';
 import ScheduleWidget from '../../../Widget/SchedulerWidget';
+import NotifyWidget from '../../../Widget/NotifyWidget'
 import { EMPTY_WIDGET_CONTENT, CONFIRM_DELETE } from '../../TabsLayout/constant';
 import confirm from 'antd/lib/modal/confirm';
 import { CONTENT_TYPE } from '../../../Widget/constant';
@@ -137,6 +138,13 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             }}
           />
         break;
+        case CONTENT_TYPE.NOTIFY:
+          if (!currentBlock.content) {
+            break;
+          };
+          currentContentBlock =
+          <NotifyWidget onRemove={removeWidget}/>
+          break;
       case CONTENT_TYPE.EMPTY:
         currentContentBlock = EMPTY_WIDGET_CONTENT
       default:
@@ -180,7 +188,13 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME,
             width: 100
           }
+        } else if (type === CONTENT_TYPE.NOTIFY) {
+          props = {
+            showSettingInit: false,
+            width: 100
+          }
         }
+        
         props && dropWidget(rowIndex, blockIndex, type, props)
       }}
     >

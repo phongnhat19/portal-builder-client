@@ -5,6 +5,7 @@ import Iframe from '../../Widget/IframeWidget/renderer';
 import { EMPTY_WIDGET_CONTENT } from './constant';
 import HTML from '../../Widget/HTMLWidget/renderer';
 import Schedule from '../../Widget/SchedulerWidget/renderer';
+import Notify from '../../Widget/NotifyWidget/renderer';
 import { CONTENT_TYPE } from '../../Widget/constant';
 
 let portalSpaceEl: HTMLElement
@@ -61,6 +62,12 @@ const TabsLayout = ({
           <Schedule
             defaultView={tabContentSchedule.defaultView}
           />
+          break;
+        case CONTENT_TYPE.NOTIFY:
+          if (!tabContent.props) {
+            break;
+          };
+          newItem.tabContent = <Notify />
           break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT

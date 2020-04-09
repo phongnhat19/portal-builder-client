@@ -12,6 +12,7 @@ import HTMLWidget from '../../Widget/HTMLWidget';
 import SchedulerWidget from '../../Widget/SchedulerWidget';
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
+import NotifyWidget from '../../Widget/NotifyWidget';
 
 const TabsLayout = ({
   tabList = []
@@ -95,6 +96,13 @@ const TabsLayout = ({
               updateWidget(currentProps)
             }} 
           />
+          break;
+        case CONTENT_TYPE.NOTIFY:
+          if (!tabContent.props) {
+            break;
+          };
+          newItem.tabContent = 
+          <NotifyWidget onRemove={removeWidget}/>
           break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
@@ -180,6 +188,10 @@ const TabsLayout = ({
           props = {
             showSettingInit: true,
             defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
+          }
+        } else if (type === CONTENT_TYPE.NOTIFY) {
+          props = {
+            showSettingInit: true
           }
         }
         props && dropWidget(selectedTab, type, props)
