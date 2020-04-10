@@ -13,7 +13,7 @@ import SchedulerWidget from '../../Widget/SchedulerWidget';
 import WeatherWidget from '../../Widget/WeatherWidget/index';
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
-import NotifyWidget from '../../Widget/NotifyWidget';
+import GNotifyWidget from '../../Widget/GNotifyWidget';
 import { WEATHER_UNIT, WEATHER_TYPE } from '../../Widget/WeatherWidget/constant';
 
 const TabsLayout = ({
@@ -127,7 +127,7 @@ const TabsLayout = ({
             break;
           };
           newItem.tabContent = 
-          <NotifyWidget onRemove={removeWidget}/>
+          <GNotifyWidget onRemove={removeWidget}/>
           break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT

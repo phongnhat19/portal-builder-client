@@ -13,7 +13,7 @@ const getNotify = () => {
   });
 };
 
-const getNotifyEvent: () => Promise<SchedulerEvent[]> = () => {
+const getNotifyEvent: () => Promise<NotificationGRN[]> = () => {
   return getNotify()
     .then((items) => {
       return items.map((item: NotificationGRN) => {

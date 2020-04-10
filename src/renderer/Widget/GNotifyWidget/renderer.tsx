@@ -2,32 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {getNotifyEvent} from './service';
 import './style.css';
 
-const Notify = ({defaultView, isPreview}: {
-  defaultView?: string;
-  isPreview?: boolean;
+const Notify = ({data}: {
+  data: NotificationGRN[];
 }) => {
-  const initNotifications: any[] = [
-    {
-      url: '',
-      title: 'Sample Notification',
-      body: 'This is body',
-      isRead: false,
-      createdAt: '2017-09-26T06:25:18Z',
-      creator: {
-        name: 'Admin',
-        code: 'Admin'
-      }
-    }
-  ];
-  const [notifications, setNotifications] = useState(initNotifications);
+  const [notifications, setNotifications] = useState(data);
 
   useEffect(() => {
-    if (!isPreview) {
-      getNotifyEvent().then((rsp: any[]) => {
-        setNotifications(rsp);
-      });
-    }
-  }, [isPreview]);
+    if (data.length === 0 && window.kintone) getNotifyEvent().then(setNotifications);
+  }, []);
 
   return (
     <div className="grn_notify_container">

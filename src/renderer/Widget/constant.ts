@@ -3,7 +3,7 @@ export const CONTENT_TYPE = {
   HTML: 'HTML',
   SCHEDULER: 'Scheduler',
   WEATHER: 'Weather',
-  NOTIFY: 'Notification',
+  NOTIFY: 'GNotification',
   DEFAULT: 'DefaultPortal',
   EMPTY: 'Empty'
 };

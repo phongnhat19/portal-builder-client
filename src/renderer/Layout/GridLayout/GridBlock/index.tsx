@@ -7,7 +7,7 @@ import { SCHEDULER_VIEW } from '../../../Widget/SchedulerWidget/constant';
 import IframeWidget from '../../../Widget/IframeWidget';
 import HTMLWidget from '../../../Widget/HTMLWidget';
 import ScheduleWidget from '../../../Widget/SchedulerWidget';
-import NotifyWidget from '../../../Widget/NotifyWidget'
+import GNotifyWidget from '../../../Widget/GNotifyWidget'
 import { EMPTY_WIDGET_CONTENT, CONFIRM_DELETE } from '../../TabsLayout/constant';
 import confirm from 'antd/lib/modal/confirm';
 import { CONTENT_TYPE } from '../../../Widget/constant';
@@ -144,7 +144,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
           break;
         };
         currentContentBlock =
-        <NotifyWidget onRemove={removeWidget}/>
+        <GNotifyWidget onRemove={removeWidget}/>
         break;
       case CONTENT_TYPE.WEATHER:
         if (!currentBlock.content)

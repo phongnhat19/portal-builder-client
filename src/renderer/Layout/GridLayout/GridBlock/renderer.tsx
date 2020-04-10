@@ -4,7 +4,7 @@ import { Row } from 'antd';
 import IframeWidget from '../../../Widget/IframeWidget/renderer';
 import HTMLWidget from '../../../Widget/HTMLWidget/renderer';
 import SchedulerWidget from '../../../Widget/SchedulerWidget/renderer';
-import Notify from '../../../Widget/NotifyWidget/'
+import Notify from '../../../Widget/GNotifyWidget/renderer';
 import { EMPTY_WIDGET_CONTENT } from '../../TabsLayout/constant';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
@@ -58,7 +58,7 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
           />
         break;
         case CONTENT_TYPE.NOTIFY:
-          currentContentBlock = <Notify />
+          currentContentBlock = <Notify data={[]}/>
         case CONTENT_TYPE.WEATHER:
           const blockContentWeather = content as WeatherWidgetProps;
           currentContentBlock =
