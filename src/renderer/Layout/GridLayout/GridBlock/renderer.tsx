@@ -59,6 +59,7 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
         break;
         case CONTENT_TYPE.NOTIFY:
           currentContentBlock = <Notify data={[]}/>
+          break;
         case CONTENT_TYPE.WEATHER:
           const blockContentWeather = content as WeatherWidgetProps;
           currentContentBlock =
