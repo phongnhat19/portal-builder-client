@@ -75,6 +75,7 @@
     }
   },
   "devDependencies": {
+    "@cybozu/eslint-config": "^10.0.2",
     "@electron-forge/cli": "6.0.0-beta.49",
     "@electron-forge/maker-deb": "6.0.0-beta.49",
     "@electron-forge/maker-dmg": "^6.0.0-beta.49",

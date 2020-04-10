@@ -4,16 +4,16 @@ declare enum LayoutType {
 }
 
 declare type Layout = {
-    type: LayoutType,
-    props: TabLayout | GridLayout
+  type: LayoutType;
+  props: TabLayout | GridLayout;
 }
 
 declare type Portal = {
-    name: string;
-    layout: Layout;
+  name: string;
+  layout: Layout;
 }
 
 declare type Widget = {
-  name: string
-  icon: any
+  name: string;
+  icon: any;
 }

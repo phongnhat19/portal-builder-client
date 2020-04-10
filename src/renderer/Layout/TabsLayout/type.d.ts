@@ -1,13 +1,13 @@
 declare type Tab = {
-  tabName: string,
+  tabName: string;
   tabContent: {
-    type: ContentType,
-    name?: string,
-    props?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps,
-    value?: string
-  }
+    type: ContentType;
+    name?: string;
+    props?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps;
+    value?: string;
+  };
 }
 
 declare type TabLayout = {
-  tabList: Tab[]
+  tabList: Tab[];
 }
