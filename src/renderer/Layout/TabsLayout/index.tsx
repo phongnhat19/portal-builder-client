@@ -105,8 +105,6 @@ const TabsLayout = ({
           newItem.tabContent =
             <WeatherWidget
               type={tabContentWeather.type}
-              width={tabContentWeather.width}
-              height={tabContentWeather.height}
               showSettingInit={tabContentWeather.showSettingInit}
               unitTemp={tabContentWeather.unitTemp}
               openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
@@ -211,8 +209,6 @@ const TabsLayout = ({
         } else if (type === CONTENT_TYPE.WEATHER) {
           props = {
             showSettingInit: true,
-            width: "100%",
-            height: "82vh",
             unitTemp: WEATHER_UNIT.CELCIUS,
             weatherCity: '',
             openWeatherMapAPIKey: '',

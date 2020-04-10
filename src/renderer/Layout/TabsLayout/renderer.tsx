@@ -70,7 +70,6 @@ const TabsLayout = ({
           const tabContentWeather = tabContent.props as WeatherWidgetProps;
           newItem.tabContent =
             <WeatherComponent
-              height={tabContentWeather.height}
               unitTemp={tabContentWeather.unitTemp}
               weatherCity={tabContentWeather.weatherCity}
               openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}

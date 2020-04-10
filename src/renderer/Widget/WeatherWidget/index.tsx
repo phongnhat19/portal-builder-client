@@ -9,8 +9,6 @@ import FullWeather from './FullWeather';
 const WeatherWidget = ({
   onSaveSetting,
   onRemove,
-  width,
-  height,
   showSettingInit = false,
   unitTemp = 'C',
   weatherCity = '',
@@ -18,8 +16,6 @@ const WeatherWidget = ({
   type = WEATHER_TYPE.SIMPLE,
 }: {
   showSettingInit?: boolean
-  width?: string | number
-  height?: string | number
   unitTemp?: string
   weatherCity?: string
   openWeatherMapAPIKey?: string
@@ -62,7 +58,7 @@ const WeatherWidget = ({
   }, [unitTemp, openWeatherMapAPIKey, weatherCity, type])
 
   return (
-    <div style={{ width, height }} className='widget-weather'>
+    <div className='widget-weather'>
       <SettingsIframeWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
       <WeatherModal
         defaultAPIKey={openWeatherMapAPIKey}

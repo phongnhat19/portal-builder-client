@@ -4,15 +4,11 @@ import { WEATHER_TYPE } from './constant';
 import { Row, Col } from 'antd';
 
 const WeatherComponent = ({
-  width,
-  height,
   unitTemp = 'C',
   weatherCity = '',
   openWeatherMapAPIKey = '',
   type = WEATHER_TYPE.SIMPLE,
 }: {
-  width?: string | number
-  height?: string | number
   unitTemp?: string
   weatherCity?: string
   openWeatherMapAPIKey?: string
@@ -48,7 +44,7 @@ const WeatherComponent = ({
   }, [weatherCity, openWeatherMapAPIKey, unitTemp, type])
 
   return (
-    <div style={{ width, height }} className='widget-weather'>
+    <div className='widget-weather'>
       {type === WEATHER_TYPE.SIMPLE ?
         <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
         :

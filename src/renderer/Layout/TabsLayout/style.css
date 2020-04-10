@@ -46,6 +46,7 @@
 .portal-tabs-layout .kuc-tabs-tab-contents .widget-weather {
   background-color: #6495ED;
   padding: 3%;
+  min-height: 85vh;
 }
 
 .portal-tabs-layout .kuc-tabs-tab-contents .widget-weather .widget-full-weather {

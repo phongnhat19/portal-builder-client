@@ -21,6 +21,7 @@
   min-height: 100px;
   overflow: auto;
   resize: horizontal;
+  box-sizing: border-box;
 }
 
 .grid-layout .grid-blocks-container {
@@ -76,6 +77,7 @@
 .grid-layout .grid-layout-row .grid-block .widget-weather {
   background-color: #6495ED;
   padding: 20px;
+  height: 100%;
 }
 
 .grid-layout .grid-layout-row .grid-block .styles_simpleReactWeather__3uy4l {

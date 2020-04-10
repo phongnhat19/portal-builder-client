@@ -60,8 +60,6 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
           const blockContentWeather = content as WeatherWidgetProps;
           currentContentBlock =
             <WeatherComponent
-              height={blockContentWeather.height}
-              width={blockContentWeather.width}
               unitTemp={blockContentWeather.unitTemp}
               weatherCity={blockContentWeather.weatherCity}
               openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}

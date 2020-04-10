@@ -145,8 +145,6 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         currentContentBlock =
           <WeatherWidget
             type={blockContentWeather.type}
-            width={blockContentWeather.width}
-            height={blockContentWeather.height}
             showSettingInit={blockContentWeather.showSettingInit}
             unitTemp={blockContentWeather.unitTemp}
             openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
@@ -209,8 +207,6 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         } else if (type === CONTENT_TYPE.WEATHER) {
           props = {
             showSettingInit: true,
-            width: "100%",
-            height: '100%',
             unitTemp: WEATHER_UNIT.CELCIUS,
             weatherCity: '',
             openWeatherMapAPIKey: '',
