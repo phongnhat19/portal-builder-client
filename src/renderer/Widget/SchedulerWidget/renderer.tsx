@@ -9,17 +9,19 @@ import '@fullcalendar/timegrid/main.css';
 import { SCHEDULER_VIEW } from './constant';
 import {getSchedulerEvent} from './service'
 
-const Scheduler = ({defaultView}: {
+const Scheduler = ({defaultView, data = []}: {
   defaultView?: string
+  data?: SchedulerEvent[]
 }) => {
 
-  const [events, setEvents] = useState([] as SchedulerEvent[])
+  const [events, setEvents] = useState(data)
 
   useEffect(() => {
-    getSchedulerEvent().then(setEvents)
-  }, [])
+    console.log(events)
+    if (data.length === 0 && window.kintone) getSchedulerEvent().then(setEvents)
+  }, [data]);
 
-  return(
+  return (
     <div style={{backgroundColor: '#FFFFFF'}}>
       <FullCalendar
         header={{
