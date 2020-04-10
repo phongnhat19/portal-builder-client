@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { SCHEDULER_VIEW } from './constant';
-import SettingsIframeWidget from '../IframeWidget/Settings';
+import SettingsWidget from '../components/Settings';
 import ScheduleModal from './ScheduleModal';
 import Schedule from './renderer'
 
@@ -24,7 +24,7 @@ const SchedulerWidget = ({ onSaveSetting, width, height, defaultView = SCHEDULER
   
   return (
     <div style={{width, height}}>
-      <SettingsIframeWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
+      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
       <Schedule
         defaultView={typeView}
         data={[
