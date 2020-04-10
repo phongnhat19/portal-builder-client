@@ -5,7 +5,7 @@ import Iframe from '../../Widget/IframeWidget/renderer';
 import { EMPTY_WIDGET_CONTENT } from './constant';
 import HTML from '../../Widget/HTMLWidget/renderer';
 import Schedule from '../../Widget/SchedulerWidget/renderer';
-import Notify from '../../Widget/GNotifyWidget/renderer';
+import GNotify from '../../Widget/GNotifyWidget/renderer';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import WeatherComponent from '../../Widget/WeatherWidget/renderer';
 
@@ -81,7 +81,7 @@ const TabsLayout = ({
           if (!tabContent.props) {
             break;
           };
-          newItem.tabContent = <Notify data={[]}/>
+          newItem.tabContent = <GNotify data={[]}/>
           break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
