@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import SettingsIframeWidget from './Settings';
+import SettingsWidget from '../components/Settings';
 import IframeModal from './IframeModal';
 import Iframe from './renderer';
 
@@ -23,7 +23,7 @@ const IframeWidget = ({ url, width = '100%', height = '100%', showSettingInit = 
 
   return (
     <React.Fragment>
-      <SettingsIframeWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
+      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
       <Iframe url={url} width={width} height={height} />
       <IframeModal
         defaultHeightValue={getCSSValue(height)}

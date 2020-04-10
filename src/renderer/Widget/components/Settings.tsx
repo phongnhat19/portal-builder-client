@@ -1,12 +1,12 @@
 import React from 'react';
-import { Dropdown, Button, Menu } from 'antd';
-import { SettingOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
+import {Dropdown, Button, Menu} from 'antd';
+import {SettingOutlined, DeleteOutlined, FormOutlined} from '@ant-design/icons';
 
-const SettingsIframeWidget = ({ onRemove, showSetting }: {
+const SettingsWidget = ({onRemove, showSetting}: {
   onRemove?: () => void;
-  showSetting?: () => void
+  showSetting?: () => void;
 }) => {
-  
+
   const menu = (
     <Menu>
       <Menu.Item key="remove-widget" onClick={onRemove}>
@@ -21,14 +21,14 @@ const SettingsIframeWidget = ({ onRemove, showSetting }: {
   );
 
   return (
-    <div className='portal-tabs-btn portal-tabs-btn-settings'>
+    <div className="portal-tabs-btn portal-tabs-btn-settings">
       <Dropdown overlay={menu}>
         <Button>
           <SettingOutlined />
         </Button>
       </Dropdown>
     </div>
-  )
-}
+  );
+};
 
-export default SettingsIframeWidget;
+export default SettingsWidget;
