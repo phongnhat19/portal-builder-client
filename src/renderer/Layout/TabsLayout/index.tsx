@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import {Tabs} from '@kintone/kintone-ui-component';
+import { Tabs } from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
-import { PlusCircleOutlined , MinusCircleOutlined, ExclamationCircleOutlined, EditOutlined} from '@ant-design/icons';
+import { PlusCircleOutlined, MinusCircleOutlined, ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
 import './style.css'
 import IframeWidget from '../../Widget/IframeWidget';
 import { PortalContext } from '../../views/PortalBuilder';
@@ -10,9 +10,11 @@ import { CONFIRM_DELETE, PORTAL_DEFAULT, EMPTY_WIDGET_CONTENT } from './constant
 import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../Widget/HTMLWidget';
 import SchedulerWidget from '../../Widget/SchedulerWidget';
+import WeatherWidget from '../../Widget/WeatherWidget/index';
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import NotifyWidget from '../../Widget/NotifyWidget';
+import { WEATHER_UNIT, WEATHER_TYPE } from '../../Widget/WeatherWidget/constant';
 
 const TabsLayout = ({
   tabList = []
@@ -42,8 +44,8 @@ const TabsLayout = ({
             break;
           }
           const tabContentIframe = tabContent.props as IframeWidgetProps;
-          newItem.tabContent = 
-            <IframeWidget 
+          newItem.tabContent =
+            <IframeWidget
               url={tabContentIframe.url}
               width={tabContentIframe.width}
               height={tabContentIframe.height}
@@ -65,8 +67,8 @@ const TabsLayout = ({
             break;
           };
           const tabContentHTML = tabContent.props as HTMLWidgetProps;
-          newItem.tabContent = 
-            <HTMLWidget 
+          newItem.tabContent =
+            <HTMLWidget
               htmlString={tabContentHTML.htmlString}
               width={tabContentHTML.width}
               height={tabContentHTML.height}
@@ -85,17 +87,40 @@ const TabsLayout = ({
             break;
           };
           const tabContentSchedule = tabContent.props as SchedulerWidgetProps;
-          newItem.tabContent = 
-          <SchedulerWidget 
-            defaultView={tabContentSchedule.defaultView}  
-            onRemove={removeWidget}
-            onSaveSetting={({defaultView}) => {
-              let currentProps = JSON.parse(JSON.stringify(tabContent.props))
-              currentProps.defaultView = defaultView
-              currentProps.showSettingInit = false;
-              updateWidget(currentProps)
-            }} 
-          />
+          newItem.tabContent =
+            <SchedulerWidget
+              defaultView={tabContentSchedule.defaultView}
+              onRemove={removeWidget}
+              onSaveSetting={({defaultView}) => {
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+                currentProps.defaultView = defaultView
+                currentProps.showSettingInit = false;
+                updateWidget(currentProps)
+              }}
+            />
+          break;
+        case CONTENT_TYPE.WEATHER:
+          if (!tabContent.props)
+            break;
+          const tabContentWeather = tabContent.props as WeatherWidgetProps
+          newItem.tabContent =
+            <WeatherWidget
+              type={tabContentWeather.type}
+              showSettingInit={tabContentWeather.showSettingInit}
+              unitTemp={tabContentWeather.unitTemp}
+              openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
+              weatherCity={tabContentWeather.weatherCity}
+              onRemove={removeWidget}
+              onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+                currentProps.unitTemp = unitTemp;
+                currentProps.weatherCity = weatherCity;
+                currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
+                currentProps.showSettingInit = false;
+                currentProps.type = type;
+                updateWidget(currentProps);
+              }}
+            />
           break;
         case CONTENT_TYPE.NOTIFY:
           if (!tabContent.props) {
@@ -131,7 +156,7 @@ const TabsLayout = ({
     })
   }
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps) => {
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
     const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList
     tabList[selectedTab].tabContent.props = newProps
     setPortalList(portalList)
@@ -160,13 +185,13 @@ const TabsLayout = ({
         props
       }
       setPortalList(portalList)
-    } 
+    }
   }
 
   return(
-    <div 
+    <div
       className='portal-tabs-layout'
-      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} 
+      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}}
       onDrop={(e) => {
         let props: any
         const type = e.dataTransfer.getData("text") as ContentType
@@ -193,6 +218,14 @@ const TabsLayout = ({
           props = {
             showSettingInit: true
           }
+        } else if (type === CONTENT_TYPE.WEATHER) {
+          props = {
+            showSettingInit: true,
+            unitTemp: WEATHER_UNIT.CELCIUS,
+            weatherCity: '',
+            openWeatherMapAPIKey: '',
+            type: WEATHER_TYPE.SIMPLE
+          }
         }
         props && dropWidget(selectedTab, type, props)
       }}
@@ -203,7 +236,7 @@ const TabsLayout = ({
         className='portal-tabs-btn portal-tabs-btn-add'
         onClick={() => {
           showTabConfigModal(true)
-        }} 
+        }}
       />
       {selectedTab !== 0 &&
         <Button
@@ -212,8 +245,8 @@ const TabsLayout = ({
           className='portal-tabs-btn portal-tabs-btn-edit-name'
           onClick={() => {
             showTabNameModal(true)
-          }} 
-        />  
+          }}
+        />
       }
       {tabItems.length > 1 &&
         <Button
@@ -229,7 +262,7 @@ const TabsLayout = ({
             newLayout.props.tabList.splice(selectedTab, 1)
             portalList[selectedPortal].layout = newLayout
             setPortalList(portalList);
-          }} 
+          }}
         />
       }
       <Tabs
@@ -237,7 +270,7 @@ const TabsLayout = ({
         value={selectedTab}
         onClickTabItem={setSelectedTab}
       />
-      <TabConfigModal 
+      <TabConfigModal
         isVisible={isShowTabConfigModal}
         onClose={()=> showTabConfigModal(false)}
         onSave={(name) => {
@@ -252,7 +285,7 @@ const TabsLayout = ({
           showTabConfigModal(false)
         }}
       />
-      <TabConfigModal 
+      <TabConfigModal
         tabName={tabList[selectedTab].tabName}
         isVisible={isShowTabNameModal}
         onClose={()=> showTabNameModal(false)}

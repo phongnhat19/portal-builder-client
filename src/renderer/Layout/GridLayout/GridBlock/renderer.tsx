@@ -1,5 +1,4 @@
 import React, { CSSProperties, useState, useEffect } from 'react'
-// import '../style.css'
 import { Row } from 'antd';
 
 import IframeWidget from '../../../Widget/IframeWidget/renderer';
@@ -8,6 +7,7 @@ import SchedulerWidget from '../../../Widget/SchedulerWidget/renderer';
 import Notify from '../../../Widget/NotifyWidget/'
 import { EMPTY_WIDGET_CONTENT } from '../../TabsLayout/constant';
 import { CONTENT_TYPE } from '../../../Widget/constant';
+import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
 
 const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = undefined, width }: {
   style?: CSSProperties
@@ -59,6 +59,15 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
         break;
         case CONTENT_TYPE.NOTIFY:
           currentContentBlock = <Notify />
+        case CONTENT_TYPE.WEATHER:
+          const blockContentWeather = content as WeatherWidgetProps;
+          currentContentBlock =
+            <WeatherComponent
+              unitTemp={blockContentWeather.unitTemp}
+              weatherCity={blockContentWeather.weatherCity}
+              openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
+              type={blockContentWeather.type}
+            />
           break;
       case CONTENT_TYPE.EMPTY:
         currentContentBlock = ''
