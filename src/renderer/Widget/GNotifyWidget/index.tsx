@@ -5,8 +5,6 @@ import Notify from './renderer';
 const GNotifyWidget = ({onRemove}: {
   onRemove?: () => void;
 }) => {
-
-  const [showSetting, setShowSetting] = useState(false);
   return (
     <div>
       <SettingsWidget onRemove={onRemove} />
