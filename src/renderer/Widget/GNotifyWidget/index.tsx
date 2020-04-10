@@ -9,7 +9,7 @@ const GNotifyWidget = ({onRemove}: {
   const [showSetting, setShowSetting] = useState(false);
   return (
     <div>
-      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(false)} />
+      <SettingsWidget onRemove={onRemove} />
       <Notify
         data={[
           {
