@@ -4,5 +4,5 @@ export const CONTENT_TYPE = {
     SCHEDULER: 'Scheduler',
     DEFAULT: 'DefaultPortal',
     EMPTY: 'Empty',
-    NOTIFY: 'Notify'
+    NOTIFY: 'Notification'
 };

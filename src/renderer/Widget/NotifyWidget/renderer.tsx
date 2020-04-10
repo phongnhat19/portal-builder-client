@@ -33,7 +33,6 @@ const Notify = ({defaultView, isPreview}: {
     <div className="grn_notify_container">
         <div>
             <span className="grn_notify_title">G Notifications</span>
-            
         </div>
         <div>
         {(notifications.length == 0) &&
@@ -54,7 +53,7 @@ const Notify = ({defaultView, isPreview}: {
                                 <div className="grn_notify_itemTitle">
                                     <span className="grn_notify_item_wrap">
                                         <a className="grn_notify_img" title={item.title} href={item.url}>
-                                            <img src="https://static.cybozu.com/g/F20.3_562/grn/image/cybozu/event20_u.gif?20200327.text"></img>
+                                            <img className="grn_notify_icon_title"></img>
                                             {item.title}
                                         </a>
                                         <span className="grn_notify_itemTime">{date.getFullYear()}-{date.getMonth() + 1}-{date.getDate()} {date.getHours()} : {date.getMinutes()}</span>
@@ -63,7 +62,7 @@ const Notify = ({defaultView, isPreview}: {
                                 <div>
                                     <span className="grn_notify_item_wrap">
                                         <a className="grn_notify_img" title={item.creator?.name} href='#'>
-                                            <img src="https://static.cybozu.com/g/F20.3_562/grn/image/cybozu/user20.gif?20200327.text"/>
+                                            <img className="grn_notify_user"/>
                                             {item.creator?.name}
                                         </a>
                                     </span>
