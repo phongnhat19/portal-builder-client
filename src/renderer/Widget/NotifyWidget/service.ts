@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const getNotify = () => {
   return axios({
@@ -8,14 +8,14 @@ const getNotify = () => {
     headers: {
       'X-Requested-With': 'XMLHttpRequest'
     }
-  }).then(function(resp) {
+  }).then((resp) => {
     return resp.data.items;
-  })
-}
+  });
+};
 
 const getNotifyEvent: () => Promise<SchedulerEvent[]> = () => {
   return getNotify()
-  .then((items) => {
+    .then((items) => {
       return items.map((item: NotificationGRN) => {
         return {
           url: item.url,
@@ -24,12 +24,12 @@ const getNotifyEvent: () => Promise<SchedulerEvent[]> = () => {
           isRead: item.isRead,
           createdAt: item.createdAt,
           creator: {
-              name: item.creator?.name,
-              code: item.creator?.code
+            name: item.creator?.name,
+            code: item.creator?.code
           }
-        }
-      })
-    })
-}
+        };
+      });
+    });
+};
 
-export {getNotifyEvent}
+export {getNotifyEvent};
