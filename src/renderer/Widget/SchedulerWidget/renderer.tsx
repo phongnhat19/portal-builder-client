@@ -17,9 +17,8 @@ const Scheduler = ({defaultView, data = []}: {
   const [events, setEvents] = useState(data)
 
   useEffect(() => {
-    console.log(events)
     if (data.length === 0 && window.kintone) getSchedulerEvent().then(setEvents)
-  }, [data]);
+  }, [data.length]);
 
   return (
     <div style={{backgroundColor: '#FFFFFF'}}>
