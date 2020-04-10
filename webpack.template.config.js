@@ -7,7 +7,7 @@ function srcPaths(src) {
 
 const libraryName = 'customPortalTemplate'
 const templateUMD = {
-    mode: 'development',
+    mode: 'production',
     entry: __dirname + '/src/template/customPortalTemplate.tsx',
     output: {
         path: __dirname + '/dist',
