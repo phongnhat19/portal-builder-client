@@ -15,12 +15,27 @@ const SchedulerWidget = ({ onSaveSetting, width, height, defaultView = SCHEDULER
 
   const [showSetting, setShowSetting] = useState(showSettingInit)
   const [typeView, setTypeView] = useState(defaultView)
+
+  const start = new Date();
+  start.setHours(9);
+
+  const end = new Date();
+  end.setHours(11);
   
   return (
     <div style={{width, height}}>
       <SettingsIframeWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
       <Schedule
         defaultView={typeView}
+        data={[
+          {
+            id: '1',
+            allDay: false,
+            title: 'SAMPLE EVENT',
+            start,
+            end
+          }
+        ]}
       />
       <ScheduleModal
         defaultView={typeView}
