@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import SettingsWidget from '../components/Settings';
-import Notify from './renderer';
+import GNotify from './renderer';
 
 const GNotifyWidget = ({onRemove}: {
   onRemove?: () => void;
@@ -8,7 +8,7 @@ const GNotifyWidget = ({onRemove}: {
   return (
     <div>
       <SettingsWidget onRemove={onRemove} />
-      <Notify
+      <GNotify
         data={[
           {
             url: '',
