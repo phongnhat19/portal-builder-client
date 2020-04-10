@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Modal, Row, Col, Radio } from 'antd'
-import './style.css'
 import { SCHEDULER_VIEW } from './constant';
 
 const SchedulerModal = ({ isVisible = false, onClose, onSave, defaultView }: {

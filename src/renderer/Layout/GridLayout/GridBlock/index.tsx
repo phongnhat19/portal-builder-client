@@ -10,6 +10,8 @@ import ScheduleWidget from '../../../Widget/SchedulerWidget';
 import { EMPTY_WIDGET_CONTENT, CONFIRM_DELETE } from '../../TabsLayout/constant';
 import confirm from 'antd/lib/modal/confirm';
 import { CONTENT_TYPE } from '../../../Widget/constant';
+import { WEATHER_UNIT, WEATHER_TYPE } from '../../../Widget/WeatherWidget/constant';
+import WeatherWidget from '../../../Widget/WeatherWidget';
 
 const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, onRemoveBlock, onResizeWidth }: {
   style?: CSSProperties
@@ -44,7 +46,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
     }
   }
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps) => {
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
     const gridLayout = portalList[selectedPortal].layout.props as GridLayout
     const currentBlock = gridLayout.rows[rowIndex].blocks[blockIndex]
     currentBlock.content = newProps
@@ -108,7 +110,6 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
           <HTMLWidget
             htmlString={blockContentHTML.htmlString}
             width={`${blockContentHTML.width}%`}
-            // height={blockContentHTML.height}
             showSettingInit={blockContentHTML.showSettingInit}
             onRemove={removeWidget}
             onSaveSetting={({ htmlString }) => {
@@ -134,6 +135,29 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
               currentProps.defaultView = defaultView
               currentProps.showSettingInit = false;
               updateWidget(currentProps)
+            }}
+          />
+        break;
+      case CONTENT_TYPE.WEATHER:
+        if (!currentBlock.content)
+          break;
+        const blockContentWeather = currentBlock.content as WeatherWidgetProps
+        currentContentBlock =
+          <WeatherWidget
+            type={blockContentWeather.type}
+            showSettingInit={blockContentWeather.showSettingInit}
+            unitTemp={blockContentWeather.unitTemp}
+            openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
+            weatherCity={blockContentWeather.weatherCity}
+            onRemove={removeWidget}
+            onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
+              let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
+              currentProps.unitTemp = unitTemp;
+              currentProps.weatherCity = weatherCity;
+              currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
+              currentProps.showSettingInit = false;
+              currentProps.type = type;
+              updateWidget(currentProps);
             }}
           />
         break;
@@ -179,6 +203,14 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             showSettingInit: true,
             defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME,
             width: 100
+          }
+        } else if (type === CONTENT_TYPE.WEATHER) {
+          props = {
+            showSettingInit: true,
+            unitTemp: WEATHER_UNIT.CELCIUS,
+            weatherCity: '',
+            openWeatherMapAPIKey: '',
+            type: WEATHER_TYPE.SIMPLE
           }
         }
         props && dropWidget(rowIndex, blockIndex, type, props)

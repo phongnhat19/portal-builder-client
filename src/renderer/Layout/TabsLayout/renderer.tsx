@@ -6,6 +6,7 @@ import { EMPTY_WIDGET_CONTENT } from './constant';
 import HTML from '../../Widget/HTMLWidget/renderer';
 import Schedule from '../../Widget/SchedulerWidget/renderer';
 import { CONTENT_TYPE } from '../../Widget/constant';
+import WeatherComponent from '../../Widget/WeatherWidget/renderer';
 
 let portalSpaceEl: HTMLElement
 let defaultPortalBodyEl: ChildNode | null
@@ -19,7 +20,7 @@ const TabsLayout = ({
   const buildTabItems = (initItems: Tab[]) => {
     let dataItems = [] as any[];
     initItems.forEach(item => {
-      
+
       let newItem = {
         tabName: item.tabName,
         tabContent: '' as any
@@ -32,7 +33,7 @@ const TabsLayout = ({
             break;
           }
           const tabContentIframe = tabContent.props as IframeWidgetProps;
-          newItem.tabContent = 
+          newItem.tabContent =
             <Iframe
               url={tabContentIframe.url}
               width={tabContentIframe.width}
@@ -45,7 +46,7 @@ const TabsLayout = ({
             break;
           };
           const tabContentHTML = tabContent.props as HTMLWidgetProps;
-          newItem.tabContent = 
+          newItem.tabContent =
             <HTML
               htmlString={tabContentHTML.htmlString}
               width={tabContentHTML.width}
@@ -57,11 +58,25 @@ const TabsLayout = ({
             break;
           };
           const tabContentSchedule = tabContent.props as SchedulerWidgetProps;
-          newItem.tabContent = 
-          <Schedule
-            defaultView={tabContentSchedule.defaultView}
-          />
+          newItem.tabContent =
+            <Schedule
+              defaultView={tabContentSchedule.defaultView}
+            />
           break;
+        case CONTENT_TYPE.WEATHER:
+          if (!tabContent.props) {
+            break;
+          };
+          const tabContentWeather = tabContent.props as WeatherWidgetProps;
+          newItem.tabContent =
+            <WeatherComponent
+              unitTemp={tabContentWeather.unitTemp}
+              weatherCity={tabContentWeather.weatherCity}
+              openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
+              type={tabContentWeather.type}
+            />
+          break;
+
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
         default:
@@ -94,9 +109,9 @@ const TabsLayout = ({
   }, [selectedTab]);
 
   return(
-    <div 
+    <div
       className='portal-tabs-layout'
-      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}} 
+      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}}
     >
       <Tabs
         items={tabItems}

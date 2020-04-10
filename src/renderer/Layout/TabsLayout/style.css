@@ -33,3 +33,23 @@
 .portal-tabs-layout .kuc-tabs-tab-contents {
   min-height: 85vh;
 }
+
+.portal-tabs-layout .kuc-tabs-tab-contents .styles_simpleReactWeather__3uy4l {
+  font-size: 30px;
+  min-height: 0px !important
+}
+
+.portal-tabs-layout .kuc-tabs-tab-contents .styles_simpleReactWeatherCity__zyECF {
+  padding-top: 10px
+}
+
+.portal-tabs-layout .kuc-tabs-tab-contents .widget-weather {
+  background-color: #6495ED;
+  padding: 3%;
+  min-height: 85vh;
+}
+
+.portal-tabs-layout .kuc-tabs-tab-contents .widget-weather .widget-full-weather {
+  text-transform: uppercase;
+  color: white;
+}
