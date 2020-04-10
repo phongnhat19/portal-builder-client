@@ -9,7 +9,7 @@ const Notify = ({data}: {
 
   useEffect(() => {
     if (data.length === 0 && window.kintone) getNotifyEvent().then(setNotifications);
-  }, []);
+  }, [data.length]);
 
   return (
     <div className="grn_notify_container">
