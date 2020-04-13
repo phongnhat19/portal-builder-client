@@ -77,7 +77,7 @@ const TabsLayout = ({
               type={tabContentWeather.type}
             />
           break;
-        case CONTENT_TYPE.NOTIFY:
+        case CONTENT_TYPE.GAROON_NOTIFY:
           if (!tabContent.props) {
             break;
           };

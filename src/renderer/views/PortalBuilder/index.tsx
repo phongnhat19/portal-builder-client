@@ -60,7 +60,7 @@ const PortalBuilder = () => {
     },
     {
       icon: <AlertOutlined />,
-      name: CONTENT_TYPE.NOTIFY
+      name: CONTENT_TYPE.GAROON_NOTIFY
     },
     {
       icon: <CloudOutlined />,

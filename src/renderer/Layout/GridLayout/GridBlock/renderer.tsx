@@ -57,7 +57,7 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
             defaultView={blockContentSchedule.defaultView}
           />
         break;
-        case CONTENT_TYPE.NOTIFY:
+        case CONTENT_TYPE.GAROON_NOTIFY:
           currentContentBlock = <GNotify data={[]}/>
           break;
         case CONTENT_TYPE.WEATHER:

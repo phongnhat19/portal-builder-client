@@ -3,7 +3,7 @@ export const CONTENT_TYPE = {
   HTML: 'HTML',
   SCHEDULER: 'Scheduler',
   WEATHER: 'Weather',
-  NOTIFY: 'GNotification',
+  GAROON_NOTIFY: 'GNotification',
   DEFAULT: 'DefaultPortal',
   EMPTY: 'Empty'
 };

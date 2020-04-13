@@ -122,7 +122,7 @@ const TabsLayout = ({
               }}
             />
           break;
-        case CONTENT_TYPE.NOTIFY:
+        case CONTENT_TYPE.GAROON_NOTIFY:
           if (!tabContent.props) {
             break;
           };
@@ -214,7 +214,7 @@ const TabsLayout = ({
             showSettingInit: true,
             defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
           }
-        } else if (type === CONTENT_TYPE.NOTIFY) {
+        } else if (type === CONTENT_TYPE.GAROON_NOTIFY) {
           props = {
             showSettingInit: true
           }

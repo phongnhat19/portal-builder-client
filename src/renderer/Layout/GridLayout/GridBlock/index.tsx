@@ -139,7 +139,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             }}
           />
         break;
-      case CONTENT_TYPE.NOTIFY:
+      case CONTENT_TYPE.GAROON_NOTIFY:
         if (!currentBlock.content) {
           break;
         };
@@ -212,7 +212,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME,
             width: 100
           }
-        } else if (type === CONTENT_TYPE.NOTIFY) {
+        } else if (type === CONTENT_TYPE.GAROON_NOTIFY) {
           props = {
             showSettingInit: false,
             width: 100
