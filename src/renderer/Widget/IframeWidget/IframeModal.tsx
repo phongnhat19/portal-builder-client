@@ -32,7 +32,10 @@ const IframeModal = ({defaultUrl = '',
       title="Iframe setting"
       visible={isVisible}
       okText="Save"
-      onCancel={onClose}
+      onCancel={() => {
+        setUrl(defaultUrl);
+        onClose && onClose();
+      }}
       onOk={() => {
         onSave({
           url: url,
