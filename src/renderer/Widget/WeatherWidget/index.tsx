@@ -31,6 +31,10 @@ const WeatherWidget = ({
   }) => void;
 }) => {
 
+  const [modelErr, setModelErr] = useState({
+    city: '',
+    api: ''
+  });
   const [showSetting, setShowSetting] = useState(showSettingInit);
   const [weatherData, setWeatherData] = useState({
     description: '',
@@ -39,25 +43,37 @@ const WeatherWidget = ({
     cloud: ''
   });
 
-  useEffect(() => {
-    const weather = `http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${openWeatherMapAPIKey}`;
-    (async () => {
-      try {
-        if (weatherCity !== '' && openWeatherMapAPIKey !== '') {
-          const weatherAPI: any = await Promise.all([fetch(weather)]);
-          const weatherDataAPI: any = await Promise.all([weatherAPI[0].json()]);
-          setWeatherData({
-            description: weatherDataAPI[0].weather[0].description,
-            humidity: `${weatherDataAPI[0].main.humidity} %`,
-            windSpeed: `${weatherDataAPI[0].wind.speed} meter/sec`,
-            cloud: `${weatherDataAPI[0].clouds.all} %`
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [unitTemp, openWeatherMapAPIKey, weatherCity, type]);
+  const handleSaveModel = async (item: WeatherModal) => {
+    const weather = `http://api.openweathermap.org/data/2.5/weather?q=${item.city}&appid=${item.apiKey}`;
+    const weatherAPI: any = await fetch(weather);
+    const weatherDataAPI: any = await weatherAPI.json();
+    if (weatherDataAPI.cod === 200) {
+      setWeatherData({
+        description: weatherDataAPI.weather[0].description,
+        humidity: `${weatherDataAPI.main.humidity} %`,
+        windSpeed: `${weatherDataAPI.wind.speed} meter/sec`,
+        cloud: `${weatherDataAPI.clouds.all} %`
+      });
+      setModelErr({
+        city: '',
+        api: ''}
+      );
+      onSaveSetting && onSaveSetting({
+        unitTemp: item.unit,
+        weatherCity: item.city,
+        openWeatherMapAPIKey: item.apiKey,
+        type: item.type
+      });
+      setShowSetting(false);
+    } else {
+      const cityErr = weatherDataAPI.cod !== 401 ? weatherDataAPI.message : '';
+      const apiErr = weatherDataAPI.cod === 401 ? weatherDataAPI.message : '';
+      setModelErr({
+        city: cityErr,
+        api: apiErr}
+      );
+    }
+  };
 
   return (
     <div className="widget-weather">
@@ -68,16 +84,9 @@ const WeatherWidget = ({
         defaultUnit={unitTemp}
         defaultType={type}
         isVisible={showSetting}
+        error={modelErr}
         onClose={() => (setShowSetting(false))}
-        onSave={(item) => {
-          onSaveSetting && onSaveSetting({
-            unitTemp: item.unit,
-            weatherCity: item.city,
-            openWeatherMapAPIKey: item.apiKey,
-            type: item.type
-          });
-          setShowSetting(false);
-        }}
+        onSave={handleSaveModel}
       />
       {
         type === WEATHER_TYPE.SIMPLE ?

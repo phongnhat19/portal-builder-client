@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
-import { Modal, Row, Col, Radio, Input } from 'antd'
+import { Modal, Row, Col, Radio, Input, Alert } from 'antd'
 import { WEATHER_UNIT, WEATHER_TYPE } from './constant';
 
-const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, defaultUnit, defaultAPIKey, defaultType }: {
+declare type WeatherModal = { city: string, unit: string, apiKey: string, type: string }
+const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, defaultUnit, defaultAPIKey, defaultType, error }: {
   defaultCity: string
   defaultUnit: string
   defaultAPIKey: string
   defaultType: string
   isVisible: boolean
-  onSave: (item: { city: string, unit: string, apiKey: string, type: string }) => void
+  error: {
+    city?: string;
+    api?: string;
+  };
+  onSave: (item: WeatherModal) => void
   onClose?: () => void
 }) => {
 
@@ -64,6 +69,7 @@ const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, default
             onChange={(e) => { setCity(e.target.value) }}
             placeholder="Input City"
           />
+          {error.city && <Alert message={error.city} type="error" /> }
         </Col>
       </Row>
       <Row className='widget-config-weather'>
@@ -76,6 +82,7 @@ const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, default
             onChange={(e) => { setApiKey(e.target.value) }}
             placeholder="Input OpenWeatherMap API Key"
           />
+          {error.api && <Alert message={error.api} type="error" /> }
         </Col>
       </Row>
     </Modal>
