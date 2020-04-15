@@ -22,7 +22,13 @@ const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, default
       title="Weather setting"
       visible={isVisible}
       okText="Save"
-      onCancel={onClose}
+      onCancel={() => {
+        setType(defaultType);
+        setWeatherUnit(defaultUnit);
+        setCity(defaultCity);
+        setApiKey(defaultAPIKey);
+        onClose && onClose();
+      }}
       onOk={() => {
         onSave({
           city,
@@ -37,7 +43,7 @@ const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, default
           <strong>Type show</strong>
         </Col>
         <Col span={20}>
-          <Radio.Group onChange={(e) => { setType(e.target.value) }} defaultValue={type}>
+          <Radio.Group onChange={(e) => { setType(e.target.value) }} value={type}>
             <Radio.Button value={WEATHER_TYPE.SIMPLE}>{WEATHER_TYPE.SIMPLE}</Radio.Button>
             <Radio.Button value={WEATHER_TYPE.FULL_INFO}>{WEATHER_TYPE.FULL_INFO}</Radio.Button>
           </Radio.Group>
@@ -48,7 +54,7 @@ const WeatherModal = ({ isVisible = false, onClose, onSave, defaultCity, default
           <strong>Unit</strong>
         </Col>
         <Col span={20}>
-          <Radio.Group onChange={(e) => { setWeatherUnit(e.target.value) }} defaultValue={weatherUnit}>
+          <Radio.Group onChange={(e) => { setWeatherUnit(e.target.value) }} value={weatherUnit}>
             <Radio.Button value={WEATHER_UNIT.CELCIUS}>{WEATHER_UNIT.CELCIUS_TITLE}</Radio.Button>
             <Radio.Button value={WEATHER_UNIT.FAHRENHEIT}>{WEATHER_UNIT.FAHRENHEIT_TITLE}</Radio.Button>
           </Radio.Group>
