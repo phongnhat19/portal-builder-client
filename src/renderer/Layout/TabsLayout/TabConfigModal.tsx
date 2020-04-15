@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Modal, Input, Row, Col} from 'antd';
+import {Modal, Input, Row, Col, Alert} from 'antd';
 
 
 const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
@@ -9,6 +9,7 @@ const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
   onClose?: () => void;
 }) => {
   const [name, setName] = useState(tabName);
+  const [emptyName, setEmptyName] = useState(false);
 
   useEffect(() => {
     setName(tabName);
@@ -21,6 +22,11 @@ const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
       okText="Save"
       onCancel={onClose}
       onOk={() => {
+        if (!name) {
+          setEmptyName(true);
+          return;
+        }
+        setEmptyName(false);
         onSave(name);
       }}
     >
@@ -33,9 +39,15 @@ const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
             value={name}
             onChange={(e) => {
               setName(e.target.value);
+              if (e.target.value) {
+                setEmptyName(false);
+                return;
+              }
+              setEmptyName(true);
             }}
             placeholder="Input Tab Name"
           />
+          {emptyName && <Alert message="Required Field" type="error" />}
         </Col>
       </Row>
 
