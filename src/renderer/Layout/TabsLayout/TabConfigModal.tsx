@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { Modal, Input, Row, Col } from 'antd'
+import React, {useState, useEffect} from 'react';
+import {Modal, Input, Row, Col} from 'antd';
 
 
-const TabConfigModal = ({ tabName = '', isVisible = false, onClose, onSave }: {
-  tabName?: string
-  isVisible: boolean
-  onSave: (name: string) => void
-  onClose?: () => void
+const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
+  tabName?: string;
+  isVisible: boolean;
+  onSave: (name: string) => void;
+  onClose?: () => void;
 }) => {
-  const [name, setName] = useState(tabName)
+  const [name, setName] = useState(tabName);
 
   useEffect(() => {
-    setName(tabName)
-  }, [tabName])
+    setName(tabName);
+  }, [tabName]);
 
   return (
     <Modal
@@ -21,8 +21,7 @@ const TabConfigModal = ({ tabName = '', isVisible = false, onClose, onSave }: {
       okText="Save"
       onCancel={onClose}
       onOk={() => {
-        onSave(name)
-        setName('')
+        onSave(name);
       }}
     >
       <Row>
@@ -32,14 +31,16 @@ const TabConfigModal = ({ tabName = '', isVisible = false, onClose, onSave }: {
         <Col span={20}>
           <Input
             value={name}
-            onChange={(e) => { setName(e.target.value) }}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
             placeholder="Input Tab Name"
           />
         </Col>
       </Row>
 
     </Modal>
-  )
-}
+  );
+};
 
-export default TabConfigModal
+export default TabConfigModal;
