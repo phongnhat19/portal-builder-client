@@ -1,4 +1,4 @@
-import React, {CSSProperties, useState} from 'react';
+import React, {CSSProperties, useState, useEffect} from 'react';
 import {Modal, Input, Button, Alert} from 'antd';
 import {TableOutlined, FileOutlined} from '@ant-design/icons';
 import './style.css';
@@ -13,7 +13,9 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
   const [portalType, setPortalType] = useState('');
   const [portalName, setPortalName] = useState('');
 
-
+  useEffect(() => {
+    setPortalName('');
+  }, [isVisible]);
   const normalIconStyle: CSSProperties = {
     fontSize: '40px'
   };
