@@ -1,0 +1,38 @@
+.category {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.add-category {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.item-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.item-block > input {
+  width: 85%;
+}
+.item-block > span[role='img'] {
+  margin-left: 10px;
+}
+
+.infor-category{
+  border-bottom: 1px solid gray;
+  margin-bottom: 10px;
+  width: 100%;
+
+}
+
+.category-detail {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

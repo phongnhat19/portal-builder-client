@@ -4,5 +4,6 @@ export const CONTENT_TYPE = {
   SCHEDULER: 'Scheduler',
   WEATHER: 'Weather',
   DEFAULT: 'DefaultPortal',
-  EMPTY: 'Empty'
+  EMPTY: 'Empty',
+  APP_SPACE:"App/Space"
 };

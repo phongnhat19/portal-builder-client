@@ -76,7 +76,11 @@ const TabsLayout = ({
               type={tabContentWeather.type}
             />
           break;
-
+        case CONTENT_TYPE.APP_SPACE:
+          if(!tabContent.props){
+            break;
+          }
+          const tabContentAppSpace = tabContent.props;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
         default:
