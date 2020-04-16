@@ -3,7 +3,7 @@ import './style.css';
 import PortalPreview from './PortalPreview';
 import SideBar from './SideBar';
 import WidgetList from '../../Widget/WidgetList';
-import { BorderOutlined, CalendarOutlined, Html5Outlined,AlertOutlined, CloudOutlined } from '@ant-design/icons';
+import { BorderOutlined, CalendarOutlined, Html5Outlined, CloudOutlined, AppstoreFilled, AlertOutlined } from '@ant-design/icons';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import {LAYOUT_TYPE} from '../../Layout/constant'
 
@@ -28,7 +28,7 @@ const PortalBuilder = () => {
               tabName: 'Default Portal',
               tabContent: {
                 type: CONTENT_TYPE.DEFAULT as ContentType,
-                name: 'DefaultPortal'
+                name: 'DefaultPortal' 
               }
             }
           ]
@@ -65,6 +65,10 @@ const PortalBuilder = () => {
     {
       icon: <CloudOutlined />,
       name: CONTENT_TYPE.WEATHER
+    },
+    {
+      icon:<AppstoreFilled />,
+      name: CONTENT_TYPE.APP_SPACE,
     }
   ];
 

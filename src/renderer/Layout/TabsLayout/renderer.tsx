@@ -81,6 +81,12 @@ const TabsLayout = ({
           };
           newItem.tabContent = <GNotify data={[]}/>
           break;
+        case CONTENT_TYPE.APP_SPACE:
+          if(!tabContent.props){
+            break;
+          }
+          const tabContentAppSpace = tabContent.props;
+          break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
         default:

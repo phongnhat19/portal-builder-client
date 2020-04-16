@@ -3,5 +3,6 @@ declare enum ContentType {
   HTML = 'HTML',
   SCHEDULE = 'Schedule',
   DEFAULT = 'DefaultPortal',
-  EMPTY = 'Empty'
+  EMPTY = 'Empty',
+  APP_SPACE = 'AppSpace'
 }

@@ -11,6 +11,8 @@ import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../Widget/HTMLWidget';
 import SchedulerWidget from '../../Widget/SchedulerWidget';
 import WeatherWidget from '../../Widget/WeatherWidget/index';
+import AppSpaceWidget from '../../Widget/AppSpaceWidget';
+
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import GNotifyWidget from '../../Widget/GNotifyWidget';
@@ -35,8 +37,8 @@ const TabsLayout = ({
       const newItem = {
         tabName: item.tabName,
         tabContent: PORTAL_DEFAULT.TAB_CONTENT_INIT as any
-      };
-      const tabContent = item.tabContent;
+      }
+      const tabContent = item.tabContent; 
       if (!tabContent) return;
       switch (tabContent.type) {
         case CONTENT_TYPE.IFRAME:
@@ -128,6 +130,12 @@ const TabsLayout = ({
           newItem.tabContent = 
           <GNotifyWidget onRemove={removeWidget}/>
           break;
+        case CONTENT_TYPE.APP_SPACE:
+          if (!tabContent.props)
+            break;
+          const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps
+          newItem.tabContent = <AppSpaceWidget showSettingInit={tabContentAppSpace.showSettingInit}/>
+            break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT;
         default:
@@ -197,6 +205,11 @@ const TabsLayout = ({
         openWeatherMapAPIKey: '',
         type: WEATHER_TYPE.SIMPLE
       };
+    }
+    else if (type === CONTENT_TYPE.APP_SPACE){
+      props = {
+        showSettingInit: true,
+      }
     }
     props && dropWidget(selectedTab, type, props);
   };
