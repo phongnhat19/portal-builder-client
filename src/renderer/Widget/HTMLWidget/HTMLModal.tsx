@@ -16,7 +16,10 @@ const HTMLModal = ({isVisible = false, onClose, onSave, htmlString}: {
       title="HTML Widget setting"
       visible={isVisible}
       okText="Save"
-      onCancel={onClose}
+      onCancel={() => {
+        setInputHtmlValue(htmlString);
+        onClose && onClose();
+      }}
       onOk={() => {
         onSave({htmlString: inputHtmlValue});
       }}

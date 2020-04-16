@@ -19,7 +19,10 @@ const TabConfigModal = ({ tabName = '', isVisible = false, onClose, onSave }: {
       title="Tab setting"
       visible={isVisible}
       okText="Save"
-      onCancel={onClose}
+      onCancel={() => {
+        setName(tabName);
+        onClose && onClose();
+      }}
       onOk={() => {
         onSave(name)
         setName('')
