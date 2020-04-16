@@ -1,5 +1,5 @@
 import React, {CSSProperties, useState} from 'react';
-import {Modal, Input, Button} from 'antd';
+import {Modal, Input, Button, Alert} from 'antd';
 import {TableOutlined, FileOutlined} from '@ant-design/icons';
 import './style.css';
 import {LAYOUT_TYPE} from '../../../Layout/constant';
@@ -10,8 +10,9 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
   onClose?: () => void;
   onCreate: (item: Portal) => void;
 }) => {
-  const [portalType, setPortalType] = useState('tab');
+  const [portalType, setPortalType] = useState('');
   const [portalName, setPortalName] = useState('');
+
 
   const normalIconStyle: CSSProperties = {
     fontSize: '40px'
@@ -22,6 +23,8 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
   };
   const [tabIconStyle, setTabIconStyle] = useState(normalIconStyle);
   const [gridIconStyle, setGridIconStyle] = useState(normalIconStyle);
+  const [emptyName, setEmptyName] = useState(false);
+  const [emptyLayout, setEmptyLayout] = useState(false);
 
   const onBtnTabClick = () => {
     setTabIconStyle(clickIconStyle);
@@ -41,6 +44,20 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
       onCancel={onClose}
       onOk={() => {
         let defaultProps = {};
+
+        if (!portalName.trim()) {
+          setEmptyName(true);
+          return;
+        }
+
+        if (!portalType) {
+          setEmptyLayout(true);
+          return;
+        }
+
+        setEmptyLayout(false);
+        setEmptyName(false);
+
         if (portalType === LAYOUT_TYPE.TAB) {
           defaultProps = {
             tabList: [
@@ -67,6 +84,7 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
             ]
           };
         }
+
         onCreate({
           name: portalName,
           layout: {
@@ -86,12 +104,14 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
           }}
           placeholder="Input portal name"
         />
+        {emptyName && <Alert message="Required Field" type="error" />}
       </div>
 
       <div className="btn-type">
         <div>Choose Portal layout</div>
         <Button key="2" className="btn-tab-type" icon={<FileOutlined style={tabIconStyle} />} type="dashed" onClick={onBtnTabClick} />
         <Button key="3" className="btn-grid-type" icon={<TableOutlined style={gridIconStyle} />} type="dashed" onClick={onBtnGridClick} />
+        {emptyLayout && <Alert message="Required Field" type="error" />}
       </div>
     </Modal>
   );
