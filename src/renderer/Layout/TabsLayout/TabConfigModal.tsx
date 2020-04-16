@@ -38,8 +38,8 @@ const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
           <Input
             value={name}
             onChange={(e) => {
-              setName(e.target.value);
-              if (e.target.value) {
+              setName(e.target.value.trim());
+              if (e.target.value.trim()) {
                 setEmptyName(false);
                 return;
               }
