@@ -107,8 +107,7 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
           placeholder="Input portal name"
         />
       </div>
-      {emptyName && <Alert style={{display: 'block', marginTop: '5px'}} message="Required Field" type="error" />}
-
+      {emptyName && <Alert style={{display: 'block', marginTop: '10px', fontWeight: 'bold'}} message="Required Field" type="error" />}
 
       <div className="btn-type">
         <div>Choose Portal layout</div>
