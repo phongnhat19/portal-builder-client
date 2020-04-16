@@ -1,5 +1,5 @@
 import React, {CSSProperties, useState, useEffect} from 'react';
-import {Modal, Input, Button, Alert} from 'antd';
+import {Modal, Input, Button, Alert, Row, Col} from 'antd';
 import {TableOutlined, FileOutlined} from '@ant-design/icons';
 import './style.css';
 import {LAYOUT_TYPE} from '../../../Layout/constant';
@@ -96,18 +96,21 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
         });
       }}
     >
-      <div className="input-name">
-        <span>Name</span>
-        <Input
-          style={{marginLeft: '50px'}}
-          value={portalName}
-          onChange={(e) => {
-            setPortalName(e.target.value);
-          }}
-          placeholder="Input portal name"
-        />
-      </div>
-      {emptyName && <Alert message="Required Field" type="error" />}
+      <Row className="input-name">
+        <Col>
+          <span>Name</span>
+          <Input
+            style={{marginLeft: '50px'}}
+            value={portalName}
+            onChange={(e) => {
+              setPortalName(e.target.value);
+            }}
+            placeholder="Input portal name"
+          />
+          {emptyName && <Alert style={{display: 'block', marginTop: '5px'}} message="Required Field" type="error" />}
+        </Col>
+      </Row>
+
 
       <div className="btn-type">
         <div>Choose Portal layout</div>
