@@ -11,6 +11,8 @@ import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../Widget/HTMLWidget';
 import SchedulerWidget from '../../Widget/SchedulerWidget';
 import WeatherWidget from '../../Widget/WeatherWidget/index';
+import AppSpaceWidget from '../../Widget/AppSpaceWidget';
+
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import GNotifyWidget from '../../Widget/GNotifyWidget';
@@ -36,7 +38,7 @@ const TabsLayout = ({
         tabName: item.tabName,
         tabContent: PORTAL_DEFAULT.TAB_CONTENT_INIT as any
       }
-      const tabContent = item.tabContent;
+      const tabContent = item.tabContent; 
       if (!tabContent) return;
       switch (tabContent.type) {
         case CONTENT_TYPE.IFRAME:
@@ -122,13 +124,12 @@ const TabsLayout = ({
               }}
             />
           break;
-        case CONTENT_TYPE.GAROON_NOTIFY:
-          if (!tabContent.props) {
+        case CONTENT_TYPE.APP_SPACE:
+          if (!tabContent.props)
             break;
-          };
-          newItem.tabContent = 
-          <GNotifyWidget onRemove={removeWidget}/>
-          break;
+          const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps
+          newItem.tabContent = <AppSpaceWidget showSettingInit={tabContentAppSpace.showSettingInit}/>
+            break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
         default:
@@ -232,7 +233,44 @@ const TabsLayout = ({
     <div
       className='portal-tabs-layout'
       onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}}
-      onDrop={handleDropWidget}
+      onDrop={(e) => {
+        let props: any
+        const type = e.dataTransfer.getData("text") as ContentType 
+        if (type === CONTENT_TYPE.IFRAME) {
+          props = {
+            showSettingInit: true,
+            url: "",
+            width: "100%",
+            height: "82vh"
+          }
+        } else if (type === CONTENT_TYPE.HTML) {
+          props = {
+            showSettingInit: true,
+            htmlString: "",
+            width: "100%",
+            height: "82vh"
+          }
+        } else if (type === CONTENT_TYPE.SCHEDULER) {
+          props = {
+            showSettingInit: true,
+            defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
+          }
+        } else if (type === CONTENT_TYPE.WEATHER) {
+          props = {
+            showSettingInit: true,
+            unitTemp: WEATHER_UNIT.CELCIUS,
+            weatherCity: '',
+            openWeatherMapAPIKey: '',
+            type: WEATHER_TYPE.SIMPLE
+          }
+        }
+        else if (type === CONTENT_TYPE.APP_SPACE){
+          props = {
+            showSettingInit: true,
+          }
+        }
+        props && dropWidget(selectedTab, type, props)
+      }}
     >
       <Button
         type="default"
