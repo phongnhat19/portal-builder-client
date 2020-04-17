@@ -148,13 +148,13 @@ const TabsLayout = ({
   };
 
   const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
-    const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList;
-    tabList[selectedTab].tabContent.props = newProps;
+    const listTab = (portalList[selectedPortal].layout.props as TabLayout).tabList;
+    listTab[selectedTab].tabContent.props = newProps;
     setPortalList(portalList);
   };
   const handleDropWidget = (e: DragEvent) => {
-    const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList;
-    if (tabList[selectedTab].tabContent.type !== CONTENT_TYPE.EMPTY) return;
+    const listTab = (portalList[selectedPortal].layout.props as TabLayout).tabList;
+    if (listTab[selectedTab].tabContent.type !== CONTENT_TYPE.EMPTY) return;
 
     let props: any;
     const type = e.dataTransfer.getData('text') as ContentType;
@@ -199,7 +199,7 @@ const TabsLayout = ({
 
   useEffect(() => {
     setTabItems(buildTabItems(tabList));
-  }, [tabList, selectedTab, buildTabItems]);
+  }, [tabList, selectedTab]);
 
   const dropWidget = (tabIndex: number, type: ContentType, props: any) => {
 
@@ -217,6 +217,7 @@ const TabsLayout = ({
 
   return (
     <div
+      role="presentation"
       className="portal-tabs-layout"
       onDragOver={(event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
@@ -279,7 +280,7 @@ const TabsLayout = ({
         }}
       />
       <TabConfigModal
-        tabName={tabList[selectedTab].tabName}
+        tabName={tabList[selectedTab] ? tabList[selectedTab].tabName : tabList[0].tabName}
         isVisible={isShowTabNameModal}
         onClose={()=> showTabNameModal(false)}
         onSave={(name) => {
