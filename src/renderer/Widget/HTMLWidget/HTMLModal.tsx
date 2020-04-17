@@ -3,21 +3,25 @@ import { Modal, Input, Row, Col } from 'antd'
 
 const { TextArea } = Input;
 
-const HTMLModal = ({ isVisible = false, onClose, onSave }: {
-  isVisible: boolean
-  onSave: (item: { htmlString: string }) => void
-  onClose?: () => void
+const HTMLModal = ({isVisible = false, onClose, onSave, htmlString}: {
+  isVisible: boolean;
+  htmlString: string;
+  onSave: (item: { htmlString: string }) => void;
+  onClose?: () => void;
 }) => {
-  const [htmlString, setHTMLString] = useState('')
+  const [inputHtmlValue, setInputHtmlValue] = useState(htmlString);
 
   return (
     <Modal
       title="HTML Widget setting"
       visible={isVisible}
       okText="Save"
-      onCancel={onClose}
+      onCancel={() => {
+        setInputHtmlValue(htmlString);
+        onClose && onClose();
+      }}
       onOk={() => {
-        onSave({htmlString: htmlString})
+        onSave({htmlString: inputHtmlValue});
       }}
     >
       <Row>
@@ -27,8 +31,8 @@ const HTMLModal = ({ isVisible = false, onClose, onSave }: {
         <Col span={20}>
           <TextArea
             rows={6}
-            value={htmlString}
-            onChange={(e) => { setHTMLString(e.target.value) }}
+            value={inputHtmlValue}
+            onChange={(e) => {setInputHtmlValue(e.target.value);}}
             placeholder="Input HTML"
           />
         </Col>

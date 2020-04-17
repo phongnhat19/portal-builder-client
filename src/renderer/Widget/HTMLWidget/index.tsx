@@ -27,6 +27,7 @@ const HTMLWidget = ({htmlString, width, height, showSettingInit = false, onRemov
         />
       </div>
       <HTMLModal
+        htmlString={htmlString}
         isVisible={showSetting}
         onClose={() => (setShowSetting(false))}
         onSave={(item) => {
