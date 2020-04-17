@@ -8,7 +8,7 @@ const GridLayout = ({ items = [] }: {
 
   return (
     <div className='grid-layout-container'>
-      <div style={{ height: '85vh', overflow: 'auto' }}>
+      <div>
         <div className='grid-layout'>
           {items.map((item, i) => {
             return <GridRow
