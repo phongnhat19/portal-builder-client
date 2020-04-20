@@ -47,13 +47,9 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
       onOk={() => {
         let defaultProps = {};
 
-        if (!portalName.trim()) {
-          setEmptyName(true);
-          return;
-        }
-
-        if (!portalType) {
-          setEmptyLayout(true);
+        if (!portalName.trim() || !portalType) {
+          setEmptyName(!portalName.trim());
+          setEmptyLayout(!portalType);
           return;
         }
 
