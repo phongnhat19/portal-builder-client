@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, DragEvent } from 'react'
 import { Tabs } from '@kintone/kintone-ui-component';
 import { Button } from 'antd';
 import { PlusCircleOutlined, MinusCircleOutlined, ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
@@ -153,6 +153,42 @@ const TabsLayout = ({
     tabList[selectedTab].tabContent.props = newProps
     setPortalList(portalList)
   }
+  const handleDropWidget = (e: DragEvent) => {
+    const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList;
+    if (tabList[selectedTab].tabContent.type !== CONTENT_TYPE.EMPTY) return;
+
+    let props: any
+    const type = e.dataTransfer.getData("text") as ContentType
+    if (type === CONTENT_TYPE.IFRAME) {
+      props = {
+        showSettingInit: true,
+        url: "",
+        width: "100%",
+        height: "82vh"
+      }
+    } else if (type === CONTENT_TYPE.HTML) {
+      props = {
+        showSettingInit: true,
+        htmlString: "",
+        width: "100%",
+        height: "82vh"
+      }
+    } else if (type === CONTENT_TYPE.SCHEDULER) {
+      props = {
+        showSettingInit: true,
+        defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
+      }
+    } else if (type === CONTENT_TYPE.WEATHER) {
+      props = {
+        showSettingInit: true,
+        unitTemp: WEATHER_UNIT.CELCIUS,
+        weatherCity: '',
+        openWeatherMapAPIKey: '',
+        type: WEATHER_TYPE.SIMPLE
+      }
+    }
+    props && dropWidget(selectedTab, type, props)
+  }
 
   useEffect(() => {
     if (inited) {
@@ -184,39 +220,7 @@ const TabsLayout = ({
     <div
       className='portal-tabs-layout'
       onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}}
-      onDrop={(e) => {
-        let props: any
-        const type = e.dataTransfer.getData("text") as ContentType
-        if (type === CONTENT_TYPE.IFRAME) {
-          props = {
-            showSettingInit: true,
-            url: "",
-            width: "100%",
-            height: "82vh"
-          }
-        } else if (type === CONTENT_TYPE.HTML) {
-          props = {
-            showSettingInit: true,
-            htmlString: "",
-            width: "100%",
-            height: "82vh"
-          }
-        } else if (type === CONTENT_TYPE.SCHEDULER) {
-          props = {
-            showSettingInit: true,
-            defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
-          }
-        } else if (type === CONTENT_TYPE.WEATHER) {
-          props = {
-            showSettingInit: true,
-            unitTemp: WEATHER_UNIT.CELCIUS,
-            weatherCity: '',
-            openWeatherMapAPIKey: '',
-            type: WEATHER_TYPE.SIMPLE
-          }
-        }
-        props && dropWidget(selectedTab, type, props)
-      }}
+      onDrop={handleDropWidget}
     >
       <Button
         type="default"
