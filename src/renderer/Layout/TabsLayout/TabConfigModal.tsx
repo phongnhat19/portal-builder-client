@@ -50,7 +50,7 @@ const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
             }}
             placeholder="Input Tab Name"
           />
-          {emptyName && <Alert message="Required Field" type="error" />}
+          {emptyName && <Alert style={{fontWeight: 'bold', marginTop: '10px'}} message="Required Field" type="error" />}
         </Col>
       </Row>
 
