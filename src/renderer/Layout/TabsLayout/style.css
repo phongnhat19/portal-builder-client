@@ -28,6 +28,11 @@
 
 .portal-tabs-layout .portal-tabs-btn-settings {
   right: 30px;
+  z-index: 3;
+}
+
+.portal-tabs-layout .kuc-tabs-tabs {
+  min-width: 100%;
 }
 
 .portal-tabs-layout .kuc-tabs-tab-contents {

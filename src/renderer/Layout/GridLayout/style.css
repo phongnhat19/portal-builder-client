@@ -14,10 +14,6 @@
     margin-bottom: 15px;
 }
 
-/* .grid-layout-row:not(:first-child) {
-    margin-top: 15px
-} */
-
 .grid-block {
     border: 1px solid #ace5cc;
     background-color: #ecfdf6;
@@ -25,10 +21,6 @@
     min-height: 100px;
     overflow: auto;
     resize: horizontal;
-}
-
-.grid-layout-container {
-    width: 65vw;
 }
 
 .grid-layout .grid-blocks-container {
