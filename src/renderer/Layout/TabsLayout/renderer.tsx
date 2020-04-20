@@ -7,8 +7,6 @@ import HTML from '../../Widget/HTMLWidget/renderer';
 import Schedule from '../../Widget/SchedulerWidget/renderer';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import WeatherComponent from '../../Widget/WeatherWidget/renderer';
-
-let portalSpaceEl: HTMLElement
 let defaultPortalBodyEl: ChildNode | null
 
 const TabsLayout = ({
@@ -92,19 +90,13 @@ const TabsLayout = ({
   const [selectedTab, setSelectedTab] = useState(0)
   const [tabItems, setTabItems] = useState(buildTabItems(tabList))
 
-  useLayoutEffect(() => {
-    if (!portalSpaceEl) {
-      portalSpaceEl = kintone.portal.getContentSpaceElement();
-      defaultPortalBodyEl = portalSpaceEl.nextSibling;
-    }
-    if (defaultPortalBodyEl) document.getElementById('default-portal')?.appendChild(defaultPortalBodyEl)
-  }, [])
-
   useEffect(() => {
     if (selectedTab === 0) {
-      const tabContentDOM = document.getElementsByClassName('kuc-tabs-tab-contents')[0] as HTMLElement
-      if (tabContentDOM) tabContentDOM.style.backgroundColor = 'transparent'
-      if (defaultPortalBodyEl) document.getElementById('default-portal')?.appendChild(defaultPortalBodyEl)
+      const tabContentDOM = document.getElementsByClassName('kuc-tabs-tab-contents')[0] as HTMLElement;
+      if (tabContentDOM) tabContentDOM.style.backgroundColor = 'transparent';
+      const portalSpaceEl = kintone.portal.getContentSpaceElement();
+      defaultPortalBodyEl = portalSpaceEl.nextSibling || defaultPortalBodyEl;
+      if (defaultPortalBodyEl) document.getElementById('default-portal')?.appendChild(defaultPortalBodyEl);
     }
   }, [selectedTab]);
 
