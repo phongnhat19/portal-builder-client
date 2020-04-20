@@ -11,7 +11,7 @@ import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../Widget/HTMLWidget';
 import SchedulerWidget from '../../Widget/SchedulerWidget';
 import WeatherWidget from '../../Widget/WeatherWidget/index';
-import AppSpaceWidget from '../../Widget/AppSpaceWidget';
+import AppSpaceWidget from '../../Widget/AppSpaceListWidget';
 
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
@@ -127,7 +127,12 @@ const TabsLayout = ({
           if (!tabContent.props)
             break;
           const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps
-          newItem.tabContent = <AppSpaceWidget showSettingInit={tabContentAppSpace.showSettingInit}/>
+          newItem.tabContent = <AppSpaceWidget onSaveSetting={({listContent,titleWidget})=>{
+            let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+            currentProps.listContent = listContent;
+            currentProps.titleWidget = titleWidget;
+            updateWidget(currentProps);
+          }} showSettingInit={tabContentAppSpace.showSettingInit}/>
             break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT;
@@ -156,11 +161,11 @@ const TabsLayout = ({
     });
   };
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
-    const listTab = (portalList[selectedPortal].layout.props as TabLayout).tabList;
-    listTab[selectedTab].tabContent.props = newProps;
-    setPortalList(portalList);
-  };
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | AppSpaceWidgetProps) => {
+    const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList    
+    tabList[selectedTab].tabContent.props = newProps 
+    setPortalList(portalList)
+  }
   const handleDropWidget = (e: DragEvent) => {
     const listTab = (portalList[selectedPortal].layout.props as TabLayout).tabList;
     if (listTab[selectedTab].tabContent.type !== CONTENT_TYPE.EMPTY) return;
