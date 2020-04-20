@@ -11,7 +11,7 @@ import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../Widget/HTMLWidget';
 import SchedulerWidget from '../../Widget/SchedulerWidget';
 import WeatherWidget from '../../Widget/WeatherWidget/index';
-import AppSpaceWidget from '../../Widget/AppSpaceWidget';
+import AppSpaceWidget from '../../Widget/AppSpaceListWidget';
 
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
@@ -87,14 +87,14 @@ const TabsLayout = ({
           if (!tabContent.props) {
             break;
           };
-          const tabContentSchedule = tabContent.props as SchedulerWidgetProps;
+          const tabContentSchedule = tabContent.props as SchedulerWidgetProps;          
           newItem.tabContent =
             <SchedulerWidget
               defaultView={tabContentSchedule.defaultView}
               onRemove={removeWidget}
               onSaveSetting={({defaultView}) => {
                 let currentProps = JSON.parse(JSON.stringify(tabContent.props))
-                currentProps.defaultView = defaultView
+                currentProps.defaultView = defaultView;
                 currentProps.showSettingInit = false;
                 updateWidget(currentProps)
               }}
@@ -113,7 +113,7 @@ const TabsLayout = ({
               weatherCity={tabContentWeather.weatherCity}
               onRemove={removeWidget}
               onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
-                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props));
                 currentProps.unitTemp = unitTemp;
                 currentProps.weatherCity = weatherCity;
                 currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
@@ -127,7 +127,12 @@ const TabsLayout = ({
           if (!tabContent.props)
             break;
           const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps
-          newItem.tabContent = <AppSpaceWidget showSettingInit={tabContentAppSpace.showSettingInit}/>
+          newItem.tabContent = <AppSpaceWidget onSaveSetting={({listContent,titleWidget})=>{
+            let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+            currentProps.listContent = listContent;
+            currentProps.titleWidget = titleWidget;
+            updateWidget(currentProps);
+          }} showSettingInit={tabContentAppSpace.showSettingInit}/>
             break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
@@ -156,9 +161,9 @@ const TabsLayout = ({
     })
   }
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
-    const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList
-    tabList[selectedTab].tabContent.props = newProps
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | AppSpaceWidgetProps) => {
+    const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList    
+    tabList[selectedTab].tabContent.props = newProps 
     setPortalList(portalList)
   }
 

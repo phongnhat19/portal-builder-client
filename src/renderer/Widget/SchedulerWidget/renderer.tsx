@@ -15,7 +15,6 @@ const Scheduler = ({defaultView, data = []}: {
 }) => {
 
   const [events, setEvents] = useState(data)
-
   useEffect(() => {
     if (data.length === 0 && window.kintone) getSchedulerEvent().then(setEvents)
   }, [data.length]);
