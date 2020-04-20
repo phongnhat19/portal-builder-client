@@ -1,11 +1,11 @@
-import React, { useState, createContext } from 'react'
-import './style.css'
-import PortalPreview from './PortalPreview'
-import SideBar from './SideBar'
+import React, {useState, createContext} from 'react';
+import './style.css';
+import PortalPreview from './PortalPreview';
+import SideBar from './SideBar';
 import WidgetList from '../../Widget/WidgetList';
-import { BorderOutlined, CalendarOutlined, Html5Outlined, CloudOutlined } from '@ant-design/icons';
-import { CONTENT_TYPE } from '../../Widget/constant';
-import {LAYOUT_TYPE} from '../../Layout/constant'
+import {BorderOutlined, CalendarOutlined, Html5Outlined, CloudOutlined} from '@ant-design/icons';
+import {CONTENT_TYPE} from '../../Widget/constant';
+import {LAYOUT_TYPE} from '../../Layout/constant';
 
 const PortalContext = createContext({
   portalList: [] as Portal[],
@@ -17,7 +17,7 @@ const PortalContext = createContext({
 
 const PortalBuilder = () => {
 
-  let initData:Portal[] = [
+  let initData: Portal[] = [
     {
       name: 'Portal 1',
       layout: {
@@ -35,25 +35,25 @@ const PortalBuilder = () => {
         }
       }
     }
-  ]
-  
-  const storagePortal = window.localStorage.getItem('portal')
+  ];
+
+  const storagePortal = window.localStorage.getItem('portal');
   if (storagePortal !== null) {
     initData = JSON.parse(storagePortal);
   }
-  
-  const [data, setData] = useState(initData)
-  const [selectedPortal, setSelectedPortal] = useState(0)
+
+  const [data, setData] = useState(initData);
+  const [selectedPortal, setSelectedPortal] = useState(0);
 
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
       name: CONTENT_TYPE.IFRAME,
-    }, 
+    },
     {
       icon: <Html5Outlined />,
       name: CONTENT_TYPE.HTML,
-    }, 
+    },
     {
       icon: <CalendarOutlined />,
       name: CONTENT_TYPE.SCHEDULER
@@ -62,49 +62,50 @@ const PortalBuilder = () => {
       icon: <CloudOutlined />,
       name: CONTENT_TYPE.WEATHER
     }
-  ]
+  ];
 
   const setPortalList = (newPortalList: Portal[]) => {
-    setData(JSON.parse(JSON.stringify(newPortalList)))
-    window.localStorage.setItem("portal", JSON.stringify(newPortalList))
-  }
+    setData(JSON.parse(JSON.stringify(newPortalList)));
+    window.localStorage.setItem('portal', JSON.stringify(newPortalList));
+  };
 
   const updatePortal = (newPortal: Portal, portalIndex: number) => {
-    data[portalIndex] = newPortal
-    setData(JSON.parse(JSON.stringify(data)))
-    window.localStorage.setItem("portal", JSON.stringify(data))
-  }
+    data[portalIndex] = newPortal;
+    setData(JSON.parse(JSON.stringify(data)));
+    window.localStorage.setItem('portal', JSON.stringify(data));
+  };
 
   const removePortal = (portalIndex: number) => {
-    data.splice(portalIndex, 1)
-    setSelectedPortal(data.length - 1)
-    setData(JSON.parse(JSON.stringify(data)))
-    window.localStorage.setItem("portal", JSON.stringify(data))
-  }
-  let selectedIndex = selectedPortal > data.length - 1 ? data.length - 1 : selectedPortal
+    data.splice(portalIndex, 1);
+    setSelectedPortal(data.length - 1);
+    setData(JSON.parse(JSON.stringify(data)));
+    window.localStorage.setItem('portal', JSON.stringify(data));
+  };
+  const selectedIndex = selectedPortal > data.length - 1 ? data.length - 1 : selectedPortal;
 
-  return(
-    <PortalContext.Provider value = {{
-      portalList: data, 
-      setPortalList, 
+  return (
+    <PortalContext.Provider value={{
+      portalList: data,
+      setPortalList,
       selectedPortal,
       updatePortal,
       removePortal
-    }} >
+    }}
+    >
       <div className="portal-container">
         <div className="portal-list-container">
-          <SideBar 
-            selectedPortal = {selectedIndex}
-            items = {data}
-            onChange= {(item, index) => {
-              setSelectedPortal(index)
-            }} 
-            onDeploy= {async (dataDeploy) => {}} 
-            onCreate= {(item: Portal) => {
-              data.push(item)
+          <SideBar
+            selectedPortal={selectedIndex}
+            items={data}
+            onChange={(item, index) => {
+              setSelectedPortal(index);
+            }}
+            onDeploy={async (dataDeploy) => {}}
+            onCreate={(item: Portal) => {
+              data.push(item);
               setPortalList(data);
-              
-              setSelectedPortal(data.length - 1)
+
+              setSelectedPortal(data.length - 1);
             }}
             onSaveRename={(item) => {
               data[selectedPortal].name = item.name;
@@ -113,17 +114,17 @@ const PortalBuilder = () => {
           />
         </div>
         <div className="portal-preview">
-          <PortalPreview 
-            layout = {data.length > 0 ? data[selectedIndex].layout : undefined}
+          <PortalPreview
+            layout={data.length > 0 ? data[selectedIndex].layout : undefined}
           />
         </div>
         <div className="widget-list-container">
-          <WidgetList containers={widgetList}/>
+          <WidgetList containers={widgetList} />
         </div>
       </div>
     </PortalContext.Provider>
-  )
-}
+  );
+};
 
-export {PortalContext}
-export default PortalBuilder
+export {PortalContext};
+export default PortalBuilder;
