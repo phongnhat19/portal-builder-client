@@ -8,6 +8,7 @@ import IframeWidget from '../../../Widget/IframeWidget';
 import HTMLWidget from '../../../Widget/HTMLWidget';
 import GmailWidget from '../../../Widget/GmailWidget';
 import ScheduleWidget from '../../../Widget/SchedulerWidget';
+import GNotifyWidget from '../../../Widget/GNotifyWidget'
 import { EMPTY_WIDGET_CONTENT, CONFIRM_DELETE } from '../../TabsLayout/constant';
 import confirm from 'antd/lib/modal/confirm';
 import { CONTENT_TYPE } from '../../../Widget/constant';
@@ -144,6 +145,13 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             }}
           />
         break;
+      case CONTENT_TYPE.GAROON_NOTIFY:
+        if (!currentBlock.content) {
+          break;
+        };
+        currentContentBlock =
+        <GNotifyWidget onRemove={removeWidget}/>
+        break;
       case CONTENT_TYPE.WEATHER:
         if (!currentBlock.content)
           break;
@@ -214,6 +222,11 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME,
             width: 100
           }
+        } else if (type === CONTENT_TYPE.GAROON_NOTIFY) {
+          props = {
+            showSettingInit: false,
+            width: 100
+          }
         } else if (type === CONTENT_TYPE.WEATHER) {
           props = {
             showSettingInit: true,
@@ -223,6 +236,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             type: WEATHER_TYPE.SIMPLE
           }
         }
+        
         props && dropWidget(rowIndex, blockIndex, type, props)
       }}
     >
