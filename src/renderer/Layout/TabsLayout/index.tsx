@@ -13,6 +13,7 @@ import SchedulerWidget from '../../Widget/SchedulerWidget';
 import WeatherWidget from '../../Widget/WeatherWidget/index';
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
+import GNotifyWidget from '../../Widget/GNotifyWidget';
 import { WEATHER_UNIT, WEATHER_TYPE } from '../../Widget/WeatherWidget/constant';
 
 const TabsLayout = ({
@@ -121,6 +122,13 @@ const TabsLayout = ({
               }}
             />
           break;
+        case CONTENT_TYPE.GAROON_NOTIFY:
+          if (!tabContent.props) {
+            break;
+          };
+          newItem.tabContent = 
+          <GNotifyWidget onRemove={removeWidget}/>
+          break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
         default:
@@ -177,6 +185,10 @@ const TabsLayout = ({
       props = {
         showSettingInit: true,
         defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
+      }
+    } else if (type === CONTENT_TYPE.GAROON_NOTIFY) {
+      props = {
+        showSettingInit: true
       }
     } else if (type === CONTENT_TYPE.WEATHER) {
       props = {

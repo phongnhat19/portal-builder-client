@@ -5,6 +5,7 @@ import Iframe from '../../Widget/IframeWidget/renderer';
 import { EMPTY_WIDGET_CONTENT } from './constant';
 import HTML from '../../Widget/HTMLWidget/renderer';
 import Schedule from '../../Widget/SchedulerWidget/renderer';
+import GNotify from '../../Widget/GNotifyWidget/renderer';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import WeatherComponent from '../../Widget/WeatherWidget/renderer';
 
@@ -76,7 +77,12 @@ const TabsLayout = ({
               type={tabContentWeather.type}
             />
           break;
-
+        case CONTENT_TYPE.GAROON_NOTIFY:
+          if (!tabContent.props) {
+            break;
+          };
+          newItem.tabContent = <GNotify data={[]}/>
+          break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT
         default:
