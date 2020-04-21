@@ -3,7 +3,7 @@ import './style.css';
 import PortalPreview from './PortalPreview';
 import SideBar from './SideBar';
 import WidgetList from '../../Widget/WidgetList';
-import {BorderOutlined, CalendarOutlined, Html5Outlined, CloudOutlined} from '@ant-design/icons';
+import {BorderOutlined, MailOutlined, CalendarOutlined, Html5Outlined, CloudOutlined} from '@ant-design/icons';
 import {CONTENT_TYPE} from '../../Widget/constant';
 import {LAYOUT_TYPE} from '../../Layout/constant';
 
@@ -57,6 +57,10 @@ const PortalBuilder = () => {
     {
       icon: <CalendarOutlined />,
       name: CONTENT_TYPE.SCHEDULER
+    },
+    {
+      icon: <MailOutlined />,
+      name: CONTENT_TYPE.GMAIL
     },
     {
       icon: <CloudOutlined />,

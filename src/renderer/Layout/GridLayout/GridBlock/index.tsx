@@ -6,6 +6,7 @@ import { PortalContext } from '../../../views/PortalBuilder';
 import { SCHEDULER_VIEW } from '../../../Widget/SchedulerWidget/constant';
 import IframeWidget from '../../../Widget/IframeWidget';
 import HTMLWidget from '../../../Widget/HTMLWidget';
+import GmailWidget from '../../../Widget/GmailWidget';
 import ScheduleWidget from '../../../Widget/SchedulerWidget';
 import { EMPTY_WIDGET_CONTENT, CONFIRM_DELETE } from '../../TabsLayout/constant';
 import confirm from 'antd/lib/modal/confirm';
@@ -100,7 +101,12 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             }}
           />
         break;
-
+      case CONTENT_TYPE.GMAIL:
+        if (!currentBlock.content) {
+          break;
+        }
+        currentContentBlock = <GmailWidget />;
+        break;
       case CONTENT_TYPE.HTML:
         if (!currentBlock.content) {
           break;
@@ -191,6 +197,10 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             url: "",
             width: '100%',
             height: '100%'
+          }
+        } else if (type === CONTENT_TYPE.GMAIL) {
+          props = {
+            showSettingInit: true
           }
         } else if (type === CONTENT_TYPE.HTML) {
           props = {
