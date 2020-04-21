@@ -74,9 +74,13 @@
     width: 100%;
 }
 
+
+.grid-layout .grid-layout-row .grid-block .widget-weather .portal-tabs-btn-settings {
+    z-index: 5;
+  }
+
 .grid-layout .grid-layout-row .grid-block .styles_simpleReactWeather__3uy4l {
     font-size: 20px;
-    min-height: 0px !important
 }
 
 .grid-layout .grid-layout-row .grid-block .widget-weather .widget-full-weather {

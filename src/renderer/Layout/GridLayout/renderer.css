@@ -11,10 +11,6 @@
   margin-bottom: 15px;
 }
 
-/* .grid-layout-row:not(:first-child) {
-  margin-top: 15px
-} */
-
 .grid-block {
   padding-left: 15px;
   padding-right: 15px;
@@ -33,26 +29,6 @@
   flex-wrap: wrap;
   max-width: 100%;
 }
-
-/* .grid-layout .grid-block-position-relative, .grid-layout .grid-layout-row, .grid-layout .grid-layout-row .grid-block {
-  position: relative;
-} */
-
-/* .grid-layout .grid-block-position-relative {
-  padding-top: 5%;
-} */
-
-/* .grid-layout .portal-tabs-btn, .grid-layout .grid-layout-btn-remove {
-  position: absolute;
-} */
-
-/* .grid-layout .portal-tabs-btn-settings {
-  right: 0px;
-}
-
-.grid-layout .grid-layout-btn-add-row {
-  min-height: 10vh;
-} */
 
 .grid-layout .grid-layout-btn-add.ant-btn-icon-only {
   font-size: 40px !important;
