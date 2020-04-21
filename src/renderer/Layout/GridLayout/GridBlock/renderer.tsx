@@ -85,10 +85,9 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
   return (
     <div
       style={finalStyle}
-      className="grid-block"
-      // onDragOver={(event: React.DragEvent<HTMLDivElement>) => { event.preventDefault(); }}
+      className="grid-block grid-block-template"
     >
-      <Row className='grid-block-position-relative'>
+      <Row className="grid-block-position-relative">
         {blockContent}
       </Row>
     </div>
