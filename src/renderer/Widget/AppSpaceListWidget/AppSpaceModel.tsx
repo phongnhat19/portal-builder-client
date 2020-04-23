@@ -20,36 +20,36 @@ const RenderBlockCategory = ({
   let listCategory = newData.listCategory as CategorytAppSpace[];
   return (
     <div className="infor-category" key={i}>
-      <InputText
-        label={LABEL.CATEGORY}
-        width={'100%'}
-        value={content.category}
-        placeholder={INPUT_TEXT.CATEGORY}
-        type={'text'}
-        className={''}
-        onChange={(value) => {
-          let valueString = value as string;
-          newData.category = valueString;
-          onChange(newData, '');
-        }}
-      />
+      <div className="input-action">
+        <InputText
+          label={LABEL.CATEGORY}
+          width={'100%'}
+          value={content.category}
+          placeholder={INPUT_TEXT.CATEGORY}
+          type={'text'}
+          className={''}
+          onChange={(value) => {
+            let valueString = value as string;
+            newData.category = valueString;
+            onChange(newData, '');
+          }}
+        />
+        <RenderActionAddCategory
+          onRemove={(status) => {
+            onChange(newData, status);
+          }}
+          i={i}
+          onClick={(value, status) => {
+            onChange(value, status);
+          }}
+        />
+      </div>
+
       <RenderCategoryDetail
         listCategory={listCategory}
         onChangeRow={(newListCategory) => {
           newData.listCategory = newListCategory;
           onChange(newData, '');
-        }}
-      />
-      <RenderActionAddCategory
-        onRemove={(status) => {
-          onChange(newData, status);
-        }}
-        i={i}
-        onClick={(value, status) => {
-          // let newListContent = listContent.slice();
-          // newListContent.push(value);
-          // setListContent(newListContent);
-          onChange(value, status);
         }}
       />
     </div>
@@ -68,21 +68,23 @@ const RenderCategory = ({
     <div className="category">
       {newListContent.map((content, i) => {
         return (
-          <RenderBlockCategory
-            content={content}
-            onChange={(newData, status) => {
-              let cloneData = JSON.parse(JSON.stringify(newData));
-              if (status === 'add') {
-                newListContent.splice(i + 1, 0, cloneData);
-              } else if (status === 'remove') {
-                newListContent.splice(i, 1);
-              } else {
-                newListContent[i] = cloneData;
-              }
-              setListContent(newListContent);
-            }}
-            i={i}
-          />
+          <React.Fragment key={i}>
+            <RenderBlockCategory
+              content={content}
+              onChange={(newData, status) => {
+                let cloneData = JSON.parse(JSON.stringify(newData));
+                if (status === 'add') {
+                  newListContent.splice(i + 1, 0, cloneData);
+                } else if (status === 'remove') {
+                  newListContent.splice(i, 1);
+                } else {
+                  newListContent[i] = cloneData;
+                }
+                setListContent(newListContent);
+              }}
+              i={i}
+            />
+          </React.Fragment>
         );
       })}
     </div>
@@ -99,7 +101,7 @@ const RenderActionAddCategory = ({
   i: number;
 }) => {
   const handleAddCategory = () => {
-    let category: ModalAppSpace = {listCategory: [{type: 'app', id: ''}], category: ''};
+    let category: ModalAppSpace = {listCategory: [{type: 'app', id: '', name: '', icon: ''}], category: ''};
     onClick(category, 'add');
   };
   const handleRemoveCategory = () => {
@@ -114,38 +116,45 @@ const RenderActionAddCategory = ({
 };
 
 const AppSpaceModel = ({
-  showSettingInit,
+  showSettingInit = false,
   getContent,
+  onCancel,
+  titleWidget,
+  listContent = [{listCategory: [{type: 'app', id: '', name: '', icon: ''}], category: ''}],
 }: {
   showSettingInit?: boolean;
-  getContent: ({listContent, titleWidget}: {listContent: ModalAppSpace[]; titleWidget: string}) => void;
+  onCancel: () => void;
+  listContent: ModalAppSpace[];
+  titleWidget: string;
+  getContent: ({listContent, titleWidget}: {listContent: ModalAppSpace[]; titleWidget: string;}) => void;
 }) => {
-  const [isShow, setShow] = useState(showSettingInit);
-  const [listContent, setListContent] = useState<ModalAppSpace[]>([{listCategory: [{type: 'app', id: ''}], category: ''}]);
-  const [titleWidget, setTitleWidget] = useState('');
+  const [newListContent, setListContent] = useState<ModalAppSpace[]>(listContent);
+  const [newTitleWidget, setTitleWidget] = useState(titleWidget);
 
   return (
     <Modal
       bodyStyle={{maxHeight: '500px', overflow: 'auto'}}
       onOk={() => {
-        getContent({listContent, titleWidget});
-        setShow(false);
+        getContent({listContent: newListContent, titleWidget: newTitleWidget});
+        onCancel();
       }}
       title={MODAL.TITLE}
-      visible={isShow}
-      onCancel={() => setShow(false)}
+      visible={showSettingInit}
+      onCancel={() => {
+        onCancel()
+      }}
     >
       <InputText
-        label={'Title'}
-        width={'100%'}
+        label={LABEL.TITLE}
+        width={'calc(94% - 5px)'}
         placeholder={`${INPUT_TEXT.TITLE}`}
         type={'text'}
-        value={titleWidget}
+        value={newTitleWidget}
         className="item-margin-bottom-10 title"
         onChange={(value) => setTitleWidget(value as string)}
       />
       <RenderCategory
-        listContent={listContent}
+        listContent={newListContent}
         setListContent={(listContent) => {
           let newListContent = listContent.slice();
           setListContent(newListContent);
