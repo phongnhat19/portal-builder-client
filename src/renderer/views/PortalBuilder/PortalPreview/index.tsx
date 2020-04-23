@@ -26,7 +26,7 @@ const PortalPreview = ({
   }
 
   return(
-    <div style={{display: 'flex', justifyContent:'center', paddingTop: '30px'}}>
+    <div style={{paddingTop: '30px'}}>
       {
         layout && renderLayout()
       }

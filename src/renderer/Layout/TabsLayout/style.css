@@ -30,13 +30,23 @@
   right: 30px;
 }
 
+.portal-tabs-layout .kuc-tabs-tabs {
+  min-width: 100%;
+}
+
 .portal-tabs-layout .kuc-tabs-tab-contents {
   min-height: 85vh;
 }
 
+.portal-tabs-layout .kuc-tabs-tab-list .kuc-tabs-container {
+  max-width: 250px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .portal-tabs-layout .kuc-tabs-tab-contents .styles_simpleReactWeather__3uy4l {
   font-size: 30px;
-  min-height: 0px !important
 }
 
 .portal-tabs-layout .kuc-tabs-tab-contents .styles_simpleReactWeatherCity__zyECF {
