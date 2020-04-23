@@ -3,6 +3,7 @@ import {Button, Table} from 'antd';
 import 'antd/dist/antd.css';
 import $script from 'scriptjs';
 import {handleClientLoad, initClient, handleSignin, checkSignin, getListMail} from './service';
+import MailDetail from './MailDetail';
 import './style.css';
 
 const Gmail = ({width, height, htmlString}: {
@@ -25,11 +26,14 @@ const Gmail = ({width, height, htmlString}: {
       dataIndex: 'from',
       key: 'from',
     },
-    
     {
       title: 'Subject',
       dataIndex: 'subject',
       key: 'subject',
+      // eslint-disable-next-line react/display-name
+      render: (data: any) => {
+        return <MailDetail />;
+      },
     },
     {
       title: 'Time',
@@ -37,6 +41,7 @@ const Gmail = ({width, height, htmlString}: {
       key: 'time',
     },
   ]);
+  const [showDetail, setShowDetail] = useState(false);
   const [signin, setSignin] = useState(false);
   useEffect(() =>{
     if (window.kintone) {
