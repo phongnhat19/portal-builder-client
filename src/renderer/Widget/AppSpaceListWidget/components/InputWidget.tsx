@@ -8,7 +8,8 @@ export const InputText = ({
   placeholder,
   type,
   onChange,
-  className
+  className,
+  disabled
 }: {
   label: string;
   width: string;
@@ -16,12 +17,13 @@ export const InputText = ({
   placeholder: string;
   type: string;
   className:string;
+  disabled?: boolean;
   onChange: (value: string | number) => void;
 }) => {
   return (
     <div className={`item-block ` + className}  style={{width}}>
       <strong>{label}</strong>
-      <Input type={type} placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} />
+      <Input type={type} placeholder={placeholder} value={value} disabled={disabled} onChange={(e) => onChange(e.target.value)} />
     </div>
   );
 };
