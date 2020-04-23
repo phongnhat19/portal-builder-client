@@ -1,6 +1,6 @@
 declare type GridBlock = {
   style?: CSSProperties;
-  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps;
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps;
   width: number;
   type?: ContentType;
 }
