@@ -14,6 +14,7 @@ import WeatherWidget from '../../Widget/WeatherWidget/index';
 import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import GNotifyWidget from '../../Widget/GNotifyWidget';
+import GmailWidget from '../../Widget/GmailWidget';
 import { WEATHER_UNIT, WEATHER_TYPE } from '../../Widget/WeatherWidget/constant';
 
 const TabsLayout = ({
@@ -81,6 +82,12 @@ const TabsLayout = ({
                 updateWidget(currentProps)
               }}
             />
+          break;
+        case CONTENT_TYPE.GMAIL:
+          if (!tabContent.props) {
+            break;
+          }
+          newItem.tabContent = <GmailWidget onRemove={removeWidget} />;
           break;
         case CONTENT_TYPE.SCHEDULER:
           if (!tabContent.props) {
@@ -187,6 +194,10 @@ const TabsLayout = ({
         defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
       }
     } else if (type === CONTENT_TYPE.GAROON_NOTIFY) {
+      props = {
+        showSettingInit: true
+      }
+    } else if (type === CONTENT_TYPE.GMAIL) {
       props = {
         showSettingInit: true
       }

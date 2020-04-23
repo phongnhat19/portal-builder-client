@@ -8,6 +8,7 @@ import Schedule from '../../Widget/SchedulerWidget/renderer';
 import GNotify from '../../Widget/GNotifyWidget/renderer';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import WeatherComponent from '../../Widget/WeatherWidget/renderer';
+import Gmail from '../../Widget/GmailWidget/renderer';
 
 let portalSpaceEl: HTMLElement
 let defaultPortalBodyEl: ChildNode | null
@@ -63,6 +64,12 @@ const TabsLayout = ({
             <Schedule
               defaultView={tabContentSchedule.defaultView}
             />
+          break;
+        case CONTENT_TYPE.GMAIL:
+          if (!tabContent.props) {
+            break;
+          }
+          newItem.tabContent = <Gmail />;
           break;
         case CONTENT_TYPE.WEATHER:
           if (!tabContent.props) {

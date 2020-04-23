@@ -1,0 +1,19 @@
+.widget-gmail {
+    width: 100%;
+    /* padding: 20px */
+}
+/* .gmail-container {
+    width: 100%;
+    padding: 20px
+} */
+.gmail-header {
+    width: 100%;
+    background: brown;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+.gmail-contain {
+    background: white;
+    width: 100%;
+}

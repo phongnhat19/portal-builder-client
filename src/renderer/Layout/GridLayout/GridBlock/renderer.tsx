@@ -8,6 +8,7 @@ import GNotify from '../../../Widget/GNotifyWidget/renderer';
 import { EMPTY_WIDGET_CONTENT } from '../../TabsLayout/constant';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
+import GmailWidget from '../../../Widget/GmailWidget';
 
 const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = undefined, width }: {
   style?: CSSProperties
@@ -56,6 +57,9 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
           <SchedulerWidget
             defaultView={blockContentSchedule.defaultView}
           />
+        break;
+      case CONTENT_TYPE.GMAIL:
+        currentContentBlock = <GmailWidget />;
         break;
         case CONTENT_TYPE.GAROON_NOTIFY:
           currentContentBlock = <GNotify data={[]}/>

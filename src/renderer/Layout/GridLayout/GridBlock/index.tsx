@@ -106,7 +106,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         if (!currentBlock.content) {
           break;
         }
-        currentContentBlock = <GmailWidget />;
+        currentContentBlock = <GmailWidget onRemove={removeWidget} />;
         break;
       case CONTENT_TYPE.HTML:
         if (!currentBlock.content) {

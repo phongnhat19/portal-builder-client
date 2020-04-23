@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import SettingsWidget from '../components/Settings';
-// import HTMLModal from './HTMLModal';
+
 import Gmail from './renderer';
 
 const GmailWidget = ({htmlString, width, height, showSettingInit = false, onRemove, onSaveSetting}: {
@@ -12,29 +12,18 @@ const GmailWidget = ({htmlString, width, height, showSettingInit = false, onRemo
   onSaveSetting?: ({htmlString}: { htmlString: string }) => void;
 }) => {
 
-  const [showSetting, setShowSetting] = useState(showSettingInit)
+  const [showSetting, setShowSetting] = useState(showSettingInit);
 
   return (
     <React.Fragment>
       <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
-      <div
-        onDrop={(event)=>event.stopPropagation()}
-      >
+      <div role="presentation" className="widget-gmail" onDrop={(event)=>event.stopPropagation()} >
         <Gmail
           htmlString={htmlString}
           width={width}
           height={height}
         />
       </div>
-      {/* <HTMLModal
-        htmlString={htmlString}
-        isVisible={showSetting}
-        onClose={() => (setShowSetting(false))}
-        onSave={(item) => {
-          onSaveSetting && onSaveSetting({htmlString: item.htmlString});
-          setShowSetting(false);
-        }}
-      /> */}
     </React.Fragment>
   );
 };
