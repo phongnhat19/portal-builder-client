@@ -70,8 +70,8 @@ const WeatherWidget = ({
       const apiErr = weatherDataAPI.cod === 401 ? weatherDataAPI.message : '';
       setModelErr({
         city: cityErr,
-        api: apiErr}
-      );
+        api: apiErr
+      });
     }
   };
 
@@ -85,7 +85,13 @@ const WeatherWidget = ({
         defaultType={type}
         isVisible={showSetting}
         error={modelErr}
-        onClose={() => (setShowSetting(false))}
+        onClose={() => {
+          setShowSetting(false);
+          setModelErr({
+            city: '',
+            api: ''
+          });
+        }}
         onSave={handleSaveModel}
       />
       {
