@@ -36,9 +36,9 @@ const TabsLayout = ({
     initItems.forEach(item => {
       const newItem = {
         tabName: item.tabName,
-        tabContent: PORTAL_DEFAULT.TAB_CONTENT_INIT as any
-      }
-      const tabContent = item.tabContent; 
+        tabContent: PORTAL_DEFAULT.TAB_CONTENT_INIT as any,
+      };
+      const tabContent = item.tabContent;
       if (!tabContent) return;
       switch (tabContent.type) {
         case CONTENT_TYPE.IFRAME:
@@ -131,16 +131,26 @@ const TabsLayout = ({
           <GNotifyWidget onRemove={removeWidget}/>
           break;
         case CONTENT_TYPE.APP_SPACE:
-          if (!tabContent.props)
-            break;
-          const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps
-          newItem.tabContent = <AppSpaceWidget onSaveSetting={({listContent,titleWidget})=>{
-            let currentProps = JSON.parse(JSON.stringify(tabContent.props))
-            currentProps.listContent = listContent;
-            currentProps.titleWidget = titleWidget;
-            updateWidget(currentProps);
-          }} showSettingInit={tabContentAppSpace.showSettingInit}/>
-            break;
+          if (!tabContent.props) break;
+          const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps;
+          newItem.tabContent = (
+            <AppSpaceWidget
+              isSave={tabContentAppSpace.isSave}
+              titleWidget={tabContentAppSpace.titleWidget}
+              listContent={tabContentAppSpace.listContent}
+              showSettingInit={tabContentAppSpace.showSettingInit}
+              onRemove={removeWidget}
+              onSaveSetting={({listContent, titleWidget,isSave}) => {
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                currentProps.listContent = listContent;
+                currentProps.titleWidget = titleWidget;
+                currentProps.showSettingInit = false;
+                currentProps.isSave= isSave;
+                updateWidget(currentProps);
+              }}
+            />
+          );
+          break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT;
         default:
@@ -232,14 +242,13 @@ const TabsLayout = ({
   }, [tabList, selectedTab]);
 
   const dropWidget = (tabIndex: number, type: ContentType, props: any) => {
-
     const currentTab = (portalList[selectedPortal].layout.props as TabLayout).tabList[tabIndex];
 
     if (currentTab.tabContent.type !== CONTENT_TYPE.DEFAULT) {
       currentTab.tabContent = {
         type: type,
         name: 'New Tab',
-        props
+        props,
       };
       setPortalList(portalList);
     }
@@ -262,7 +271,7 @@ const TabsLayout = ({
           showTabConfigModal(true);
         }}
       />
-      {selectedTab !== 0 &&
+      {selectedTab !== 0 && (
         <Button
           type="default"
           icon={<EditOutlined />}
@@ -271,8 +280,8 @@ const TabsLayout = ({
             showTabNameModal(true);
           }}
         />
-      }
-      {tabItems.length > 1 &&
+      )}
+      {tabItems.length > 1 && (
         <Button
           type="default"
           icon={<MinusCircleOutlined />}
@@ -288,15 +297,11 @@ const TabsLayout = ({
             setPortalList(portalList);
           }}
         />
-      }
-      <Tabs
-        items={tabItems}
-        value={selectedTab}
-        onClickTabItem={setSelectedTab}
-      />
+      )}
+      <Tabs items={tabItems} value={selectedTab} onClickTabItem={setSelectedTab} />
       <TabConfigModal
         isVisible={isShowTabConfigModal}
-        onClose={()=> showTabConfigModal(false)}
+        onClose={() => showTabConfigModal(false)}
         onSave={(name) => {
           const tab = {
             tabName: name,
@@ -312,7 +317,7 @@ const TabsLayout = ({
       <TabConfigModal
         tabName={tabList[selectedTab] ? tabList[selectedTab].tabName : tabList[0].tabName}
         isVisible={isShowTabNameModal}
-        onClose={()=> showTabNameModal(false)}
+        onClose={() => showTabNameModal(false)}
         onSave={(name) => {
           const portalListClone = JSON.parse(JSON.stringify(portalList));
           portalListClone[selectedPortal].layout.props.tabList[selectedTab].tabName = name;
