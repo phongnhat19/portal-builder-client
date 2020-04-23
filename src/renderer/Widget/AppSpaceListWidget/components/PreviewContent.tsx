@@ -11,9 +11,7 @@ const PreviewContent = ({listContent}: {listContent: ModalAppSpace[]}) => {
       return true;
     }
     return false;
-  };
-  console.log("listContent preview",listContent);
-  
+  };  
   return (
     <div className="widget-content-preview">
       {listContent.map((content,key) => {        

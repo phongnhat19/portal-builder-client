@@ -10,26 +10,24 @@ const AppSpace = ({listContent = [], titleWidget = ''}: {listContent: ModalAppSp
   const [listAppSpace, setListAppSpace] = useState(listContent);
   const [titleAppSpace, setTitleAppSpace] = useState(titleWidget); 
   
-  useEffect(() => {        
+  useEffect(() => {       
+
     (async () => {
       if (window.kintone) {
         let newListContent = await getAppInfo({listAppSpace});
         setTitleAppSpace(titleWidget);
         setListAppSpace(newListContent);
-      } else {
-        console.log("else listContent",listContent);
-        
+      } else {        
         setTitleAppSpace(titleWidget);
         setListAppSpace(listContent);
       }
     })();
-  });
+  },[listContent.length && listContent != listAppSpace]);
 
   if (listAppSpace.length === 0) {
     return null;
   }
-  console.log("listContent",listContent);
-  console.log("listAppSpace",listAppSpace);
+
   
   return (
     <div className="app-space-widget">
