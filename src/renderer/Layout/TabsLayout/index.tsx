@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext, DragEvent } from 'react'
-import { Tabs } from '@kintone/kintone-ui-component';
-import { Button } from 'antd';
-import { PlusCircleOutlined, MinusCircleOutlined, ExclamationCircleOutlined, EditOutlined } from '@ant-design/icons';
-import './style.css'
+import React, {useState, useEffect, useContext, DragEvent} from 'react';
+import {Tabs} from '@kintone/kintone-ui-component';
+import {Button} from 'antd';
+import {PlusCircleOutlined, MinusCircleOutlined, ExclamationCircleOutlined, EditOutlined} from '@ant-design/icons';
+import './style.css';
 import IframeWidget from '../../Widget/IframeWidget';
-import { PortalContext } from '../../views/PortalBuilder';
+import {PortalContext} from '../../views/PortalBuilder';
 import confirm from 'antd/lib/modal/confirm';
-import { CONFIRM_DELETE, PORTAL_DEFAULT, EMPTY_WIDGET_CONTENT } from './constant';
+import {CONFIRM_DELETE, PORTAL_DEFAULT, EMPTY_WIDGET_CONTENT} from './constant';
 import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../Widget/HTMLWidget';
 import SchedulerWidget from '../../Widget/SchedulerWidget';
@@ -18,24 +18,24 @@ import { WEATHER_UNIT, WEATHER_TYPE } from '../../Widget/WeatherWidget/constant'
 
 const TabsLayout = ({
   tabList = []
-} : {
-  tabList?: Tab[]
+}: {
+  tabList?: Tab[];
 }) => {
 
-  const [selectedTab, setSelectedTab] = useState(0)
-  const [isShowTabNameModal, showTabNameModal] = useState(false)
-  const [inited, setInited] = useState(false)
-  const [tabItems, setTabItems] = useState([] as any[])
-  const {portalList, setPortalList, selectedPortal} = useContext(PortalContext)
-  const [isShowTabConfigModal, showTabConfigModal] = useState(false)
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [isShowTabNameModal, showTabNameModal] = useState(false);
+  const [inited, setInited] = useState(false);
+  const [tabItems, setTabItems] = useState([] as any[]);
+  const {portalList, setPortalList, selectedPortal} = useContext(PortalContext);
+  const [isShowTabConfigModal, showTabConfigModal] = useState(false);
 
   const buildTabItems = (initItems: Tab[]) => {
     let dataItems = [] as any[];
     initItems.forEach(item => {
-      let newItem = {
+      const newItem = {
         tabName: item.tabName,
         tabContent: PORTAL_DEFAULT.TAB_CONTENT_INIT as any
-      }
+      };
       const tabContent = item.tabContent;
       if (!tabContent) return;
       switch (tabContent.type) {
@@ -45,74 +45,73 @@ const TabsLayout = ({
           }
           const tabContentIframe = tabContent.props as IframeWidgetProps;
           newItem.tabContent =
-            <IframeWidget
+            (<IframeWidget
               url={tabContentIframe.url}
               width={tabContentIframe.width}
               height={tabContentIframe.height}
               showSettingInit={tabContentIframe.showSettingInit}
               onRemove={removeWidget}
               onSaveSetting={({url, height, width}) => {
-                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
-                currentProps.url = url
-                currentProps.width = width
-                currentProps.height = height
+                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                currentProps.url = url;
+                currentProps.width = width;
+                currentProps.height = height;
                 currentProps.showSettingInit = false;
-                updateWidget(currentProps)
+                updateWidget(currentProps);
               }}
-            />
+            />);
           break;
 
         case CONTENT_TYPE.HTML:
           if (!tabContent.props) {
             break;
-          };
+          }
           const tabContentHTML = tabContent.props as HTMLWidgetProps;
           newItem.tabContent =
-            <HTMLWidget
+            (<HTMLWidget
               htmlString={tabContentHTML.htmlString}
               width={tabContentHTML.width}
               height={tabContentHTML.height}
               showSettingInit={tabContentHTML.showSettingInit}
               onRemove={removeWidget}
               onSaveSetting={({htmlString}) => {
-                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
-                currentProps.htmlString = htmlString
+                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                currentProps.htmlString = htmlString;
                 currentProps.showSettingInit = false;
-                updateWidget(currentProps)
+                updateWidget(currentProps);
               }}
-            />
+            />);
           break;
         case CONTENT_TYPE.SCHEDULER:
           if (!tabContent.props) {
             break;
-          };
+          }
           const tabContentSchedule = tabContent.props as SchedulerWidgetProps;
           newItem.tabContent =
-            <SchedulerWidget
+            (<SchedulerWidget
               defaultView={tabContentSchedule.defaultView}
               onRemove={removeWidget}
               onSaveSetting={({defaultView}) => {
-                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
-                currentProps.defaultView = defaultView
+                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                currentProps.defaultView = defaultView;
                 currentProps.showSettingInit = false;
-                updateWidget(currentProps)
+                updateWidget(currentProps);
               }}
-            />
+            />);
           break;
         case CONTENT_TYPE.WEATHER:
-          if (!tabContent.props)
-            break;
-          const tabContentWeather = tabContent.props as WeatherWidgetProps
+          if (!tabContent.props) break;
+          const tabContentWeather = tabContent.props as WeatherWidgetProps;
           newItem.tabContent =
-            <WeatherWidget
+            (<WeatherWidget
               type={tabContentWeather.type}
               showSettingInit={tabContentWeather.showSettingInit}
               unitTemp={tabContentWeather.unitTemp}
               openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
               weatherCity={tabContentWeather.weatherCity}
               onRemove={removeWidget}
-              onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
-                let currentProps = JSON.parse(JSON.stringify(tabContent.props))
+              onSaveSetting={({unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
+                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
                 currentProps.unitTemp = unitTemp;
                 currentProps.weatherCity = weatherCity;
                 currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
@@ -120,7 +119,7 @@ const TabsLayout = ({
                 currentProps.type = type;
                 updateWidget(currentProps);
               }}
-            />
+            />);
           break;
         case CONTENT_TYPE.GAROON_NOTIFY:
           if (!tabContent.props) {
@@ -130,15 +129,15 @@ const TabsLayout = ({
           <GNotifyWidget onRemove={removeWidget}/>
           break;
         case CONTENT_TYPE.EMPTY:
-          newItem.tabContent = EMPTY_WIDGET_CONTENT
+          newItem.tabContent = EMPTY_WIDGET_CONTENT;
         default:
           break;
       }
-      dataItems = [...dataItems, newItem]
-    })
+      dataItems = [...dataItems, newItem];
+    });
 
-    return dataItems
-  }
+    return dataItems;
+  };
 
   const removeWidget = () => {
     confirm({
@@ -148,39 +147,39 @@ const TabsLayout = ({
       okType: 'danger',
       cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
       onOk() {
-        const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList
-        tabList[selectedTab].tabContent.type = CONTENT_TYPE.EMPTY as ContentType
-        delete tabList[selectedTab].tabContent.props
-        setPortalList(portalList)
+        const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList;
+        tabList[selectedTab].tabContent.type = CONTENT_TYPE.EMPTY as ContentType;
+        delete tabList[selectedTab].tabContent.props;
+        setPortalList(portalList);
       }
-    })
-  }
+    });
+  };
 
   const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
-    const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList
-    tabList[selectedTab].tabContent.props = newProps
-    setPortalList(portalList)
-  }
+    const listTab = (portalList[selectedPortal].layout.props as TabLayout).tabList;
+    listTab[selectedTab].tabContent.props = newProps;
+    setPortalList(portalList);
+  };
   const handleDropWidget = (e: DragEvent) => {
-    const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList;
-    if (tabList[selectedTab].tabContent.type !== CONTENT_TYPE.EMPTY) return;
+    const listTab = (portalList[selectedPortal].layout.props as TabLayout).tabList;
+    if (listTab[selectedTab].tabContent.type !== CONTENT_TYPE.EMPTY) return;
 
-    let props: any
-    const type = e.dataTransfer.getData("text") as ContentType
+    let props: any;
+    const type = e.dataTransfer.getData('text') as ContentType;
     if (type === CONTENT_TYPE.IFRAME) {
       props = {
         showSettingInit: true,
-        url: "",
-        width: "100%",
-        height: "82vh"
-      }
+        url: '',
+        width: '100%',
+        height: '82vh'
+      };
     } else if (type === CONTENT_TYPE.HTML) {
       props = {
         showSettingInit: true,
-        htmlString: "",
-        width: "100%",
-        height: "82vh"
-      }
+        htmlString: '',
+        width: '100%',
+        height: '82vh'
+      };
     } else if (type === CONTENT_TYPE.SCHEDULER) {
       props = {
         showSettingInit: true,
@@ -197,58 +196,61 @@ const TabsLayout = ({
         weatherCity: '',
         openWeatherMapAPIKey: '',
         type: WEATHER_TYPE.SIMPLE
-      }
+      };
     }
-    props && dropWidget(selectedTab, type, props)
-  }
+    props && dropWidget(selectedTab, type, props);
+  };
 
   useEffect(() => {
     if (inited) {
-      setSelectedTab(tabList.length - 1)
+      setSelectedTab(tabList.length - 1);
     } else {
-      setInited(true)
+      setInited(true);
     }
-  }, [tabList.length])
+  }, [inited, tabList.length]);
 
   useEffect(() => {
-    setTabItems(buildTabItems(tabList))
-  },[tabList, selectedTab])
+    setTabItems(buildTabItems(tabList));
+  }, [tabList, selectedTab]);
 
   const dropWidget = (tabIndex: number, type: ContentType, props: any) => {
 
-    const currentTab = (portalList[selectedPortal].layout.props as TabLayout).tabList[tabIndex]
+    const currentTab = (portalList[selectedPortal].layout.props as TabLayout).tabList[tabIndex];
 
-    if (currentTab.tabContent.type !== CONTENT_TYPE.DEFAULT){
+    if (currentTab.tabContent.type !== CONTENT_TYPE.DEFAULT) {
       currentTab.tabContent = {
         type: type,
         name: 'New Tab',
         props
-      }
-      setPortalList(portalList)
+      };
+      setPortalList(portalList);
     }
-  }
+  };
 
-  return(
+  return (
     <div
-      className='portal-tabs-layout'
-      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {event.preventDefault();}}
+      role="presentation"
+      className="portal-tabs-layout"
+      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+      }}
       onDrop={handleDropWidget}
     >
       <Button
         type="default"
         icon={<PlusCircleOutlined />}
-        className='portal-tabs-btn portal-tabs-btn-add'
+        className="portal-tabs-btn portal-tabs-btn-add"
         onClick={() => {
-          showTabConfigModal(true)
+          showTabConfigModal(true);
         }}
       />
       {selectedTab !== 0 &&
         <Button
           type="default"
           icon={<EditOutlined />}
-          className='portal-tabs-btn portal-tabs-btn-edit-name'
+          className="portal-tabs-btn portal-tabs-btn-edit-name"
           onClick={() => {
-            showTabNameModal(true)
+            showTabNameModal(true);
           }}
         />
       }
@@ -256,15 +258,15 @@ const TabsLayout = ({
         <Button
           type="default"
           icon={<MinusCircleOutlined />}
-          className='portal-tabs-btn portal-tabs-btn-sub'
+          className="portal-tabs-btn portal-tabs-btn-sub"
           onClick={() => {
             if (selectedTab === 0) return;
             const newSelectedTab = selectedTab - 1;
-            setSelectedTab(newSelectedTab)
+            setSelectedTab(newSelectedTab);
 
-            const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout))
-            newLayout.props.tabList.splice(selectedTab, 1)
-            portalList[selectedPortal].layout = newLayout
+            const newLayout = JSON.parse(JSON.stringify(portalList[selectedPortal].layout));
+            newLayout.props.tabList.splice(selectedTab, 1);
+            portalList[selectedPortal].layout = newLayout;
             setPortalList(portalList);
           }}
         />
@@ -283,25 +285,25 @@ const TabsLayout = ({
             tabContent: {
               type: CONTENT_TYPE.EMPTY as ContentType
             }
-          } as Tab
-          (portalList[selectedPortal].layout.props as TabLayout).tabList.push(tab)
+          } as Tab;
+          (portalList[selectedPortal].layout.props as TabLayout).tabList.push(tab);
           setPortalList(portalList);
-          showTabConfigModal(false)
+          showTabConfigModal(false);
         }}
       />
       <TabConfigModal
-        tabName={tabList[selectedTab].tabName}
+        tabName={tabList[selectedTab] ? tabList[selectedTab].tabName : tabList[0].tabName}
         isVisible={isShowTabNameModal}
         onClose={()=> showTabNameModal(false)}
         onSave={(name) => {
-          const portalListClone = JSON.parse(JSON.stringify(portalList))
-          portalListClone[selectedPortal].layout.props.tabList[selectedTab].tabName = name
-          setPortalList(portalListClone)
-          showTabNameModal(false)
+          const portalListClone = JSON.parse(JSON.stringify(portalList));
+          portalListClone[selectedPortal].layout.props.tabList[selectedTab].tabName = name;
+          setPortalList(portalListClone);
+          showTabNameModal(false);
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default TabsLayout
+export default TabsLayout;
