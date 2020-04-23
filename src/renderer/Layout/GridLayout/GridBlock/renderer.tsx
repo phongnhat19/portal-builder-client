@@ -4,6 +4,7 @@ import { Row } from 'antd';
 import IframeWidget from '../../../Widget/IframeWidget/renderer';
 import HTMLWidget from '../../../Widget/HTMLWidget/renderer';
 import SchedulerWidget from '../../../Widget/SchedulerWidget/renderer';
+import GNotify from '../../../Widget/GNotifyWidget/renderer';
 import { EMPTY_WIDGET_CONTENT } from '../../TabsLayout/constant';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
@@ -56,6 +57,9 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
             defaultView={blockContentSchedule.defaultView}
           />
         break;
+        case CONTENT_TYPE.GAROON_NOTIFY:
+          currentContentBlock = <GNotify data={[]}/>
+          break;
         case CONTENT_TYPE.WEATHER:
           const blockContentWeather = content as WeatherWidgetProps;
           currentContentBlock =
@@ -81,10 +85,9 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
   return (
     <div
       style={finalStyle}
-      className="grid-block"
-      // onDragOver={(event: React.DragEvent<HTMLDivElement>) => { event.preventDefault(); }}
+      className="grid-block grid-block-template"
     >
-      <Row className='grid-block-position-relative'>
+      <Row className="grid-block-position-relative">
         {blockContent}
       </Row>
     </div>
