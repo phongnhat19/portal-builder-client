@@ -8,11 +8,12 @@ import GNotify from '../../../Widget/GNotifyWidget/renderer';
 import { EMPTY_WIDGET_CONTENT } from '../../TabsLayout/constant';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
+import AppSpaceWidget from '../../../Widget/AppSpaceListWidget/rerender';
 
 const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = undefined, width }: {
   style?: CSSProperties
   type?: ContentType
-  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps
   width: number
 }) => {
 
@@ -69,6 +70,12 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
               openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
               type={blockContentWeather.type}
             />
+          break;
+          case CONTENT_TYPE.APP_SPACE:
+          const blockContentAppSpace = content as AppSpaceWidgetProps;
+          currentContentBlock = (
+            <AppSpaceWidget isSave={blockContentAppSpace.isSave} titleWidget={blockContentAppSpace.titleWidget} listContent={blockContentAppSpace.listContent} />
+          );
           break;
       case CONTENT_TYPE.EMPTY:
         currentContentBlock = ''
