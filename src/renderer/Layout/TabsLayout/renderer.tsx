@@ -90,6 +90,14 @@ const TabsLayout = ({tabList = []}: {tabList?: Tab[]}) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [tabItems, setTabItems] = useState(buildTabItems(tabList));
 
+  useLayoutEffect(() => {
+    if (!portalSpaceEl) {
+      portalSpaceEl = kintone.portal.getContentSpaceElement();
+      defaultPortalBodyEl = portalSpaceEl.nextSibling;
+    }
+    if (defaultPortalBodyEl) document.getElementById('default-portal')?.appendChild(defaultPortalBodyEl);
+  }, []);
+
   useEffect(() => {
     if (selectedTab === 0) {
       const tabContentDOM = document.getElementsByClassName('kuc-tabs-tab-contents')[0] as HTMLElement;

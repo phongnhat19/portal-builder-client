@@ -6,7 +6,6 @@ import React from 'react';
 
 // @ts-ignore
 const portalConfig = PORTAL_CONFIG
-console.log("PORTAL_CONFIG",PORTAL_CONFIG);
 
 kintone.events.on('portal.show', function (event: any) {
   const portalSpaceEl = kintone.portal.getContentSpaceElement();
