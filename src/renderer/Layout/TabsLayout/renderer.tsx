@@ -8,6 +8,8 @@ import Schedule from '../../Widget/SchedulerWidget/renderer';
 import GNotify from '../../Widget/GNotifyWidget/renderer';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import WeatherComponent from '../../Widget/WeatherWidget/renderer';
+import AppSpaceWidget from '../../Widget/AppSpaceListWidget/rerender';
+
 let defaultPortalBodyEl: ChildNode | null
 
 const TabsLayout = ({
@@ -80,6 +82,16 @@ const TabsLayout = ({
             break;
           };
           newItem.tabContent = <GNotify data={[]}/>
+          break;
+
+        case CONTENT_TYPE.APP_SPACE:
+          if (!tabContent.props) {
+            break;
+          }
+          const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps;
+          newItem.tabContent = (
+            <AppSpaceWidget titleWidget={tabContentAppSpace.titleWidget} listContent={tabContentAppSpace.listContent} />
+          );
           break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT

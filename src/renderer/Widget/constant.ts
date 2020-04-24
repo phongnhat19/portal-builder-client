@@ -5,5 +5,7 @@ export const CONTENT_TYPE = {
   WEATHER: 'Weather',
   GAROON_NOTIFY: 'GNotification',
   DEFAULT: 'DefaultPortal',
-  EMPTY: 'Empty'
+  EMPTY: 'Empty',
+  APP_SPACE:"App/Space"
+
 };

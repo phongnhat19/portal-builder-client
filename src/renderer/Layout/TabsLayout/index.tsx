@@ -15,6 +15,7 @@ import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import GNotifyWidget from '../../Widget/GNotifyWidget';
 import { WEATHER_UNIT, WEATHER_TYPE } from '../../Widget/WeatherWidget/constant';
+import AppSpaceWidget from '../../Widget/AppSpaceListWidget';
 
 const TabsLayout = ({
   tabList = []
@@ -128,6 +129,25 @@ const TabsLayout = ({
           newItem.tabContent = 
           <GNotifyWidget onRemove={removeWidget}/>
           break;
+        case CONTENT_TYPE.APP_SPACE:
+          if (!tabContent.props) break;
+          const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps;
+          newItem.tabContent = (
+            <AppSpaceWidget
+              titleWidget={tabContentAppSpace.titleWidget}
+              listContent={tabContentAppSpace.listContent}
+              showSettingInit={tabContentAppSpace.showSettingInit}
+              onRemove={removeWidget}
+              onSaveSetting={({listContent, titleWidget}) => {
+                let currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                currentProps.listContent = listContent;
+                currentProps.titleWidget = titleWidget;
+                currentProps.showSettingInit = false;
+                updateWidget(currentProps);
+              }}
+            />
+          );
+          break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT;
         default:
@@ -155,7 +175,7 @@ const TabsLayout = ({
     });
   };
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | AppSpaceWidgetProps) => {
     const listTab = (portalList[selectedPortal].layout.props as TabLayout).tabList;
     listTab[selectedTab].tabContent.props = newProps;
     setPortalList(portalList);
@@ -196,6 +216,10 @@ const TabsLayout = ({
         weatherCity: '',
         openWeatherMapAPIKey: '',
         type: WEATHER_TYPE.SIMPLE
+      };
+    } else if (type === CONTENT_TYPE.APP_SPACE) {
+      props = {
+        showSettingInit: true,
       };
     }
     props && dropWidget(selectedTab, type, props);

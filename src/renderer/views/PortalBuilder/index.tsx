@@ -3,7 +3,7 @@ import './style.css';
 import PortalPreview from './PortalPreview';
 import SideBar from './SideBar';
 import WidgetList from '../../Widget/WidgetList';
-import { BorderOutlined, CalendarOutlined, Html5Outlined,AlertOutlined, CloudOutlined } from '@ant-design/icons';
+import { BorderOutlined, CalendarOutlined, Html5Outlined,AlertOutlined, CloudOutlined, AppstoreFilled } from '@ant-design/icons';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import {LAYOUT_TYPE} from '../../Layout/constant'
 
@@ -65,6 +65,10 @@ const PortalBuilder = () => {
     {
       icon: <CloudOutlined />,
       name: CONTENT_TYPE.WEATHER
+    }, 
+    {
+      icon:<AppstoreFilled />,
+      name: CONTENT_TYPE.APP_SPACE,
     }
   ];
 
@@ -125,7 +129,7 @@ const PortalBuilder = () => {
         <div className="widget-list-container">
           <WidgetList containers={widgetList} />
         </div>
-      </div>
+      </div> 
     </PortalContext.Provider>
   );
 };

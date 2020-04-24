@@ -13,10 +13,11 @@ import confirm from 'antd/lib/modal/confirm';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 import { WEATHER_UNIT, WEATHER_TYPE } from '../../../Widget/WeatherWidget/constant';
 import WeatherWidget from '../../../Widget/WeatherWidget';
+import AppSpaceWidget from '../../../Widget/AppSpaceListWidget';
 
 const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, onRemoveBlock, onResizeWidth }: {
   style?: CSSProperties
-  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps
   width: number
   rowIndex: number
   blockIndex: number
@@ -47,7 +48,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
     }
   }
 
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
+  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | AppSpaceWidgetProps) => {
     const gridLayout = portalList[selectedPortal].layout.props as GridLayout
     const currentBlock = gridLayout.rows[rowIndex].blocks[blockIndex]
     currentBlock.content = newProps
@@ -169,6 +170,26 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             }}
           />
         break;
+        case CONTENT_TYPE.APP_SPACE:          
+        if (!currentBlock.content)
+          break;
+          const blockContentAppSpace = currentBlock.content as AppSpaceWidgetProps
+          currentContentBlock =(
+            <AppSpaceWidget 
+              titleWidget={blockContentAppSpace.titleWidget}
+              listContent={blockContentAppSpace.listContent}
+              showSettingInit={blockContentAppSpace.showSettingInit}
+              onRemove={removeWidget}
+              onSaveSetting={({listContent, titleWidget}) => {
+                let currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+                currentProps.listContent = listContent;
+                currentProps.titleWidget = titleWidget;
+                currentProps.showSettingInit = false;
+                updateWidget(currentProps);
+              }}
+            />
+          );
+          break;
       case CONTENT_TYPE.EMPTY:
         currentContentBlock = EMPTY_WIDGET_CONTENT
       default:
@@ -225,6 +246,10 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             openWeatherMapAPIKey: '',
             type: WEATHER_TYPE.SIMPLE
           }
+        } else if (type === CONTENT_TYPE.APP_SPACE) {
+          props = {
+            showSettingInit: true,
+          };
         }
         
         props && dropWidget(rowIndex, blockIndex, type, props)
