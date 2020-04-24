@@ -14,10 +14,6 @@
     margin-bottom: 15px;
 }
 
-/* .grid-layout-row:not(:first-child) {
-    margin-top: 15px
-} */
-
 .grid-block {
     border: 1px solid #ace5cc;
     background-color: #ecfdf6;
@@ -25,10 +21,6 @@
     min-height: 100px;
     overflow: auto;
     resize: horizontal;
-}
-
-.grid-layout-container {
-    width: 65vw;
 }
 
 .grid-layout .grid-blocks-container {
@@ -82,9 +74,13 @@
     width: 100%;
 }
 
+
+.grid-layout .grid-layout-row .grid-block .widget-weather .portal-tabs-btn-settings {
+    z-index: 5;
+  }
+
 .grid-layout .grid-layout-row .grid-block .styles_simpleReactWeather__3uy4l {
     font-size: 20px;
-    min-height: 0px !important
 }
 
 .grid-layout .grid-layout-row .grid-block .widget-weather .widget-full-weather {
