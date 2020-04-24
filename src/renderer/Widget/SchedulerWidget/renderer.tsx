@@ -6,6 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import '@fullcalendar/core/main.css';
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
+import './style.css';
 import {SCHEDULER_VIEW} from './constant';
 import {getSchedulerEvent} from './service';
 
@@ -27,6 +28,10 @@ const Scheduler = ({defaultView, data = []}: {
 
   return (
     <div style={{backgroundColor: '#FFFFFF'}}>
+      <div className="g_schedule_header">
+        <div className="g_schedule_icon">G</div>
+        <div className="g_schedule_title">Schedule</div>
+      </div>
       <FullCalendar
         ref={calendarRef}
         header={{

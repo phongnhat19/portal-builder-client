@@ -32,6 +32,7 @@
 
 .portal-tabs-layout .kuc-tabs-tab-contents {
   min-height: 85vh;
+  line-height: unset;
 }
 
 .portal-tabs-layout .kuc-tabs-tab-contents .styles_simpleReactWeather__3uy4l {
