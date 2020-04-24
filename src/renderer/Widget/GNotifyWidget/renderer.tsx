@@ -13,8 +13,9 @@ const Notify = ({data}: {
 
   return (
     <div className="grn_notify_container">
-      <div>
-        <span className="grn_notify_title">G Notifications</span>
+      <div className="g_notify_header">
+        <div className="g_notify_icon">G</div>
+        <div className="g_notify_title">Notifications</div>
       </div>
       <div>
         {(notifications.length === 0) &&
