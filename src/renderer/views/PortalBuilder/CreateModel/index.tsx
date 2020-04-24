@@ -43,7 +43,11 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
       title="New Portal"
       visible={isVisible}
       okText="Create"
-      onCancel={onClose}
+      onCancel={()=> {
+        setEmptyName(false);
+        setEmptyLayout(false);
+        onClose && onClose();
+      }}
       onOk={() => {
         let defaultProps = {};
 

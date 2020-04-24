@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Modal, Form, Select, Input } from 'antd'
 import {ProfileContext} from '../../../App'
 
@@ -23,13 +23,22 @@ const SettingModal = ({ isVisible = false, onClose }: {
 }) => {
   const [form] = Form.useForm();
   const {profiles, setProfiles} = useContext(ProfileContext);
-  
+  const [requiredField, setRequiredField] = useState(isVisible);
+
+  useEffect(() => {
+    setRequiredField(isVisible);
+    form.validateFields();
+  }, [isVisible]);
+
   return (
     <Modal
       title="Setting"
       visible={isVisible}
       okText="Save"
-      onCancel={onClose}
+      onCancel={() => {
+        form.resetFields();
+        onClose && onClose();
+      }}
       onOk={() => {
         form
           .validateFields()
@@ -86,28 +95,28 @@ const SettingModal = ({ isVisible = false, onClose }: {
         <Form.Item
           name="name"
           label="Name"
-          rules={[{ required: true, message: 'Please input your profile name!' }]}
+          rules={[{ required: requiredField, message: 'Please input your profile name!' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="domain"
           label="Domain"
-          rules={[{ required: true, message: 'Please input your kintone domain!' }]}
+          rules={[{ required: requiredField, message: 'Please input your kintone domain!' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="username"
           label="Username"
-          rules={[{ required: true, message: 'Please input your kintone username!' }]}
+          rules={[{ required: requiredField, message: 'Please input your kintone username!' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="password"
           label="Password"
-          rules={[{ required: true, message: 'Please input your kintone password!' }]}
+          rules={[{ required: requiredField, message: 'Please input your kintone password!' }]}
         >
           <Input.Password />
         </Form.Item>

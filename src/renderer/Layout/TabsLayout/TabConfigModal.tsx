@@ -22,6 +22,7 @@ const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
       okText="Save"
       onCancel={() => {
         setName(tabName);
+        setEmptyName(false);
         onClose && onClose();
       }}
       onOk={() => {
