@@ -11,10 +11,10 @@ import TabConfigModal from './TabConfigModal';
 import HTMLWidget from '../../Widget/HTMLWidget';
 import SchedulerWidget from '../../Widget/SchedulerWidget';
 import WeatherWidget from '../../Widget/WeatherWidget/index';
-import { SCHEDULER_VIEW } from '../../Widget/SchedulerWidget/constant';
-import { CONTENT_TYPE } from '../../Widget/constant';
+import {SCHEDULER_VIEW} from '../../Widget/SchedulerWidget/constant';
+import {CONTENT_TYPE} from '../../Widget/constant';
 import GNotifyWidget from '../../Widget/GNotifyWidget';
-import { WEATHER_UNIT, WEATHER_TYPE } from '../../Widget/WeatherWidget/constant';
+import {WEATHER_UNIT, WEATHER_TYPE} from '../../Widget/WeatherWidget/constant';
 import AppSpaceWidget from '../../Widget/AppSpaceListWidget';
 
 const TabsLayout = ({
@@ -125,11 +125,11 @@ const TabsLayout = ({
         case CONTENT_TYPE.GAROON_NOTIFY:
           if (!tabContent.props) {
             break;
-          };
-          newItem.tabContent = 
-          <GNotifyWidget onRemove={removeWidget}/>
+          }
+          newItem.tabContent =
+            <GNotifyWidget onRemove={removeWidget} />;
           break;
-        case CONTENT_TYPE.APP_SPACE:
+        case CONTENT_TYPE.APP_SPACE: {
           if (!tabContent.props) break;
           const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps;
           newItem.tabContent = (
@@ -139,7 +139,7 @@ const TabsLayout = ({
               showSettingInit={tabContentAppSpace.showSettingInit}
               onRemove={removeWidget}
               onSaveSetting={({listContent, titleWidget}) => {
-                let currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
                 currentProps.listContent = listContent;
                 currentProps.titleWidget = titleWidget;
                 currentProps.showSettingInit = false;
@@ -147,6 +147,7 @@ const TabsLayout = ({
               }}
             />
           );
+        }
           break;
         case CONTENT_TYPE.EMPTY:
           newItem.tabContent = EMPTY_WIDGET_CONTENT;
@@ -204,11 +205,11 @@ const TabsLayout = ({
       props = {
         showSettingInit: true,
         defaultView: SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME
-      }
+      };
     } else if (type === CONTENT_TYPE.GAROON_NOTIFY) {
       props = {
         showSettingInit: true
-      }
+      };
     } else if (type === CONTENT_TYPE.WEATHER) {
       props = {
         showSettingInit: true,
@@ -235,7 +236,7 @@ const TabsLayout = ({
 
   useEffect(() => {
     setTabItems(buildTabItems(tabList));
-  }, [tabList, selectedTab]);
+  }, [tabList, selectedTab, buildTabItems]);
 
   const dropWidget = (tabIndex: number, type: ContentType, props: any) => {
 
