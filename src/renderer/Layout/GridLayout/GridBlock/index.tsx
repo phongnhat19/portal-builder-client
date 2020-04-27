@@ -210,7 +210,7 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
   };
   useEffect(() => {
     setBlockContent(buildContent({portalList, blockIndex, rowIndex, selectedPortal, updateWidget, removeWidget}));
-  }, [blockIndex, content, portalList, removeWidget, rowIndex, selectedPortal, updateWidget]);
+  }, [content]);
 
   return (
     <div
