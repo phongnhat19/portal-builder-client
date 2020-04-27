@@ -47,7 +47,7 @@ const Notify = ({data}: {
                   <div>
                     <span className="grn_notify_item_wrap">
                       <a className="grn_notify_img" title={item.creator?.name} href={`https://${window.location.host}/users/${item.creator?.code}`}>
-                        <img alt="icon user" className="grn_notify_user" />
+                        <img alt="user icon" className="grn_notify_user" />
                         {item.creator?.name}
                       </a>
                     </span>
