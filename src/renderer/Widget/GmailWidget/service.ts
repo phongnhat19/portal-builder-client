@@ -22,43 +22,56 @@ const initClient = (apiKey, clientID) => {
     discoveryDocs: DISCOVERY_DOCS,
     scope: SCOPES
   }).then(() => {
-    // console.log(gapi.auth2.getAuthInstance().isSignedIn.get());
     return gapi.auth2.getAuthInstance().isSignedIn.get();
-    // gapi.auth2.getAuthInstance().isSignedIn.listen()
-
-    // Listen for sign-in state changes.
-    // gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-    // // Handle the initial sign-in state.
-    // updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    // authorizeButton.onclick = handleAuthClick;
-    // signoutButton.onclick = handleSignoutClick;
   });
+};
+
+const signIn = () => {
+  gapi.auth2.getAuthInstance().signIn();
+};
+
+const signOut = () => {
+  gapi.auth2.getAuthInstance().signOut();
 };
 
 const handleSignin = (callback: Function) => {
   gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
 };
 
+const getMailFromID = async (msgIDs: any[]) => {
+
+  const LIMIT_REQUEST = msgIDs.length > 20 ? 20 : (msgIDs.length - 1);
+  let listMail: any = [];
+  let listRequest = [];
+
+  for (let i = 0; i < msgIDs.length; i++) {
+    listRequest.push(
+      gapi.client.gmail.users.messages.get({
+        'userId': 'me',
+        'id': msgIDs[i].id
+      })
+    );
+
+    if ((((i % LIMIT_REQUEST) === 0) && (i !== 0)) || i === (msgIDs.length - 1)) {
+      const requests = await Promise.all(listRequest);
+      listMail = listMail.concat(requests);
+      listRequest = [];
+    }
+  }
+
+  return listMail;
+};
+
 const getListMail = () => {
   return gapi.client.gmail.users.messages.list({
     'userId': 'me',
     'labelIds': ['INBOX', 'UNREAD'],
-    'maxResults': 10
+    // 'maxResults': 10
   }).then((rsp: any)=> {
-    console.log(rsp);
-    const listMsgRequest = rsp.result.messages.map((item: {id?: string; threadId?: string}) => {
-      return gapi.client.gmail.users.messages.get({
-        'userId': 'me',
-        'id': item.id
-      });
-    });
-
-    return Promise.all(listMsgRequest);
+    return getMailFromID(rsp.result.messages);
   }).then((rsp: any)=> {
-    console.log(rsp);
     return formatListMail(rsp);
-  })
+  });
 };
 
 const formatListMail = (listMail: any[]) => {
@@ -87,4 +100,4 @@ const getHeaderObj = (payloadHeaders: any[]) => {
 
 const checkSignin = () => gapi.auth2.getAuthInstance().isSignedIn.get();
 
-export {handleClientLoad, initClient, handleSignin, checkSignin, getListMail};
+export {handleClientLoad, initClient, handleSignin, checkSignin, getListMail, signIn, signOut};

@@ -2,8 +2,8 @@ import React, {useContext, useEffect} from 'react';
 import {Collapse} from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 const { Panel } = Collapse;
-const MailDetail = ({isVisible = false, onClose, mailDetail = '<html></html>'}: {
-  isVisible?: boolean;
+const MailDetail = ({data = '', onClose, mailDetail = '<html></html>'}: {
+  data?: any;
   onClose?: () => void;
   mailDetail?: any;
 }) => {
@@ -14,7 +14,7 @@ const MailDetail = ({isVisible = false, onClose, mailDetail = '<html></html>'}: 
       expandIcon={({isActive = false}) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
       // className="site-collapse-custom-collapse"
     >
-      <Panel header="This is panel header 1" key="1" className="site-collapse-custom-panel">
+      <Panel header={data} key="1" className="site-collapse-custom-panel">
         hello
       </Panel>
     </Collapse>
