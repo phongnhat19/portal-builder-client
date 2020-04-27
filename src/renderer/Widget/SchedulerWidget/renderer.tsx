@@ -10,7 +10,7 @@ import './style.css';
 import {SCHEDULER_VIEW} from './constant';
 import {getSchedulerEvent} from './service';
 
-const Scheduler = ({defaultView, data = []}: {
+const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = []}: {
   defaultView?: string;
   data?: SchedulerEvent[];
 }) => {
@@ -23,7 +23,7 @@ const Scheduler = ({defaultView, data = []}: {
 
   useEffect(() => {
     const calendarApi = (calendarRef.current)!.getApi();
-    calendarApi.changeView(defaultView || SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME);
+    calendarApi.changeView(defaultView);
   }, [defaultView]);
 
   return (
