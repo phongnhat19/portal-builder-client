@@ -1,25 +1,25 @@
-import React from 'react'
-import './renderer.css'
+import React from 'react';
+import './renderer.css';
 import GridRow from './GridRow/renderer';
 
-const GridLayout = ({ items = [] }: {
-  items?: GridRow[]
+const GridLayout = ({items = []}: {
+  items?: GridRow[];
 }) => {
 
   return (
-    <div className='grid-layout-container'>
+    <div className="grid-layout-container">
       <div>
-        <div className='grid-layout'>
+        <div className="grid-layout">
           {items.map((item, i) => {
-            return <GridRow
+            return (<GridRow
               gridRowItem={item}
               key={i}
-            />
+                    />);
           })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GridLayout
+export default GridLayout;
