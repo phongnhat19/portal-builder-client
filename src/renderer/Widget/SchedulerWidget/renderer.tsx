@@ -14,7 +14,12 @@ const Scheduler = ({defaultView, data = []}: {
   defaultView?: string;
   data?: SchedulerEvent[];
 }) => {
-  const calendarRef = useRef();
+  const calendarRef = useRef({
+    getApi: (i: number) => {
+      return {
+        changeView: (view: string| undefined) => {}
+      };
+    }});
   const [events, setEvents] = useState(data);
 
   useEffect(() => {
