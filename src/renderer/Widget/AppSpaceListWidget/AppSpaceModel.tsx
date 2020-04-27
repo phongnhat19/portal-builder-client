@@ -3,7 +3,7 @@ import {Modal} from 'antd';
 import {PlusCircleFilled, MinusCircleFilled} from '@ant-design/icons';
 import {InputText} from './components/InputWidget';
 import './style.css';
-import RenderCategoryDetail from './components/categoryList';
+import RenderCategoryDetail from './components/CategoryList';
 
 import {INPUT_TEXT, MODAL, LABEL} from './constant';
 
