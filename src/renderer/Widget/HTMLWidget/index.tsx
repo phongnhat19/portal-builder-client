@@ -3,6 +3,7 @@ import SettingsWidget from '../components/Settings';
 import HTMLModal from './HTMLModal';
 import HTML from './renderer';
 import {Html5Outlined} from '@ant-design/icons';
+import HTMLHeader from './components/HTMLHeader';
 
 const HTMLWidget = ({
   htmlString,
@@ -25,14 +26,7 @@ const HTMLWidget = ({
 
   return (
     <div className="html-wrapper">
-      <div className="html-header">
-        <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} className="align-vertical right-5" />
-        <div className="icon align-vertical">
-          <Html5Outlined />
-        </div>
-        <div className="title align-vertical">{htmlTitle}</div>
-      </div>
-
+      <HTMLHeader htmlTitle={htmlTitle} onRemove={onRemove} setShowSetting={setShowSetting} />
       <div onDrop={(event) => event.stopPropagation()} className="padding-5">
         <HTML htmlString={htmlString} width={width} height={height} />
       </div>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Modal, Input, Row, Col } from 'antd'
 import './style.css'
-
 const { TextArea } = Input;
 
 const HTMLModal = ({isVisible = false, onClose, onSave, htmlString, htmlTitle}: {
