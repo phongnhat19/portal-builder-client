@@ -16,96 +16,102 @@ import WeatherWidget from '../../../Widget/WeatherWidget';
 import AppSpaceWidget from '../../../Widget/AppSpaceListWidget';
 
 
-const buildContent = ({portalList,selectedPortal,rowIndex,blockIndex,removeWidget, updateWidget}:
-  {portalList:Portal[],selectedPortal:number,rowIndex:number,blockIndex:number,removeWidget:()=> void; updateWidget:(currentProps:any)=> void}) => {
-  const gridLayout = portalList[selectedPortal].layout.props as GridLayout
-  const currentBlock = gridLayout.rows[rowIndex].blocks[blockIndex]
-  let currentContentBlock = EMPTY_WIDGET_CONTENT as any
+const buildContent = ({portalList, selectedPortal, rowIndex, blockIndex, removeWidget, updateWidget}:
+{portalList: Portal[];selectedPortal: number;rowIndex: number;blockIndex: number;
+  removeWidget: () => void; updateWidget: (currentProps: any) => void;}) => {
+  const gridLayout = portalList[selectedPortal].layout.props as GridLayout;
+  const currentBlock = gridLayout.rows[rowIndex].blocks[blockIndex];
+  let currentContentBlock = EMPTY_WIDGET_CONTENT as any;
 
   if (!currentBlock) return;
   switch (currentBlock.type) {
-    case CONTENT_TYPE.IFRAME:
+    case CONTENT_TYPE.IFRAME: {
       if (!currentBlock.content) {
         break;
       }
       const blockContentIframe = currentBlock.content as IframeWidgetProps;
-
       currentContentBlock =
-        <IframeWidget
+        (<IframeWidget
           url={blockContentIframe.url}
           width={blockContentIframe.width}
           height={blockContentIframe.height}
           showSettingInit={blockContentIframe.showSettingInit}
           onRemove={removeWidget}
-          onSaveSetting={({ url, width, height }) => {
-            let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
-            currentProps.url = url
-            currentProps.width = width
-            currentProps.height = height
+          onSaveSetting={({url, width, height}) => {
+            const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+            currentProps.url = url;
+            currentProps.width = width;
+            currentProps.height = height;
             currentProps.showSettingInit = false;
-            updateWidget(currentProps)
+            updateWidget(currentProps);
           }}
-        />
+        />);
       break;
+    }
 
-    case CONTENT_TYPE.HTML:
+    case CONTENT_TYPE.HTML: {
       if (!currentBlock.content) {
         break;
-      };
+      }
       const blockContentHTML = currentBlock.content as HTMLWidgetProps;
       currentContentBlock =
-        <HTMLWidget
+        (<HTMLWidget
           htmlString={blockContentHTML.htmlString}
           width={`${blockContentHTML.width}%`}
           showSettingInit={blockContentHTML.showSettingInit}
           onRemove={removeWidget}
-          onSaveSetting={({ htmlString }) => {
-            let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
-            currentProps.htmlString = htmlString
+          onSaveSetting={({htmlString}) => {
+            const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+            currentProps.htmlString = htmlString;
             currentProps.showSettingInit = false;
-            updateWidget(currentProps)
+            updateWidget(currentProps);
           }}
-        />
+        />);
       break;
-    case CONTENT_TYPE.SCHEDULER:
+    }
+
+    case CONTENT_TYPE.SCHEDULER: {
       if (!currentBlock.content) {
         break;
-      };
+      }
       const blockContentSchedule = currentBlock.content as SchedulerWidgetProps;
       currentContentBlock =
-        <ScheduleWidget
+        (<ScheduleWidget
           width={`${blockContentSchedule.width}%`}
           defaultView={blockContentSchedule.defaultView}
           onRemove={removeWidget}
-          onSaveSetting={({ defaultView }) => {
-            let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
-            currentProps.defaultView = defaultView
+          onSaveSetting={({defaultView}) => {
+            const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+            currentProps.defaultView = defaultView;
             currentProps.showSettingInit = false;
-            updateWidget(currentProps)
+            updateWidget(currentProps);
           }}
-        />
+        />);
       break;
-    case CONTENT_TYPE.GAROON_NOTIFY:
+    }
+
+    case CONTENT_TYPE.GAROON_NOTIFY: {
       if (!currentBlock.content) {
         break;
-      };
+      }
       currentContentBlock =
-      <GNotifyWidget onRemove={removeWidget}/>
+        <GNotifyWidget onRemove={removeWidget} />;
       break;
-    case CONTENT_TYPE.WEATHER:
-      if (!currentBlock.content)
-        break;
-      const blockContentWeather = currentBlock.content as WeatherWidgetProps
+    }
+
+    case CONTENT_TYPE.WEATHER: {
+      if (!currentBlock.content) break;
+      const blockContentWeather = currentBlock.content as WeatherWidgetProps;
       currentContentBlock =
-        <WeatherWidget
+        (<WeatherWidget
           type={blockContentWeather.type}
           showSettingInit={blockContentWeather.showSettingInit}
           unitTemp={blockContentWeather.unitTemp}
           openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
           weatherCity={blockContentWeather.weatherCity}
           onRemove={removeWidget}
-          onSaveSetting={({ unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
-            let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
+          onSaveSetting={({unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
+            const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
             currentProps.unitTemp = unitTemp;
             currentProps.weatherCity = weatherCity;
             currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
@@ -113,36 +119,39 @@ const buildContent = ({portalList,selectedPortal,rowIndex,blockIndex,removeWidge
             currentProps.type = type;
             updateWidget(currentProps);
           }}
-        />
+        />);
       break;
-      case CONTENT_TYPE.APP_SPACE: {
-        if (!currentBlock.content) break;
-        const blockContentAppSpace = currentBlock.content as AppSpaceWidgetProps;
-        currentContentBlock = (
-          <AppSpaceWidget
-            titleWidget={blockContentAppSpace.titleWidget}
-            listContent={blockContentAppSpace.listContent}
-            showSettingInit={blockContentAppSpace.showSettingInit}
-            onRemove={removeWidget}
-            onSaveSetting={({listContent, titleWidget}) => {
-              const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
-              currentProps.listContent = listContent;
-              currentProps.titleWidget = titleWidget;
-              currentProps.showSettingInit = false;
-              updateWidget(currentProps);
-            }}
-          />
-        );
-        break;
-      }
-    
+    }
+
+    case CONTENT_TYPE.APP_SPACE: {
+      if (!currentBlock.content) break;
+      const blockContentAppSpace = currentBlock.content as AppSpaceWidgetProps;
+      currentContentBlock = (
+        <AppSpaceWidget
+          titleWidget={blockContentAppSpace.titleWidget}
+          listContent={blockContentAppSpace.listContent}
+          showSettingInit={blockContentAppSpace.showSettingInit}
+          onRemove={removeWidget}
+          onSaveSetting={({listContent, titleWidget}) => {
+            const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+            currentProps.listContent = listContent;
+            currentProps.titleWidget = titleWidget;
+            currentProps.showSettingInit = false;
+            updateWidget(currentProps);
+          }}
+        />
+      );
+      break;
+    }
+
     case CONTENT_TYPE.EMPTY:
-      currentContentBlock = EMPTY_WIDGET_CONTENT
+      currentContentBlock = EMPTY_WIDGET_CONTENT;
+      break;
     default:
       break;
   }
-  return currentContentBlock
-}
+  return currentContentBlock;
+};
 const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onRemoveBlock, onResizeWidth}: {
   style?: CSSProperties;
   content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps;
@@ -200,8 +209,8 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
     });
   };
   useEffect(() => {
-    setBlockContent(buildContent({portalList,blockIndex,rowIndex,selectedPortal,updateWidget,removeWidget}));
-  }, [content]);
+    setBlockContent(buildContent({portalList, blockIndex, rowIndex, selectedPortal, updateWidget, removeWidget}));
+  }, [blockIndex, content, portalList, removeWidget, rowIndex, selectedPortal, updateWidget]);
 
   return (
     <div

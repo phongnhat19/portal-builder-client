@@ -10,12 +10,13 @@ import {CONTENT_TYPE} from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
 import AppSpaceWidget from '../../../Widget/AppSpaceListWidget/rerender';
 
-const buildContent = ({content,type = CONTENT_TYPE.EMPTY as ContentType}:{content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps,type:ContentType}) => {
+const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}:
+{content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps;type: ContentType}) => {
   let currentContentBlock = EMPTY_WIDGET_CONTENT as any;
 
   if (!content) return;
   switch (type) {
-    case CONTENT_TYPE.IFRAME:
+    case CONTENT_TYPE.IFRAME: {
       const blockContentIframe = content as IframeWidgetProps;
 
       currentContentBlock =
@@ -25,8 +26,9 @@ const buildContent = ({content,type = CONTENT_TYPE.EMPTY as ContentType}:{conten
           height={blockContentIframe.height}
         />);
       break;
+    }
 
-    case CONTENT_TYPE.HTML:
+    case CONTENT_TYPE.HTML: {
       const blockContentHTML = content as HTMLWidgetProps;
       currentContentBlock =
         (<HTMLWidget
@@ -34,17 +36,23 @@ const buildContent = ({content,type = CONTENT_TYPE.EMPTY as ContentType}:{conten
           width={`${blockContentHTML.width}%`}
         />);
       break;
-    case CONTENT_TYPE.SCHEDULER:
+    }
+
+    case CONTENT_TYPE.SCHEDULER: {
       const blockContentSchedule = content as SchedulerWidgetProps;
       currentContentBlock =
         (<SchedulerWidget
           defaultView={blockContentSchedule.defaultView}
         />);
       break;
-    case CONTENT_TYPE.GAROON_NOTIFY:
+    }
+
+    case CONTENT_TYPE.GAROON_NOTIFY: {
       currentContentBlock = <GNotify data={[]} />;
       break;
-    case CONTENT_TYPE.WEATHER:
+    }
+
+    case CONTENT_TYPE.WEATHER: {
       const blockContentWeather = content as WeatherWidgetProps;
       currentContentBlock =
           (<WeatherComponent
@@ -54,6 +62,8 @@ const buildContent = ({content,type = CONTENT_TYPE.EMPTY as ContentType}:{conten
             type={blockContentWeather.type}
           />);
       break;
+    }
+
     case CONTENT_TYPE.APP_SPACE: {
       const blockContentAppSpace = content as AppSpaceWidgetProps;
       currentContentBlock = (
@@ -61,8 +71,10 @@ const buildContent = ({content,type = CONTENT_TYPE.EMPTY as ContentType}:{conten
       );
       break;
     }
+
     case CONTENT_TYPE.EMPTY:
       currentContentBlock = '';
+      break;
     default:
       break;
   }
@@ -86,11 +98,10 @@ const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = u
 
   const [blockContent, setBlockContent] = useState(null);
 
-  
 
   useEffect(() => {
-    setBlockContent(buildContent({content,type}));
-  }, [content]);
+    setBlockContent(buildContent({content, type}));
+  }, [content, type]);
 
   return (
     <div
