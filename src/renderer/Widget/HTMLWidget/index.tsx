@@ -4,6 +4,7 @@ import HTMLModal from './HTMLModal';
 import HTML from './renderer';
 import {Html5Outlined} from '@ant-design/icons';
 import HTMLHeader from './components/HTMLHeader';
+import './style.css'
 
 const HTMLWidget = ({
   htmlString,
@@ -23,12 +24,13 @@ const HTMLWidget = ({
   htmlTitle: string;
 }) => {
   const [showSetting, setShowSetting] = useState(showSettingInit);
-
+  console.log("htmlTitle",htmlTitle);
+  
   return (
     <div className="html-wrapper">
       <HTMLHeader htmlTitle={htmlTitle} onRemove={onRemove} setShowSetting={setShowSetting} />
       <div onDrop={(event) => event.stopPropagation()} className="padding-5">
-        <HTML htmlString={htmlString} width={width} height={height} />
+        <HTML htmlTitle={htmlTitle} htmlString={htmlString} width={width} height={height} />
       </div>
 
       <HTMLModal

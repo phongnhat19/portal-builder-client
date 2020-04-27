@@ -47,6 +47,7 @@ const TabsLayout = ({
           const tabContentHTML = tabContent.props as HTMLWidgetProps;
           newItem.tabContent =
             <HTML
+              htmlTitle={tabContentHTML.htmlTitle}
               htmlString={tabContentHTML.htmlString}
               width={tabContentHTML.width}
               height={tabContentHTML.height}

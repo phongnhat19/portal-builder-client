@@ -1,13 +1,15 @@
 import React from 'react'
 import SettingsWidget from '../../components/Settings'
 import { Html5Outlined } from '@ant-design/icons'
- const  HTMLHeader =({onRemove,setShowSetting,htmlTitle}:{ onRemove?: () => void;
-  setShowSetting: (status:boolean) => void;
+ const  HTMLHeader =({onRemove,setShowSetting,htmlTitle}:{ onRemove?: () => void ;
+  setShowSetting?: (status:boolean) => void;
   htmlTitle: string;
 })=>{
   return (
     <div className="html-header">
-    <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} className="align-vertical right-5" />
+    {!window.kintone && <SettingsWidget className="align-vertical right-5"  onRemove={onRemove} showSetting={() => {
+      setShowSetting && setShowSetting(true)
+    }} /> }
     <div className="icon align-vertical">
       <Html5Outlined />
     </div>
