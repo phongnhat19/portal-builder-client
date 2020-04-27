@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { Modal, Input, Row, Col } from 'antd'
-const { TextArea } = Input;
+import React, {useState} from 'react';
+import {Modal, Input, Row, Col} from 'antd';
+const {TextArea} = Input;
 
 const HTMLModal = ({isVisible = false, onClose, onSave, htmlString, htmlTitle}: {
   isVisible: boolean;
   htmlString: string;
-  onSave: (item: { htmlString: string, htmlTitle:string }) => void;
+  onSave: (item: { htmlString: string; htmlTitle: string }) => void;
   onClose?: () => void;
   htmlTitle: string;
 }) => {
@@ -23,16 +23,16 @@ const HTMLModal = ({isVisible = false, onClose, onSave, htmlString, htmlTitle}: 
         onClose && onClose();
       }}
       onOk={() => {
-        onSave({htmlString: inputHtmlValue, htmlTitle:inputHtmlTitle});
+        onSave({htmlString: inputHtmlValue, htmlTitle: inputHtmlTitle});
       }}
     >
       <React.Fragment>
         <Row className="margin-bottom-20">
           <Col span={4}>
-              <strong>Title</strong>
+            <strong>Title</strong>
           </Col>
           <Col span={20}>
-            <Input placeholder="Widget title" value={inputHtmlTitle} onChange={(e)=> setInputHtmlTitle(e.target.value)}/>
+            <Input placeholder="Widget title" value={inputHtmlTitle} onChange={(e)=> setInputHtmlTitle(e.target.value)} />
           </Col>
         </Row>
         <Row>
@@ -43,14 +43,16 @@ const HTMLModal = ({isVisible = false, onClose, onSave, htmlString, htmlTitle}: 
             <TextArea
               rows={6}
               value={inputHtmlValue}
-              onChange={(e) => {setInputHtmlValue(e.target.value);}}
+              onChange={(e) => {
+                setInputHtmlValue(e.target.value);
+              }}
               placeholder="Input HTML"
             />
           </Col>
         </Row>
       </React.Fragment>
     </Modal>
-  )
-}
+  );
+};
 
-export default HTMLModal
+export default HTMLModal;
