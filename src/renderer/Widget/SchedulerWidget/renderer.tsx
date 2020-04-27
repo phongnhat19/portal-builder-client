@@ -14,12 +14,7 @@ const Scheduler = ({defaultView, data = []}: {
   defaultView?: string;
   data?: SchedulerEvent[];
 }) => {
-  const calendarRef = useRef({
-    getApi: (i: number) => {
-      return {
-        changeView: (view: string| undefined) => {}
-      };
-    }});
+  const calendarRef = useRef<FullCalendar>(null);
   const [events, setEvents] = useState(data);
 
   useEffect(() => {
@@ -27,8 +22,8 @@ const Scheduler = ({defaultView, data = []}: {
   }, [data.length]);
 
   useEffect(() => {
-    const calendarApi = (calendarRef.current)!.getApi(0);
-    calendarApi.changeView(defaultView);
+    const calendarApi = (calendarRef.current)!.getApi();
+    calendarApi.changeView(defaultView || SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME);
   }, [defaultView]);
 
   return (
