@@ -236,7 +236,7 @@ const TabsLayout = ({
 
   useEffect(() => {
     setTabItems(buildTabItems(tabList));
-  }, [tabList, selectedTab, buildTabItems]);
+  }, [tabList, selectedTab]);
 
   const dropWidget = (tabIndex: number, type: ContentType, props: any) => {
 
