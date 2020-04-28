@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import { Modal, Input, Row, Col } from 'antd'
+import React, {useState, useEffect} from 'react';
+import {Modal, Input, Row, Col, Alert} from 'antd';
 
 
-const TabConfigModal = ({ tabName = '', isVisible = false, onClose, onSave }: {
-  tabName?: string
-  isVisible: boolean
-  onSave: (name: string) => void
-  onClose?: () => void
+const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
+  tabName?: string;
+  isVisible: boolean;
+  onSave: (name: string) => void;
+  onClose?: () => void;
 }) => {
-  const [name, setName] = useState(tabName)
+  const [name, setName] = useState(tabName);
+  const [emptyName, setEmptyName] = useState(false);
 
   useEffect(() => {
-    setName(tabName)
-  }, [tabName])
+    setName(tabName);
+  }, [tabName]);
 
   return (
     <Modal
@@ -21,11 +22,16 @@ const TabConfigModal = ({ tabName = '', isVisible = false, onClose, onSave }: {
       okText="Save"
       onCancel={() => {
         setName(tabName);
+        setEmptyName(false);
         onClose && onClose();
       }}
       onOk={() => {
-        onSave(name)
-        setName('')
+        if (!name.trim()) {
+          setEmptyName(true);
+          return;
+        }
+        setEmptyName(false);
+        onSave(name);
       }}
     >
       <Row>
@@ -35,14 +41,22 @@ const TabConfigModal = ({ tabName = '', isVisible = false, onClose, onSave }: {
         <Col span={20}>
           <Input
             value={name}
-            onChange={(e) => { setName(e.target.value) }}
+            onChange={(e) => {
+              setName(e.target.value);
+              if (e.target.value.trim()) {
+                setEmptyName(false);
+                return;
+              }
+              setEmptyName(true);
+            }}
             placeholder="Input Tab Name"
           />
+          {emptyName && <Alert style={{fontWeight: 'bold', marginTop: '10px'}} message="Required Field" type="error" />}
         </Col>
       </Row>
 
     </Modal>
-  )
-}
+  );
+};
 
-export default TabConfigModal
+export default TabConfigModal;
