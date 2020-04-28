@@ -38,9 +38,9 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
 
   const blockRef = useRef<HTMLDivElement>(null);
 
-  const dropWidget = (rowIndex: number, blockIndex: number, type: ContentType, props: any) => {
+  const dropWidget = (dropRowIndex: number, dropBlockIndex: number, type: ContentType, props: any) => {
     const gridLayout = portalList[selectedPortal].layout.props as GridLayout;
-    const currentBlock = gridLayout.rows[rowIndex].blocks[blockIndex];
+    const currentBlock = gridLayout.rows[dropRowIndex].blocks[dropBlockIndex];
     if (currentBlock.type === CONTENT_TYPE.EMPTY) {
       currentBlock.type = type;
       currentBlock.content = props;
@@ -93,11 +93,11 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
             height={blockContentIframe.height}
             showSettingInit={blockContentIframe.showSettingInit}
             onRemove={removeWidget}
-            onSaveSetting={({url, width, height}) => {
+            onSaveSetting={(setting) => {
               const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
-              currentProps.url = url;
-              currentProps.width = width;
-              currentProps.height = height;
+              currentProps.url = setting.url;
+              currentProps.width = setting.width;
+              currentProps.height = setting.height;
               currentProps.showSettingInit = false;
               updateWidget(currentProps);
             }}
