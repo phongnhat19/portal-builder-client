@@ -66,22 +66,22 @@ const Category = ({
     <div className="category">
       {newContentList.map((content, i) => {
         return (
-            <CategoryBlock
-              key={i}
-              content={content}
-              onChange={(newData, status) => {
-                const cloneData = JSON.parse(JSON.stringify(newData));
-                if (status === 'add') {
-                  newContentList.splice(i + 1, 0, cloneData);
-                } else if (status === 'remove') {
-                  newContentList.splice(i, 1);
-                } else {
-                  newContentList[i] = cloneData;
-                }
-                setListContent(newContentList);
-              }}
-              index={i}
-            />
+          <CategoryBlock
+            key={i}
+            content={content}
+            onChange={(newData, status) => {
+              const cloneData = JSON.parse(JSON.stringify(newData));
+              if (status === 'add') {
+                newContentList.splice(i + 1, 0, cloneData);
+              } else if (status === 'remove') {
+                newContentList.splice(i, 1);
+              } else {
+                newContentList[i] = cloneData;
+              }
+              setListContent(newContentList);
+            }}
+            index={i}
+          />
         );
       })}
     </div>
