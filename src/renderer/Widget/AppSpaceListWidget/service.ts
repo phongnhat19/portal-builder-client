@@ -30,8 +30,6 @@ const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpaceContent[]}) => Pr
         continue;
       }
       const appNameAndIcon = parseInfoApp(appInfo);
-      console.log('appNameAndIcon', appNameAndIcon);
-
       if (appNameAndIcon) {
         appInfo.name = appNameAndIcon.name;
         appInfo.icon = appNameAndIcon.icon;
