@@ -7,29 +7,22 @@ import Note from './components/Note';
 
 const AppSpace = ({contentList = [], widgetTitle = ''}: {contentList: ModalAppSpaceContent[]; widgetTitle: string}) => {
   const [listAppSpace, setListAppSpace] = useState(contentList);
-  const [titleAppSpace, setTitleAppSpace] = useState(widgetTitle);
 
-  useEffect(() => {
-    (async () => {
-      if (window.kintone) {
-        const newContentList = await getAppInfo({listAppSpace});
-        setTitleAppSpace(widgetTitle);
-        setListAppSpace(newContentList);
-      } else {
-        setTitleAppSpace(widgetTitle);
-        setListAppSpace(contentList);
-      }
-    })();
-  }, [contentList.length && contentList !== listAppSpace]);
+  if (contentList.length && contentList !== listAppSpace) {
+    if (window.kintone) {
+      getAppInfo({listAppSpace}).then((newContentList) => setListAppSpace(newContentList));
+    } else {
+      setListAppSpace(contentList);
+    }
+  }
 
   if (listAppSpace.length === 0) {
     return null;
   }
 
-
   return (
     <div className="app-space-widget">
-      <PreviewTitle widgetTitle={titleAppSpace} />
+      <PreviewTitle widgetTitle={widgetTitle} />
       {window.kintone ? '' : <Note />}
       <PreviewContent contentList={listAppSpace} />
     </div>
