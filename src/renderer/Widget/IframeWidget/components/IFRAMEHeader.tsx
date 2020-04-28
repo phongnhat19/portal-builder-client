@@ -1,6 +1,6 @@
 import React from 'react';
 import SettingsWidget from '../../components/Settings';
-import { BorderOutlined } from '@ant-design/icons';
+import {BorderOutlined} from '@ant-design/icons';
 const IFRAMEHeader = ({
   defaultTitle,
   onRemove,
@@ -13,7 +13,12 @@ const IFRAMEHeader = ({
 
   return (
     <div className="iframe-header">
-      {!window.kintone && <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting && setShowSetting(true)} className="center-setting" />}
+      {!window.kintone &&
+      <SettingsWidget
+        onRemove={onRemove}
+        showSetting={() => setShowSetting && setShowSetting(true)}
+        className="center-setting"
+      />}
       <div className="icon size">
         <BorderOutlined />
       </div>
