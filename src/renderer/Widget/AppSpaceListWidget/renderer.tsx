@@ -7,13 +7,14 @@ import Note from './components/Note';
 
 const AppSpace = ({contentList = [], widgetTitle = ''}: {contentList: ModalAppSpaceContent[]; widgetTitle: string}) => {
   const [listAppSpace, setListAppSpace] = useState(contentList);
-
-  if (contentList.length && contentList !== listAppSpace) {
-    if (window.kintone) {
-      getAppInfo({listAppSpace}).then((newContentList) => setListAppSpace(newContentList));
-    } else {
-      setListAppSpace(contentList);
-    }
+  if (window.kintone) {
+    getAppInfo({listAppSpace}).then((newContentList) => {
+      if (contentList.length && contentList !== listAppSpace) {
+        setListAppSpace(newContentList);
+      }
+    });
+  } else if (contentList.length && contentList !== listAppSpace) {
+    setListAppSpace(contentList);
   }
 
   if (listAppSpace.length === 0) {
