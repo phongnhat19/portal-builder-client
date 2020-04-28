@@ -8,7 +8,7 @@ import Schedule from '../../Widget/SchedulerWidget/renderer';
 import GNotify from '../../Widget/GNotifyWidget/renderer';
 import { CONTENT_TYPE } from '../../Widget/constant';
 import WeatherComponent from '../../Widget/WeatherWidget/renderer';
-import AppSpaceWidget from '../../Widget/AppSpaceListWidget/rerender';
+import AppSpaceWidget from '../../Widget/AppSpaceListWidget/renderer';
 
 let defaultPortalBodyEl: ChildNode | null
 
@@ -90,7 +90,7 @@ const TabsLayout = ({
           }
           const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps;
           newItem.tabContent = (
-            <AppSpaceWidget titleWidget={tabContentAppSpace.titleWidget} contentList={tabContentAppSpace.contentList} />
+            <AppSpaceWidget widgetTitle={tabContentAppSpace.widgetTitle} contentList={tabContentAppSpace.contentList} />
           );
           break;
         case CONTENT_TYPE.EMPTY:

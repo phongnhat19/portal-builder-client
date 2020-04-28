@@ -116,23 +116,23 @@ const AppSpaceModel = ({
   showSettingInit = false,
   getContent,
   onCancel,
-  titleWidget,
+  widgetTitle,
   contentList = [{categoryList: [{type: 'app', id: '', name: '', icon: ''}], category: ''}],
 }: {
   showSettingInit?: boolean;
   onCancel: () => void;
   contentList: ModalAppSpaceContent[];
-  titleWidget: string;
-  getContent: ({contentList, titleWidget}: {contentList: ModalAppSpaceContent[]; titleWidget: string}) => void;
+  widgetTitle: string;
+  getContent: ({contentList, widgetTitle}: {contentList: ModalAppSpaceContent[]; widgetTitle: string}) => void;
 }) => {
   const [newContentList, setListContent] = useState<ModalAppSpaceContent[]>(contentList);
-  const [newTitleWidget, setTitleWidget] = useState(titleWidget);
+  const [newTitleWidget, setTitleWidget] = useState(widgetTitle);
 
   return (
     <Modal
       bodyStyle={{maxHeight: '500px', overflow: 'auto'}}
       onOk={() => {
-        getContent({contentList: newContentList, titleWidget: newTitleWidget});
+        getContent({contentList: newContentList, widgetTitle: newTitleWidget});
         onCancel();
       }}
       title={MODAL.TITLE}

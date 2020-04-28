@@ -8,7 +8,7 @@ import GNotify from '../../../Widget/GNotifyWidget/renderer';
 import {EMPTY_WIDGET_CONTENT} from '../../TabsLayout/constant';
 import {CONTENT_TYPE} from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
-import AppSpaceWidget from '../../../Widget/AppSpaceListWidget/rerender';
+import AppSpaceWidget from '../../../Widget/AppSpaceListWidget/renderer';
 
 const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}:
 {content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps;type: ContentType}) => {
@@ -67,7 +67,7 @@ const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}:
     case CONTENT_TYPE.APP_SPACE: {
       const blockContentAppSpace = content as AppSpaceWidgetProps;
       currentContentBlock = (
-        <AppSpaceWidget titleWidget={blockContentAppSpace.titleWidget} listContent={blockContentAppSpace.listContent} />
+        <AppSpaceWidget widgetTitle={blockContentAppSpace.widgetTitle} listContent={blockContentAppSpace.listContent} />
       );
       break;
     }

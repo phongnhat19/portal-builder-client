@@ -1,7 +1,7 @@
 declare type AppSpaceWidgetProps = {
   showSettingInit?: boolean;
   contentList: ModalAppSpaceContent[];
-  titleWidget: string;
+  widgetTitle: string;
 };
 
 declare type CategorytAppSpace = {
