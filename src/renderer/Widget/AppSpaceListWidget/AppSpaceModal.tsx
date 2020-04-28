@@ -134,8 +134,6 @@ const AppSpaceModel = ({
       onOk={() => {
         getContent({contentList: newContentList, titleWidget: newTitleWidget});
         onCancel();
-        console.log('contentList', contentList);
-
       }}
       title={MODAL.TITLE}
       visible={showSettingInit}

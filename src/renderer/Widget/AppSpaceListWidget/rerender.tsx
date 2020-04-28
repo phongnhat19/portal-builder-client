@@ -8,7 +8,6 @@ import Note from './components/Note';
 const AppSpace = ({contentList = [], titleWidget = ''}: {contentList: ModalAppSpaceContent[]; titleWidget: string}) => {
   const [listAppSpace, setListAppSpace] = useState(contentList);
   const [titleAppSpace, setTitleAppSpace] = useState(titleWidget);
-  console.log(listAppSpace);
 
   useEffect(() => {
     (async () => {
