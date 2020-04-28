@@ -36,6 +36,7 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
 
         currentContentBlock =
           <IframeWidget
+            defaultTitle={blockContentIframe.defaultTitle}
             url={blockContentIframe.url}
             width={blockContentIframe.width}
             height={blockContentIframe.height}
