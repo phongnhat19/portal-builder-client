@@ -3,29 +3,33 @@ import {Modal, Input, Row, Col, Select, InputNumber} from 'antd';
 import './style.css';
 import {Option} from 'rc-select';
 
-const IframeModal = ({defaultUrl = '',
+const IframeModal = ({
+  defaultUrl = '',
   defaultWidthValue = 0,
   defaultWidthUnit = 'px',
   defaultHeightValue = 0,
   defaultHeightUnit = 'px',
   isVisible = false,
-  onClose, onSave
+  defaultTitle,
+  onClose,
+  onSave,
 }: {
   defaultUrl?: string;
   defaultWidthValue?: number;
   defaultWidthUnit?: string;
   defaultHeightValue?: number;
   defaultHeightUnit?: string;
+  defaultTitle: string;
   isVisible: boolean;
-  onSave: (item: { url: string; width: string; height: string }) => void;
+  onSave: (item: {url: string; width: string; height: string; title: string}) => void;
   onClose?: () => void;
 }) => {
-
   const [url, setUrl] = useState(defaultUrl);
   const [widthValue, setWidthValue] = useState(defaultWidthValue);
   const [widthUnit, setWidthUnit] = useState(defaultWidthUnit);
   const [heightValue, setHeightValue] = useState(defaultHeightValue);
   const [heightUnit, setHeightUnit] = useState(defaultHeightUnit);
+  const [titleIframe, setTitleIframe] = useState(defaultTitle);
 
   return (
     <Modal
@@ -41,10 +45,25 @@ const IframeModal = ({defaultUrl = '',
           url: url,
           width: `${widthValue}${widthUnit}`,
           height: `${heightValue}${heightUnit}`,
+          title: titleIframe,
         });
       }}
     >
       <Row>
+        <Col span={4}>
+          <strong>Title</strong>
+        </Col>
+        <Col span={20}>
+          <Input
+            value={titleIframe}
+            onChange={(e) => {
+              setTitleIframe(e.target.value);
+            }}
+            placeholder="Input Title"
+          />
+        </Col>
+      </Row>
+      <Row className="widget-iframe-row">
         <Col span={4}>
           <strong>URL</strong>
         </Col>
