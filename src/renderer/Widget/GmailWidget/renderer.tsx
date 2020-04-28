@@ -6,19 +6,12 @@ import {handleClientLoad, initClient, handleSignin, checkSignin, getListMail, si
 import MailDetail from './MailDetail';
 import './style.css';
 
-const Gmail = ({width, height, htmlString}: {
-  htmlString?: string;
-  width?: string | number;
-  height?: string | number;
+const Gmail = ({apiKey, clientID, data = []}: {
+  apiKey: string;
+  clientID: string;
+  data?: GmailData[];
 }) => {
-  const [dataSource, setDataSource] = useState([
-    {
-      key: '1',
-      from: 'kimcuc0202@gmail.com',
-      subject: '10 Downing Street',
-      time: '24/10/2020',
-    }
-  ]);
+  const [dataSource, setDataSource] = useState(data);
 
   const [columns, setColumns] = useState([
     {
@@ -46,8 +39,8 @@ const Gmail = ({width, height, htmlString}: {
   useEffect(() =>{
     if (window.kintone) {
       $script('https://apis.google.com/js/api.js', () => {
-        const apiKey = 'AIzaSyDk9PdSINSxc0N52-Q58pKJrKr9pZgr5W4';
-        const clientID = '171368506272-s327p05s7haujqmm88j86fjegc53b934.apps.googleusercontent.com';
+        // const apiKey = 'AIzaSyDk9PdSINSxc0N52-Q58pKJrKr9pZgr5W4';
+        // const clientID = '171368506272-s327p05s7haujqmm88j86fjegc53b934.apps.googleusercontent.com';
         handleClientLoad(apiKey, clientID);
         gapi.load('client:auth2', () => {
           initClient(apiKey, clientID).then(() => {
@@ -85,7 +78,7 @@ const Gmail = ({width, height, htmlString}: {
       >Login
       </Button>
       <Button style={{display: signin ? 'block' : 'none'}} className="gmail-widget-logout" type="primary" onClick={signOut} >Logout</Button>
-      {signin &&
+      {/* {signin && */}
       <div>
         <div className="gmail-header" >
           <span>Inbox</span>
@@ -93,7 +86,8 @@ const Gmail = ({width, height, htmlString}: {
         <div className="gmail-contain" >
           <Table dataSource={dataSource} columns={columns} />;
         </div>
-      </div> }
+      </div> 
+      {/* } */}
     </div>
   );
 };

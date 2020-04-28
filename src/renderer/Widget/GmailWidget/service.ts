@@ -39,7 +39,6 @@ const handleSignin = (callback: Function) => {
 };
 
 const getMailFromID = async (msgIDs: any[]) => {
-
   const LIMIT_REQUEST = msgIDs.length > 20 ? 20 : (msgIDs.length - 1);
   let listMail: any = [];
   let listRequest = [];
@@ -59,6 +58,7 @@ const getMailFromID = async (msgIDs: any[]) => {
     }
   }
 
+  console.log('mail ', listMail);
   return listMail;
 };
 
@@ -68,6 +68,8 @@ const getListMail = () => {
     'labelIds': ['INBOX', 'UNREAD'],
     // 'maxResults': 10
   }).then((rsp: any)=> {
+    console.log('list ', rsp);
+    
     return getMailFromID(rsp.result.messages);
   }).then((rsp: any)=> {
     return formatListMail(rsp);
