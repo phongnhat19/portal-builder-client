@@ -10,22 +10,23 @@ const getCSSValue = (value: any) => {
   return parseFloat(value)
 }
 
-const IframeWidget = ({ url, width = '100%', height = '100%', showSettingInit = false, onRemove, onSaveSetting }: {
+const IframeWidget = ({ url, width = '100%', height = '100%', showSettingInit = false, defaultTitle= "" , onRemove, onSaveSetting }: {
   url?: string,
   width?: string | number,
   height?: string | number,
   showSettingInit?: boolean
   onRemove?: () => void;
-  onSaveSetting?: ({url, width, height}: {url: string, width: string | number, height: string | number}) => void
+  defaultTitle:string;
+  onSaveSetting?: ({url, width, height, title}: {url: string, width: string | number, height: string | number, title:string}) => void
 }) => {
 
   const [showSetting, setShowSetting] = useState(showSettingInit)
 
   return (
-    <React.Fragment>
-      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
-      <Iframe url={url} width={width} height={height} />
+    <div style={{width:"100%"}}>
+      <Iframe url={url} width={width} height={height} defaultTitle={defaultTitle} onRemove={onRemove} setShowSetting={setShowSetting}/>
       <IframeModal
+        defaultTitle={defaultTitle}
         defaultHeightValue={getCSSValue(height)}
         defaultHeightUnit={getCSSUnit(height)}
         defaultWidthValue={getCSSValue(width)}
@@ -34,11 +35,11 @@ const IframeWidget = ({ url, width = '100%', height = '100%', showSettingInit = 
         isVisible={showSetting}
         onClose={() => (setShowSetting(false))}
         onSave={(item) => {
-          onSaveSetting && onSaveSetting({url: item.url, width: item.width, height: item.height})
+          onSaveSetting && onSaveSetting({url: item.url, width: item.width, height: item.height, title:item.title})
           setShowSetting(false)
         }}
       />
-    </React.Fragment>
+    </div>
   )
 }
 

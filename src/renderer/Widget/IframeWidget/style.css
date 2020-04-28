@@ -5,3 +5,32 @@
 .widget-iframe-row{
     padding-top: 15px;
 }
+.iframe-header{
+    position: relative;
+    height: 50px;
+    border: 1px solid  #c4c7c7;
+    border-width: 2px;
+    border-bottom: none;
+}
+.iframe-header .icon {
+    position: absolute;
+    font-size: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.iframe-header .size{
+    position: absolute;
+    font-size: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.iframe-header .icon{
+    left: 1%;
+}
+.iframe-header .title{
+    left: 5%;
+}
+.center-setting{
+    top: 50%;
+    transform: translateY(-50%);
+}
