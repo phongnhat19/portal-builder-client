@@ -5,11 +5,11 @@ const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpaceContent[]}) => Pr
 }: {
   listAppSpace: ModalAppSpaceContent[];
 }) => {
-  let newListAppSpace = listAppSpace.slice();
+  const newListAppSpace = listAppSpace.slice();
   for (let i = 0; i < newListAppSpace.length; i++) {
-    let appSpace = newListAppSpace[i];
+    const appSpace = newListAppSpace[i];
     for (let j = 0; j < appSpace.categoryList.length; j++) {
-      let category = appSpace.categoryList[j];
+      const category = appSpace.categoryList[j];
       if (category.type === 'space') {
         let spaceInfo = {} as any;
         try {
@@ -42,17 +42,21 @@ const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpaceContent[]}) => Pr
   return newListAppSpace;
 };
 
-const parseInfoApp = (appInfo: any) => {
+function parseInfoApp(appInfo: any) {
   if (appInfo.error) {
-    return;
+    return null;
   }
   for (const key in PRESET_ICON_APP) {
-    let preset = PRESET_ICON_APP[key] as any;
+    if (!Object.prototype.hasOwnProperty.call(PRESET_ICON_APP, key)) {
+      continue;
+    }
+    const preset = PRESET_ICON_APP[key] as any;
     if (PRESET_ICON_APP[key] === appInfo.icon.key) {
       return {name: preset.name, icon: PRESET_ICON_APP[key]};
     }
   }
-};
+  return null;
+}
 
 const getSpace = ({id}: {id: number}) => {
   return kintone.api(kintone.api.url('/k/v1/space', true), 'GET', {id: id});
