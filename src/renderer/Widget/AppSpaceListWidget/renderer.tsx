@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {getAppInfo} from './service';
 import './style.css';
 import PreviewTitle from './components/PreviewTitle';
@@ -7,15 +7,14 @@ import Note from './components/Note';
 
 const AppSpace = ({contentList = [], widgetTitle = ''}: {contentList: ModalAppSpaceContent[]; widgetTitle: string}) => {
   const [listAppSpace, setListAppSpace] = useState(contentList);
-  if (window.kintone) {
-    getAppInfo({listAppSpace}).then((newContentList) => {
-      if (contentList.length && contentList !== listAppSpace) {
-        setListAppSpace(newContentList);
-      }
-    });
-  } else if (contentList.length && contentList !== listAppSpace) {
-    setListAppSpace(contentList);
-  }
+
+  useEffect(() => {
+    if (window.kintone) {
+      getAppInfo({listAppSpace: contentList}).then(setListAppSpace);
+    } else {
+      setListAppSpace(contentList);
+    }
+  }, [contentList]);
 
   if (listAppSpace.length === 0) {
     return null;
