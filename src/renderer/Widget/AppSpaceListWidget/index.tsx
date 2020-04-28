@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import AppSpaceModel from './AppSpaceModel';
+import AppSpaceModal from './AppSpaceModal';
 import AppSpace from './rerender';
 import SettingsWidget from '../components/Settings';
 const AppSpaceWidget = ({
@@ -19,13 +19,11 @@ const AppSpaceWidget = ({
   return (
     <React.Fragment>
       <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
-      <AppSpaceModel
+      <AppSpaceModal
         titleWidget={titleWidget}
         contentList={contentList}
         showSettingInit={showSetting}
         getContent={({contentList: newContentList, titleWidget: newTitleWidget}) => {
-          console.log('newContentList', newContentList);
-
           const newContentListProps = newContentList.slice();
           onSaveSetting && onSaveSetting({contentList: newContentListProps, titleWidget: newTitleWidget});
         }}

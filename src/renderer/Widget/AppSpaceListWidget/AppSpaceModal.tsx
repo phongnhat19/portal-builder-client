@@ -3,11 +3,11 @@ import {Modal} from 'antd';
 import {PlusCircleFilled, MinusCircleFilled} from '@ant-design/icons';
 import {InputWithLabel} from './components/InputWithLabel';
 import './style.css';
-import RenderCategoryDetail from './components/CategoryList';
+import CategoryDetail from './components/CategoryList';
 
 import {INPUT_TEXT, MODAL, LABEL} from './constant';
 
-const BlockCategory = ({
+const CategoryBlock = ({
   content,
   onChange,
   index,
@@ -43,7 +43,7 @@ const BlockCategory = ({
         />
       </div>
 
-      <RenderCategoryDetail
+      <CategoryDetail
         categoryList={categoryList}
         onChangeRow={(newcategoryList) => {
           newData.categoryList = newcategoryList;
@@ -66,8 +66,8 @@ const Category = ({
     <div className="category">
       {newContentList.map((content, i) => {
         return (
-          <React.Fragment key={i}>
-            <BlockCategory
+            <CategoryBlock
+              key={i}
               content={content}
               onChange={(newData, status) => {
                 const cloneData = JSON.parse(JSON.stringify(newData));
@@ -82,7 +82,6 @@ const Category = ({
               }}
               index={i}
             />
-          </React.Fragment>
         );
       })}
     </div>

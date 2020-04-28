@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {getAppInfo} from './service';
 import './style.css';
-// import 'antd/dist/antd.css';
 import PreviewTitle from './components/PreviewTitle';
 import PreviewContent from './components/PreviewContent';
 import Note from './components/Note';

@@ -22,21 +22,19 @@ const PreviewContent = ({contentList}: {contentList: ModalAppSpaceContent[]}) =>
               const isEven = checkEvenNumber(i);
               const hightLightRow = !isEven ? 'hight-light' : '';
               return (
-                <React.Fragment key={i}>
-                  <div className={'widget-content-preview-row ' + hightLightRow}>
-                    <div className="widget-content-preview-col-icon">
-                      {category.icon ? (
-                        <img alt="widget-icon" src={category.icon ? category.icon : ''} width={34} height={34} />
-                      ) : (
-                        <IconType type={category.type} />
-                      )}
-                    </div>
-                    <div className="widget-content-preview-col-app">{
-                      category.name ? category.name : `${category.type === 'app'
-                        ? 'App' : 'Space'} name (id: ${category.id})`}
-                    </div>
+                <div className={'widget-content-preview-row ' + hightLightRow} key={i}>
+                  <div className="widget-content-preview-col-icon">
+                    {category.icon ? (
+                      <img alt="widget-icon" src={category.icon ? category.icon : ''} width={34} height={34} />
+                    ) : (
+                      <IconType type={category.type} />
+                    )}
                   </div>
-                </React.Fragment>
+                  <div className="widget-content-preview-col-app">{
+                    category.name ? category.name : `${category.type === 'app'
+                      ? 'App' : 'Space'} name (id: ${category.id})`}
+                  </div>
+                </div>
               );
             })}
           </React.Fragment>
