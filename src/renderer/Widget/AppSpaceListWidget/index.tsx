@@ -6,32 +6,34 @@ const AppSpaceWidget = ({
   showSettingInit,
   onSaveSetting,
   titleWidget,
-  listContent,
+  contentList,
   onRemove,
 }: {
   titleWidget: string;
-  listContent: ModalAppSpace[];
+  contentList: ModalAppSpaceContent[];
   showSettingInit?: boolean;
   onRemove?: () => void;
-  onSaveSetting?: ({listContent, titleWidget}: {listContent: any; titleWidget: string;}) => void;
-}) => {  
+  onSaveSetting?: ({contentList, titleWidget}: {contentList: any; titleWidget: string}) => void;
+}) => {
   const [showSetting, setShowSetting] = useState(showSettingInit);
   return (
     <React.Fragment>
       <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
       <AppSpaceModel
-      titleWidget={titleWidget}
-        listContent={listContent}
+        titleWidget={titleWidget}
+        contentList={contentList}
         showSettingInit={showSetting}
-        getContent={({listContent, titleWidget}) => {
-          let newListContent = listContent.slice()
-          onSaveSetting && onSaveSetting({listContent:newListContent, titleWidget});
+        getContent={({contentList: newContentList, titleWidget: newTitleWidget}) => {
+          console.log('newContentList', newContentList);
+
+          const newContentListProps = newContentList.slice();
+          onSaveSetting && onSaveSetting({contentList: newContentListProps, titleWidget: newTitleWidget});
         }}
         onCancel={() => {
           setShowSetting(false);
         }}
       />
-      <AppSpace listContent={listContent} titleWidget={titleWidget} />
+      <AppSpace contentList={contentList} titleWidget={titleWidget} />
     </React.Fragment>
   );
 };

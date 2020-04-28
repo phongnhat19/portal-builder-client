@@ -7,6 +7,14 @@
 .app-space-widget {
   width: 100%;
 }
+
+.ant-dropdown-link{
+  background: none;
+  color: rgb(24, 144, 255);
+  border: none;
+  outline: none;
+}
+
 .add-category {
   display: flex;
   cursor: pointer;

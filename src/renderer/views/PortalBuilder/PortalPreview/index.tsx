@@ -1,38 +1,38 @@
-import React from 'react'
-import TabsLayout from '../../../Layout/TabsLayout'
-import {LAYOUT_TYPE} from '../../../Layout/constant'
-import GridLayout from '../../../Layout/GridLayout'
+import React from 'react';
+import TabsLayout from '../../../Layout/TabsLayout';
+import {LAYOUT_TYPE} from '../../../Layout/constant';
+import GridLayout from '../../../Layout/GridLayout';
 
-const PortalPreview = ({ 
+const PortalPreview = ({
   layout
 }: {
-  layout?: Layout
+  layout?: Layout;
 }) => {
 
   const renderLayout = () => {
     if (layout!.type === LAYOUT_TYPE.TAB) {
-      const props = layout!.props as TabLayout
+      const props = layout!.props as TabLayout;
       return (
         <TabsLayout
           tabList={props.tabList}
         />
-      )
+      );
     } else if (layout!.type === LAYOUT_TYPE.GRID) {
-      const props = layout!.props as GridLayout
+      const props = layout!.props as GridLayout;
       return (
         <GridLayout items={props.rows} />
-      )
+      );
     }
-  }
+  };
 
-  return(
+  return (
     <div style={{paddingTop: '30px'}}>
       {
         layout && renderLayout()
       }
-      
-    </div>
-  )
-}
 
-export default PortalPreview
+    </div>
+  );
+};
+
+export default PortalPreview;

@@ -90,7 +90,7 @@ const TabsLayout = ({
           }
           const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps;
           newItem.tabContent = (
-            <AppSpaceWidget titleWidget={tabContentAppSpace.titleWidget} listContent={tabContentAppSpace.listContent} />
+            <AppSpaceWidget titleWidget={tabContentAppSpace.titleWidget} contentList={tabContentAppSpace.contentList} />
           );
           break;
         case CONTENT_TYPE.EMPTY:

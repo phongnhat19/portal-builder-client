@@ -1,15 +1,15 @@
 import {PRESET_ICON_APP} from './constant';
 
-const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpace[]}) => Promise<ModalAppSpace[]> = async ({
+const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpaceContent[]}) => Promise<ModalAppSpaceContent[]> = async ({
   listAppSpace,
 }: {
-  listAppSpace: ModalAppSpace[];
+  listAppSpace: ModalAppSpaceContent[];
 }) => {
   let newListAppSpace = listAppSpace.slice();
   for (let i = 0; i < newListAppSpace.length; i++) {
     let appSpace = newListAppSpace[i];
-    for (let j = 0; j < appSpace.listCategory.length; j++) {
-      let category = appSpace.listCategory[j];
+    for (let j = 0; j < appSpace.categoryList.length; j++) {
+      let category = appSpace.categoryList[j];
       if (category.type === 'space') {
         let spaceInfo = {} as any;
         try {

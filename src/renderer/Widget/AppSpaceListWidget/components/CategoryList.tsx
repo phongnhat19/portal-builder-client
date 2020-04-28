@@ -1,57 +1,57 @@
 import React from 'react';
-import {InputText} from './InputWidget';
-import DropDownType from './DropDownType';
+import {InputWithLabel} from './InputWithLabel';
+import TypeDropdown from './TypeDropdown';
 import {PlusCircleFilled, MinusCircleFilled} from '@ant-design/icons';
 import {INPUT_TEXT} from '../constant';
 
-const RenderCategoryDetail = ({
-  listCategory,
+const CategoryDetail = ({
+  categoryList,
   onChangeRow,
 }: {
-  listCategory: any;
-  onChangeRow?: (listCategory: {id: string; type: string}[]) => void;
+  categoryList: any;
+  onChangeRow?: (categoryList: Array<{id: string; type: string}>) => void;
 }) => {
-  let newListCategory = listCategory.slice();
+  const newCategoryList = categoryList.slice();
   const addRow = (i: number) => {
-    newListCategory.splice(i + 1, 0, {type: 'app', id: ''});
-    if (onChangeRow) onChangeRow(newListCategory);
+    newCategoryList.splice(i + 1, 0, {type: 'app', id: ''});
+    if (onChangeRow) onChangeRow(newCategoryList);
   };
   const removeRow = (index: number) => {
-    newListCategory.splice(index, 1);
-    if (onChangeRow) onChangeRow(newListCategory);
+    newCategoryList.splice(index, 1);
+    if (onChangeRow) onChangeRow(newCategoryList);
   };
-  return newListCategory.map((category: CategorytAppSpace, i: number) => {
+  return newCategoryList.map((category: CategorytAppSpace, i: number) => {
     const newCategory = {...category};
     return (
-      <div className={'category-detail'} key={i}>
+      <div className="category-detail" key={i}>
         <div className="item-block flex-end">
-          <DropDownType
+          <TypeDropdown
             value={newCategory.type}
             onChange={(value: string) => {
-              newListCategory[i].type = value;
-              if (onChangeRow) onChangeRow(newListCategory);
+              newCategoryList[i].type = value;
+              if (onChangeRow) onChangeRow(newCategoryList);
             }}
           />
         </div>
-        <InputText
-          label={''}
-          width={'67%'}
+        <InputWithLabel
+          label=""
+          width="67%"
           value={newCategory.id}
           placeholder={`${INPUT_TEXT.ID}`}
-          type={'number'}
+          type="number"
           className="input-text-custome"
           onChange={(value) => {
-            newListCategory[i].id = value as string;
-            if (onChangeRow) onChangeRow(newListCategory);
+            newCategoryList[i].id = value as string;
+            if (onChangeRow) onChangeRow(newCategoryList);
           }}
         />
         <div className="item-block width">
-          <PlusCircleFilled onClick={() => addRow(i)} style={{color:"#1890ff"}} />
-          {i > 0 ? <MinusCircleFilled style={{color:"#1890ff"}} onClick={() => removeRow(i)} /> : ''}
+          <PlusCircleFilled onClick={() => addRow(i)} style={{color: '#1890ff'}} />
+          {i > 0 && <MinusCircleFilled style={{color: '#1890ff'}} onClick={() => removeRow(i)} />}
         </div>
       </div>
     );
   });
 };
 
-export default RenderCategoryDetail;
+export default CategoryDetail;

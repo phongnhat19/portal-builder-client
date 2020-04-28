@@ -6,34 +6,34 @@ import PreviewTitle from './components/PreviewTitle';
 import PreviewContent from './components/PreviewContent';
 import Note from './components/Note';
 
-const AppSpace = ({listContent = [], titleWidget = ''}: {listContent: ModalAppSpace[]; titleWidget: string}) => {  
-  const [listAppSpace, setListAppSpace] = useState(listContent);
-  const [titleAppSpace, setTitleAppSpace] = useState(titleWidget); 
-  
-  useEffect(() => {       
+const AppSpace = ({contentList = [], titleWidget = ''}: {contentList: ModalAppSpaceContent[]; titleWidget: string}) => {
+  const [listAppSpace, setListAppSpace] = useState(contentList);
+  const [titleAppSpace, setTitleAppSpace] = useState(titleWidget);
+  console.log(listAppSpace);
 
+  useEffect(() => {
     (async () => {
       if (window.kintone) {
-        let newListContent = await getAppInfo({listAppSpace});
+        const newContentList = await getAppInfo({listAppSpace});
         setTitleAppSpace(titleWidget);
-        setListAppSpace(newListContent);
-      } else {        
+        setListAppSpace(newContentList);
+      } else {
         setTitleAppSpace(titleWidget);
-        setListAppSpace(listContent);
+        setListAppSpace(contentList);
       }
     })();
-  },[listContent.length && listContent != listAppSpace]);
+  }, [contentList.length && contentList !== listAppSpace]);
 
   if (listAppSpace.length === 0) {
     return null;
   }
 
-  
+
   return (
     <div className="app-space-widget">
       <PreviewTitle titleWidget={titleAppSpace} />
-      {window.kintone ? "" :  <Note />}
-      <PreviewContent listContent={listAppSpace} />
+      {window.kintone ? '' : <Note />}
+      <PreviewContent contentList={listAppSpace} />
     </div>
   );
 };

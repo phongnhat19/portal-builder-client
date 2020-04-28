@@ -1,8 +1,7 @@
 declare type AppSpaceWidgetProps = {
   showSettingInit?: boolean;
-  listContent: ModalAppSpace[];
+  contentList: ModalAppSpaceContent[];
   titleWidget: string;
-  isSave:boolean
 };
 
 declare type CategorytAppSpace = {
@@ -12,7 +11,7 @@ declare type CategorytAppSpace = {
   name:string;
 };
 
-declare type ModalAppSpace = {
+declare type ModalAppSpaceContent = {
   category: string;
-  listCategory: ContentAppSpaceWidget[];
+  categoryList: ContentAppSpaceWidget[];
 };

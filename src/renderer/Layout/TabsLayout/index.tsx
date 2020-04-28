@@ -135,12 +135,12 @@ const TabsLayout = ({
           newItem.tabContent = (
             <AppSpaceWidget
               titleWidget={tabContentAppSpace.titleWidget}
-              listContent={tabContentAppSpace.listContent}
+              contentList={tabContentAppSpace.contentList}
               showSettingInit={tabContentAppSpace.showSettingInit}
               onRemove={removeWidget}
-              onSaveSetting={({listContent, titleWidget}) => {
+              onSaveSetting={({contentList, titleWidget}) => {
                 const currentProps = JSON.parse(JSON.stringify(tabContent.props));
-                currentProps.listContent = listContent;
+                currentProps.contentList = contentList;
                 currentProps.titleWidget = titleWidget;
                 currentProps.showSettingInit = false;
                 updateWidget(currentProps);

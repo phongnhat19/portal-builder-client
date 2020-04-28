@@ -1,54 +1,52 @@
 import React, {useState} from 'react';
 import {Modal} from 'antd';
 import {PlusCircleFilled, MinusCircleFilled} from '@ant-design/icons';
-import {InputText} from './components/InputWidget';
+import {InputWithLabel} from './components/InputWithLabel';
 import './style.css';
 import RenderCategoryDetail from './components/CategoryList';
 
 import {INPUT_TEXT, MODAL, LABEL} from './constant';
 
-const RenderBlockCategory = ({
+const BlockCategory = ({
   content,
   onChange,
-  i,
+  index,
 }: {
-  content: ModalAppSpace;
-  onChange: (content: ModalAppSpace, status: string) => void;
-  i: number;
+  content: ModalAppSpaceContent;
+  onChange: (content: ModalAppSpaceContent, status: string) => void;
+  index: number;
 }) => {
-  let newData = {...content};
-  let listCategory = newData.listCategory as CategorytAppSpace[];
+  const newData = {...content};
+  const categoryList = newData.categoryList as CategorytAppSpace[];
   return (
-    <div className="infor-category" key={i}>
+    <div className="infor-category" key={index}>
       <div className="input-action">
-        <InputText
+        <InputWithLabel
           label={LABEL.CATEGORY}
-          width={'100%'}
+          width="100%"
           value={content.category}
           placeholder={INPUT_TEXT.CATEGORY}
-          type={'text'}
-          className={''}
+          type="text"
+          className=""
           onChange={(value) => {
-            let valueString = value as string;
+            const valueString = value as string;
             newData.category = valueString;
             onChange(newData, '');
           }}
         />
-        <RenderActionAddCategory
+        <ActionAddCategory
           onRemove={(status) => {
             onChange(newData, status);
           }}
-          i={i}
-          onClick={(value, status) => {
-            onChange(value, status);
-          }}
+          index={index}
+          onClick={onChange}
         />
       </div>
 
       <RenderCategoryDetail
-        listCategory={listCategory}
-        onChangeRow={(newListCategory) => {
-          newData.listCategory = newListCategory;
+        categoryList={categoryList}
+        onChangeRow={(newcategoryList) => {
+          newData.categoryList = newcategoryList;
           onChange(newData, '');
         }}
       />
@@ -56,33 +54,33 @@ const RenderBlockCategory = ({
   );
 };
 
-const RenderCategory = ({
-  listContent,
+const Category = ({
+  contentList,
   setListContent,
 }: {
-  listContent: ModalAppSpace[];
-  setListContent: (listContent: ModalAppSpace[]) => void;
+  contentList: ModalAppSpaceContent[];
+  setListContent: (contentList: ModalAppSpaceContent[]) => void;
 }) => {
-  let newListContent = listContent.slice();
+  const newContentList = contentList.slice();
   return (
     <div className="category">
-      {newListContent.map((content, i) => {
+      {newContentList.map((content, i) => {
         return (
           <React.Fragment key={i}>
-            <RenderBlockCategory
+            <BlockCategory
               content={content}
               onChange={(newData, status) => {
-                let cloneData = JSON.parse(JSON.stringify(newData));
+                const cloneData = JSON.parse(JSON.stringify(newData));
                 if (status === 'add') {
-                  newListContent.splice(i + 1, 0, cloneData);
+                  newContentList.splice(i + 1, 0, cloneData);
                 } else if (status === 'remove') {
-                  newListContent.splice(i, 1);
+                  newContentList.splice(i, 1);
                 } else {
-                  newListContent[i] = cloneData;
+                  newContentList[i] = cloneData;
                 }
-                setListContent(newListContent);
+                setListContent(newContentList);
               }}
-              i={i}
+              index={i}
             />
           </React.Fragment>
         );
@@ -91,17 +89,17 @@ const RenderCategory = ({
   );
 };
 
-const RenderActionAddCategory = ({
+const ActionAddCategory = ({
   onClick,
   onRemove,
-  i,
+  index,
 }: {
-  onClick: (value: ModalAppSpace, status: string) => void;
+  onClick: (value: ModalAppSpaceContent, status: string) => void;
   onRemove: (status: string) => void;
-  i: number;
+  index: number;
 }) => {
   const handleAddCategory = () => {
-    let category: ModalAppSpace = {listCategory: [{type: 'app', id: '', name: '', icon: ''}], category: ''};
+    const category: ModalAppSpaceContent = {categoryList: [{type: 'app', id: '', name: '', icon: ''}], category: ''};
     onClick(category, 'add');
   };
   const handleRemoveCategory = () => {
@@ -110,7 +108,7 @@ const RenderActionAddCategory = ({
   return (
     <div className="add-category">
       <PlusCircleFilled onClick={() => handleAddCategory()} />
-      {i > 0 ? <MinusCircleFilled onClick={() => handleRemoveCategory()} /> : ''}
+      {index > 0 && <MinusCircleFilled onClick={() => handleRemoveCategory()} /> }
     </div>
   );
 };
@@ -120,44 +118,44 @@ const AppSpaceModel = ({
   getContent,
   onCancel,
   titleWidget,
-  listContent = [{listCategory: [{type: 'app', id: '', name: '', icon: ''}], category: ''}],
+  contentList = [{categoryList: [{type: 'app', id: '', name: '', icon: ''}], category: ''}],
 }: {
   showSettingInit?: boolean;
   onCancel: () => void;
-  listContent: ModalAppSpace[];
+  contentList: ModalAppSpaceContent[];
   titleWidget: string;
-  getContent: ({listContent, titleWidget}: {listContent: ModalAppSpace[]; titleWidget: string;}) => void;
+  getContent: ({contentList, titleWidget}: {contentList: ModalAppSpaceContent[]; titleWidget: string}) => void;
 }) => {
-  const [newListContent, setListContent] = useState<ModalAppSpace[]>(listContent);
+  const [newContentList, setListContent] = useState<ModalAppSpaceContent[]>(contentList);
   const [newTitleWidget, setTitleWidget] = useState(titleWidget);
 
   return (
     <Modal
       bodyStyle={{maxHeight: '500px', overflow: 'auto'}}
       onOk={() => {
-        getContent({listContent: newListContent, titleWidget: newTitleWidget});
+        getContent({contentList: newContentList, titleWidget: newTitleWidget});
         onCancel();
+        console.log('contentList', contentList);
+
       }}
       title={MODAL.TITLE}
       visible={showSettingInit}
-      onCancel={() => {
-        onCancel()
-      }}
+      onCancel={onCancel}
     >
-      <InputText
+      <InputWithLabel
         label={LABEL.TITLE}
-        width={'calc(94% - 5px)'}
+        width="calc(94% - 5px)"
         placeholder={`${INPUT_TEXT.TITLE}`}
-        type={'text'}
+        type="text"
         value={newTitleWidget}
         className="item-margin-bottom-10 title"
         onChange={(value) => setTitleWidget(value as string)}
       />
-      <RenderCategory
-        listContent={newListContent}
-        setListContent={(listContent) => {
-          let newListContent = listContent.slice();
-          setListContent(newListContent);
+      <Category
+        contentList={newContentList}
+        setListContent={(categoryList) => {
+          const newCategoryList = categoryList.slice();
+          setListContent(newCategoryList);
         }}
       />
     </Modal>

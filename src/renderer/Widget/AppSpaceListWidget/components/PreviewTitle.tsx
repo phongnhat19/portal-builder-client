@@ -1,5 +1,5 @@
-import React from 'react'
-import { AppstoreFilled } from '@ant-design/icons';
+import React from 'react';
+import {AppstoreFilled} from '@ant-design/icons';
 const PreviewTitle = ({titleWidget}: {titleWidget: string}) => {
   return (
     <div className="widget-header-preview">
@@ -10,4 +10,4 @@ const PreviewTitle = ({titleWidget}: {titleWidget: string}) => {
     </div>
   );
 };
-export default PreviewTitle
+export default PreviewTitle;

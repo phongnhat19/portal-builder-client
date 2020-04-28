@@ -6,6 +6,6 @@ export const CONTENT_TYPE = {
   GAROON_NOTIFY: 'GNotification',
   DEFAULT: 'DefaultPortal',
   EMPTY: 'Empty',
-  APP_SPACE:"App/Space"
+  APP_SPACE:'App/Space'
 
 };
