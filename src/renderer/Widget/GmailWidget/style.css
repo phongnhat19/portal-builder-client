@@ -6,7 +6,6 @@
     background-color: white;
     width: 100%;
     min-width: 300px;
-    overflow-x: auto;
 }
 .gmail-header {
     width: 100%;
@@ -35,11 +34,25 @@
 }
 .gmail-header-left {
     display: flex;
+    width: 100%;
+    border-bottom: 1px solid ghostwhite;
 }
 
-.gmail-header-right {
+.gmail-action-left {
+    float: left;
+}
+
+.gmail-action-right {
     float: right;
     display: flex;
+}
+.gmail-tag {
+    margin-right: 8px;
+    margin-bottom: 8px;
+    line-height: 20px;
+    border-radius: 2px;
+    padding: 0 7px;
+    border: 1px solid #d9d9d9;
 }
 
 .gmail-contain-item {
@@ -57,7 +70,7 @@
 
 .gmail-body-contain tr td {
     padding: 5px;
-    /* border-bottom: 1px solid ghostwhite; */
+    border-bottom: 1px solid ghostwhite;
 }
 
 .gmail-body-contain  tr:nth-child(2n + 1) {
@@ -72,24 +85,44 @@
     font-size: .75rem;
 }
 
+.gmail-error-alert {
+    background-color: #fff2f0;
+    border: 1px solid #ffccc7;
+    margin: '10px 50%'
+}
+.gmail-loading {
+    padding: '10px 50%';
+    position: 'static';
+    display: 'inline-block';
+    opacity: 1;
+    color: '#1890ff';
+}
 .icon-previous {
     height: 16px;
     width: 16px;
     float: right;
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnklEQVQ4jWNgoAeYNWuW9syZM/mxyTERodng////h/7//99IsgFQzXsZGBgucnFxVWNTw0iMZk5OTt+4uLivRBtArGasBpCimYEBLQygms8zMDDcJkYzhgHkABQD0tLSLjAyMhoyMDCofv/+ffOiRYu4CRlA/UAk1RCcBhBrCN5AhIaJMwMDg/63b99asakhGAtQQ+wYGRnrCaklCwAANy5j6B1wv/kAAAAASUVORK5CYII=");
 }
+.gmail-widget-login:hover,
+.gmail-widget-logout:hover {
+    color: #fff;
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+}
+.gmail-widget-login,
+.gmail-widget-logout {
+    height: 32px;
+    padding: 4px 15px;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #1890ff;
+    border-color: #1890ff;
+}
 .icon-next-container,
 .icon-previous-container {
-    /* height: 40px;
-    width: 40px; */
+    height: 32px;
     margin-left: 10px;
-    /* padding: 5px 7px; */
     padding: 10px 10px;
-    /* height: 35px; */
-    /* width: 35px; */
-    /* background-color: white; */
-    /* border: 1px solid white; */
-    /* border-radius: 50%; */
 }
 .icon-next-container:hover,
 .icon-previous-container:hover {

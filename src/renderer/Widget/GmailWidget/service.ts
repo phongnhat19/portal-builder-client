@@ -32,14 +32,12 @@ const signOut = () => {
   gapi.auth2.getAuthInstance().signOut();
 };
 
-const handleSignin = (callback: Function) => {
+const handleAuthorize = (callback: Function) => {
   gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
 };
 
-const getMailFromID = async (msgIDs: any[]) => {
-  const LIMIT_REQUEST = msgIDs.length > 20 ? 20 : (msgIDs.length - 1);
-  let listMail: any[] = [];
-  let listRequest = [];
+const getMailFromID = async (msgIDs: [{id: string}]) => {
+  const listRequest = [];
 
   for (let i = 0; i < msgIDs.length; i++) {
     listRequest.push(
@@ -48,15 +46,8 @@ const getMailFromID = async (msgIDs: any[]) => {
         'id': msgIDs[i].id
       })
     );
-
-    if ((((i % LIMIT_REQUEST) === 0) && (i !== 0)) || i === (msgIDs.length - 1)) {
-      const requests = await Promise.all(listRequest);
-      listMail = listMail.concat(requests);
-      listRequest = [];
-    }
   }
-
-  return listMail;
+  return Promise.all(listRequest);
 };
 
 const getListMail = (pageToken?: string) => {
@@ -65,20 +56,20 @@ const getListMail = (pageToken?: string) => {
     'labelIds': ['INBOX', 'UNREAD'],
     'maxResults': NUM_DATA_DISPLAY,
     'pageToken': pageToken
-  }).then((rsp: any)=> {
+  }).then((rsp: {result: {nextPageToken: string; messages: [{id: string}]}})=> {
     return rsp.result;
   });
 };
 
-const formatListMail = (listMail: any[]) => {
+const formatListMail = (listMail: [ListMail]) => {
   const mailFormats: GmailData[] = [];
   for (let i = 0; i < listMail.length; i++) {
     const headers = getHeaderObj(listMail[i].result.payload.headers);
     const mail = {
       threadId: listMail[i].result.threadId,
-      from: headers.From,
+      from: formatFrom(headers.From),
       subject: headers.Subject,
-      time: headers.Date,
+      time: formatDate(headers.Date),
       link: `https://mail.google.com/mail?authuser=${headers['Delivered-To']}#all/${listMail[i].result.threadId}`
     };
     mailFormats.push(mail);
@@ -86,8 +77,29 @@ const formatListMail = (listMail: any[]) => {
   return mailFormats;
 };
 
-const getHeaderObj = (payloadHeaders: any[]) => {
-  const headerObject: any = {};
+const formatFrom = (from?: string) => {
+  const format = from.split('<')[0];
+  format.replace(/"/g, '').replace('>', '');
+  return format.trim();
+};
+
+const formatDate = (date?: string) => {
+  let format = '';
+  const inputDate = new Date(date);
+  const today = new Date();
+
+  const numberFormat = (num: number) => `${num < 10 ? '0' : ''}${num}`;
+  const dateFormat = (d: Date) => `${d.getFullYear()}-${numberFormat(d.getMonth())}-${numberFormat(d.getDate())} `;
+  format = dateFormat(inputDate);
+
+  if (dateFormat(today) === dateFormat(inputDate)) {
+    format = `${numberFormat(inputDate.getHours())}:${numberFormat(inputDate.getMinutes())}`;
+  }
+  return format;
+};
+
+const getHeaderObj = (payloadHeaders: [{name: GmailHeaderKey ; value: string}]) => {
+  const headerObject: GmailHeaderRsp = {};
   for (let i = 0; i < payloadHeaders.length; i++) {
     const item = payloadHeaders[i];
     headerObject[item.name] = payloadHeaders[i].value;
@@ -97,4 +109,4 @@ const getHeaderObj = (payloadHeaders: any[]) => {
 
 const checkSignin = () => gapi.auth2.getAuthInstance().isSignedIn.get();
 
-export {loadGAPI, getMailFromID, formatListMail, initClient, handleSignin, checkSignin, getListMail, signIn, signOut};
+export {loadGAPI, getMailFromID, formatListMail, initClient, handleAuthorize, checkSignin, getListMail, signIn, signOut};

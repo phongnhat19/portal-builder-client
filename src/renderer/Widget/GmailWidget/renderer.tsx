@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {NUM_DATA_DISPLAY, ERROR_MESSAGE} from './constant';
-import {Button, Spin, Alert} from 'antd';
+import {Button, Spin, Alert, Tag} from 'antd';
 import {LoadingOutlined} from '@ant-design/icons';
-import 'antd/dist/antd.css';
-import {loadGAPI, initClient, getMailFromID, formatListMail, handleSignin, checkSignin, getListMail, signIn, signOut} from './service';
+import {loadGAPI, initClient, getMailFromID, formatListMail, handleAuthorize, checkSignin, getListMail, signIn, signOut} from './service';
 import MailDetail from './MailDetail';
 import './style.css';
 
@@ -48,7 +47,7 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
           setLoading(true);
           initClient(apiKey, clientID).then(() => {
             setSignin(checkSignin());
-            handleSignin(handleSigninCallBack);
+            handleAuthorize(handleSigninCallBack);
             handleSigninCallBack(checkSignin());
           }).catch(() => {
             setError({invalidKey: ERROR_MESSAGE.API_KEY, logOut: ''});
@@ -58,16 +57,17 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
       }
     };
     handleGAPIClient();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKey, clientID, existGAPI]);
 
   const prepareData = (isSignedIn: boolean, pageToken?: string) => {
     if (isSignedIn) {
       setError({invalidKey: '', logOut: ''});
       setLoading(true);
-      getListMail(pageToken).then((rsp: any) => {
+      getListMail(pageToken).then((rsp: {nextPageToken: string; messages: [{id: string}]}) => {
         setNextPageToken(rsp.nextPageToken);
         return getMailFromID(rsp.messages);
-      }).then((rsp: any[])=> {
+      }).then((rsp: [ListMail])=> {
         return formatListMail(rsp);
       }).then((rsp: GmailData[])=> {
         const newData = dataSource.concat(rsp);
@@ -80,6 +80,7 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
     } else {
       setDataSource([]);
       setError({invalidKey: '', logOut: ERROR_MESSAGE.OAUTH});
+      setLoading(false);
     }
   };
   const handlePreviousBtn = () => {
@@ -94,6 +95,15 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
     setCurrentPage(currentPape + 1);
   };
 
+  const handleSignin = () => {
+    signIn();
+  };
+  const handleSignout = () => {
+    signOut();
+    setDataSource([]);
+    setError({invalidKey: '', logOut: ERROR_MESSAGE.OAUTH});
+  };
+
   const antIcon = <LoadingOutlined style={{fontSize: 24}} spin />;
 
   return (
@@ -104,30 +114,28 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
           <div className="gmail-header-title"> Gmail </div>
         </div>
       </div>
+      {!window.kintone && <Alert message="Warning" description={ERROR_MESSAGE.WANNING} type="warning" showIcon style={{margin: '10px'}} />}
       <div className="gmail-action">
-        <div className="gmail-header-right" >
+        <div className="gmail-action-left">
+          <Tag className="gmail-tag" style={{color: '#1890ff', background: '#e6f7ff', borderColor: '#91d5ff'}} color="blue">Inbox</Tag>
+          <Tag className="gmail-tag" style={{color: '#eb2f96', background: '#fff0f6', borderColor: '#ffadd2'}} color="magenta">Unread</Tag>
+        </div>
+        <div className="gmail-action-right" >
           <Button
-            style={{display: signin ? 'none' : 'block', height: '30px'}}
+            type="primary"
             className="gmail-widget-login"
-            type="primary"
-            onClick={() => {
-              window.kintone && signIn();
-            }}
-          >Login
-          </Button>
-          <Button
-            style={{display: signin ? 'block' : 'none'}}
-            className="gmail-widget-logout"
-            type="primary"
             onClick={() => {
               if (!window.kintone) return;
-              signOut();
-              setDataSource([]);
-              setError({invalidKey: '', logOut: ERROR_MESSAGE.OAUTH});
+              if (checkSignin()) {
+                handleSignout();
+              } else {
+                handleSignin();
+              }
             }}
-          >Logout
+          >
+            {(!signin && window.kintone) && `Login` }
+            {(signin || !window.kintone) && `Logout` }
           </Button>
-
           <Button disabled={(currentPape === 0)} className="icon-previous-container" onClick={handlePreviousBtn}>
             <div className="icon-previous"> </div>
           </Button>
@@ -137,9 +145,8 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
         </div>
       </div>
       <div>
-        <div className="gmail-header" >Inbox</div>
-        {(error.invalidKey || error.logOut) && <Alert message={error.invalidKey || error.logOut} type="error" />}
-        {loading ? <Spin style={{padding: '10px 50%'}} indicator={antIcon} /> : <MailDetail dataDisplay={dataDisplay} />}
+        {(error.invalidKey || error.logOut) && <div className="gmail-error-alert"> {error.invalidKey || error.logOut}</div> }
+        {loading ? <Spin className="gmail-loading" indicator={antIcon} /> : <MailDetail dataDisplay={dataDisplay} />}
       </div>
     </div>
   );

@@ -19,8 +19,15 @@ const GmailWidget = ({apiKey = '', clientID = '', onRemove, onSaveSetting, showS
               threadId: '1',
               from: 'test@gmail.com',
               subject: '10 Downing Street',
-              time: '24/10/2020',
+              time: '2020-10-24',
               link: 'htpps://test.com'
+            },
+            {
+              threadId: '1',
+              from: 'alex@gmail.com',
+              subject: '10 Downing Street',
+              time: '2020-10-25',
+              link: 'htpps://alex.com'
             }
           ]}
         />

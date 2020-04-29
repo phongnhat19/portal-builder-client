@@ -17,3 +17,20 @@ declare type GmailWidgetProps = {
   onSaveSetting?: (settings: GmailSettings) => void;
   onRemove?: () => void;
 }
+
+declare type GmailHeaderRsp = {
+  threadId?: string;
+  From?: string;
+  Subject?: string;
+  Date?: string;
+}
+
+declare type GmailHeaderKey = 'threadId' | 'From' | 'Subject' | 'Date'
+declare type ListMail = {
+  result: {
+    threadId: string;
+    payload: {
+      headers: [{name: GmailHeaderKey ; value: string}];
+    };
+  };
+}
