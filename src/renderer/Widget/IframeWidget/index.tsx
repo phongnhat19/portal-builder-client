@@ -4,7 +4,7 @@ import IframeModal from './IframeModal';
 import Iframe from './renderer';
 
 const getCSSUnit = (value: any) => {
-  return value.replace(/^[\-\d\.]+/, '');
+  return value.replace(/^[-\d.]+/, '');
 };
 const getCSSValue = (value: any) => {
   return parseFloat(value);
