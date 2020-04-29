@@ -19,8 +19,7 @@ const PortalConfigNameModal = ({ portalName, isVisible = false, onClose, onSave 
       onOk={() => {
         onSave({
           name: name
-        })
-        setName('');
+        });
       }}
     >
       <Row>
