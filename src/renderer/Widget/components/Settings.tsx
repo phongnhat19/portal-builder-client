@@ -2,7 +2,7 @@ import React from 'react';
 import {Dropdown, Button, Menu} from 'antd';
 import {SettingOutlined, DeleteOutlined, FormOutlined} from '@ant-design/icons';
 
-const SettingsWidget = ({onRemove, showSetting,className}: {
+const SettingsWidget = ({onRemove, showSetting, className}: {
   onRemove?: () => void;
   showSetting?: () => void;
   className?: string;
