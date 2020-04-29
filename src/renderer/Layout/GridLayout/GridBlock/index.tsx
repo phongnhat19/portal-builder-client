@@ -85,23 +85,23 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         const blockContentIframe = currentBlock.content as IframeWidgetProps;
 
         currentContentBlock =
-          <IframeWidget
-            defaultTitle= {blockContentIframe.defaultTitle}
+          (<IframeWidget
+            defaultTitle={blockContentIframe.defaultTitle}
             url={blockContentIframe.url}
             width={blockContentIframe.width}
             height={blockContentIframe.height}
             showSettingInit={blockContentIframe.showSettingInit}
             onRemove={removeWidget}
-            onSaveSetting={({ url, width, height,title }) => {
-              let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
-              currentProps.url = url
-              currentProps.width = width
-              currentProps.height = height
+            onSaveSetting={({url, width: nextWidth, height, title}) => {
+              let currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+              currentProps.url = url;
+              currentProps.width = nextWidth;
+              currentProps.height = height;
               currentProps.showSettingInit = false;
-              currentProps.defaultTitle= title;
-              updateWidget(currentProps)
+              currentProps.defaultTitle = title;
+              updateWidget(currentProps);
             }}
-          />
+          />)
         break;
 
       case CONTENT_TYPE.HTML:

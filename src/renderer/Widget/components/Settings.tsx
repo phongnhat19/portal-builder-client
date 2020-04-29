@@ -3,7 +3,7 @@ import {Dropdown, Button, Menu} from 'antd';
 import {SettingOutlined, DeleteOutlined, FormOutlined} from '@ant-design/icons';
 
 const SettingsWidget = ({onRemove, showSetting, className}: {onRemove?: () => void; 
-  showSetting?: () => void; className?: string}) => {
+  showSetting?: () => void; className?: string;}) => {
   let _className = '';
   if (className) {
     _className = className;

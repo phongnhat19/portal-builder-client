@@ -9,7 +9,7 @@ import { EMPTY_WIDGET_CONTENT } from '../../TabsLayout/constant';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
 
-const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = undefined, width }: {
+const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = undefined, width}: {
   style?: CSSProperties
   type?: ContentType
   content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps
@@ -33,14 +33,15 @@ const GridBlock = ({ style, type = CONTENT_TYPE.EMPTY as ContentType, content = 
     switch (type) {
       case CONTENT_TYPE.IFRAME:
         const blockContentIframe = content as IframeWidgetProps;
-
         currentContentBlock =
-          <IframeWidget
-            defaultTitle={blockContentIframe.defaultTitle}
-            url={blockContentIframe.url}
-            width={blockContentIframe.width}
-            height={blockContentIframe.height}
-          />
+          (
+            <IframeWidget
+              defaultTitle={blockContentIframe.defaultTitle}
+              url={blockContentIframe.url}
+              width={blockContentIframe.width}
+              height={blockContentIframe.height}
+            />
+          );
         break;
 
       case CONTENT_TYPE.HTML:

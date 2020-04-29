@@ -29,7 +29,7 @@ const IframeModal = ({
   const [widthUnit, setWidthUnit] = useState(defaultWidthUnit);
   const [heightValue, setHeightValue] = useState(defaultHeightValue);
   const [heightUnit, setHeightUnit] = useState(defaultHeightUnit);
-  const [titleIframe, setTitleIframe] = useState(defaultTitle);
+  const [iframeTitle, setIframeTitle] = useState(defaultTitle);
 
   return (
     <Modal
@@ -45,7 +45,7 @@ const IframeModal = ({
           url: url,
           width: `${widthValue}${widthUnit}`,
           height: `${heightValue}${heightUnit}`,
-          title: titleIframe,
+          title: iframeTitle,
         });
       }}
     >
@@ -55,9 +55,9 @@ const IframeModal = ({
         </Col>
         <Col span={20}>
           <Input
-            value={titleIframe}
+            value={iframeTitle}
             onChange={(e) => {
-              setTitleIframe(e.target.value);
+              setIframeTitle(e.target.value);
             }}
             placeholder="Input Title"
           />
