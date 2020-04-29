@@ -146,7 +146,9 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
       </div>
       <div>
         {(error.invalidKey || error.logOut) && <div className="gmail-error-alert"> {error.invalidKey || error.logOut}</div> }
-        {loading ? <Spin className="gmail-loading" indicator={antIcon} /> : <MailDetail dataDisplay={dataDisplay} />}
+        {loading ? <Spin
+          style={{padding: '10px 50%', position: 'static', display: 'inline-block', opacity: 1, color: '#1890ff'}}
+          indicator={antIcon} /> : <MailDetail dataDisplay={dataDisplay} />}
       </div>
     </div>
   );
