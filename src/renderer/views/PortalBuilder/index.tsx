@@ -59,12 +59,12 @@ const PortalBuilder = () => {
       name: CONTENT_TYPE.SCHEDULER
     },
     {
-      icon: <MailOutlined />,
-      name: CONTENT_TYPE.GMAIL
-    },
-    {
       icon: <AlertOutlined />,
       name: CONTENT_TYPE.GAROON_NOTIFY
+    },
+    {
+      icon: <MailOutlined />,
+      name: CONTENT_TYPE.GMAIL
     },
     {
       icon: <CloudOutlined />,
