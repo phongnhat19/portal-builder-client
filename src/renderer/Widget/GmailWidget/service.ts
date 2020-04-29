@@ -1,20 +1,18 @@
 
+import $script from 'scriptjs';
+import {NUM_DATA_DISPLAY} from './constant';
 
-let API_KEY = '';
-let CLIENT_ID = '';
-
-const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly';
-const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'];
-
-const handleClientLoad = (apiKey: string, clientID: string) => {
-  CLIENT_ID = clientID;
-  API_KEY = apiKey;
-  console.log(gapi);
-
-//   gapi.load('client:auth2', initClient);
+const loadGAPI = () => {
+  return new Promise((resolve) => {
+    $script('https://apis.google.com/js/api.js', () => {
+      resolve(true);
+    });
+  });
 };
 
-const initClient = (apiKey, clientID) => {
+const initClient = (apiKey: string, clientID: string) => {
+  const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly';
+  const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'];
 
   return gapi.client.init({
     apiKey: apiKey,
@@ -40,7 +38,7 @@ const handleSignin = (callback: Function) => {
 
 const getMailFromID = async (msgIDs: any[]) => {
   const LIMIT_REQUEST = msgIDs.length > 20 ? 20 : (msgIDs.length - 1);
-  let listMail: any = [];
+  let listMail: any[] = [];
   let listRequest = [];
 
   for (let i = 0; i < msgIDs.length; i++) {
@@ -58,33 +56,30 @@ const getMailFromID = async (msgIDs: any[]) => {
     }
   }
 
-  console.log('mail ', listMail);
   return listMail;
 };
 
-const getListMail = () => {
+const getListMail = (pageToken?: string) => {
   return gapi.client.gmail.users.messages.list({
     'userId': 'me',
     'labelIds': ['INBOX', 'UNREAD'],
-    // 'maxResults': 10
+    'maxResults': NUM_DATA_DISPLAY,
+    'pageToken': pageToken
   }).then((rsp: any)=> {
-    console.log('list ', rsp);
-    
-    return getMailFromID(rsp.result.messages);
-  }).then((rsp: any)=> {
-    return formatListMail(rsp);
+    return rsp.result;
   });
 };
 
 const formatListMail = (listMail: any[]) => {
-  const mailFormats: any[] = [];
+  const mailFormats: GmailData[] = [];
   for (let i = 0; i < listMail.length; i++) {
     const headers = getHeaderObj(listMail[i].result.payload.headers);
     const mail = {
-      key: i,
+      threadId: listMail[i].result.threadId,
       from: headers.From,
       subject: headers.Subject,
       time: headers.Date,
+      link: `https://mail.google.com/mail?authuser=${headers['Delivered-To']}#all/${listMail[i].result.threadId}`
     };
     mailFormats.push(mail);
   }
@@ -102,4 +97,4 @@ const getHeaderObj = (payloadHeaders: any[]) => {
 
 const checkSignin = () => gapi.auth2.getAuthInstance().isSignedIn.get();
 
-export {handleClientLoad, initClient, handleSignin, checkSignin, getListMail, signIn, signOut};
+export {loadGAPI, getMailFromID, formatListMail, initClient, handleSignin, checkSignin, getListMail, signIn, signOut};

@@ -1,23 +1,21 @@
-import React, {useContext, useEffect} from 'react';
-import {Collapse} from 'antd';
-import { CaretRightOutlined } from '@ant-design/icons';
-const { Panel } = Collapse;
-const MailDetail = ({data = '', onClose, mailDetail = '<html></html>'}: {
-  data?: any;
-  onClose?: () => void;
-  mailDetail?: any;
+import React from 'react';
+const MailDetail = ({dataDisplay = []}: {
+  dataDisplay?: GmailData[];
 }) => {
 
   return (
-    <Collapse
-      bordered={false}
-      expandIcon={({isActive = false}) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-      // className="site-collapse-custom-collapse"
-    >
-      <Panel header={data} key="1" className="site-collapse-custom-panel">
-        hello
-      </Panel>
-    </Collapse>
+    <table className="gmail-body-contain">
+      <tbody>
+        {dataDisplay.map((item: GmailData, i: number)=> {
+          return (
+            <tr className="gmail-contain-item" key={i}>
+              <td className="gmail-contain-from" > {item.from}</td>
+              <td> <a href={item.link}>{item.subject}</a> </td>
+              <td> {item.time}</td>
+            </tr>);
+        })}
+      </tbody>
+    </table>
   );
 };
 

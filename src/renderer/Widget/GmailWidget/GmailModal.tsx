@@ -1,22 +1,24 @@
 import React, {useState} from 'react';
-import {Modal, Input, Row, Col, Select, InputNumber} from 'antd';
+import {Modal, Input, Row, Col, Alert} from 'antd';
+import {ERROR_MESSAGE} from './constant';
 import './style.css';
-import {Option} from 'rc-select';
 
 const GmailModal = ({
   isVisible = false,
+  apiKey = '',
+  clientID = '',
   onClose, onSave
 }: {
+  apiKey: string;
+  clientID: string;
   isVisible: boolean;
-  onSave: (item: { url: string; width: string; height: string }) => void;
+  onSave?: (setting: GmailSettings) => void;
   onClose?: () => void;
 }) => {
 
-  // const [url, setUrl] = useState(defaultUrl);
-  // const [widthValue, setWidthValue] = useState(defaultWidthValue);
-  // const [widthUnit, setWidthUnit] = useState(defaultWidthUnit);
-  // const [heightValue, setHeightValue] = useState(defaultHeightValue);
-  // const [heightUnit, setHeightUnit] = useState(defaultHeightUnit);
+  const [apiKeyInput, setApiKeyInput] = useState(apiKey);
+  const [clientIDInput, setClientIDInput] = useState(clientID);
+  const [error, setError] = useState({apiKey: '', clientID: ''});
 
   return (
     <Modal
@@ -24,43 +26,60 @@ const GmailModal = ({
       visible={isVisible}
       okText="Save"
       onCancel={() => {
-        // setUrl(defaultUrl);
+        setApiKeyInput(apiKey);
+        setClientIDInput(clientID);
+        setError({apiKey: '', clientID: ''});
         onClose && onClose();
       }}
       onOk={() => {
-        onSave({
-          // url: url,
-          // width: `${widthValue}${widthUnit}`,
-          // height: `${heightValue}${heightUnit}`,
-        });
+        let errorMsg = {
+          apiKey: '',
+          clientID: ''
+        };
+        if (apiKeyInput.trim() === '' || clientIDInput.trim() === '') {
+          const msg = ERROR_MESSAGE.REQUIRED_FIELD;
+          errorMsg = {
+            apiKey: apiKeyInput.trim() === '' ? msg : '',
+            clientID: clientIDInput.trim() === '' ? msg : ''
+          };
+        } else {
+          onSave && onSave({
+            apiKey: apiKeyInput,
+            clientID: clientIDInput
+          });
+          onClose && onClose();
+        }
+        setError(errorMsg);
       }}
     >
       <Row>
+        <Col span={4}>
+          <strong>API Key</strong>
+        </Col>
+        <Col span={20}>
+          <Input
+            value={apiKeyInput}
+            onChange={(e) => {
+              setApiKeyInput(e.target.value);
+            }}
+            placeholder="Input API Key"
+          />
+          {error.apiKey && <Alert style={{marginTop: '5px'}} message={error.apiKey} type="error" />}
+        </Col>
+      </Row>
+      <Row className="widget-iframe-row">
         <Col span={4}>
           <strong>Client ID</strong>
         </Col>
         <Col span={20}>
           <Input
-            // value={url}
+            value={clientIDInput}
             onChange={(e) => {
-              // setUrl(e.target.value);
+              setClientIDInput(e.target.value);
             }}
-            placeholder="Input URL"
+            placeholder="Input Client ID"
           />
-        </Col>
-      </Row>
-      <Row className="widget-iframe-row">
-        <Col span={4}>
-          <strong>API key</strong>
-        </Col>
-        <Col span={20}>
-        <Input
-            // value={url}
-            onChange={(e) => {
-              // setUrl(e.target.value);
-            }}
-            placeholder="Input URL"
-          />
+          {error.clientID && <Alert message={error.clientID} type="error" />}
         </Col>
       </Row>
 

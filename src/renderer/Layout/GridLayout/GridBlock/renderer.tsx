@@ -8,7 +8,7 @@ import GNotify from '../../../Widget/GNotifyWidget/renderer';
 import {EMPTY_WIDGET_CONTENT} from '../../TabsLayout/constant';
 import {CONTENT_TYPE} from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
-import GmailWidget from '../../../Widget/GmailWidget';
+import GmailWidget from '../../../Widget/GmailWidget/renderer';
 
 const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = undefined, width}: {
   style?: CSSProperties;
@@ -64,7 +64,7 @@ const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = u
         case CONTENT_TYPE.GMAIL: {
 
           const blockContentHTML = content as GmailWidgetProps;
-          currentContentBlock = <GmailWidget/>;
+          currentContentBlock = <GmailWidget apiKey={blockContentHTML.apiKey} clientID={blockContentHTML.clientID} />;
           break;
         }
         case CONTENT_TYPE.GAROON_NOTIFY:

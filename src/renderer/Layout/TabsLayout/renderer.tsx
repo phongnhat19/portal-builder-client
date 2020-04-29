@@ -8,7 +8,7 @@ import Schedule from '../../Widget/SchedulerWidget/renderer';
 import GNotify from '../../Widget/GNotifyWidget/renderer';
 import {CONTENT_TYPE} from '../../Widget/constant';
 import WeatherComponent from '../../Widget/WeatherWidget/renderer';
-import Gmail from '../../Widget/GmailWidget/renderer';
+import GmailWidget from '../../Widget/GmailWidget/renderer';
 
 let defaultPortalBodyEl: ChildNode | null;
 
@@ -70,9 +70,9 @@ const TabsLayout = ({
           if (!tabContent.props) {
             break;
           }
-          const tabContentGmail = tabContent.props as GmailSettings;
+          const tabContentGmail = tabContent.props as GmailWidgetProps;
 
-          newItem.tabContent = <Gmail/>;
+          newItem.tabContent = <GmailWidget clientID={tabContentGmail.clientID} apiKey={tabContentGmail.apiKey} />;
           break;
         }
         case CONTENT_TYPE.WEATHER: {

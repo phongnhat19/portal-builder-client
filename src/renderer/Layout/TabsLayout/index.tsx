@@ -165,8 +165,20 @@ const TabsLayout = ({
             if (!tabContent.props) {
               break;
             }
+            const tabContentGmail = tabContent.props as GmailWidgetProps;
             newItem.tabContent =
-            (<GmailWidget onRemove={removeWidget} />);
+            (<GmailWidget
+              onRemove={removeWidget}
+              apiKey={tabContentGmail.apiKey}
+              clientID={tabContentGmail.clientID}
+              onSaveSetting={({apiKey, clientID}: GmailSettings) => {
+                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                currentProps.apiKey = apiKey;
+                currentProps.showSettingInit = false;
+                currentProps.clientID = clientID;
+                updateWidget(currentProps);
+              }}
+            />);
             break;
           }
           case CONTENT_TYPE.SCHEDULER: {

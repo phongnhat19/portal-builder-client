@@ -50,7 +50,7 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
 
 
   useEffect(() => {
-    const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
+    const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | GmailWidgetProps) => {
       const gridLayout = portalList[selectedPortal].layout.props as GridLayout;
       const currentBlock = gridLayout.rows[rowIndex].blocks[blockIndex];
       currentBlock.content = newProps;
@@ -104,12 +104,24 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
           />);
           break;
         }
-        case CONTENT_TYPE.GMAIL:
+        case CONTENT_TYPE.GMAIL: {
           if (!currentBlock.content) {
             break;
           }
-          currentContentBlock = <GmailWidget onRemove={removeWidget} />;
+          const blockContentGmail = currentBlock.content as GmailWidgetProps;
+          currentContentBlock = (<GmailWidget
+            clientID={blockContentGmail.clientID}
+            apiKey={blockContentGmail.apiKey}
+            onRemove={removeWidget}
+            onSaveSetting={(settings) => {
+              const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+              currentProps.apiKey = settings.apiKey;
+              currentProps.clientID = settings.clientID;
+              updateWidget(currentProps);
+            }}
+          />);
           break;
+        }
         case CONTENT_TYPE.HTML: {
           if (!currentBlock.content) {
             break;
@@ -212,7 +224,9 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
           };
         } else if (type === CONTENT_TYPE.GMAIL) {
           props = {
-            showSettingInit: true
+            showSettingInit: true,
+            apiKey: '',
+            clientID: ''
           };
         } else if (type === CONTENT_TYPE.HTML) {
           props = {
