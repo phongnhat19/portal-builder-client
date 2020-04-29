@@ -26,31 +26,29 @@ const HTMLModal = ({isVisible = false, onClose, onSave, htmlString, htmlTitle}: 
         onSave({htmlString: inputHtmlValue, htmlTitle: inputHtmlTitle});
       }}
     >
-      <React.Fragment>
-        <Row className="margin-bottom-20">
-          <Col span={4}>
-            <strong>Title</strong>
-          </Col>
-          <Col span={20}>
-            <Input placeholder="Widget title" value={inputHtmlTitle} onChange={(e)=> setInputHtmlTitle(e.target.value)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={4}>
-            <strong>HTML</strong>
-          </Col>
-          <Col span={20}>
-            <TextArea
-              rows={6}
-              value={inputHtmlValue}
-              onChange={(e) => {
-                setInputHtmlValue(e.target.value);
-              }}
-              placeholder="Input HTML"
-            />
-          </Col>
-        </Row>
-      </React.Fragment>
+      <Row className="margin-bottom-20">
+        <Col span={4}>
+          <strong>Title</strong>
+        </Col>
+        <Col span={20}>
+          <Input placeholder="Widget title" value={inputHtmlTitle} onChange={(e)=> setInputHtmlTitle(e.target.value)} />
+        </Col>
+      </Row>
+      <Row>
+        <Col span={4}>
+          <strong>HTML</strong>
+        </Col>
+        <Col span={20}>
+          <TextArea
+            rows={6}
+            value={inputHtmlValue}
+            onChange={(e) => {
+              setInputHtmlValue(e.target.value);
+            }}
+            placeholder="Input HTML"
+          />
+        </Col>
+      </Row>
     </Modal>
   );
 };

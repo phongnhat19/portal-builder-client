@@ -108,20 +108,22 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
         };
         const blockContentHTML = currentBlock.content as HTMLWidgetProps;
         currentContentBlock =
+        (
           <HTMLWidget
             htmlString={blockContentHTML.htmlString}
             htmlTitle={blockContentHTML.htmlTitle}
             width={`${blockContentHTML.width}%`}
             showSettingInit={blockContentHTML.showSettingInit}
             onRemove={removeWidget}
-            onSaveSetting={({ htmlString,htmlTitle }) => {
-              let currentProps = JSON.parse(JSON.stringify(currentBlock.content))
-              currentProps.htmlString = htmlString
+            onSaveSetting={({htmlString, htmlTitle}) => {
+              let currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+              currentProps.htmlString = htmlString;
               currentProps.showSettingInit = false;
-              currentProps.htmlTitle= htmlTitle
-              updateWidget(currentProps)
+              currentProps.htmlTitle = htmlTitle;
+              updateWidget(currentProps);
             }}
           />
+        );
         break;
       case CONTENT_TYPE.SCHEDULER:
         if (!currentBlock.content) {

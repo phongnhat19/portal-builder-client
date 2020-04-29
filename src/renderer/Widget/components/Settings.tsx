@@ -5,12 +5,12 @@ import {SettingOutlined, DeleteOutlined, FormOutlined} from '@ant-design/icons';
 const SettingsWidget = ({onRemove, showSetting,className}: {
   onRemove?: () => void;
   showSetting?: () => void;
-  className?:string;
+  className?: string;
 }) => {
-  let _className = "";
+  let _className = '';
 
   if (className) {
-    _className= className;
+    _className = className;
   }
 
   const menu = (

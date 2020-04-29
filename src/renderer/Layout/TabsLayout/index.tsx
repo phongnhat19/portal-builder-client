@@ -75,7 +75,7 @@ const TabsLayout = ({
               height={tabContentHTML.height}
               showSettingInit={tabContentHTML.showSettingInit}
               onRemove={removeWidget}
-              onSaveSetting={({htmlString,htmlTitle}) => {
+              onSaveSetting={({htmlString, htmlTitle}) => {
                 const currentProps = JSON.parse(JSON.stringify(tabContent.props));
                 currentProps.htmlString = htmlString;
                 currentProps.htmlTitle = htmlTitle;
