@@ -42,4 +42,21 @@
 .title {
   font-size: 25px;
   left: 4%;
+  overflow-x: auto; 
+  overflow-y: hidden;
+  max-width: 85%;
+  white-space: nowrap;
+  height: 40px;
+}
+
+.title::-webkit-scrollbar{
+height: 2px;
+}
+
+.title::-webkit-scrollbar-track {
+box-shadow: inset 0 0 2px #c4c7c7; 
+}
+
+.title::-webkit-scrollbar-thumb {
+background: #c4c7c7; 
 }
