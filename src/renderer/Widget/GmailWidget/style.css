@@ -88,7 +88,11 @@
 .gmail-error-alert {
     background-color: #fff2f0;
     border: 1px solid #ffccc7;
-    margin: '10px 50%'
+    text-align: center;
+    padding: 10px 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.65);
 }
 .gmail-loading {
     padding: '10px 50%';
