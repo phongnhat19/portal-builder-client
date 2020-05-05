@@ -10,11 +10,11 @@ import './style.css';
 import {SCHEDULER_VIEW} from './constant';
 import {getSchedulerEvent} from './service';
 
-const Scheduler = ({defaultView, data = []}: {
+const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = []}: {
   defaultView?: string;
   data?: SchedulerEvent[];
 }) => {
-  const calendarRef = useRef();
+  const calendarRef = useRef<FullCalendar>(null);
   const [events, setEvents] = useState(data);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Scheduler = ({defaultView, data = []}: {
   }, [data.length]);
 
   useEffect(() => {
-    const calendarApi = (calendarRef.current)!.getApi(0);
+    const calendarApi = (calendarRef.current)!.getApi();
     calendarApi.changeView(defaultView);
   }, [defaultView]);
 
