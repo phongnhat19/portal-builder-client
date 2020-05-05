@@ -192,7 +192,6 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
       }}
       onMouseOut={()=> {      
         onResizeWidth({width: blockRef.current!.offsetWidth});
-        
       }}
       onDrop={(e) => {
         let props: any
