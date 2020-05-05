@@ -1,8 +1,7 @@
 .grn_notify_container {
-    padding-top: 15px;
+    padding-top: 5px;
     background: #fff;
     font-family: HelveticaNeueW02-45Ligh,Arial,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
-    box-shadow: 0 0 0 0 rgba(255,255,255,0) inset, 0 2px 8px rgba(0,0,0,.4);
 }
 
 .grn_notify_item {
@@ -34,8 +33,10 @@
 }
 
 .grn_notify_read {
-    margin-top: 5px;
-    box-shadow: 0 0 0 0 rgba(255,255,255,0) inset, 0 2px 8px rgba(0,0,0,.4);
+    padding-right: 10px;
+}
+.grn_notify_read ul li{
+    box-shadow: 0 0 0 0 rgba(255,255,255,0) inset, 0 1px 1px rgba(0,0,0,.4);
 }
 
 .grn_notify_title {
@@ -67,4 +68,24 @@ img {
 
 .grn_notify_icon_title {
     content: url('data:image/gif;base64,R0lGODlhFAAUALMOAP///0ZGRpmemujj5GNzadnU1/f398jIyPHv9LW7t//3/xwkIEJaSvP3/wAAAAAAACH5BAEAAA4ALAAAAAAUABQAAASP0MlJq704S8G5ntxQHMPgZUJRlAlQmphwAMYAzAaAIMIlz4BbECCAVYo1wWIFKAhaBsIRUQIQFozEQUGKHps2QIKACB4KXoogWFAEEQ1XwSVVGwyCMgLNbVkta00HBisJZQABABYENjUHgUMBiYtzQTaSmJKKFQQEaDmZmZucnYihkxpDQZofFYijrRJBFBEAOw==');
+}
+
+.g_notify_header {
+    display: inline-flex;
+    padding: 10px;
+}
+.g_notify_icon {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    font-size: 23px;
+    color: white;
+    background: #003489;
+    border-radius: 50%;
+}
+.g_notify_title {
+    font-size: 20px;
+    padding: 5px 15px;
+    font-weight: bold;
+    color: #003489;
 }

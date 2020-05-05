@@ -3,9 +3,9 @@ import './style.css';
 import PortalPreview from './PortalPreview';
 import SideBar from './SideBar';
 import WidgetList from '../../Widget/WidgetList';
-import { BorderOutlined, CalendarOutlined, Html5Outlined,AlertOutlined, CloudOutlined } from '@ant-design/icons';
-import { CONTENT_TYPE } from '../../Widget/constant';
-import {LAYOUT_TYPE} from '../../Layout/constant'
+import {BorderOutlined, MailOutlined, CalendarOutlined, Html5Outlined, CloudOutlined, AlertOutlined} from '@ant-design/icons';
+import {CONTENT_TYPE} from '../../Widget/constant';
+import {LAYOUT_TYPE} from '../../Layout/constant';
 
 const PortalContext = createContext({
   portalList: [] as Portal[],
@@ -61,6 +61,10 @@ const PortalBuilder = () => {
     {
       icon: <AlertOutlined />,
       name: CONTENT_TYPE.GAROON_NOTIFY
+    },
+    {
+      icon: <MailOutlined />,
+      name: CONTENT_TYPE.GMAIL
     },
     {
       icon: <CloudOutlined />,
