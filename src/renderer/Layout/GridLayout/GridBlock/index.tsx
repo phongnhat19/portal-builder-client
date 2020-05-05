@@ -181,16 +181,19 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
     setBlockContent(buildContent())
   }, [content])
 
-  customeAddEventWindow('mouseup', blockRef, ()=>{
-    onResizeWidth({width: blockRef.current!.offsetWidth});
-  });
-
   return (
     <div
       ref={blockRef}
       style={finalStyle}
       className="grid-block"
       onDragOver={(event: React.DragEvent<HTMLDivElement>) => { event.preventDefault(); }}
+      onMouseUp={()=>{
+        onResizeWidth({width: blockRef.current!.offsetWidth})
+      }}
+      onMouseOut={()=> {      
+        onResizeWidth({width: blockRef.current!.offsetWidth});
+        
+      }}
       onDrop={(e) => {
         let props: any
         const type = e.dataTransfer.getData("text") as ContentType
