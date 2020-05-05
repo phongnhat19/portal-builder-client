@@ -130,13 +130,15 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
           currentContentBlock =
           (<HTMLWidget
             htmlString={blockContentHTML.htmlString}
+            htmlTitle={blockContentHTML.htmlTitle}
             width={`${blockContentHTML.width}%`}
             showSettingInit={blockContentHTML.showSettingInit}
             onRemove={removeWidget}
-            onSaveSetting={({htmlString}) => {
+            onSaveSetting={({htmlString, htmlTitle}) => {
               const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
               currentProps.htmlString = htmlString;
               currentProps.showSettingInit = false;
+              currentProps.htmlTitle = htmlTitle;
               updateWidget(currentProps);
             }}
           />);

@@ -48,6 +48,7 @@ const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = u
           const blockContentHTML = content as HTMLWidgetProps;
           currentContentBlock =
             (<HTMLWidget
+              htmlTitle={blockContentHTML.htmlTitle}
               htmlString={blockContentHTML.htmlString}
               width={`${blockContentHTML.width}%`}
             />);
