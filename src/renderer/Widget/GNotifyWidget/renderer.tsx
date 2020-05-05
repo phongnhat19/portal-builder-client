@@ -13,8 +13,9 @@ const Notify = ({data}: {
 
   return (
     <div className="grn_notify_container">
-      <div>
-        <span className="grn_notify_title">G Notifications</span>
+      <div className="g_notify_header">
+        <div className="g_notify_icon">G</div>
+        <div className="g_notify_title">Notifications</div>
       </div>
       <div>
         {(notifications.length === 0) &&
@@ -35,16 +36,18 @@ const Notify = ({data}: {
                   <div className="grn_notify_itemTitle">
                     <span className="grn_notify_item_wrap">
                       <a className="grn_notify_img" title={item.title} href={item.url}>
-                        <img className="grn_notify_icon_title" />
+                        <img alt="Garoon icon" className="grn_notify_icon_title" />
                         {item.title}
                       </a>
-                      <span className="grn_notify_itemTime">{date.getFullYear()}-{date.getMonth() + 1}-{date.getDate()} {date.getHours()} : {date.getMinutes()}</span>
+                      <span className="grn_notify_itemTime">
+                        {date.getFullYear()}-{date.getMonth() + 1}-{date.getDate()} {date.getHours()} : {date.getMinutes()}
+                      </span>
                     </span>
                   </div>
                   <div>
                     <span className="grn_notify_item_wrap">
                       <a className="grn_notify_img" title={item.creator?.name} href={`https://${window.location.host}/users/${item.creator?.code}`}>
-                        <img className="grn_notify_user" />
+                        <img alt="user icon" className="grn_notify_user" />
                         {item.creator?.name}
                       </a>
                     </span>
