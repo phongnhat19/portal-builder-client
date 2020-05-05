@@ -57,7 +57,6 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
       }
     };
     handleGAPIClient();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKey, clientID, existGAPI]);
 
   const prepareData = (isSignedIn: boolean, pageToken?: string) => {
@@ -70,8 +69,7 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
       }).then((rsp: [ListMail])=> {
         return formatListMail(rsp);
       }).then((rsp: GmailData[])=> {
-        const newData = dataSource.concat(rsp);
-        setDataSource(newData);
+        setDataSource(prevData => prevData.concat(rsp));
         setLoading(false);
       }).catch(() => {
         setError({invalidKey: ERROR_MESSAGE.API_KEY, logOut: ''});
@@ -95,10 +93,7 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
     setCurrentPage(currentPape + 1);
   };
 
-  const handleSignin = () => {
-    signIn();
-  };
-  const handleSignout = () => {
+  const handleSignOut = () => {
     signOut();
     setDataSource([]);
     setError({invalidKey: '', logOut: ERROR_MESSAGE.OAUTH});
@@ -127,9 +122,9 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
             onClick={() => {
               if (!window.kintone) return;
               if (checkSignin()) {
-                handleSignout();
+                handleSignOut();
               } else {
-                handleSignin();
+                signIn();
               }
             }}
           >
@@ -148,7 +143,8 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
         {(error.invalidKey || error.logOut) && <div className="gmail-error-alert"> {error.invalidKey || error.logOut}</div> }
         {loading ? <Spin
           style={{padding: '10px 50%', position: 'static', display: 'inline-block', opacity: 1, color: '#1890ff'}}
-          indicator={antIcon} /> : <MailDetail dataDisplay={dataDisplay} />}
+          indicator={antIcon}
+        /> : <MailDetail gmailDataList={dataDisplay} />}
       </div>
     </div>
   );

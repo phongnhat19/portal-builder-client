@@ -116,7 +116,8 @@ const TabsLayout = ({
       if (tabContentDOM) tabContentDOM.style.backgroundColor = 'transparent';
       const portalSpaceEl = kintone.portal.getContentSpaceElement();
       defaultPortalBodyEl = portalSpaceEl.nextSibling || defaultPortalBodyEl;
-      if (defaultPortalBodyEl) document.getElementById('default-portal')?.appendChild(defaultPortalBodyEl);
+      const portalDefaultEl = document.getElementById('default-portal')!;
+      if (defaultPortalBodyEl) portalDefaultEl.appendChild(defaultPortalBodyEl);
     }
   }, [selectedTab]);
 

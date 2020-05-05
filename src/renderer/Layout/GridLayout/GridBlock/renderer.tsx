@@ -31,7 +31,7 @@ const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = u
     const buildContent = () => {
       let currentContentBlock = EMPTY_WIDGET_CONTENT as any;
 
-      if (!content) return;
+      if (!content) return currentContentBlock;
       switch (type) {
         case CONTENT_TYPE.IFRAME: {
           const blockContentIframe = content as IframeWidgetProps;

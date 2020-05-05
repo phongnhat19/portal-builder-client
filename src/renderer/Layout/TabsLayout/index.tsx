@@ -102,7 +102,7 @@ const TabsLayout = ({
       });
     };
 
-    const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps) => {
+    const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | GmailWidgetProps) => {
       const tabListContext = (portalList[selectedPortal].layout.props as TabLayout).tabList;
       tabListContext[selectedTab].tabContent.props = newProps;
       setPortalList(portalList);

@@ -78,7 +78,7 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
       const currentBlock = gridLayout.rows[rowIndex].blocks[blockIndex];
       let currentContentBlock = EMPTY_WIDGET_CONTENT as any;
 
-      if (!currentBlock) return;
+      if (!currentBlock) return currentContentBlock;
       switch (currentBlock.type) {
         case CONTENT_TYPE.IFRAME: {
           if (!currentBlock.content) {

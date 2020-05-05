@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import SettingsWidget from '../components/Settings';
-import GmailModel from './GmailModal';
+import GmailModal from './GmailModal';
+import {SAMPLE_DATA} from './constant';
 
 import Gmail from './renderer';
 
@@ -14,25 +15,10 @@ const GmailWidget = ({apiKey = '', clientID = '', onRemove, onSaveSetting, showS
         <Gmail
           apiKey={apiKey}
           clientID={clientID}
-          data={[
-            {
-              threadId: '1',
-              from: 'test@gmail.com',
-              subject: '10 Downing Street',
-              time: '2020-10-24',
-              link: 'htpps://test.com'
-            },
-            {
-              threadId: '1',
-              from: 'alex@gmail.com',
-              subject: '10 Downing Street',
-              time: '2020-10-25',
-              link: 'htpps://alex.com'
-            }
-          ]}
+          data={SAMPLE_DATA}
         />
       </div>
-      <GmailModel
+      <GmailModal
         isVisible={showSetting}
         apiKey={apiKey}
         clientID={clientID}
