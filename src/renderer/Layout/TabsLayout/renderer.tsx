@@ -36,6 +36,7 @@ const TabsLayout = ({
           const tabContentIframe = tabContent.props as IframeWidgetProps;
           newItem.tabContent =
             (<Iframe
+              defaultTitle={tabContentIframe.defaultTitle}
               url={tabContentIframe.url}
               width={tabContentIframe.width}
               height={tabContentIframe.height}

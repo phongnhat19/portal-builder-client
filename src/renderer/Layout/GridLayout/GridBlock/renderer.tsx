@@ -38,6 +38,7 @@ const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = u
 
           currentContentBlock =
             (<IframeWidget
+              defaultTitle={blockContentIframe.defaultTitle}
               url={blockContentIframe.url}
               width={blockContentIframe.width}
               height={blockContentIframe.height}
@@ -64,8 +65,8 @@ const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = u
         }
         case CONTENT_TYPE.GMAIL: {
 
-          const blockContentHTML = content as GmailWidgetProps;
-          currentContentBlock = <GmailWidget apiKey={blockContentHTML.apiKey} clientID={blockContentHTML.clientID} />;
+          const blockContentGmail = content as GmailWidgetProps;
+          currentContentBlock = <GmailWidget apiKey={blockContentGmail.apiKey} clientID={blockContentGmail.clientID} />;
           break;
         }
         case CONTENT_TYPE.GAROON_NOTIFY:
