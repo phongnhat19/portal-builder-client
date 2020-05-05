@@ -13,7 +13,7 @@ import confirm from 'antd/lib/modal/confirm';
 import { CONTENT_TYPE } from '../../../Widget/constant';
 import { WEATHER_UNIT, WEATHER_TYPE } from '../../../Widget/WeatherWidget/constant';
 import WeatherWidget from '../../../Widget/WeatherWidget';
-import {customeAddEventWindow} from '../../../../main/util/addEventWindow'
+
 const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, onRemoveBlock, onResizeWidth }: {
   style?: CSSProperties
   content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps
