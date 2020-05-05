@@ -32,7 +32,7 @@ const signOut = () => {
   gapi.auth2.getAuthInstance().signOut();
 };
 
-const handleAuthorize = (callback: Function) => {
+const handleAuthorize = (callback: (isSignedIn: boolean) => void) => {
   gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
 };
 
