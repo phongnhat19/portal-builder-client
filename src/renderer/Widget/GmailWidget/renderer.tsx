@@ -33,7 +33,7 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
     setDataDisplay(currentData);
   }, [currentPape, dataSource]);
   useEffect(() =>{
-    const handleSigninCallBack = (isSignedIn: boolean) => {
+    const handleSigninCallBack = (isSignedIn: boolean): void => {
       setSignin(isSignedIn);
       prepareData(isSignedIn);
     };
