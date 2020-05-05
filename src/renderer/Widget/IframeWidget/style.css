@@ -8,7 +8,7 @@
 .iframe-header{
     position: relative;
     height: 50px;
-    border: 1px solid  #c4c7c7;
+    border: 1px solid rgb(238, 238, 238);
     border-width: 2px;
     border-bottom: none;
 }
@@ -26,7 +26,9 @@
     left: 1%;
 }
 
-
+.iframe {
+    border: 2px solid rgb(238, 238, 238);
+}
 
 .iframe-header .title{
     left: 5%;
