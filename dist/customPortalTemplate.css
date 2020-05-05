@@ -11,8 +11,10 @@
     padding: 5px;
 }
 
-.kintone-portal-content-space .kuc-tabs-tab-contents iframe {
-    border: none;
+.iframe-deploy {
+    width: calc(100% - 2px) !important;
+    border-right: none;
+    border-color: rgb(238, 238, 238);
 }
 
 .kintone-portal-content-space .kuc-tabs-container {
