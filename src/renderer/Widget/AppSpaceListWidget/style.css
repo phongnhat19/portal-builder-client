@@ -104,6 +104,7 @@
 .widget-content-preview-col-icon {
   width: 5%;
   display: flex;
+  cursor: pointer;
 }
 .widget-content-preview-col-app {
   width: 89%;

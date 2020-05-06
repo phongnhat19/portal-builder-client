@@ -6,6 +6,14 @@ const IconType = ({type}: {type: string}) => {
 };
 
 const PreviewContent = ({contentList}: {contentList: ModalAppSpaceContent[]}) => {
+  function redirectApp(categoryType: string, id: number) {
+    let path = `/#/space/${id}`;
+
+    if (categoryType === 'app') {
+      path = `${id}`;
+    }
+    window.location.replace(`${window.location.origin}/k/${path}`);
+  }
   const checkEvenNumber = (number: number) => {
     if (number % 2 === 0) {
       return true;
@@ -25,7 +33,16 @@ const PreviewContent = ({contentList}: {contentList: ModalAppSpaceContent[]}) =>
                 <div className={'widget-content-preview-row ' + hightLightRow} key={i}>
                   <div className="widget-content-preview-col-icon">
                     {category.icon ? (
-                      <img alt="widget-icon" src={category.icon ? category.icon : ''} width={34} height={34} />
+                      <img
+                        role="presentation"
+                        onDoubleClick={() => {
+                          redirectApp(category.type, category.id);
+                        }}
+                        alt="widget-icon"
+                        src={category.icon ? category.icon : ''}
+                        width={34}
+                        height={34}
+                      />
                     ) : (
                       <IconType type={category.type} />
                     )}
