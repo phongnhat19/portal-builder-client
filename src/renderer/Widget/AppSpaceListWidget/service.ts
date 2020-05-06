@@ -5,7 +5,7 @@ const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpaceContent[]}) => Pr
 }: {
   listAppSpace: ModalAppSpaceContent[];
 }) => {
-  const newListAppSpace = listAppSpace.slice();
+  const newListAppSpace = listAppSpace.map(appSpace => JSON.parse(JSON.stringify(appSpace)));
   for (let i = 0; i < newListAppSpace.length; i++) {
     const appSpace = newListAppSpace[i];
     for (let j = 0; j < appSpace.categoryList.length; j++) {
@@ -13,7 +13,7 @@ const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpaceContent[]}) => Pr
       if (category.type === 'space') {
         let spaceInfo = {} as any;
         try {
-          spaceInfo = await getSpace({id: category.id});
+          spaceInfo = await getSpace({id: Number(category.id)});
         } catch (error) {
           category.name = error.message;
           continue;
@@ -24,7 +24,7 @@ const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpaceContent[]}) => Pr
       }
       let appInfo = {} as {name: string; icon: string; message: any};
       try {
-        appInfo = await getApp({id: category.id});
+        appInfo = await getApp({id: Number(category.id)});
       } catch (error) {
         category.name = error.message;
         continue;

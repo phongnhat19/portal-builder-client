@@ -67,7 +67,7 @@ const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}:
     case CONTENT_TYPE.APP_SPACE: {
       const blockContentAppSpace = content as AppSpaceWidgetProps;
       currentContentBlock = (
-        <AppSpaceWidget widgetTitle={blockContentAppSpace.widgetTitle} listContent={blockContentAppSpace.listContent} />
+        <AppSpaceWidget widgetTitle={blockContentAppSpace.widgetTitle} contentList={blockContentAppSpace.contentList} />
       );
       break;
     }
