@@ -37,6 +37,16 @@ const isSameCategoryValue = (currentObjectList: ModalAppSpaceContent[], updateOb
   return true;
 };
 
+function redirectApp(categoryType: string, id: number) {
+  let path = `/#/space/${id}`;
+
+  if (categoryType === 'app') {
+    path = `${id}`;
+  }
+  window.location.href = `${window.location.origin}/k/${path}`;
+}
+
 export {
   isSameCategoryValue,
+  redirectApp
 };
