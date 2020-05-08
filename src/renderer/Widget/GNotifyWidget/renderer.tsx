@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {getNotifyEvent} from './service';
 import './style.css';
-import { USER_ICON, TITLE_ICON } from './constant';
+import {USER_ICON, TITLE_ICON} from './constant';
 
 const Notify = ({data}: {
   data: NotificationGRN[];
