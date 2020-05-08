@@ -5,7 +5,8 @@
 .grid-block {
   padding-right: 15px;
   min-height: 100px;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   resize: horizontal;
   box-sizing: border-box;
 }
