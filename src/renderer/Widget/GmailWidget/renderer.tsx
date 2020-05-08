@@ -49,8 +49,8 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
             setSignin(checkSignin());
             handleAuthorize(handleSigninCallBack);
             handleSigninCallBack(checkSignin());
-          }).catch(() => {
-            setError({invalidKey: ERROR_MESSAGE.API_KEY, logOut: ''});
+          }).catch((err) => {
+            setError({invalidKey: praseErrorMsg(err), logOut: ''});
             setLoading(false);
           });
         });
@@ -59,6 +59,16 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
     handleGAPIClient();
   }, [apiKey, clientID, existGAPI]);
 
+  const praseErrorMsg = (err: {details: string; error: {errors: [{reason: string; message: string}]}}) => {
+    let msg = err.details || '';
+    const errors = err.error.errors;
+    if (errors) {
+      errors.forEach((item: {reason: string; message: string}) => {
+        msg = `${msg} Reason: ${item.reason}  -  Message: ${item.message} \n`;
+      });
+    }
+    return msg;
+  };
   const prepareData = (isSignedIn: boolean, pageToken?: string) => {
     if (isSignedIn) {
       setError({invalidKey: '', logOut: ''});
@@ -71,8 +81,8 @@ const Gmail = ({apiKey = '', clientID = '', data = []}: {
       }).then((rsp: GmailData[])=> {
         setDataSource(prevData => prevData.concat(rsp));
         setLoading(false);
-      }).catch(() => {
-        setError({invalidKey: ERROR_MESSAGE.API_KEY, logOut: ''});
+      }).catch((err: any) => {
+        setError({invalidKey: praseErrorMsg(err), logOut: ''});
         setLoading(false);
       });
     } else {
