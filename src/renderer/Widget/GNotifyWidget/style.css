@@ -1,4 +1,5 @@
 .grn_notify_container {
+    width: calc(100% + 15px);
     padding-top: 5px;
     background: #fff;
     font-family: HelveticaNeueW02-45Ligh,Arial,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
