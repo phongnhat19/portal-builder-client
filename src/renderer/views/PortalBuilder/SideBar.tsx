@@ -72,7 +72,10 @@ const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate
                           <Popconfirm
                             placement="bottomLeft"
                             title={CONFIRM_DELETE_PORTAL}
-                            onConfirm={() => removePortal(index)}
+                            onConfirm={(e) => {
+                              e && e.stopPropagation();
+                              removePortal(index);
+                            }}
                             okText="Yes"
                             cancelText="No"
                           >

@@ -80,11 +80,13 @@ const PortalBuilder = () => {
   };
 
   const removePortal = (portalIndex: number) => {
-    data.splice(portalIndex, 1);
-    setSelectedPortal(data.length - 1);
-    setData(JSON.parse(JSON.stringify(data)));
-    window.localStorage.setItem('portal', JSON.stringify(data));
+    const portalList = [...data];
+    portalList.splice(portalIndex, 1);
+    setSelectedPortal(portalList.length - 1);
+    setData(JSON.parse(JSON.stringify(portalList)));
+    window.localStorage.setItem('portal', JSON.stringify(portalList));
   };
+
   const selectedIndex = selectedPortal > data.length - 1 ? data.length - 1 : selectedPortal;
 
   return (
