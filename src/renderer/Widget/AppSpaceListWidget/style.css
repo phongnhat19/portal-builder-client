@@ -110,6 +110,10 @@
   width: 5%;
   display: flex;
 }
+.color-link {
+  color: blue;
+  font-weight: bold;
+}
 .widget-content-preview-col-app {
   width: 89%;
 }

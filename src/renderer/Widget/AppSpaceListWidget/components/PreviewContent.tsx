@@ -43,7 +43,7 @@ const PreviewContent = ({contentList}: {contentList: ModalAppSpaceContent[]}) =>
                       <IconType type={category.type} />
                     )}
                   </div>
-                  <div className="widget-content-preview-col-app">{
+                  <div className={`widget-content-preview-col-app ${window.kintone ? 'color-link' : ''}`}>{
                     category.name ? category.name : `${category.type === 'app'
                       ? 'App' : 'Space'} name (id: ${category.id})`}
                   </div>
