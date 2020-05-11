@@ -15,6 +15,7 @@ const SchedulerWidget = ({onSaveSetting, width, height, defaultView = SCHEDULER_
 
   const [showSetting, setShowSetting] = useState(showSettingInit);
   const [typeView, setTypeView] = useState(defaultView);
+  const [onSaveModal, setOnSaveModal] = useState(false);
 
   const start = new Date();
   start.setHours(9);
@@ -24,7 +25,13 @@ const SchedulerWidget = ({onSaveSetting, width, height, defaultView = SCHEDULER_
 
   return (
     <div style={{width, height}}>
-      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
+      <SettingsWidget 
+        onRemove={onRemove}
+        showSetting={() => {
+          setShowSetting(true);
+          setOnSaveModal(false);
+        }}
+      />
       <Schedule
         defaultView={typeView}
         data={[
@@ -36,6 +43,7 @@ const SchedulerWidget = ({onSaveSetting, width, height, defaultView = SCHEDULER_
             end
           }
         ]}
+        onSaveModal={onSaveModal}
       />
       <ScheduleModal
         defaultView={typeView}
@@ -43,6 +51,7 @@ const SchedulerWidget = ({onSaveSetting, width, height, defaultView = SCHEDULER_
         onClose={() => (setShowSetting(false))}
         onSave={(item) => {
           setTypeView(item.defaultView);
+          setOnSaveModal(true);
           onSaveSetting && onSaveSetting({defaultView: item.defaultView});
           setShowSetting(false);
         }}
