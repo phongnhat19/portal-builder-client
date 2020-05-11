@@ -34,7 +34,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
 
   const { portalList, setPortalList, selectedPortal } = useContext(PortalContext)
   const [blockContent, setBlockContent] = useState(null)
-
+  const [isResize, setIsReSize] = useState(false);
   const blockRef = useRef<HTMLDivElement>(null)
 
   const dropWidget = (rowIndex: number, blockIndex: number, type: ContentType, props: any) => {
@@ -188,10 +188,13 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
       className="grid-block"
       onDragOver={(event: React.DragEvent<HTMLDivElement>) => { event.preventDefault(); }}
       onMouseUp={()=>{
-        onResizeWidth({width: blockRef.current!.offsetWidth})
+        if(isResize) {
+          onResizeWidth({width: blockRef.current!.offsetWidth})
+        }
+        setIsReSize(false);
       }}
-      onMouseOut={()=> {      
-        onResizeWidth({width: blockRef.current!.offsetWidth});
+      onMouseDown={()=> {
+        setIsReSize(true);
       }}
       onDrop={(e) => {
         let props: any
