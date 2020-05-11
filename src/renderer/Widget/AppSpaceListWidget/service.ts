@@ -5,7 +5,7 @@ const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpaceContent[]}) => Pr
 }: {
   listAppSpace: ModalAppSpaceContent[];
 }) => {
-  const newListAppSpace = listAppSpace.slice();
+  const newListAppSpace = listAppSpace.map(appSpace => JSON.parse(JSON.stringify(appSpace)));
   for (let i = 0; i < newListAppSpace.length; i++) {
     const appSpace = newListAppSpace[i];
     for (let j = 0; j < appSpace.categoryList.length; j++) {

@@ -129,12 +129,12 @@ const buildContent = ({portalList, selectedPortal, rowIndex, blockIndex, removeW
       currentContentBlock = (
         <AppSpaceWidget
           widgetTitle={blockContentAppSpace.widgetTitle}
-          listContent={blockContentAppSpace.listContent}
+          contentList={blockContentAppSpace.contentList}
           showSettingInit={blockContentAppSpace.showSettingInit}
           onRemove={removeWidget}
-          onSaveSetting={({listContent, widgetTitle}) => {
+          onSaveSetting={({contentList, widgetTitle}) => {
             const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
-            currentProps.listContent = listContent;
+            currentProps.contentList = contentList;
             currentProps.widgetTitle = widgetTitle;
             currentProps.showSettingInit = false;
             updateWidget(currentProps);

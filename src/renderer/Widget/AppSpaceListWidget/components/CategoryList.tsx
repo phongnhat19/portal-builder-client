@@ -9,11 +9,11 @@ const CategoryDetail = ({
   onChangeRow,
 }: {
   categoryList: any;
-  onChangeRow?: (categoryList: Array<{id: string; type: string}>) => void;
+  onChangeRow?: (categoryList: Array<{id: string; type: string; name: string; icon: string}>) => void;
 }) => {
   const newCategoryList = categoryList.slice();
   const addRow = (i: number) => {
-    newCategoryList.splice(i + 1, 0, {type: 'app', id: ''});
+    newCategoryList.splice(i + 1, 0, {type: 'app', id: '', name: '', icon: ''});
     if (onChangeRow) onChangeRow(newCategoryList);
   };
   const removeRow = (index: number) => {

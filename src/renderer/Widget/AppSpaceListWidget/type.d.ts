@@ -13,5 +13,5 @@ declare type CategorytAppSpace = {
 
 declare type ModalAppSpaceContent = {
   category: string;
-  categoryList: ContentAppSpaceWidget[];
+  categoryList: CategorytAppSpace[];
 };
