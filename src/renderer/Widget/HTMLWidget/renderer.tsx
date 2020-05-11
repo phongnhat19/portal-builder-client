@@ -8,7 +8,7 @@ const HTML = ({width, height, htmlString, htmlTitle}: {htmlTitle: string;htmlStr
   };
 
   return (
-    <React.Fragment>
+    <div className="padding-5">
       {window.kintone && <HTMLHeader htmlTitle={htmlTitle} /> }
       <div
         role="button"
@@ -17,7 +17,7 @@ const HTML = ({width, height, htmlString, htmlTitle}: {htmlTitle: string;htmlStr
         style={{width, height}}
         dangerouslySetInnerHTML={createMarkupHTMLWidget(htmlString)}
       />
-    </React.Fragment>
+    </div>
   );
 };
 

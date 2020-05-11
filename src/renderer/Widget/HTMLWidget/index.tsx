@@ -25,7 +25,7 @@ const HTMLWidget = ({
   return (
     <div className="html-wrapper">
       <HTMLHeader htmlTitle={htmlTitle} onRemove={onRemove} setShowSetting={setShowSetting} />
-      <div role="button" tabIndex={0} onDrop={(event) => event.stopPropagation()} className="padding-5">
+      <div role="button" tabIndex={0} onDrop={(event) => event.stopPropagation()}>
         <HTML htmlTitle={htmlTitle} htmlString={htmlString} width={width} height={height} />
       </div>
 
