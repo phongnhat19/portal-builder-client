@@ -116,7 +116,7 @@
 .gmail-widget-login,
 .gmail-widget-logout {
     height: 32px;
-    padding: 4px 15px;
+    padding: 0px 15px;
     border-radius: 2px;
     color: #fff;
     background-color: #1890ff;
@@ -126,7 +126,7 @@
 .icon-previous-container {
     height: 32px;
     margin-left: 10px;
-    padding: 10px 10px;
+    padding: 5px 10px;
 }
 .icon-next-container:hover,
 .icon-previous-container:hover {

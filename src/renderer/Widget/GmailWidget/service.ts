@@ -89,7 +89,7 @@ const formatDate = (date?: string) => {
   const today = new Date();
 
   const numberFormat = (num: number) => `${num < 10 ? '0' : ''}${num}`;
-  const dateFormat = (d: Date) => `${d.getFullYear()}-${numberFormat(d.getMonth())}-${numberFormat(d.getDate())} `;
+  const dateFormat = (d: Date) => `${d.getFullYear()}-${numberFormat(d.getMonth() + 1)}-${numberFormat(d.getDate())} `;
   format = dateFormat(inputDate);
 
   if (dateFormat(today) === dateFormat(inputDate)) {
