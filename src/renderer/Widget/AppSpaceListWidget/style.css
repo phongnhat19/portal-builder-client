@@ -102,7 +102,7 @@
   width: 4%;
 }
 .widget-content-preview-col-icon {
-  width: 5%;
+  margin-right: 10px;
   display: flex;
 }
 .widget-content-preview-col-app {
