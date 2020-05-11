@@ -19,7 +19,7 @@ const Iframe = ({
   return (
     <div>
       <IFRAMEHeader setShowSetting={setShowSetting} defaultTitle={defaultTitle} onRemove={onRemove} />
-      <iframe title="iframe" src={url} style={{width, height}} />
+      <iframe className="iframe" title="iframe" src={url} style={{width, height}} />
     </div>
   );
 };
