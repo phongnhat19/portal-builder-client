@@ -10,10 +10,9 @@ import './style.css';
 import {SCHEDULER_VIEW} from './constant';
 import {getSchedulerEvent} from './service';
 
-const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = [], onSaveModal}: {
+const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = []}: {
   defaultView?: string;
   data?: SchedulerEvent[];
-  onSaveModal: boolean;
 }) => {
   const calendarRef = useRef<FullCalendar>(null);
   const [events, setEvents] = useState(data);
@@ -24,10 +23,8 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
 
   useEffect(() => {
     const calendarApi = (calendarRef.current)!.getApi();
-    if (onSaveModal) {
-      calendarApi.changeView(defaultView);
-    }
-  }, [defaultView, onSaveModal]);
+    calendarApi.changeView(defaultView);
+  }, [defaultView]);
 
   return (
     <div style={{backgroundColor: '#FFFFFF'}}>
