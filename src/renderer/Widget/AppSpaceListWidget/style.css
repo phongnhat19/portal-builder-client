@@ -98,12 +98,21 @@
   font-size: 12px;
   padding: 10px 10px;
 }
+
+.widget-content-preview-row:hover {
+  cursor: pointer;
+}
+
 .widget-content-preview-col-type {
   width: 4%;
 }
 .widget-content-preview-col-icon {
   width: 5%;
   display: flex;
+}
+.color-link {
+  color: blue;
+  font-weight: bold;
 }
 .widget-content-preview-col-app {
   width: 89%;
