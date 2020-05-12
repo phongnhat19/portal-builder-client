@@ -200,7 +200,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
             showSettingInit: true,
             url: "",
             width: '100%',
-            height: '100%'
+            height: '82vh'
           }
         } else if (type === CONTENT_TYPE.HTML) {
           props = {
