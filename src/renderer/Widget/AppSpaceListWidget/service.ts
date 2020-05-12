@@ -31,8 +31,8 @@ const getAppInfo: ({listAppSpace}: {listAppSpace: ModalAppSpaceContent[]}) => Pr
       }
       const appNameAndIcon = parseInfoApp(appInfo);
       if (appNameAndIcon) {
-        appInfo.name = appNameAndIcon.name;
-        appInfo.icon = appNameAndIcon.icon;
+        category.name = appNameAndIcon.name;
+        category.icon = appNameAndIcon.icon;
         continue;
       }
       category.name = appInfo.name;
@@ -49,8 +49,8 @@ function parseInfoApp(appInfo: any) {
   for (const key in PRESET_ICON_APP) {
     if (Object.prototype.hasOwnProperty.call(PRESET_ICON_APP, key)) {
       const preset = PRESET_ICON_APP[key] as any;
-      if (PRESET_ICON_APP[key] === appInfo.icon.key) {
-        return {name: preset.name, icon: PRESET_ICON_APP[key]};
+      if (key === appInfo.icon.key) {
+        return {name: appInfo.name, icon: preset};
       }
     }
   }
