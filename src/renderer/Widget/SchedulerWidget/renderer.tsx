@@ -21,11 +21,6 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
     if (data.length === 0 && window.kintone) getSchedulerEvent().then(setEvents);
   }, [data.length]);
 
-  useEffect(() => {
-    const calendarApi = (calendarRef.current)!.getApi();
-    calendarApi.changeView(defaultView);
-  }, [defaultView]);
-
   return (
     <div style={{backgroundColor: '#FFFFFF'}}>
       <div className="g_schedule_header">
