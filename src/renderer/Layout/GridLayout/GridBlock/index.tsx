@@ -182,13 +182,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
     setBlockContent(buildContent())
   }, [content])
 
-  const stableResizeWidth = useCallback(onResizeWidth, []);
-
   useEffect(()=> {
-    const handleResizeDown = () => {
-      setIsReSize(true);
-    };
-
     const handleMouseUp = () => {
       if (isResize) {
         onResizeWidth({width: blockRef.current!.offsetWidth});
@@ -196,13 +190,11 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
       setIsReSize(false);
     };
 
-    document.addEventListener('mousedown', handleResizeDown);
     document.addEventListener('mouseup', handleMouseUp);
-    return ()=> {
-      document.removeEventListener('mousedown', handleResizeDown);
+    return () => {
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResize]);
+  }, [isResize, onResizeWidth]);
 
   return (
     <div
@@ -210,6 +202,7 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
       style={finalStyle}
       className="grid-block"
       onDragOver={(event: React.DragEvent<HTMLDivElement>) => { event.preventDefault(); }}
+      onMouseDown={() => setIsReSize(true)}
       onDrop={(e) => {
         let props: any
         const type = e.dataTransfer.getData("text") as ContentType
