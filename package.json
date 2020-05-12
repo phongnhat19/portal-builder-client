@@ -84,6 +84,7 @@
     "@electron-forge/maker-zip": "6.0.0-beta.49",
     "@electron-forge/plugin-webpack": "6.0.0-beta.49",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/whatwg-fetch": "0.0.33",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "babel-loader": "^8.0.6",
