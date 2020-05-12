@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Weather from 'simple-react-weather'
+import 'whatwg-fetch';
+import Weather from 'simple-react-weather';
 import { WEATHER_TYPE } from './constant';
 import { Row, Col } from 'antd';
 import axios from 'axios';
-
 const WeatherComponent = ({
   unitTemp = 'C',
   weatherCity = '',
