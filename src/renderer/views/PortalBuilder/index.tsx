@@ -85,7 +85,6 @@ const PortalBuilder = () => {
     setData(JSON.parse(JSON.stringify(data)));
     window.localStorage.setItem('portal', JSON.stringify(data));
   };
-
   const selectedIndex = selectedPortal > data.length - 1 ? data.length - 1 : selectedPortal;
 
   return (
