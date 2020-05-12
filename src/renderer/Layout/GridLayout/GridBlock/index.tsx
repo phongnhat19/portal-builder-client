@@ -186,8 +186,8 @@ const GridBlock = ({ style, content = undefined, width, rowIndex, blockIndex, on
     const handleMouseUp = () => {
       if (isResize) {
         onResizeWidth({width: blockRef.current!.offsetWidth});
+        setIsReSize(false);
       }
-      setIsReSize(false);
     };
 
     document.addEventListener('mouseup', handleMouseUp);
