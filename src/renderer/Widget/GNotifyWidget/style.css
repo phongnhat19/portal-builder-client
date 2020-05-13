@@ -78,6 +78,9 @@ img {
     color: white;
     background: #003489;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .g_notify_title {
     font-size: 20px;
