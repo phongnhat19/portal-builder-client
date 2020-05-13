@@ -34,6 +34,7 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
           center: 'title',
           right: ''
         }}
+        contentHeight="auto"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         defaultView={defaultView}
         eventTimeFormat={{
