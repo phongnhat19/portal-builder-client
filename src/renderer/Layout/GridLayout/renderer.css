@@ -50,6 +50,7 @@
 .grid-layout .grid-layout-row .grid-block .widget-weather {
   background-color: #6495ED;
   padding: 20px;
+  height: 100%;
 }
 
 .grid-layout .grid-layout-row .grid-block .styles_simpleReactWeather__3uy4l {
@@ -60,6 +61,7 @@
 .grid-layout .grid-layout-row .grid-block .grid-block-position-relative {
   height: 100%;
 }
+
 .grid-layout .grid-layout-row .grid-block .grid-block-position-relative {
   background: #ffffff;
 }

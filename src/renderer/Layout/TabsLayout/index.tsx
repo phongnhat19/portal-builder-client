@@ -289,7 +289,7 @@ const TabsLayout = ({
           }}
         />
       }
-      {tabItems.length > 1 &&
+      {selectedTab !== 0 &&
         <Button
           type="default"
           icon={<MinusCircleOutlined />}

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Weather from 'simple-react-weather'
+import 'whatwg-fetch';
+import Weather from 'simple-react-weather';
 import { WEATHER_TYPE } from './constant';
 import { Row, Col } from 'antd';
-
+import axios from 'axios';
 const WeatherComponent = ({
   unitTemp = 'C',
   weatherCity = '',
@@ -28,8 +29,8 @@ const WeatherComponent = ({
     (async () => {
       try {
         if (weatherCity !== '' && openWeatherMapAPIKey !== '') {
-          const weatherAPI: any = await Promise.all([fetch(weather)])
-          const weatherDataAPI: any = await Promise.all([weatherAPI[0].json()])
+          const weatherAPI: any = await Promise.all([axios.get(weather)]);
+          const weatherDataAPI: any = await Promise.all([weatherAPI[0].data]);
           setWeatherData({
             description: weatherDataAPI[0].weather[0].description,
             humidity: `${weatherDataAPI[0].main.humidity} %`,

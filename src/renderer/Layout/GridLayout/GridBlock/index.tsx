@@ -1,9 +1,9 @@
-import React, {CSSProperties, useRef, useContext, useState, useEffect} from 'react';
-import '../style.css';
-import {ExclamationCircleOutlined, CloseOutlined} from '@ant-design/icons';
-import {Button, Popconfirm, Row} from 'antd';
-import {PortalContext} from '../../../views/PortalBuilder';
-import {SCHEDULER_VIEW} from '../../../Widget/SchedulerWidget/constant';
+import React, { CSSProperties, useRef, useContext, useState, useEffect, useCallback } from 'react'
+import '../style.css'
+import { ExclamationCircleOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, Popconfirm, Row } from 'antd';
+import { PortalContext } from '../../../views/PortalBuilder';
+import { SCHEDULER_VIEW } from '../../../Widget/SchedulerWidget/constant';
 import IframeWidget from '../../../Widget/IframeWidget';
 import HTMLWidget from '../../../Widget/HTMLWidget';
 import GmailWidget from '../../../Widget/GmailWidget';
@@ -33,10 +33,11 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
     finalStyle = {...finalStyle, ...style};
   }
 
-  const {portalList, setPortalList, selectedPortal} = useContext(PortalContext);
-  const [blockContent, setBlockContent] = useState(null);
-
+  const { portalList, setPortalList, selectedPortal } = useContext(PortalContext)
+  const [blockContent, setBlockContent] = useState(null)
+  const [isResize, setIsReSize] = useState(false);
   const blockRef = useRef<HTMLDivElement>(null);
+
 
   const dropWidget = (dropRowIndex: number, dropBlockIndex: number, type: ContentType, props: any) => {
     const gridLayout = portalList[selectedPortal].layout.props as GridLayout;
@@ -204,18 +205,28 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
     setBlockContent(buildContent());
   }, [blockIndex, content, portalList, rowIndex, selectedPortal, setPortalList]);
 
+  useEffect(()=> {
+    const handleMouseUp = () => {
+      if (isResize) {
+        onResizeWidth({width: blockRef.current!.offsetWidth});
+        setIsReSize(false);
+      }
+    };
+
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResize, onResizeWidth]);
+
   return (
     <div
       role="presentation"
       ref={blockRef}
       style={finalStyle}
       className="grid-block"
-      onMouseUp={() => {
-        onResizeWidth({width: blockRef.current!.offsetWidth});
-      }}
-      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {
-        event.preventDefault();
-      }}
+      onDragOver={(event: React.DragEvent<HTMLDivElement>) => { event.preventDefault(); }}
+      onMouseDown={() => setIsReSize(true)}
       onDrop={(e) => {
         let props: any;
         const type = e.dataTransfer.getData('text') as ContentType;
