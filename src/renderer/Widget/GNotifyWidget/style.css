@@ -6,7 +6,7 @@
 
 .grn_notify_item {
     border: 1px solid #d6d6d6;
-    padding: 12px;
+    padding: 12px 12px 10px 14px;
     display: flex;
 }
 .grn_notify_itemTime {
