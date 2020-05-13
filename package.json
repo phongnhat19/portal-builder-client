@@ -84,6 +84,11 @@
     "@electron-forge/maker-zip": "6.0.0-beta.49",
     "@electron-forge/plugin-webpack": "6.0.0-beta.49",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/gapi": "0.0.39",
+    "@types/gapi.auth2": "0.0.51",
+    "@types/gapi.client": "^1.0.3",
+    "@types/gapi.client.gmail": "^1.0.1",
+    "@types/scriptjs": "0.0.2",
     "@types/whatwg-fetch": "0.0.33",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
@@ -127,6 +132,7 @@
     "react-hot-loader": "^4.12.19",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
+    "scriptjs": "^2.5.9",
     "simple-react-weather": "^1.0.1",
     "whatwg-fetch": "^3.0.0"
   }
