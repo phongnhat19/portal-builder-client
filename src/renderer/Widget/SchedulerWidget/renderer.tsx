@@ -36,6 +36,11 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
         }}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         defaultView={defaultView}
+        eventTimeFormat={{
+          hour: 'numeric',
+          minute: '2-digit',
+          meridiem: 'short'
+        }}
         events={events}
         eventClick={(e)=> {
           if (window.kintone) {
