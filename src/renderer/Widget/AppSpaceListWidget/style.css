@@ -6,6 +6,7 @@
 }
 .app-space-widget {
   width: 100%;
+  padding-left: 10px;
 }
 
 .ant-dropdown-link{
