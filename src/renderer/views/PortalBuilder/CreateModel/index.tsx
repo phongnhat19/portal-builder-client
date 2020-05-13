@@ -43,7 +43,13 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
       title="New Portal"
       visible={isVisible}
       okText="Create"
-      onCancel={onClose}
+      onCancel={()=> {
+        setEmptyName(false);
+        setEmptyLayout(false);
+        setTabIconStyle(normalIconStyle);
+        setGridIconStyle(normalIconStyle);
+        onClose && onClose();
+      }}
       onOk={() => {
         let defaultProps = {};
 
@@ -55,6 +61,8 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
 
         setEmptyLayout(false);
         setEmptyName(false);
+        setTabIconStyle(normalIconStyle);
+        setGridIconStyle(normalIconStyle);
 
         if (portalType === LAYOUT_TYPE.TAB) {
           defaultProps = {
