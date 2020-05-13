@@ -10,21 +10,16 @@ import './style.css';
 import {SCHEDULER_VIEW} from './constant';
 import {getSchedulerEvent} from './service';
 
-const Scheduler = ({defaultView, data = []}: {
+const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = []}: {
   defaultView?: string;
   data?: SchedulerEvent[];
 }) => {
-  const calendarRef = useRef();
+  const calendarRef = useRef<FullCalendar>(null);
   const [events, setEvents] = useState(data);
 
   useEffect(() => {
     if (data.length === 0 && window.kintone) getSchedulerEvent().then(setEvents);
   }, [data.length]);
-
-  useEffect(() => {
-    const calendarApi = (calendarRef.current)!.getApi(0);
-    calendarApi.changeView(defaultView);
-  }, [defaultView]);
 
   return (
     <div style={{backgroundColor: '#FFFFFF'}}>
@@ -41,7 +36,17 @@ const Scheduler = ({defaultView, data = []}: {
         }}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         defaultView={defaultView}
+        eventTimeFormat={{
+          hour: 'numeric',
+          minute: '2-digit',
+          meridiem: 'short'
+        }}
         events={events}
+        eventClick={(e)=> {
+          if (window.kintone) {
+            window.location.href = window.location.origin + '/g/schedule/view.csp?event=' + e.event.id;
+          }
+        }}
       />
     </div>
   );

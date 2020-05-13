@@ -89,6 +89,7 @@
     "@types/gapi.client": "^1.0.3",
     "@types/gapi.client.gmail": "^1.0.1",
     "@types/scriptjs": "0.0.2",
+    "@types/whatwg-fetch": "0.0.33",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "babel-loader": "^8.0.6",
@@ -132,6 +133,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
     "scriptjs": "^2.5.9",
-    "simple-react-weather": "^1.0.1"
+    "simple-react-weather": "^1.0.1",
+    "whatwg-fetch": "^3.0.0"
   }
 }
