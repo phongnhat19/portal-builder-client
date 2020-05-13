@@ -37,6 +37,11 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         defaultView={defaultView}
         events={events}
+        eventClick={(e)=> {
+          if (window.kintone) {
+            window.location.href = window.location.origin + '/g/schedule/view.csp?event=' + e.event.id;
+          }
+        }}
       />
     </div>
   );
