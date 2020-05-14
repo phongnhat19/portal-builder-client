@@ -12,6 +12,7 @@ sidebar_label: Overview
 ## Quick start
 
 ### Step 1: Add new profile
+Profile stores information to deploy portal.
 For more info please reference to [Add new Profile](profileManagement/addProfile).
 
 ### Step 2: Add new portal
