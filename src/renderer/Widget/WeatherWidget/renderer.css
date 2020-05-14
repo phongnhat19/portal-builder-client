@@ -1,0 +1,15 @@
+.widget-weather .widget-full-weather {
+  text-transform: uppercase;
+  color: white;
+}
+
+.widget-weather {
+  background-color: #6495ED;
+  padding: 20px;
+  height: 100%;
+}
+
+.styles_simpleReactWeather__3uy4l {
+  font-size: 20px;
+  min-height: 0px !important
+}
