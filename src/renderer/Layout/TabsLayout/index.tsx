@@ -14,8 +14,9 @@ import WeatherWidget from '../../Widget/WeatherWidget/index';
 import {SCHEDULER_VIEW} from '../../Widget/SchedulerWidget/constant';
 import {CONTENT_TYPE} from '../../Widget/constant';
 import GNotifyWidget from '../../Widget/GNotifyWidget';
-import GmailWidget from '../../Widget/GmailWidget';
 import {WEATHER_UNIT, WEATHER_TYPE} from '../../Widget/WeatherWidget/constant';
+import AppSpaceWidget from '../../Widget/AppSpaceListWidget';
+import GmailWidget from '../../Widget/GmailWidget';
 
 const TabsLayout = ({
   tabList = []
@@ -73,6 +74,10 @@ const TabsLayout = ({
         weatherCity: '',
         openWeatherMapAPIKey: '',
         type: WEATHER_TYPE.SIMPLE
+      };
+    } else if (type === CONTENT_TYPE.APP_SPACE) {
+      props = {
+        showSettingInit: true,
       };
     }
     props && dropWidget(selectedTab, type, props);
@@ -223,6 +228,26 @@ const TabsLayout = ({
                   updateWidget(currentProps);
                 }}
               />);
+            break;
+          }
+          case CONTENT_TYPE.APP_SPACE: {
+            if (!tabContent.props) break;
+            const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps;
+            newItem.tabContent = (
+              <AppSpaceWidget
+                widgetTitle={tabContentAppSpace.widgetTitle}
+                contentList={tabContentAppSpace.contentList}
+                showSettingInit={tabContentAppSpace.showSettingInit}
+                onRemove={removeWidget}
+                onSaveSetting={({contentList, widgetTitle}) => {
+                  const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                  currentProps.contentList = contentList;
+                  currentProps.widgetTitle = widgetTitle;
+                  currentProps.showSettingInit = false;
+                  updateWidget(currentProps);
+                }}
+              />
+            );
             break;
           }
           case CONTENT_TYPE.GAROON_NOTIFY:

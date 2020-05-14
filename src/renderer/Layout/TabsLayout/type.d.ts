@@ -3,7 +3,7 @@ declare type Tab = {
   tabContent: {
     type: ContentType;
     name?: string;
-    props?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | GmailWidgetProps;
+    props?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | GmailWidgetProps | AppSpaceWidgetProps;
     value?: string;
   };
 }
