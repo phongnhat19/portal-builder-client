@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import { Modal, Input, Row, Col } from 'antd'
+import React, {useState} from 'react';
+import {Modal, Input, Row, Col} from 'antd';
 
-const PortalConfigNameModal = ({ portalName, isVisible = false, onClose, onSave }: {
-  portalName: string
-  isVisible: boolean
-  onSave: (item: { name: string }) => void
-  onClose?: () => void
+const PortalConfigNameModal = ({portalName, isVisible = false, onClose, onSave}: {
+  portalName: string;
+  isVisible: boolean;
+  onSave: (item: { name: string }) => void;
+  onClose?: () => void;
 }) => {
-  
-  const [name, setName] = useState(portalName)
+
+  const [name, setName] = useState(portalName);
 
   return (
     <Modal
@@ -23,6 +23,7 @@ const PortalConfigNameModal = ({ portalName, isVisible = false, onClose, onSave 
         onSave({
           name: name
         });
+        setName('');
       }}
     >
       <Row>
@@ -32,14 +33,16 @@ const PortalConfigNameModal = ({ portalName, isVisible = false, onClose, onSave 
         <Col span={20}>
           <Input
             value={name}
-            onChange={(e) => { setName(e.target.value) }}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
             placeholder="Input Portal Name"
           />
         </Col>
       </Row>
 
     </Modal>
-  )
-}
+  );
+};
 
-export default PortalConfigNameModal
+export default PortalConfigNameModal;
