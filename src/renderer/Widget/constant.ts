@@ -1,9 +1,12 @@
 export const CONTENT_TYPE = {
   IFRAME: 'Iframe',
+  GMAIL: 'Gmail',
   HTML: 'HTML',
-  SCHEDULER: 'Scheduler',
+  SCHEDULER: 'GScheduler',
   WEATHER: 'Weather',
   GAROON_NOTIFY: 'GNotification',
   DEFAULT: 'DefaultPortal',
-  EMPTY: 'Empty'
+  EMPTY: 'Empty',
+  APP_SPACE:'App/Space'
+
 };

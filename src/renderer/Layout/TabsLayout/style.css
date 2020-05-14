@@ -45,7 +45,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
+  margin-bottom: -6px;
+} 
 
 .portal-tabs-layout .kuc-tabs-tab-contents .styles_simpleReactWeather__3uy4l {
   font-size: 30px;
