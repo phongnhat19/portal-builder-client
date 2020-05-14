@@ -16,6 +16,7 @@ import {CONTENT_TYPE} from '../../Widget/constant';
 import GNotifyWidget from '../../Widget/GNotifyWidget';
 import {WEATHER_UNIT, WEATHER_TYPE} from '../../Widget/WeatherWidget/constant';
 import AppSpaceWidget from '../../Widget/AppSpaceListWidget';
+import GmailWidget from '../../Widget/GmailWidget';
 
 const TabsLayout = ({
   tabList = []
@@ -30,157 +31,6 @@ const TabsLayout = ({
   const {portalList, setPortalList, selectedPortal} = useContext(PortalContext);
   const [isShowTabConfigModal, showTabConfigModal] = useState(false);
 
-  const buildTabItems = (initItems: Tab[]) => {
-    let dataItems = [] as any[];
-    initItems.forEach(item => {
-      const newItem = {
-        tabName: item.tabName,
-        tabContent: PORTAL_DEFAULT.TAB_CONTENT_INIT as any
-      };
-      const tabContent = item.tabContent;
-      if (!tabContent) return;
-      switch (tabContent.type) {
-        case CONTENT_TYPE.IFRAME:
-          if (!tabContent.props) {
-            break;
-          }
-          const tabContentIframe = tabContent.props as IframeWidgetProps;
-          newItem.tabContent =
-            (<IframeWidget
-              url={tabContentIframe.url}
-              width={tabContentIframe.width}
-              height={tabContentIframe.height}
-              showSettingInit={tabContentIframe.showSettingInit}
-              onRemove={removeWidget}
-              onSaveSetting={({url, height, width}) => {
-                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
-                currentProps.url = url;
-                currentProps.width = width;
-                currentProps.height = height;
-                currentProps.showSettingInit = false;
-                updateWidget(currentProps);
-              }}
-            />);
-          break;
-
-        case CONTENT_TYPE.HTML:
-          if (!tabContent.props) {
-            break;
-          }
-          const tabContentHTML = tabContent.props as HTMLWidgetProps;
-          newItem.tabContent =
-            (<HTMLWidget
-              htmlString={tabContentHTML.htmlString}
-              width={tabContentHTML.width}
-              height={tabContentHTML.height}
-              showSettingInit={tabContentHTML.showSettingInit}
-              onRemove={removeWidget}
-              onSaveSetting={({htmlString}) => {
-                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
-                currentProps.htmlString = htmlString;
-                currentProps.showSettingInit = false;
-                updateWidget(currentProps);
-              }}
-            />);
-          break;
-        case CONTENT_TYPE.SCHEDULER:
-          if (!tabContent.props) {
-            break;
-          }
-          const tabContentSchedule = tabContent.props as SchedulerWidgetProps;
-          newItem.tabContent =
-            (<SchedulerWidget
-              defaultView={tabContentSchedule.defaultView}
-              onRemove={removeWidget}
-              onSaveSetting={({defaultView}) => {
-                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
-                currentProps.defaultView = defaultView;
-                currentProps.showSettingInit = false;
-                updateWidget(currentProps);
-              }}
-            />);
-          break;
-        case CONTENT_TYPE.WEATHER:
-          if (!tabContent.props) break;
-          const tabContentWeather = tabContent.props as WeatherWidgetProps;
-          newItem.tabContent =
-            (<WeatherWidget
-              type={tabContentWeather.type}
-              showSettingInit={tabContentWeather.showSettingInit}
-              unitTemp={tabContentWeather.unitTemp}
-              openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
-              weatherCity={tabContentWeather.weatherCity}
-              onRemove={removeWidget}
-              onSaveSetting={({unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
-                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
-                currentProps.unitTemp = unitTemp;
-                currentProps.weatherCity = weatherCity;
-                currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
-                currentProps.showSettingInit = false;
-                currentProps.type = type;
-                updateWidget(currentProps);
-              }}
-            />);
-          break;
-        case CONTENT_TYPE.GAROON_NOTIFY:
-          if (!tabContent.props) {
-            break;
-          }
-          newItem.tabContent =
-            <GNotifyWidget onRemove={removeWidget} />;
-          break;
-        case CONTENT_TYPE.APP_SPACE: {
-          if (!tabContent.props) break;
-          const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps;
-          newItem.tabContent = (
-            <AppSpaceWidget
-              widgetTitle={tabContentAppSpace.widgetTitle}
-              contentList={tabContentAppSpace.contentList}
-              showSettingInit={tabContentAppSpace.showSettingInit}
-              onRemove={removeWidget}
-              onSaveSetting={({contentList, widgetTitle}) => {
-                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
-                currentProps.contentList = contentList;
-                currentProps.widgetTitle = widgetTitle;
-                currentProps.showSettingInit = false;
-                updateWidget(currentProps);
-              }}
-            />
-          );
-        }
-          break;
-        case CONTENT_TYPE.EMPTY:
-          newItem.tabContent = EMPTY_WIDGET_CONTENT;
-        default:
-          break;
-      }
-      dataItems = [...dataItems, newItem];
-    });
-
-    return dataItems;
-  };
-
-  const removeWidget = () => {
-    confirm({
-      title: CONFIRM_DELETE.TITLE,
-      icon: <ExclamationCircleOutlined />,
-      okText: CONFIRM_DELETE.BUTTON_OK,
-      okType: 'danger',
-      cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
-      onOk() {
-        const tabList = (portalList[selectedPortal].layout.props as TabLayout).tabList;
-        tabList[selectedTab].tabContent.type = CONTENT_TYPE.EMPTY as ContentType;
-        delete tabList[selectedTab].tabContent.props;
-        setPortalList(portalList);
-      }
-    });
-  };
-
-  const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | AppSpaceWidgetProps) => {
-    const listTab = (portalList[selectedPortal].layout.props as TabLayout).tabList;
-    listTab[selectedTab].tabContent.props = newProps;
-    setPortalList(portalList);
-  };
   const handleDropWidget = (e: DragEvent) => {
     const listTab = (portalList[selectedPortal].layout.props as TabLayout).tabList;
     if (listTab[selectedTab].tabContent.type !== CONTENT_TYPE.EMPTY) return;
@@ -199,7 +49,8 @@ const TabsLayout = ({
         showSettingInit: true,
         htmlString: '',
         width: '100%',
-        height: '82vh'
+        height: '82vh',
+        htmlTitle: ''
       };
     } else if (type === CONTENT_TYPE.SCHEDULER) {
       props = {
@@ -209,6 +60,12 @@ const TabsLayout = ({
     } else if (type === CONTENT_TYPE.GAROON_NOTIFY) {
       props = {
         showSettingInit: true
+      };
+    } else if (type === CONTENT_TYPE.GMAIL) {
+      props = {
+        showSettingInit: true,
+        apiKey: '',
+        clientID: ''
       };
     } else if (type === CONTENT_TYPE.WEATHER) {
       props = {
@@ -235,8 +92,181 @@ const TabsLayout = ({
   }, [inited, tabList.length]);
 
   useEffect(() => {
+    const removeWidget = () => {
+      confirm({
+        title: CONFIRM_DELETE.TITLE,
+        icon: <ExclamationCircleOutlined />,
+        okText: CONFIRM_DELETE.BUTTON_OK,
+        okType: 'danger',
+        cancelText: CONFIRM_DELETE.BUTTON_CANCEL,
+        onOk() {
+          const tabListContext = (portalList[selectedPortal].layout.props as TabLayout).tabList;
+          tabListContext[selectedTab].tabContent.type = CONTENT_TYPE.EMPTY as ContentType;
+          delete tabListContext[selectedTab].tabContent.props;
+          setPortalList(portalList);
+        }
+      });
+    };
+
+    const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | GmailWidgetProps) => {
+      const tabListContext = (portalList[selectedPortal].layout.props as TabLayout).tabList;
+      tabListContext[selectedTab].tabContent.props = newProps;
+      setPortalList(portalList);
+    };
+    const buildTabItems = (initItems: Tab[]) => {
+      let dataItems = [] as any[];
+      initItems.forEach(item => {
+        const newItem = {
+          tabName: item.tabName,
+          tabContent: PORTAL_DEFAULT.TAB_CONTENT_INIT as any
+        };
+        const tabContent = item.tabContent;
+        if (!tabContent) return;
+        switch (tabContent.type) {
+          case CONTENT_TYPE.IFRAME: {
+            if (!tabContent.props) {
+              break;
+            }
+            const tabContentIframe = tabContent.props as IframeWidgetProps;
+            newItem.tabContent =
+              (<IframeWidget
+                url={tabContentIframe.url}
+                width={tabContentIframe.width}
+                height={tabContentIframe.height}
+                showSettingInit={tabContentIframe.showSettingInit}
+                onRemove={removeWidget}
+                onSaveSetting={({url, height, width}) => {
+                  const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                  currentProps.url = url;
+                  currentProps.width = width;
+                  currentProps.height = height;
+                  currentProps.showSettingInit = false;
+                  updateWidget(currentProps);
+                }}
+              />);
+            break;
+          }
+          case CONTENT_TYPE.HTML: {
+            if (!tabContent.props) {
+              break;
+            }
+            const tabContentHTML = tabContent.props as HTMLWidgetProps;
+            newItem.tabContent =
+              (<HTMLWidget
+                htmlString={tabContentHTML.htmlString}
+                htmlTitle={tabContentHTML.htmlTitle}
+                width={tabContentHTML.width}
+                height={tabContentHTML.height}
+                showSettingInit={tabContentHTML.showSettingInit}
+                onRemove={removeWidget}
+                onSaveSetting={({htmlString, htmlTitle}) => {
+                  const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                  currentProps.htmlString = htmlString;
+                  currentProps.htmlTitle = htmlTitle;
+                  currentProps.showSettingInit = false;
+                  updateWidget(currentProps);
+                }}
+              />);
+            break;
+          }
+          case CONTENT_TYPE.GMAIL: {
+            if (!tabContent.props) {
+              break;
+            }
+            const tabContentGmail = tabContent.props as GmailWidgetProps;
+            newItem.tabContent =
+            (<GmailWidget
+              onRemove={removeWidget}
+              apiKey={tabContentGmail.apiKey}
+              clientID={tabContentGmail.clientID}
+              onSaveSetting={({apiKey, clientID}: GmailSettings) => {
+                const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                currentProps.apiKey = apiKey;
+                currentProps.showSettingInit = false;
+                currentProps.clientID = clientID;
+                updateWidget(currentProps);
+              }}
+            />);
+            break;
+          }
+          case CONTENT_TYPE.SCHEDULER: {
+            if (!tabContent.props) {
+              break;
+            }
+            const tabContentSchedule = tabContent.props as SchedulerWidgetProps;
+            newItem.tabContent =
+              (<SchedulerWidget
+                defaultView={tabContentSchedule.defaultView}
+                onRemove={removeWidget}
+                onSaveSetting={({defaultView}) => {
+                  const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                  currentProps.defaultView = defaultView;
+                  currentProps.showSettingInit = false;
+                  updateWidget(currentProps);
+                }}
+              />);
+            break;
+          }
+          case CONTENT_TYPE.WEATHER: {
+            if (!tabContent.props) break;
+            const tabContentWeather = tabContent.props as WeatherWidgetProps;
+            newItem.tabContent =
+              (<WeatherWidget
+                type={tabContentWeather.type}
+                showSettingInit={tabContentWeather.showSettingInit}
+                unitTemp={tabContentWeather.unitTemp}
+                openWeatherMapAPIKey={tabContentWeather.openWeatherMapAPIKey}
+                weatherCity={tabContentWeather.weatherCity}
+                onRemove={removeWidget}
+                onSaveSetting={({unitTemp, weatherCity, openWeatherMapAPIKey, type}) => {
+                  const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                  currentProps.unitTemp = unitTemp;
+                  currentProps.weatherCity = weatherCity;
+                  currentProps.openWeatherMapAPIKey = openWeatherMapAPIKey;
+                  currentProps.showSettingInit = false;
+                  currentProps.type = type;
+                  updateWidget(currentProps);
+                }}
+              />);
+            break;
+          }
+          case CONTENT_TYPE.APP_SPACE: {
+            if (!tabContent.props) break;
+            const tabContentAppSpace = tabContent.props as AppSpaceWidgetProps;
+            newItem.tabContent = (
+              <AppSpaceWidget
+                widgetTitle={tabContentAppSpace.widgetTitle}
+                contentList={tabContentAppSpace.contentList}
+                showSettingInit={tabContentAppSpace.showSettingInit}
+                onRemove={removeWidget}
+                onSaveSetting={({contentList, widgetTitle}) => {
+                  const currentProps = JSON.parse(JSON.stringify(tabContent.props));
+                  currentProps.contentList = contentList;
+                  currentProps.widgetTitle = widgetTitle;
+                  currentProps.showSettingInit = false;
+                  updateWidget(currentProps);
+                }}
+              />
+            );
+            break;
+          }
+          case CONTENT_TYPE.GAROON_NOTIFY:
+            if (!tabContent.props) {
+              break;
+            }
+            newItem.tabContent =
+              <GNotifyWidget onRemove={removeWidget} />;
+            break;
+          case CONTENT_TYPE.EMPTY:
+            newItem.tabContent = EMPTY_WIDGET_CONTENT;
+        }
+        dataItems = [...dataItems, newItem];
+      });
+
+      return dataItems;
+    };
     setTabItems(buildTabItems(tabList));
-  }, [tabList, selectedTab]);
+  }, [tabList, selectedTab, portalList, selectedPortal, setPortalList]);
 
   const dropWidget = (tabIndex: number, type: ContentType, props: any) => {
 
@@ -279,7 +309,7 @@ const TabsLayout = ({
           }}
         />
       }
-      {tabItems.length > 1 &&
+      {selectedTab !== 0 &&
         <Button
           type="default"
           icon={<MinusCircleOutlined />}

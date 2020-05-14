@@ -3,7 +3,7 @@ import './style.css';
 import PortalPreview from './PortalPreview';
 import SideBar from './SideBar';
 import WidgetList from '../../Widget/WidgetList';
-import {BorderOutlined, CalendarOutlined, Html5Outlined, AlertOutlined, CloudOutlined, AppstoreFilled} from '@ant-design/icons';
+import {BorderOutlined, CalendarOutlined, Html5Outlined, AlertOutlined, CloudOutlined, MailOutlined, AppstoreFilled} from '@ant-design/icons';
 import {CONTENT_TYPE} from '../../Widget/constant';
 import {LAYOUT_TYPE} from '../../Layout/constant';
 
@@ -61,6 +61,10 @@ const PortalBuilder = () => {
     {
       icon: <AlertOutlined />,
       name: CONTENT_TYPE.GAROON_NOTIFY
+    },
+    {
+      icon: <MailOutlined />,
+      name: CONTENT_TYPE.GMAIL
     },
     {
       icon: <CloudOutlined />,

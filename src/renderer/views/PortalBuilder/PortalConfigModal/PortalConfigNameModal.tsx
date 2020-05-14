@@ -15,7 +15,10 @@ const PortalConfigNameModal = ({portalName, isVisible = false, onClose, onSave}:
       title="Portal Setting"
       visible={isVisible}
       okText="Save"
-      onCancel={onClose}
+      onCancel={()=>{
+        onClose && onClose();
+        setName(portalName);
+      }}
       onOk={() => {
         onSave({
           name: name

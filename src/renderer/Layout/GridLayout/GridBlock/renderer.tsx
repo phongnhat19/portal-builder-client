@@ -8,13 +8,15 @@ import GNotify from '../../../Widget/GNotifyWidget/renderer';
 import {EMPTY_WIDGET_CONTENT} from '../../TabsLayout/constant';
 import {CONTENT_TYPE} from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
+import GmailWidget from '../../../Widget/GmailWidget/renderer';
 import AppSpaceWidget from '../../../Widget/AppSpaceListWidget/renderer';
 
-const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}:
-{content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps;type: ContentType}) => {
+const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}: {
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps | GmailWidgetProps | WeatherWidgetProps;
+  type: ContentType;
+}) => {
   let currentContentBlock = EMPTY_WIDGET_CONTENT as any;
 
-  if (!content) return;
   switch (type) {
     case CONTENT_TYPE.IFRAME: {
       const blockContentIframe = content as IframeWidgetProps;
@@ -32,6 +34,7 @@ const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}:
       const blockContentHTML = content as HTMLWidgetProps;
       currentContentBlock =
         (<HTMLWidget
+          htmlTitle={blockContentHTML.htmlTitle}
           htmlString={blockContentHTML.htmlString}
           width={`${blockContentHTML.width}%`}
         />);
@@ -72,6 +75,12 @@ const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}:
       break;
     }
 
+    case CONTENT_TYPE.GMAIL: {
+      const blockContentHTML = content as GmailWidgetProps;
+      currentContentBlock = <GmailWidget apiKey={blockContentHTML.apiKey} clientID={blockContentHTML.clientID} />;
+      break;
+    }
+
     case CONTENT_TYPE.EMPTY:
       currentContentBlock = '';
       break;
@@ -84,7 +93,7 @@ const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}:
 const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = undefined, width}: {
   style?: CSSProperties;
   type?: ContentType;
-  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps;
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps | GmailWidgetProps;
   width: number;
 }) => {
 
