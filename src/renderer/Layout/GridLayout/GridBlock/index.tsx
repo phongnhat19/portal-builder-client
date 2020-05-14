@@ -1,4 +1,4 @@
-import React, {CSSProperties, useRef, useContext, useState, useEffect} from 'react';
+import React, {CSSProperties, useRef, useCallback, useContext, useState, useEffect} from 'react';
 import '../style.css';
 import {ExclamationCircleOutlined, CloseOutlined} from '@ant-design/icons';
 import {Button, Popconfirm, Row} from 'antd';
@@ -37,7 +37,11 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
   const {portalList, setPortalList, selectedPortal} = useContext(PortalContext);
   const [blockContent, setBlockContent] = useState(null);
   const [isResize, setIsReSize] = useState(false);
-  const blockRef = useRef<HTMLDivElement>(null);
+  const [blockElement, setBlockElement] = useState<HTMLDivElement>();
+  const blockRef = useCallback((node: HTMLDivElement) => {
+    node && setBlockElement(node);
+  }, []);
+  // const blockRef = useRef<HTMLDivElement>(null);
 
 
   const dropWidget = (dropRowIndex: number, dropBlockIndex: number, type: ContentType, props: any) => {
@@ -226,16 +230,16 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
   useEffect(()=> {
     const handleMouseUp = () => {
       if (isResize) {
-        onResizeWidth({width: blockRef.current!.offsetWidth});
+        onResizeWidth({width: blockElement!.offsetWidth});
         setIsReSize(false);
       }
     };
 
-    document.addEventListener('mouseup', handleMouseUp);
+    blockElement && blockElement.addEventListener('resize', handleMouseUp);
     return () => {
-      document.removeEventListener('mouseup', handleMouseUp);
+      blockElement && blockElement.removeEventListener('resize', handleMouseUp);
     };
-  }, [isResize, onResizeWidth]);
+  }, [isResize, onResizeWidth, blockElement]);
 
   return (
     <div
