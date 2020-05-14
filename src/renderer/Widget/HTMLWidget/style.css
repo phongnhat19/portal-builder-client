@@ -3,6 +3,7 @@
 }
 
 .html-widget-index-wrapper {
+  position: relative;
   display: inline-block;
   width: 100%;
 }
@@ -13,12 +14,10 @@
   position: relative;
 }
 
-.portal-tabs-layout .portal-tabs-btn-settings.html-settings-button {
-  top: 72px;
-}
-
+.portal-tabs-layout .portal-tabs-btn-settings.html-settings-button,
 .grid-layout .portal-tabs-btn-settings.html-settings-button {
-  top: 15px;
+  top: 6px;
+  right: 6px;
 }
 
 .html-wrapper .html-content {
