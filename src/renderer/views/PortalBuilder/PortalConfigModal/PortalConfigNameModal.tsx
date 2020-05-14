@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Modal, Input, Row, Col} from 'antd';
+import {Modal, Input, Row, Col, Alert} from 'antd';
 
 const PortalConfigNameModal = ({portalName, isVisible = false, onClose, onSave}: {
   portalName: string;
@@ -9,6 +9,7 @@ const PortalConfigNameModal = ({portalName, isVisible = false, onClose, onSave}:
 }) => {
 
   const [name, setName] = useState(portalName);
+  const [emptyName, setEmptyName] = useState(false);
 
   return (
     <Modal
@@ -17,13 +18,19 @@ const PortalConfigNameModal = ({portalName, isVisible = false, onClose, onSave}:
       okText="Save"
       onCancel={()=>{
         onClose && onClose();
+        setEmptyName(false);
         setName(portalName);
       }}
       onOk={() => {
-        onSave({
-          name: name
-        });
-        setName('');
+        setEmptyName(false);
+        if (!name) {
+          setEmptyName(true);
+        } else {
+          onSave({
+            name: name
+          });
+          setName('');
+        }
       }}
     >
       <Row>
@@ -38,6 +45,7 @@ const PortalConfigNameModal = ({portalName, isVisible = false, onClose, onSave}:
             }}
             placeholder="Input Portal Name"
           />
+          {emptyName && <Alert message="Required Field" type="error" />}
         </Col>
       </Row>
 

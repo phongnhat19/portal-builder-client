@@ -30,7 +30,6 @@ const PortalPreview = ({
       {
         layout && renderLayout()
       }
-
     </div>
   );
 };
