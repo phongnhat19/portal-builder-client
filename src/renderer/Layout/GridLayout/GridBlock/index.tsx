@@ -41,8 +41,6 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
   const blockRef = useCallback((node: HTMLDivElement) => {
     node && setBlockElement(node);
   }, []);
-  // const blockRef = useRef<HTMLDivElement>(null);
-
 
   const dropWidget = (dropRowIndex: number, dropBlockIndex: number, type: ContentType, props: any) => {
     const gridLayout = portalList[selectedPortal].layout.props as GridLayout;
