@@ -1,6 +1,5 @@
 .widget-gmail {
     width: 100%;
-    /* padding: 20px */
 }
 .gmail-container {
     background-color: white;
@@ -8,6 +7,7 @@
     min-width: 300px;
     padding-left: 12px;
     padding-right: 12px;
+    box-sizing: border-box;
 }
 .gmail-header {
     width: 100%;
