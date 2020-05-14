@@ -48,7 +48,8 @@ const TabsLayout = ({
         showSettingInit: true,
         htmlString: '',
         width: '100%',
-        height: '82vh'
+        height: '82vh',
+        htmlTitle: ''
       };
     } else if (type === CONTENT_TYPE.SCHEDULER) {
       props = {
@@ -148,13 +149,15 @@ const TabsLayout = ({
             newItem.tabContent =
               (<HTMLWidget
                 htmlString={tabContentHTML.htmlString}
+                htmlTitle={tabContentHTML.htmlTitle}
                 width={tabContentHTML.width}
                 height={tabContentHTML.height}
                 showSettingInit={tabContentHTML.showSettingInit}
                 onRemove={removeWidget}
-                onSaveSetting={({htmlString}) => {
+                onSaveSetting={({htmlString, htmlTitle}) => {
                   const currentProps = JSON.parse(JSON.stringify(tabContent.props));
                   currentProps.htmlString = htmlString;
+                  currentProps.htmlTitle = htmlTitle;
                   currentProps.showSettingInit = false;
                   updateWidget(currentProps);
                 }}

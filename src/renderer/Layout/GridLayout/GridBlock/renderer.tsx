@@ -49,6 +49,7 @@ const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = u
           currentContentBlock =
             (<HTMLWidget
               htmlString={blockContentHTML.htmlString}
+              htmlTitle={blockContentHTML.htmlTitle}
               width={`${blockContentHTML.width}%`}
             />);
           break;
@@ -62,7 +63,6 @@ const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = u
           break;
         }
         case CONTENT_TYPE.GMAIL: {
-
           const blockContentHTML = content as GmailWidgetProps;
           currentContentBlock = <GmailWidget apiKey={blockContentHTML.apiKey} clientID={blockContentHTML.clientID} />;
           break;
