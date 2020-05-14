@@ -32,6 +32,7 @@ const TabConfigModal = ({tabName = '', isVisible = false, onClose, onSave}: {
         }
         setEmptyName(false);
         onSave(name);
+        setName('');
       }}
     >
       <Row>
