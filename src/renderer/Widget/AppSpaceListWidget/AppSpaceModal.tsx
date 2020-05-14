@@ -145,7 +145,7 @@ const AppSpaceModel = ({
         placeholder={`${INPUT_TEXT.TITLE}`}
         type="text"
         value={newTitleWidget}
-        className="item-margin-bottom-10 title"
+        className="item-margin-bottom-10 title-list-app"
         onChange={(value) => setTitleWidget(value as string)}
       />
       <Category
