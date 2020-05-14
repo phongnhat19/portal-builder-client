@@ -76,7 +76,6 @@
   width: 100%;
   height: 50px;
   border-bottom: 1px solid #e3e7e8;
-
 }
 .widget-header-preview-icon {
   font-size: 20px;
@@ -84,6 +83,8 @@
 }
 .widget-header-preview-title {
   font-size: 16px;
+  width: 50em;
+  overflow: auto;
 }
 
 .widget-content-preview-category {
@@ -144,5 +145,17 @@
 }
 .hight-light {
   background: #f4f7f8;
+}
+
+.widget-header-preview-title::-webkit-scrollbar{
+  height: 2px;
+}
+
+.widget-header-preview-title::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px #c4c7c7; 
+}
+
+.widget-header-preview-title::-webkit-scrollbar-thumb {
+  background: #c4c7c7; 
 }
 
