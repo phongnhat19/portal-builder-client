@@ -75,6 +75,7 @@
   width: 100%;
   height: 50px;
   border-bottom: 1px solid #e3e7e8;
+  align-items: center;
 }
 .widget-header-preview-icon {
   font-size: 20px;
@@ -82,8 +83,10 @@
 }
 .widget-header-preview-title {
   font-size: 16px;
+  white-space: nowrap;
   width: 50em;
-  overflow: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .widget-content-preview-category {
