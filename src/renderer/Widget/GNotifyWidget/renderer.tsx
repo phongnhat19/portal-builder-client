@@ -30,6 +30,8 @@ const Notify = ({data}: {
         <ul>
           {notifications.map((item: NotificationGRN, index) => {
             const date = new Date(item.createdAt);
+            const formattedHours = ('0' + date.getHours()).slice(-2);
+            const formattedMinutes = ('0' + date.getMinutes()).slice(-2);
             return (
               <li className="grn_notify_item " key={index}>
                 <div className="grn_notify_item_main">
@@ -40,7 +42,7 @@ const Notify = ({data}: {
                         {item.title}
                       </a>
                       <span className="grn_notify_itemTime">
-                        {date.getFullYear()}-{date.getMonth() + 1}-{date.getDate()} {date.getHours()} : {date.getMinutes()}
+                        { `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`} {formattedHours} : {formattedMinutes}
                       </span>
                     </span>
                   </div>
