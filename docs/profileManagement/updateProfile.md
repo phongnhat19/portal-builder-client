@@ -5,7 +5,7 @@ sidebar_label: Update Profile
 ---
 
 ## Step 1: Opening Profile setting.
-- Open settig dialog by clicking on setting icon at top right Portal screen.
+- Open setting dialog by clicking on setting icon at top right Portal screen.
 
 ![](../../static/img/docs/profileManagement/setting.png)
 

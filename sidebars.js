@@ -8,7 +8,6 @@ module.exports = {
         items: [
           'profileManagement/addProfile',
           'profileManagement/updateProfile',
-          'profileManagement/deleteProfile',
         ],
       },
       {
