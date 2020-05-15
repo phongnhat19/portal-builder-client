@@ -113,6 +113,7 @@ const TabsLayout = ({
       tabListContext[selectedTab].tabContent.props = newProps;
       setPortalList(portalList);
     };
+
     const buildTabItems = (initItems: Tab[]) => {
       let dataItems = [] as any[];
       initItems.forEach(item => {
@@ -130,6 +131,7 @@ const TabsLayout = ({
             const tabContentIframe = tabContent.props as IframeWidgetProps;
             newItem.tabContent =
               (<IframeWidget
+                defaultTitle={tabContentIframe.defaultTitle}
                 url={tabContentIframe.url}
                 width={tabContentIframe.width}
                 height={tabContentIframe.height}
@@ -250,15 +252,18 @@ const TabsLayout = ({
             );
             break;
           }
-          case CONTENT_TYPE.GAROON_NOTIFY:
+          case CONTENT_TYPE.GAROON_NOTIFY: {
             if (!tabContent.props) {
               break;
             }
-            newItem.tabContent =
-              <GNotifyWidget onRemove={removeWidget} />;
+            newItem.tabContent = <GNotifyWidget onRemove={removeWidget} />;
             break;
+          }
           case CONTENT_TYPE.EMPTY:
             newItem.tabContent = EMPTY_WIDGET_CONTENT;
+            break;
+          default:
+            break;
         }
         dataItems = [...dataItems, newItem];
       });

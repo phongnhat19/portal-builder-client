@@ -1,4 +1,4 @@
-import React, {CSSProperties, useRef, useCallback, useContext, useState, useEffect} from 'react';
+import React, {CSSProperties, useCallback, useContext, useState, useEffect} from 'react';
 import '../style.css';
 import {ExclamationCircleOutlined, CloseOutlined} from '@ant-design/icons';
 import {Button, Popconfirm, Row} from 'antd';
@@ -91,17 +91,19 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
 
           currentContentBlock =
           (<IframeWidget
+            defaultTitle={blockContentIframe.defaultTitle}
             url={blockContentIframe.url}
             width={blockContentIframe.width}
             height={blockContentIframe.height}
             showSettingInit={blockContentIframe.showSettingInit}
             onRemove={removeWidget}
-            onSaveSetting={(setting) => {
+            onSaveSetting={({url, width: nextWidth, height, title}) => {
               const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
-              currentProps.url = setting.url;
-              currentProps.width = setting.width;
-              currentProps.height = setting.height;
+              currentProps.url = url;
+              currentProps.width = nextWidth;
+              currentProps.height = height;
               currentProps.showSettingInit = false;
+              currentProps.defaultTitle = title;
               updateWidget(currentProps);
             }}
           />);
@@ -138,7 +140,7 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
             showSettingInit={blockContentHTML.showSettingInit}
             onRemove={removeWidget}
             onSaveSetting={({htmlString, htmlTitle}) => {
-              let currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+              const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
               currentProps.htmlString = htmlString;
               currentProps.showSettingInit = false;
               currentProps.htmlTitle = htmlTitle;
@@ -257,7 +259,7 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
             showSettingInit: true,
             url: '',
             width: '100%',
-            height: '100%'
+            height: '82vh'
           };
         } else if (type === CONTENT_TYPE.GMAIL) {
           props = {

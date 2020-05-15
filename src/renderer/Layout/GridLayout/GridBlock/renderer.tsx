@@ -26,6 +26,7 @@ const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}: {
           url={blockContentIframe.url}
           width={blockContentIframe.width}
           height={blockContentIframe.height}
+          defaultTitle={blockContentIframe.defaultTitle}
         />);
       break;
     }

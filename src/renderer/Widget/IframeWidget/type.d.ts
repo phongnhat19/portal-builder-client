@@ -3,4 +3,5 @@ declare type IframeWidgetProps = {
   width: string;
   height: string;
   showSettingInit?: boolean;
+  defaultTitle: string;
 }
