@@ -24,7 +24,7 @@ For more info please reference to [Add new Widget](widgetManagement/addWidget).
 ### Step 4: Deployment
 For more info please reference to [Deploy Portal](portalManagement/deployPortal).
 
-## Supported widgets
+## Default widgets
 - [Iframe Widget](widgetManagement/widgets/iframe)
 - [HTML Widget](widgetManagement/widgets/html)
 - [App / Space List Widget](widgetManagement/widgets/appSpaceList)
