@@ -1,5 +1,7 @@
 import React from 'react';
 import {AppstoreFilled} from '@ant-design/icons';
+import './previewTitle.css';
+
 const PreviewTitle = ({widgetTitle}: {widgetTitle: string}) => {
   return (
     <div className="widget-header-preview border-bottom">
