@@ -159,3 +159,9 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.app-space-widget-container {
+  padding: 10px;
+  box-sizing: border-box;
+  height: 100%;
+}
