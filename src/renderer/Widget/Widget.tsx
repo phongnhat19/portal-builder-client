@@ -1,5 +1,5 @@
-import React, { CSSProperties } from 'react'
-import { Card } from 'antd';
+import React, {CSSProperties} from 'react';
+import {Card} from 'antd';
 
 const gridStyle: CSSProperties = {
   width: '50%',
@@ -10,20 +10,20 @@ const gridStyle: CSSProperties = {
   flexDirection: 'column'
 };
 
-const Widget = ({name, icon, dragStart }: {
-  name?: string,
-  icon?: HTMLElement,
-  dragStart?: (event: React.DragEvent<HTMLDivElement>) => void
+const Widget = ({name, icon, dragStart}: {
+  name?: string;
+  icon?: HTMLElement;
+  dragStart?: (event: React.DragEvent<HTMLDivElement>) => void;
 }) => {
 
   return (
-    <div draggable onDragStart={dragStart}>
+    <div role="button" tabIndex={0} draggable onDragStart={dragStart}>
       <Card.Grid style={gridStyle}>
         {icon}
         {name}
       </Card.Grid>
     </div>
-  )
-}
+  );
+};
 
-export default Widget
+export default Widget;
