@@ -8,7 +8,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint --ext .tsx --ext .ts .",
     "build:template": "webpack --config webpack.template.config"
   },
   "keywords": [],
