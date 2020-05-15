@@ -137,12 +137,13 @@ const TabsLayout = ({
                 height={tabContentIframe.height}
                 showSettingInit={tabContentIframe.showSettingInit}
                 onRemove={removeWidget}
-                onSaveSetting={({url, height, width}) => {
+                onSaveSetting={({url, height, width, title}) => {
                   const currentProps = JSON.parse(JSON.stringify(tabContent.props));
                   currentProps.url = url;
                   currentProps.width = width;
                   currentProps.height = height;
                   currentProps.showSettingInit = false;
+                  currentProps.defaultTitle = title;
                   updateWidget(currentProps);
                 }}
               />);
