@@ -1,8 +1,8 @@
-import {hot} from "react-hot-loader/root";
-import React, {useState, createContext} from "react";
+import {hot} from 'react-hot-loader/root';
+import React, {useState, createContext} from 'react';
 import {HashRouter as Router, Switch, Route} from 'react-router-dom';
-import PortalBuilder from './views/PortalBuilder'
-import Header from "./views/components/Header";
+import PortalBuilder from './views/PortalBuilder';
+import Header from './views/components/Header';
 
 const ProfileContext = createContext({
   profiles: [] as Profile[],
@@ -10,18 +10,18 @@ const ProfileContext = createContext({
 });
 
 const App = () => {
-  let initProfiles = []
-  const storageProfile = window.localStorage.getItem('profiles')
-  
+  let initProfiles = [];
+  const storageProfile = window.localStorage.getItem('profiles');
+
   if (storageProfile !== null) {
     initProfiles = JSON.parse(storageProfile);
   }
-  const [profileList, setProfileList] = useState(initProfiles)
-  
+  const [profileList, setProfileList] = useState(initProfiles);
+
   return (
     <Router>
-      <ProfileContext.Provider value = {{profiles: profileList, setProfiles: setProfileList}} >
-        <Header/>
+      <ProfileContext.Provider value={{profiles: profileList, setProfiles: setProfileList}} >
+        <Header />
         <Switch>
           <Route path="/">
             <PortalBuilder />
@@ -29,8 +29,8 @@ const App = () => {
         </Switch>
       </ProfileContext.Provider>
     </Router>
-  )
-}
+  );
+};
 
-export {ProfileContext}
+export {ProfileContext};
 export default hot(App);
