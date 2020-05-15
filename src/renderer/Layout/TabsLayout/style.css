@@ -31,7 +31,8 @@
 }
 
 .portal-tabs-layout .kuc-tabs-tabs {
-  min-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .portal-tabs-layout .kuc-tabs-tab-contents {

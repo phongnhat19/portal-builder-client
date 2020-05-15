@@ -9,11 +9,92 @@ import {EMPTY_WIDGET_CONTENT} from '../../TabsLayout/constant';
 import {CONTENT_TYPE} from '../../../Widget/constant';
 import WeatherComponent from '../../../Widget/WeatherWidget/renderer';
 import GmailWidget from '../../../Widget/GmailWidget/renderer';
+import AppSpaceWidget from '../../../Widget/AppSpaceListWidget/renderer';
+
+const buildContent = ({content, type = CONTENT_TYPE.EMPTY as ContentType}: {
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps | GmailWidgetProps | WeatherWidgetProps;
+  type: ContentType;
+}) => {
+  let currentContentBlock = EMPTY_WIDGET_CONTENT as any;
+
+  switch (type) {
+    case CONTENT_TYPE.IFRAME: {
+      const blockContentIframe = content as IframeWidgetProps;
+
+      currentContentBlock =
+        (<IframeWidget
+          url={blockContentIframe.url}
+          width={blockContentIframe.width}
+          height={blockContentIframe.height}
+          defaultTitle={blockContentIframe.defaultTitle}
+        />);
+      break;
+    }
+
+    case CONTENT_TYPE.HTML: {
+      const blockContentHTML = content as HTMLWidgetProps;
+      currentContentBlock =
+        (<HTMLWidget
+          htmlTitle={blockContentHTML.htmlTitle}
+          htmlString={blockContentHTML.htmlString}
+          width={`${blockContentHTML.width}%`}
+        />);
+      break;
+    }
+
+    case CONTENT_TYPE.SCHEDULER: {
+      const blockContentSchedule = content as SchedulerWidgetProps;
+      currentContentBlock =
+        (<SchedulerWidget
+          defaultView={blockContentSchedule.defaultView}
+        />);
+      break;
+    }
+
+    case CONTENT_TYPE.GAROON_NOTIFY: {
+      currentContentBlock = <GNotify data={[]} />;
+      break;
+    }
+
+    case CONTENT_TYPE.WEATHER: {
+      const blockContentWeather = content as WeatherWidgetProps;
+      currentContentBlock =
+          (<WeatherComponent
+            unitTemp={blockContentWeather.unitTemp}
+            weatherCity={blockContentWeather.weatherCity}
+            openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
+            type={blockContentWeather.type}
+          />);
+      break;
+    }
+
+    case CONTENT_TYPE.APP_SPACE: {
+      const blockContentAppSpace = content as AppSpaceWidgetProps;
+      currentContentBlock = (
+        <AppSpaceWidget widgetTitle={blockContentAppSpace.widgetTitle} contentList={blockContentAppSpace.contentList} />
+      );
+      break;
+    }
+
+    case CONTENT_TYPE.GMAIL: {
+      const blockContentHTML = content as GmailWidgetProps;
+      currentContentBlock = <GmailWidget apiKey={blockContentHTML.apiKey} clientID={blockContentHTML.clientID} />;
+      break;
+    }
+
+    case CONTENT_TYPE.EMPTY:
+      currentContentBlock = '';
+      break;
+    default:
+      break;
+  }
+  return currentContentBlock;
+};
 
 const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = undefined, width}: {
   style?: CSSProperties;
   type?: ContentType;
-  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | GmailWidgetProps;
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps | GmailWidgetProps;
   width: number;
 }) => {
 
@@ -27,68 +108,9 @@ const GridBlock = ({style, type = CONTENT_TYPE.EMPTY as ContentType, content = u
 
   const [blockContent, setBlockContent] = useState(null);
 
+
   useEffect(() => {
-    const buildContent = () => {
-      let currentContentBlock = EMPTY_WIDGET_CONTENT as any;
-
-      if (!content) return currentContentBlock;
-      switch (type) {
-        case CONTENT_TYPE.IFRAME: {
-          const blockContentIframe = content as IframeWidgetProps;
-
-          currentContentBlock =
-            (<IframeWidget
-              defaultTitle={blockContentIframe.defaultTitle}
-              url={blockContentIframe.url}
-              width={blockContentIframe.width}
-              height={blockContentIframe.height}
-            />);
-          break;
-        }
-        case CONTENT_TYPE.HTML: {
-          const blockContentHTML = content as HTMLWidgetProps;
-          currentContentBlock =
-            (<HTMLWidget
-              htmlTitle={blockContentHTML.htmlTitle}
-              htmlString={blockContentHTML.htmlString}
-              width={`${blockContentHTML.width}%`}
-            />);
-          break;
-        }
-        case CONTENT_TYPE.SCHEDULER: {
-          const blockContentSchedule = content as SchedulerWidgetProps;
-          currentContentBlock =
-            (<SchedulerWidget
-              defaultView={blockContentSchedule.defaultView}
-            />);
-          break;
-        }
-        case CONTENT_TYPE.GMAIL: {
-
-          const blockContentGmail = content as GmailWidgetProps;
-          currentContentBlock = <GmailWidget apiKey={blockContentGmail.apiKey} clientID={blockContentGmail.clientID} />;
-          break;
-        }
-        case CONTENT_TYPE.GAROON_NOTIFY:
-          currentContentBlock = <GNotify data={[]} />;
-          break;
-        case CONTENT_TYPE.WEATHER: {
-          const blockContentWeather = content as WeatherWidgetProps;
-          currentContentBlock =
-              (<WeatherComponent
-                unitTemp={blockContentWeather.unitTemp}
-                weatherCity={blockContentWeather.weatherCity}
-                openWeatherMapAPIKey={blockContentWeather.openWeatherMapAPIKey}
-                type={blockContentWeather.type}
-              />);
-          break;
-        }
-        case CONTENT_TYPE.EMPTY:
-          currentContentBlock = '';
-      }
-      return currentContentBlock;
-    };
-    setBlockContent(buildContent());
+    setBlockContent(buildContent({content, type}));
   }, [content, type]);
 
   return (

@@ -1,9 +1,9 @@
-import React, { CSSProperties, useRef, useContext, useState, useEffect, useCallback } from 'react'
-import '../style.css'
-import { ExclamationCircleOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Popconfirm, Row } from 'antd';
-import { PortalContext } from '../../../views/PortalBuilder';
-import { SCHEDULER_VIEW } from '../../../Widget/SchedulerWidget/constant';
+import React, {CSSProperties, useCallback, useContext, useState, useEffect} from 'react';
+import '../style.css';
+import {ExclamationCircleOutlined, CloseOutlined} from '@ant-design/icons';
+import {Button, Popconfirm, Row} from 'antd';
+import {PortalContext} from '../../../views/PortalBuilder';
+import {SCHEDULER_VIEW} from '../../../Widget/SchedulerWidget/constant';
 import IframeWidget from '../../../Widget/IframeWidget';
 import HTMLWidget from '../../../Widget/HTMLWidget';
 import GmailWidget from '../../../Widget/GmailWidget';
@@ -14,10 +14,11 @@ import confirm from 'antd/lib/modal/confirm';
 import {CONTENT_TYPE} from '../../../Widget/constant';
 import {WEATHER_UNIT, WEATHER_TYPE} from '../../../Widget/WeatherWidget/constant';
 import WeatherWidget from '../../../Widget/WeatherWidget';
+import AppSpaceWidget from '../../../Widget/AppSpaceListWidget';
 
 const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onRemoveBlock, onResizeWidth}: {
   style?: CSSProperties;
-  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps;
+  content?: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | AppSpaceWidgetProps | GmailWidgetProps | WeatherWidgetProps;
   width: number;
   rowIndex: number;
   blockIndex: number;
@@ -33,11 +34,13 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
     finalStyle = {...finalStyle, ...style};
   }
 
-  const { portalList, setPortalList, selectedPortal } = useContext(PortalContext)
-  const [blockContent, setBlockContent] = useState(null)
+  const {portalList, setPortalList, selectedPortal} = useContext(PortalContext);
+  const [blockContent, setBlockContent] = useState(null);
   const [isResize, setIsReSize] = useState(false);
-  const blockRef = useRef<HTMLDivElement>(null);
-
+  const [blockElement, setBlockElement] = useState<HTMLDivElement>();
+  const blockRef = useCallback((node: HTMLDivElement) => {
+    node && setBlockElement(node);
+  }, []);
 
   const dropWidget = (dropRowIndex: number, dropBlockIndex: number, type: ContentType, props: any) => {
     const gridLayout = portalList[selectedPortal].layout.props as GridLayout;
@@ -48,7 +51,6 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
       setPortalList(portalList);
     }
   };
-
 
   useEffect(() => {
     const updateWidget = (newProps: IframeWidgetProps | HTMLWidgetProps | SchedulerWidgetProps | WeatherWidgetProps | GmailWidgetProps) => {
@@ -196,6 +198,26 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
           />);
           break;
         }
+        case CONTENT_TYPE.APP_SPACE: {
+          if (!currentBlock.content) break;
+          const blockContentAppSpace = currentBlock.content as AppSpaceWidgetProps;
+          currentContentBlock = (
+            <AppSpaceWidget
+              widgetTitle={blockContentAppSpace.widgetTitle}
+              contentList={blockContentAppSpace.contentList}
+              showSettingInit={blockContentAppSpace.showSettingInit}
+              onRemove={removeWidget}
+              onSaveSetting={({contentList, widgetTitle}) => {
+                const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+                currentProps.contentList = contentList;
+                currentProps.widgetTitle = widgetTitle;
+                currentProps.showSettingInit = false;
+                updateWidget(currentProps);
+              }}
+            />
+          );
+          break;
+        }
         case CONTENT_TYPE.EMPTY:
           currentContentBlock = EMPTY_WIDGET_CONTENT;
       }
@@ -208,16 +230,16 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
   useEffect(()=> {
     const handleMouseUp = () => {
       if (isResize) {
-        onResizeWidth({width: blockRef.current!.offsetWidth});
+        onResizeWidth({width: blockElement!.offsetWidth});
         setIsReSize(false);
       }
     };
 
-    document.addEventListener('mouseup', handleMouseUp);
+    blockElement && blockElement.addEventListener('resize', handleMouseUp);
     return () => {
-      document.removeEventListener('mouseup', handleMouseUp);
+      blockElement && blockElement.removeEventListener('resize', handleMouseUp);
     };
-  }, [isResize, onResizeWidth]);
+  }, [isResize, onResizeWidth, blockElement]);
 
   return (
     <div
@@ -225,7 +247,9 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
       ref={blockRef}
       style={finalStyle}
       className="grid-block"
-      onDragOver={(event: React.DragEvent<HTMLDivElement>) => { event.preventDefault(); }}
+      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+      }}
       onMouseDown={() => setIsReSize(true)}
       onDrop={(e) => {
         let props: any;
@@ -267,6 +291,10 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
             weatherCity: '',
             openWeatherMapAPIKey: '',
             type: WEATHER_TYPE.SIMPLE
+          };
+        } else if (type === CONTENT_TYPE.APP_SPACE) {
+          props = {
+            showSettingInit: true,
           };
         }
 

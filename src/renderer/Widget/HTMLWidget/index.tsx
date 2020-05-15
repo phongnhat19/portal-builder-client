@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import HTMLModal from './HTMLModal';
 import HTML from './renderer';
-import HTMLHeader from './components/HTMLHeader';
+import SettingsWidget from '../components/Settings';
 import './style.css';
 
 const HTMLWidget = ({
@@ -23,12 +23,17 @@ const HTMLWidget = ({
 }) => {
   const [showSetting, setShowSetting] = useState(showSettingInit);
   return (
-    <div className="html-wrapper">
-      <HTMLHeader htmlTitle={htmlTitle} onRemove={onRemove} setShowSetting={setShowSetting} />
-      <div role="button" tabIndex={0} onDrop={(event) => event.stopPropagation()} className="padding-5">
+    <div className="html-widget-index-wrapper">
+      <div role="button" tabIndex={0} onDrop={(event) => event.stopPropagation()}>
         <HTML htmlTitle={htmlTitle} htmlString={htmlString} width={width} height={height} />
       </div>
-
+      <SettingsWidget
+        className="html-settings-button"
+        onRemove={onRemove}
+        showSetting={() => {
+          setShowSetting && setShowSetting(true);
+        }}
+      />
       <HTMLModal
         htmlString={htmlString}
         isVisible={showSetting}

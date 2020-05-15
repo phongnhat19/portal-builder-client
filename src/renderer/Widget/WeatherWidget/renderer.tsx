@@ -4,6 +4,7 @@ import Weather from 'simple-react-weather';
 import { WEATHER_TYPE } from './constant';
 import { Row, Col } from 'antd';
 import axios from 'axios';
+import './renderer.css';
 const WeatherComponent = ({
   unitTemp = 'C',
   weatherCity = '',

@@ -8,16 +8,17 @@ const HTML = ({width, height, htmlString, htmlTitle}: {htmlTitle: string;htmlStr
   };
 
   return (
-    <React.Fragment>
-      {window.kintone && <HTMLHeader htmlTitle={htmlTitle} /> }
+    <div className="html-wrapper">
+      <HTMLHeader htmlTitle={htmlTitle} />
       <div
+        className="html-content"
         role="button"
         tabIndex={0}
         onDrop={(event) => event.stopPropagation()}
         style={{width, height}}
         dangerouslySetInnerHTML={createMarkupHTMLWidget(htmlString)}
       />
-    </React.Fragment>
+    </div>
   );
 };
 

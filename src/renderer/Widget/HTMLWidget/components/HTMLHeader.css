@@ -1,0 +1,30 @@
+.html-header {
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid #C4C4C4;
+}
+
+.html-header .icon {
+  font-size: 25px;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.html-header .icon span {
+  vertical-align: top;
+}
+
+.html-header .title {
+  height: 45px;
+  line-height: 45px;
+  font-size: 25px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-bottom: none;
+  margin-bottom: 0px;
+  padding-right: 55px;
+}
