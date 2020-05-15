@@ -16,6 +16,11 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
 }) => {
   const calendarRef = useRef<FullCalendar>(null);
   const [events, setEvents] = useState(data);
+  const [calendarView, setCalendarView] = useState(defaultView);
+
+  useEffect(() => {
+    setCalendarView(defaultView);
+  }, [defaultView]);
 
   useEffect(() => {
     if (data.length === 0 && window.kintone) getSchedulerEvent().then(setEvents);
@@ -36,7 +41,7 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
         }}
         contentHeight="auto"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        defaultView={defaultView}
+        defaultView={calendarView}
         eventTimeFormat={{
           hour: 'numeric',
           minute: '2-digit',
