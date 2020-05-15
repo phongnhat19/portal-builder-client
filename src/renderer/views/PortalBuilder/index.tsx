@@ -1,10 +1,11 @@
-import React, { useState, createContext } from 'react'
-import './style.css'
-import PortalPreview from './PortalPreview'
-import SideBar from './SideBar'
-import WidgetList, {Widget} from './Widget/WidgetList';
-import {Portal, Layout, TabContentType} from './Type'
-import { BorderOutlined, CalendarOutlined, Html5Outlined } from '@ant-design/icons';
+import React, {useState, createContext} from 'react';
+import './style.css';
+import PortalPreview from './PortalPreview';
+import SideBar from './SideBar';
+import WidgetList from '../../Widget/WidgetList';
+import {BorderOutlined, CalendarOutlined, Html5Outlined, AlertOutlined, CloudOutlined, MailOutlined, AppstoreFilled} from '@ant-design/icons';
+import {CONTENT_TYPE} from '../../Widget/constant';
+import {LAYOUT_TYPE} from '../../Layout/constant';
 
 const PortalContext = createContext({
   portalList: [] as Portal[],
@@ -16,17 +17,17 @@ const PortalContext = createContext({
 
 const PortalBuilder = () => {
 
-  let initData:Portal[] = [
+  let initData: Portal[] = [
     {
       name: 'Portal 1',
       layout: {
-        type: 'Tabs',
+        type: LAYOUT_TYPE.TAB as LayoutType,
         props: {
           tabList: [
             {
               tabName: 'Default Portal',
               tabContent: {
-                type: TabContentType.DEFAULT,
+                type: CONTENT_TYPE.DEFAULT as ContentType,
                 name: 'DefaultPortal'
               }
             }
@@ -34,95 +35,108 @@ const PortalBuilder = () => {
         }
       }
     }
-  ]
-  
-  const storagePortal = window.localStorage.getItem('portal')
+  ];
+
+  const storagePortal = window.localStorage.getItem('portal');
   if (storagePortal !== null) {
     initData = JSON.parse(storagePortal);
   }
-  
-  const [data, setData] = useState(initData)
-  const [selectedPortal, setSelectedPortal] = useState(0)
+
+  const [data, setData] = useState(initData);
+  const [selectedPortal, setSelectedPortal] = useState(0);
 
   const widgetList: Widget[] = [
     {
       icon: <BorderOutlined />,
-      name: TabContentType.IFRAME,
-    }, 
+      name: CONTENT_TYPE.IFRAME,
+    },
     {
       icon: <Html5Outlined />,
-      name: TabContentType.HTML,
-    }, 
+      name: CONTENT_TYPE.HTML,
+    },
     {
       icon: <CalendarOutlined />,
-      name: 'Schedule',
+      name: CONTENT_TYPE.SCHEDULER
+    },
+    {
+      icon: <AlertOutlined />,
+      name: CONTENT_TYPE.GAROON_NOTIFY
+    },
+    {
+      icon: <MailOutlined />,
+      name: CONTENT_TYPE.GMAIL
+    },
+    {
+      icon: <CloudOutlined />,
+      name: CONTENT_TYPE.WEATHER
+    },
+    {
+      icon: <AppstoreFilled />,
+      name: CONTENT_TYPE.APP_SPACE,
     }
-  ]
+  ];
 
   const setPortalList = (newPortalList: Portal[]) => {
-    setData(JSON.parse(JSON.stringify(newPortalList)))
-    window.localStorage.setItem("portal", JSON.stringify(newPortalList))
-  }
+    setData(JSON.parse(JSON.stringify(newPortalList)));
+    window.localStorage.setItem('portal', JSON.stringify(newPortalList));
+  };
 
   const updatePortal = (newPortal: Portal, portalIndex: number) => {
-    data[portalIndex] = newPortal
-    setData(JSON.parse(JSON.stringify(data)))
-    window.localStorage.setItem("portal", JSON.stringify(data))
-  }
+    data[portalIndex] = newPortal;
+    setData(JSON.parse(JSON.stringify(data)));
+    window.localStorage.setItem('portal', JSON.stringify(data));
+  };
 
   const removePortal = (portalIndex: number) => {
-    data.splice(portalIndex, 1)
-    setSelectedPortal(data.length - 1)
-    setData(JSON.parse(JSON.stringify(data)))
-    window.localStorage.setItem("portal", JSON.stringify(data))
-  }
-  let selectedIndex = selectedPortal > data.length - 1 ? data.length - 1 : selectedPortal
+    data.splice(portalIndex, 1);
+    setSelectedPortal(data.length - 1);
+    setData(JSON.parse(JSON.stringify(data)));
+    window.localStorage.setItem('portal', JSON.stringify(data));
+  };
+  const selectedIndex = selectedPortal > data.length - 1 ? data.length - 1 : selectedPortal;
 
-  return(
-    <PortalContext.Provider value = {{
-      portalList: data, 
-      setPortalList, 
+  return (
+    <PortalContext.Provider value={{
+      portalList: data,
+      setPortalList,
       selectedPortal,
       updatePortal,
       removePortal
-    }} >
+    }}
+    >
       <div className="portal-container">
         <div className="portal-list-container">
-          <SideBar 
-            selectedPortal = {selectedIndex}
-            items = {data}
-            onChange= {(item, index) => {
-              setSelectedPortal(index)
-            }} 
-            onDeploy= {async (dataDeploy) => {}} 
-            onCreate= {(item: Portal) => {
-              data.push(item)
+          <SideBar
+            selectedPortal={selectedIndex}
+            items={data}
+            onChange={(item, index) => {
+              setSelectedPortal(index);
+            }}
+            onDeploy={async (dataDeploy) => {}}
+            onCreate={(item: Portal) => {
+              data.push(item);
               setPortalList(data);
-              
-              setSelectedPortal(data.length - 1)
+
+              setSelectedPortal(data.length - 1);
+            }}
+            onSaveRename={(item) => {
+              data[selectedPortal].name = item.name;
+              setPortalList(data);
             }}
           />
         </div>
         <div className="portal-preview">
-          <PortalPreview 
-            layout = {data[selectedIndex].layout}
-            onAddTabs={(item: any) => {
-              data[selectedPortal].layout.props.tabList.push(item)
-              setPortalList(data);
-            }}
-            onRemoveTabs = {(layout: Layout) => {
-              data[selectedPortal].layout = layout
-              setPortalList(data);
-            }}
+          <PortalPreview
+            layout={data.length > 0 ? data[selectedIndex].layout : undefined}
           />
         </div>
         <div className="widget-list-container">
-          <WidgetList containers={widgetList}/>
+          <WidgetList containers={widgetList} />
         </div>
       </div>
     </PortalContext.Provider>
-  )
-}
+  );
+};
 
-export {PortalContext}
-export default PortalBuilder
+export {PortalContext};
+export default PortalBuilder;

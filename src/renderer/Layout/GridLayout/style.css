@@ -1,0 +1,89 @@
+.grid-layout {
+    border: 1px solid #b9e6ff;
+    background-color: #ecf8ff;
+    min-width: 100%;
+    min-height: 85vh;
+    padding: 15px
+}
+
+.grid-layout .grid-layout-row {
+    border: 1px solid #fce0c7;
+    background-color: #fef2e7;
+    min-height: 10vh;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.grid-block {
+    border: 1px solid #ace5cc;
+    background-color: #ecfdf6;
+    padding: 15px;
+    min-height: 100px;
+    overflow: auto;
+    resize: horizontal;
+}
+
+.grid-layout .grid-blocks-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.grid-layout .grid-block-position-relative, .grid-layout .grid-layout-row, .grid-layout .grid-layout-row .grid-block {
+    position: relative;
+}
+
+.grid-layout .grid-block-position-relative {
+    padding-top: 5%;
+}
+
+.grid-layout .portal-tabs-btn, .grid-layout .grid-layout-btn-remove {
+    position: absolute;
+}
+
+.grid-layout .portal-tabs-btn-settings {
+    right: 0px;
+}
+
+.grid-layout .grid-layout-btn-add-row {
+    min-height: 10vh;
+}
+
+.grid-layout .grid-layout-btn-add.ant-btn-icon-only {
+    font-size: 40px !important;
+}
+
+.grid-layout .grid-layout-btn-remove {
+    right: -15px;
+    top: -10px;
+}
+
+.grid-layout .grid-block .grid-layout-btn-remove {
+    right: 5px;
+    top: 5px;
+    z-index: 1;
+    max-width: 20px !important;
+    min-width: 15px !important;
+    height: 20px;
+    font-size: 10px !important;
+}
+
+.grid-layout .grid-layout-row .grid-block .widget-weather {
+    background-color: #6495ED;
+    padding: 20px;
+    width: 100%;
+}
+
+
+.grid-layout .grid-layout-row .grid-block .widget-weather .portal-tabs-btn-settings {
+    z-index: 5;
+  }
+
+.grid-layout .grid-layout-row .grid-block .styles_simpleReactWeather__3uy4l {
+    font-size: 20px;
+}
+
+.grid-layout .grid-layout-row .grid-block .widget-weather .widget-full-weather {
+    text-transform: uppercase;
+    color: white;
+  }

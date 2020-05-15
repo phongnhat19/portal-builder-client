@@ -1,0 +1,27 @@
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
+.html-widget-index-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.html-wrapper {
+  border: 1px solid #C4C4C4;
+  width: 100%;
+  position: relative;
+}
+
+.portal-tabs-layout .portal-tabs-btn-settings.html-settings-button,
+.grid-layout .portal-tabs-btn-settings.html-settings-button {
+  top: 6px;
+  right: 6px;
+}
+
+.html-wrapper .html-content {
+  padding: 5px;
+  min-height: 52px;
+  box-sizing: border-box;
+}

@@ -1,0 +1,57 @@
+.input-url {
+    display: inline-flex;
+    font-weight: bold;
+}
+.widget-iframe-row{
+    padding-top: 15px;
+}
+.iframe-header{
+    position: relative;
+    height: 50px;
+    border: 1px solid rgb(238, 238, 238);
+    border-width: 2px;
+    border-bottom: none;
+}
+.iframe-header .icon {
+    position: absolute;
+    font-size: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.iframe-header .size{
+    position: absolute;
+    font-size: 32px;
+}
+.iframe-header .icon{
+    left: 1%;
+}
+
+.iframe {
+    border: 2px solid rgb(238, 238, 238);
+}
+
+.iframe-header .title{
+    left: 5%;
+    overflow-x: auto; 
+    overflow-y: hidden;
+    max-width: 85%;
+    white-space: nowrap;
+    height: 45px;
+}
+
+.iframe-header .title::-webkit-scrollbar{
+    height: 2px;
+}
+
+.iframe-header .title::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px #c4c7c7; 
+}
+
+.iframe-header .title::-webkit-scrollbar-thumb {
+    background: #c4c7c7; 
+}
+
+.center-setting{
+    top: 50%;
+    transform: translateY(-50%);
+}

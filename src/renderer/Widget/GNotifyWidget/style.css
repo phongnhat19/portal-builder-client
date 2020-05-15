@@ -1,0 +1,87 @@
+.grn_notify_container {
+    width: 100%;
+    overflow: hidden;
+    padding-top: 5px;
+    background: #fff;
+    font-family: HelveticaNeueW02-45Ligh,Arial,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+}
+
+.grn_notify_item {
+    border: 1px solid #d6d6d6;
+    padding: 12px 12px 10px 14px;
+    display: flex;
+}
+.grn_notify_itemTime {
+    float: right;
+    color: #666;
+    font-size: 90%;
+    font-weight: bold;
+    padding: 3px 0 3px 10px;
+}
+.grn_notify_item_main {
+    width: 100%;
+}
+.grn_notify_item_body {
+    margin: -2px 28px 3px 24px;
+    padding: 3px 0 2px 8px;
+    border-left: 1px solid #dbdbdb;
+    line-height: 1.4;
+    white-space: normal;
+    word-break: break-all;
+    color: #666;
+}
+.grn_notify_img {
+    color: #0a62ad;
+    display: flex;
+}
+
+.grn_notify_read {
+    padding-right: 10px;
+}
+
+.grn_notify_title {
+    color: #0a62ad;
+    font-weight: bold;
+    font-size: large;
+    margin-left: 15px;
+}
+a {
+    font-weight: 700;
+}
+
+img {
+    margin-right: 5px;
+}
+
+.grn_notidy_empty {
+    color: #666;
+    background: #eee;
+    padding: 15px 10px;
+    margin: 15px auto 0 auto;
+    font-weight: 700;
+    min-width: 400px;
+    text-align: center;
+}
+
+.g_notify_header {
+    display: inline-flex;
+    padding: 10px;
+}
+.g_notify_icon {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    font-size: 23px;
+    color: white;
+    background: #003489;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.g_notify_title {
+    font-size: 20px;
+    padding: 5px 15px;
+    font-weight: bold;
+    color: #003489;
+}

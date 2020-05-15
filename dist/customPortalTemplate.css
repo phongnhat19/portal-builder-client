@@ -4,8 +4,8 @@
 
 .kintone-portal-content-space .kuc-tabs-tab-contents {
     min-height: 730px;
-    background-color:transparent;
     box-shadow: none;
+    /* background-color:transparent; */
     border-top: 1px solid #fff;
     border-left: none;
     padding: 5px;
