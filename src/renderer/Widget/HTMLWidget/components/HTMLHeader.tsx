@@ -1,30 +1,19 @@
 import React from 'react';
-import SettingsWidget from '../../components/Settings';
 import {Html5Outlined} from '@ant-design/icons';
+
+import './HTMLHeader.css';
+
 const HTMLHeader = ({
-  onRemove,
-  setShowSetting,
-  htmlTitle,
+  htmlTitle
 }: {
-  onRemove?: () => void;
-  setShowSetting?: (status: boolean) => void;
   htmlTitle: string;
 }) => {
   return (
-    <div className="html-header">
-      {!window.kintone && (
-        <SettingsWidget
-          className="align-vertical right-5"
-          onRemove={onRemove}
-          showSetting={() => {
-            setShowSetting && setShowSetting(true);
-          }}
-        />
-      )}
-      <div className="icon align-vertical">
+    <div className="html-header" >
+      <div className="icon">
         <Html5Outlined />
       </div>
-      <div className="title align-vertical">{htmlTitle}</div>
+      <div className="title">{htmlTitle}</div>
     </div>
   );
 };

@@ -2,61 +2,26 @@
   margin-bottom: 20px;
 }
 
-.html-wrapper {
-  border: 1px solid #C4C4C4;
-  padding: 5px;
-  border-bottom: none;
+.html-widget-index-wrapper {
+  position: relative;
+  display: inline-block;
   width: 100%;
 }
 
-.html-header {
-  display: flex;
-  border-bottom: 1px solid #C4C4C4;
-  padding: 0px -10px;
-  margin: 0px -5px;
-  padding-bottom: 5px;
-  padding-left: 5px;
+.html-wrapper {
+  border: 1px solid #C4C4C4;
+  width: 100%;
   position: relative;
-  height: 45px;
 }
 
-.padding-5 {
+.portal-tabs-layout .portal-tabs-btn-settings.html-settings-button,
+.grid-layout .portal-tabs-btn-settings.html-settings-button {
+  top: 6px;
+  right: 6px;
+}
+
+.html-wrapper .html-content {
   padding: 5px;
-}
-
-.right-5 {
-  right: 5px !important;
-}
-
-.html-header .icon {
-  font-size: 25px;
-  margin-right: 5px;
-  width: 35px;
-}
-.align-vertical {
-  transform: translateY(-50%);
-  position: absolute;
-  top: 50%;
-}
-
-.title {
-  font-size: 25px;
-  left: 4%;
-  overflow-x: auto; 
-  overflow-y: hidden;
-  max-width: 85%;
-  white-space: nowrap;
-  height: 40px;
-}
-
-.title::-webkit-scrollbar{
-height: 2px;
-}
-
-.title::-webkit-scrollbar-track {
-box-shadow: inset 0 0 2px #c4c7c7; 
-}
-
-.title::-webkit-scrollbar-thumb {
-background: #c4c7c7; 
+  min-height: 52px;
+  box-sizing: border-box;
 }
