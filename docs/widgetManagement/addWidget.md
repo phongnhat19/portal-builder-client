@@ -18,7 +18,6 @@ sidebar_label: Add Widget
 :::note
 
 - To config a Widget, please reference to [Widget Configuration](configWidget).
-
 - To delete Widget, please reference to [Delete Widget](deleteWidget).
 
 :::

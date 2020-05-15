@@ -13,7 +13,6 @@ sidebar_label: Update Portal
 :::note
 
 - To add new Portal, please reference to [Add new Portal](addPortal).
-
 - To delete Portal, please reference to [Delete Portal](deletePortal).
 
 :::

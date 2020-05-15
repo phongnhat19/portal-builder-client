@@ -26,9 +26,7 @@ sidebar_label: Add new Portal
 
 - New Portal after created will be display on Portal list at left panel.
 ![](../../static/img/docs/portalManagement/portal-list.png)
-
 - To update Portal, please reference to [Update Portal](updatePortal).
-
 - To delete Portal, please reference to [Delete Portal](deletePortal).
 
 :::
