@@ -85,3 +85,9 @@ img {
     font-weight: bold;
     color: #003489;
 }
+
+.grn_notify_wrapper {
+    padding: 10px;
+    height: 100%;
+    box-sizing: border-box;
+}
