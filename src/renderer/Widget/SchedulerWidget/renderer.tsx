@@ -16,6 +16,14 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
 }) => {
   const calendarRef = useRef<FullCalendar>(null);
   const [events, setEvents] = useState(data);
+  const [calendarView, setCalendarView] = useState(defaultView);
+
+  useEffect(() => {
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      calendarApi.changeView(defaultView);
+    }
+  }, [defaultView]);
 
   useEffect(() => {
     if (data.length === 0 && window.kintone) getSchedulerEvent().then(setEvents);
