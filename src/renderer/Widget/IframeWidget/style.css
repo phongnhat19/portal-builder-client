@@ -55,3 +55,9 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+.iframe-container {
+    padding: 10px;
+    height: 100%;
+    box-sizing: border-box;
+}
