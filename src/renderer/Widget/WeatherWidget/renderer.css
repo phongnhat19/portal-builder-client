@@ -10,6 +10,12 @@
   box-sizing: border-box
 }
 
+.weather-widget-container {
+  padding: 10px;
+  box-sizing: border-box;
+  height: 100%;
+}
+
 .styles_simpleReactWeather__3uy4l {
   font-size: 20px;
   min-height: 0px !important

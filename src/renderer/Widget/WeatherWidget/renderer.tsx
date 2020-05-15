@@ -46,23 +46,25 @@ const WeatherComponent = ({
   }, [weatherCity, openWeatherMapAPIKey, unitTemp, type])
 
   return (
-    <div className='widget-weather'>
-      {type === WEATHER_TYPE.SIMPLE ?
-        <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
-        :
-        <Row style={{ display: 'flex' }}>
-          <Col style={{ width: '20%' }}>
-            <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
-          </Col>
-          <Col className='widget-full-weather'>
-            <p><strong>weather:</strong> {weatherData.description}</p>
-            <p><strong>humidity:</strong> {weatherData.humidity}</p>
-            <p><strong>wind speed:</strong> {weatherData.windSpeed}</p>
-            <p><strong>cloud:</strong> {weatherData.cloud}</p>
-          </Col>
-        </Row>
-      }
-    </div >
+    <div className="weather-widget-container">
+      <div className='widget-weather'>
+        {type === WEATHER_TYPE.SIMPLE ?
+          <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
+          :
+          <Row style={{ display: 'flex' }}>
+            <Col style={{ width: '20%' }}>
+              <Weather unit={unitTemp} city={weatherCity} appid={openWeatherMapAPIKey} />
+            </Col>
+            <Col className='widget-full-weather'>
+              <p><strong>weather:</strong> {weatherData.description}</p>
+              <p><strong>humidity:</strong> {weatherData.humidity}</p>
+              <p><strong>wind speed:</strong> {weatherData.windSpeed}</p>
+              <p><strong>cloud:</strong> {weatherData.cloud}</p>
+            </Col>
+          </Row>
+        }
+      </div>
+    </div>
   )
 }
 
