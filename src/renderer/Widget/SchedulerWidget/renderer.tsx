@@ -19,7 +19,10 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
   const [calendarView, setCalendarView] = useState(defaultView);
 
   useEffect(() => {
-    setCalendarView(defaultView);
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      calendarApi.changeView(defaultView);
+    }
   }, [defaultView]);
 
   useEffect(() => {
@@ -41,7 +44,7 @@ const Scheduler = ({defaultView = SCHEDULER_VIEW.FULL_CALENDAR_DAY_TIME, data = 
         }}
         contentHeight="auto"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        defaultView={calendarView}
+        defaultView={defaultView}
         eventTimeFormat={{
           hour: 'numeric',
           minute: '2-digit',
