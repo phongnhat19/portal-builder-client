@@ -14,7 +14,7 @@ const GridLayout = ({items = []}: {
             return (<GridRow
               gridRowItem={item}
               key={i}
-                    />);
+            />);
           })}
         </div>
       </div>

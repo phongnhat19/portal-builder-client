@@ -46,7 +46,7 @@ const GridLayout = ({items = []}: {
                 props.rows[i].blocks[blockIndex].width = width;
                 setPortalList(portalList);
               }}
-                    />);
+            />);
           })}
 
           <Button

@@ -90,23 +90,23 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
           const blockContentIframe = currentBlock.content as IframeWidgetProps;
 
           currentContentBlock =
-          (<IframeWidget
-            defaultTitle={blockContentIframe.defaultTitle}
-            url={blockContentIframe.url}
-            width={blockContentIframe.width}
-            height={blockContentIframe.height}
-            showSettingInit={blockContentIframe.showSettingInit}
-            onRemove={removeWidget}
-            onSaveSetting={({url, width: nextWidth, height, title}) => {
-              const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
-              currentProps.url = url;
-              currentProps.width = nextWidth;
-              currentProps.height = height;
-              currentProps.showSettingInit = false;
-              currentProps.defaultTitle = title;
-              updateWidget(currentProps);
-            }}
-          />);
+            (<IframeWidget
+              defaultTitle={blockContentIframe.defaultTitle}
+              url={blockContentIframe.url}
+              width={blockContentIframe.width}
+              height={blockContentIframe.height}
+              showSettingInit={blockContentIframe.showSettingInit}
+              onRemove={removeWidget}
+              onSaveSetting={({url, width: nextWidth, height, title}) => {
+                const currentProps = JSON.parse(JSON.stringify(currentBlock.content));
+                currentProps.url = url;
+                currentProps.width = nextWidth;
+                currentProps.height = height;
+                currentProps.showSettingInit = false;
+                currentProps.defaultTitle = title;
+                updateWidget(currentProps);
+              }}
+            />);
           break;
         }
         case CONTENT_TYPE.GMAIL: {
