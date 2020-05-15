@@ -24,10 +24,9 @@ module.exports = {
         type: 'category',
         label: 'Widget Management',
         items: [
-
           'widgetManagement/addWidget',
-          'widgetManagement/updateWidget',
           'widgetManagement/deleteWidget',
+          'widgetManagement/configWidget',
           {
             type: 'category',
             label: 'Widgets',
