@@ -235,9 +235,9 @@ const GridBlock = ({style, content = undefined, width, rowIndex, blockIndex, onR
       }
     };
 
-    blockElement && blockElement.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mouseup', handleMouseUp);
     return () => {
-      blockElement && blockElement.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isResize, onResizeWidth, blockElement]);
 
