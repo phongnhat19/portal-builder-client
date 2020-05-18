@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import HTMLModal from './HTMLModal';
 import HTML from './renderer';
 import SettingsWidget from '../components/Settings';
-import './style.css';
+import './index.css';
 
 const HTMLWidget = ({
   htmlString,

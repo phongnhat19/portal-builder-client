@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import {RocketFilled, PlusCircleOutlined, DeleteOutlined} from '@ant-design/icons';
 import {Button, Typography, Menu, Popconfirm} from 'antd';
 import DeployModal from './DeployModal/DeployModal';
-import CreateModal from './CreateModel';
+import CreateModal from './CreateModal';
 import './style.css';
 import {PortalContext} from './index';
 import PortalConfigNameModal from './PortalConfigModal/PortalConfigNameModal';

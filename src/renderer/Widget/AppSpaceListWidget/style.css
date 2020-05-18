@@ -6,6 +6,7 @@
 }
 .app-space-widget {
   width: 100%;
+  background-color: #FFFFFF;
 }
 
 .ant-dropdown-link{
@@ -141,4 +142,10 @@
   margin-bottom: 10px;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.app-space-widget-container {
+  padding: 10px;
+  box-sizing: border-box;
+  height: 100%;
 }

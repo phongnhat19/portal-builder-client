@@ -29,10 +29,12 @@ const AppSpace = ({contentList = [], widgetTitle = ''}: {contentList: ModalAppSp
   }
 
   return (
-    <div className="app-space-widget">
-      <PreviewTitle widgetTitle={widgetTitle} />
-      {window.kintone ? '' : <Note />}
-      <PreviewContent contentList={listAppSpace} />
+    <div className="app-space-widget-container">
+      <div className="app-space-widget">
+        <PreviewTitle widgetTitle={widgetTitle} />
+        {window.kintone ? '' : <Note />}
+        <PreviewContent contentList={listAppSpace} />
+      </div>
     </div>
   );
 };

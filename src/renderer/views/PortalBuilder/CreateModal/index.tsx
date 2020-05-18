@@ -98,6 +98,9 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
             props: defaultProps
           } as Layout
         });
+
+        setPortalName('');
+        setPortalType('');
       }}
     >
       <div className="input-name">
