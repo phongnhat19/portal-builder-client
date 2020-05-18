@@ -92,3 +92,9 @@ img {
     height: 100%;
     box-sizing: border-box;
 }
+
+.g-noti-setting-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}

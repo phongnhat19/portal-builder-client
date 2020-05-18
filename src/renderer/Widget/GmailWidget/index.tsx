@@ -9,8 +9,8 @@ const GmailWidget = ({apiKey = '', clientID = '', onRemove, onSaveSetting, showS
 
   const [showSetting, setShowSetting] = useState(showSettingInit);
   return (
-    <React.Fragment>
-      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
+    <div style={{position: 'relative'}}>
+      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} className="gmail-setting-button" />
       <div role="presentation" className="widget-gmail" onDrop={(event)=>event.stopPropagation()} >
         <Gmail
           apiKey={apiKey}
@@ -27,7 +27,7 @@ const GmailWidget = ({apiKey = '', clientID = '', onRemove, onSaveSetting, showS
         }}
         onSave={onSaveSetting}
       />
-    </React.Fragment>
+    </div>
   );
 };
 

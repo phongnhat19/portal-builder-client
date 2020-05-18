@@ -6,8 +6,8 @@ const GNotifyWidget = ({onRemove}: {
   onRemove?: () => void;
 }) => {
   return (
-    <div style={{width: '100%'}}>
-      <SettingsWidget onRemove={onRemove} />
+    <div style={{width: '100%', position: 'relative'}}>
+      <SettingsWidget onRemove={onRemove} className="g-noti-setting-button" />
       <GNotify
         data={[
           {
