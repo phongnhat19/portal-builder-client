@@ -23,8 +23,12 @@ const IframeWidget = ({url, width = '100%', height = '100%', showSettingInit = f
   const [showSetting, setShowSetting] = useState(showSettingInit);
 
   return (
-    <div style={{width: '100%', overflow: 'hidden'}}>
-      <Iframe url={url} width={width} height={height} defaultTitle={defaultTitle} onRemove={onRemove} setShowSetting={setShowSetting} />
+    <div style={{width: '100%', overflow: 'hidden', position: 'relative'}}>
+      <SettingsWidget
+        onRemove={onRemove}
+        showSetting={() => setShowSetting && setShowSetting(true)}
+      />
+      <Iframe url={url} width={width} height={height} defaultTitle={defaultTitle} />
       <IframeModal
         defaultTitle={defaultTitle}
         defaultHeightValue={getCSSValue(height)}

@@ -6,19 +6,15 @@ const Iframe = ({
   width,
   height,
   defaultTitle,
-  onRemove,
-  setShowSetting,
 }: {
   url?: string;
   width?: string | number;
   height?: string | number;
   defaultTitle: string;
-  onRemove?: () => void;
-  setShowSetting?: (status: boolean) => void;
 }) => {
   return (
     <div>
-      <IFRAMEHeader setShowSetting={setShowSetting} defaultTitle={defaultTitle} onRemove={onRemove} />
+      <IFRAMEHeader defaultTitle={defaultTitle} />
       <iframe className="iframe" title="iframe" src={url} style={{width, height}} />
     </div>
   );
