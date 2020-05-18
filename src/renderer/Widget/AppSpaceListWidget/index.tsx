@@ -17,8 +17,8 @@ const AppSpaceWidget = ({
 }) => {
   const [showSetting, setShowSetting] = useState(showSettingInit);
   return (
-    <React.Fragment>
-      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
+    <div style={{position: 'relative'}}>
+      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} className="app-space-setting-button" />
       <AppSpaceModal
         widgetTitle={widgetTitle}
         contentList={contentList}
@@ -32,7 +32,7 @@ const AppSpaceWidget = ({
         }}
       />
       <AppSpace contentList={contentList} widgetTitle={widgetTitle} />
-    </React.Fragment>
+    </div>
   );
 };
 

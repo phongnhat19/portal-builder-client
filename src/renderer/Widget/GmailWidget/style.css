@@ -1,6 +1,11 @@
 .widget-gmail {
     width: 100%;
 }
+.gmail-setting-button{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
 .gmail-widget-wrapper {
     padding: 10px;
     box-sizing: border-box;

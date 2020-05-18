@@ -4,8 +4,13 @@
   width: 100%;
 }
 
-.portal-tabs-layout .portal-tabs-btn-settings.html-settings-button,
-.grid-layout .portal-tabs-btn-settings.html-settings-button {
-  top: 6px;
-  right: 6px;
+.html-settings-button {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+}
+
+.portal-tabs-layout .portal-tabs-btn-settings.html-settings-button {
+  top: 10px;
+  right: 10px;
 }
