@@ -128,6 +128,11 @@ const AppSpaceModel = ({
   const [newContentList, setListContent] = useState<ModalAppSpaceContent[]>(contentList);
   const [newTitleWidget, setTitleWidget] = useState(widgetTitle);
 
+  const resetModal = () => {
+    setTitleWidget(widgetTitle);
+    setListContent(contentList);
+  };
+
   return (
     <Modal
       bodyStyle={{maxHeight: '500px', overflow: 'auto'}}
@@ -137,7 +142,10 @@ const AppSpaceModel = ({
       }}
       title={MODAL.TITLE}
       visible={showSettingInit}
-      onCancel={onCancel}
+      onCancel={() => {
+        resetModal();
+        onCancel();
+      }}
     >
       <InputWithLabel
         label={LABEL.TITLE}

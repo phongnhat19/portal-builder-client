@@ -12,14 +12,18 @@ const HTMLModal = ({isVisible = false, onClose, onSave, htmlString, htmlTitle}: 
   const [inputHtmlValue, setInputHtmlValue] = useState(htmlString);
   const [inputHtmlTitle, setInputHtmlTitle] = useState(htmlTitle);
 
+  const resetModal = () => {
+    setInputHtmlValue(htmlString);
+    setInputHtmlTitle(htmlTitle);
+  };
+
   return (
     <Modal
       title="HTML Widget setting"
       visible={isVisible}
       okText="Save"
       onCancel={() => {
-        setInputHtmlValue(htmlString);
-        setInputHtmlTitle(inputHtmlTitle);
+        resetModal();
         onClose && onClose();
       }}
       onOk={() => {
