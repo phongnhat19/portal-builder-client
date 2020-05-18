@@ -11,19 +11,15 @@
     border: 1px solid rgb(238, 238, 238);
     border-width: 2px;
     border-bottom: none;
+    display: flex;
 }
 .iframe-header .icon {
-    position: absolute;
     font-size: 32px;
-    top: 50%;
-    transform: translateY(-50%);
+    padding: 10px;
+    display: flex;
 }
 .iframe-header .size{
-    position: absolute;
     font-size: 32px;
-}
-.iframe-header .icon{
-    left: 1%;
 }
 
 .iframe {
@@ -31,7 +27,6 @@
 }
 
 .iframe-header .title{
-    left: 5%;
     overflow-x: auto; 
     overflow-y: hidden;
     max-width: 85%;
