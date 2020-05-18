@@ -29,6 +29,8 @@
 }
 
 .iframe-header .title{
+    display: flex;
+    align-items: center;
     overflow: hidden;
     text-overflow: ellipsis;
     overflow: hidden;
