@@ -36,6 +36,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding-right: 55px;
+    max-width: 85%;
 }
 
 .iframe-header .title::-webkit-scrollbar{
