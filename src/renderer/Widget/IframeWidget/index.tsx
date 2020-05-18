@@ -24,10 +24,6 @@ const IframeWidget = ({url, width = '100%', height = '100%', showSettingInit = f
 
   return (
     <div style={{width: '100%', overflow: 'hidden', position: 'relative'}}>
-      <SettingsWidget
-        onRemove={onRemove}
-        showSetting={() => setShowSetting && setShowSetting(true)}
-      />
       <Iframe url={url} width={width} height={height} defaultTitle={defaultTitle} />
       <IframeModal
         defaultTitle={defaultTitle}
@@ -42,6 +38,11 @@ const IframeWidget = ({url, width = '100%', height = '100%', showSettingInit = f
           onSaveSetting && onSaveSetting({url: item.url, width: item.width, height: item.height, title: item.title});
           setShowSetting(false);
         }}
+      />
+      <SettingsWidget
+        onRemove={onRemove}
+        showSetting={() => setShowSetting && setShowSetting(true)}
+        className="iframe-settings-button"
       />
     </div>
   );

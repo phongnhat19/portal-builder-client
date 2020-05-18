@@ -13,7 +13,7 @@ const Iframe = ({
   defaultTitle: string;
 }) => {
   return (
-    <div>
+    <div className="iframe-container">
       <IFRAMEHeader defaultTitle={defaultTitle} />
       <iframe className="iframe" title="iframe" src={url} style={{width, height}} />
     </div>

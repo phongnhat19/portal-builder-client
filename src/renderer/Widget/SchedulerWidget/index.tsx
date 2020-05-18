@@ -23,8 +23,8 @@ const SchedulerWidget = ({onSaveSetting, width, height, defaultView = SCHEDULER_
   end.setHours(11);
 
   return (
-    <div style={{width, height}}>
-      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
+    <div style={{width, height, position: 'relative'}}>
+      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} className="scheduler-settings-button" />
       <Schedule
         defaultView={typeView}
         data={[

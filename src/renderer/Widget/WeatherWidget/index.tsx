@@ -78,7 +78,7 @@ const WeatherWidget = ({
 
   return (
     <div className="widget-weather">
-      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
+      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} className="weather-setting-button" />
       <WeatherModal
         defaultAPIKey={openWeatherMapAPIKey}
         defaultCity={weatherCity}

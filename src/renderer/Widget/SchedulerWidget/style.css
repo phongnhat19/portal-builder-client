@@ -22,3 +22,8 @@
     box-sizing: border-box;
     height: 100%;
 }
+
+.scheduler-settings-button {
+    top: 10px;
+    right: 10px;
+}
