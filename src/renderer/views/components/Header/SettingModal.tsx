@@ -23,12 +23,6 @@ const SettingModal = ({ isVisible = false, onClose }: {
 }) => {
   const [form] = Form.useForm();
   const {profiles, setProfiles} = useContext(ProfileContext);
-  const [requiredField, setRequiredField] = useState(isVisible);
-
-  useEffect(() => {
-    setRequiredField(isVisible);
-    form.validateFields();
-  }, [isVisible]);
 
   return (
     <Modal
@@ -95,28 +89,28 @@ const SettingModal = ({ isVisible = false, onClose }: {
         <Form.Item
           name="name"
           label="Name"
-          rules={[{ required: requiredField, message: 'Please input your profile name!' }]}
+          rules={[{ required: true, message: 'Please input your profile name!' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="domain"
           label="Domain"
-          rules={[{ required: requiredField, message: 'Please input your kintone domain!' }]}
+          rules={[{ required: true, message: 'Please input your kintone domain!' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="username"
           label="Username"
-          rules={[{ required: requiredField, message: 'Please input your kintone username!' }]}
+          rules={[{ required: true, message: 'Please input your kintone username!' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="password"
           label="Password"
-          rules={[{ required: requiredField, message: 'Please input your kintone password!' }]}
+          rules={[{ required: true, message: 'Please input your kintone password!' }]}
         >
           <Input.Password />
         </Form.Item>
