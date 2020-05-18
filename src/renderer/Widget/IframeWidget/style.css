@@ -27,11 +27,12 @@
 }
 
 .iframe-header .title{
-    overflow-x: auto; 
-    overflow-y: hidden;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
     max-width: 85%;
     white-space: nowrap;
-    height: 45px;
+    padding-right: 55px;
 }
 
 .iframe-header .title::-webkit-scrollbar{
