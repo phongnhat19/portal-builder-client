@@ -1,0 +1,2 @@
+        setPortalName('');
+        setPortalType('');
