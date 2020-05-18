@@ -46,6 +46,8 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
       onCancel={()=> {
         setEmptyName(false);
         setEmptyLayout(false);
+        setTabIconStyle(normalIconStyle);
+        setGridIconStyle(normalIconStyle);
         onClose && onClose();
       }}
       onOk={() => {
@@ -59,6 +61,8 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
 
         setEmptyLayout(false);
         setEmptyName(false);
+        setTabIconStyle(normalIconStyle);
+        setGridIconStyle(normalIconStyle);
 
         if (portalType === LAYOUT_TYPE.TAB) {
           defaultProps = {
@@ -94,6 +98,9 @@ const CreateModal = ({isVisible = false, onClose, onCreate}: {
             props: defaultProps
           } as Layout
         });
+
+        setPortalName('');
+        setPortalType('');
       }}
     >
       <div className="input-name">

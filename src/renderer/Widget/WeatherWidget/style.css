@@ -1,3 +1,17 @@
 .widget-config-weather {
     padding-top: 15px;
 }
+
+.weather-setting-button {
+    z-index: 5;
+    top: 10px;
+    right: 10px;
+    position: absolute;
+}
+
+.widget-weather {
+    background-color: #6495ED;
+    padding: 20px;
+    width: 100%;
+    position: relative;
+}

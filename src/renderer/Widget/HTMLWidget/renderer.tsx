@@ -1,22 +1,27 @@
-import React from 'react'
+import React from 'react';
+import HTMLHeader from './components/HTMLHeader';
+import './renderer.css';
 
-const HTML = ({width, height, htmlString}: {
-  htmlString: string,
-  width?: string | number,
-  height?: string | number,
-}) => {
-
-  const createMarkupHTMLWidget = (htmlString: string) => {
-    return {__html: htmlString};
-  }
+const HTML = ({width, height, htmlString, htmlTitle}: {htmlTitle: string;htmlString: string; width?: string | number; height?: string | number}) => {
+  const createMarkupHTMLWidget = (newHtmlString: string) => {
+    return {__html: newHtmlString};
+  };
 
   return (
-    <div 
-      onDrop={(event)=>event.stopPropagation()} 
-      style={{width, height}} 
-      dangerouslySetInnerHTML={createMarkupHTMLWidget(htmlString)} 
-    />
-  )
-}
+    <div className="html-container">
+      <div className="html-wrapper">
+        <HTMLHeader htmlTitle={htmlTitle} />
+        <div
+          className="html-content"
+          role="button"
+          tabIndex={0}
+          onDrop={(event) => event.stopPropagation()}
+          style={{width, height}}
+          dangerouslySetInnerHTML={createMarkupHTMLWidget(htmlString)}
+        />
+      </div>
+    </div>
+  );
+};
 
 export default HTML;

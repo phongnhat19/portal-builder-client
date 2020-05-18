@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import {RocketFilled, PlusCircleOutlined, DeleteOutlined} from '@ant-design/icons';
 import {Button, Typography, Menu, Popconfirm} from 'antd';
 import DeployModal from './DeployModal/DeployModal';
-import CreateModal from './CreateModel';
+import CreateModal from './CreateModal';
 import './style.css';
 import {PortalContext} from './index';
 import PortalConfigNameModal from './PortalConfigModal/PortalConfigNameModal';
@@ -72,7 +72,10 @@ const SideBar = ({items = [], onChange = () => {}, onDeploy = () => {}, onCreate
                           <Popconfirm
                             placement="bottomLeft"
                             title={CONFIRM_DELETE_PORTAL}
-                            onConfirm={() => removePortal(index)}
+                            onConfirm={(e) => {
+                              e && e.stopPropagation();
+                              removePortal(index);
+                            }}
                             okText="Yes"
                             cancelText="No"
                           >

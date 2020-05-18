@@ -3,7 +3,6 @@
 }
 
 .grid-block {
-  padding-right: 15px;
   min-height: 100px;
   overflow: auto;
   resize: horizontal;
@@ -42,24 +41,10 @@
   margin-top: 15px;
 }
 
-.grid-layout .grid-layout-row .grid-block .widget-weather .widget-full-weather {
-  text-transform: uppercase;
-  color: white;
-}
-
-.grid-layout .grid-layout-row .grid-block .widget-weather {
-  background-color: #6495ED;
-  padding: 20px;
-}
-
-.grid-layout .grid-layout-row .grid-block .styles_simpleReactWeather__3uy4l {
-  font-size: 20px;
-  min-height: 0px !important
-}
-
 .grid-layout .grid-layout-row .grid-block .grid-block-position-relative {
   height: 100%;
 }
+
 .grid-layout .grid-layout-row .grid-block .grid-block-position-relative {
-  background: #ffffff;
+  background-color: transparent;
 }

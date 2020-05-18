@@ -6,20 +6,16 @@ const Iframe = ({
   width,
   height,
   defaultTitle,
-  onRemove,
-  setShowSetting,
 }: {
   url?: string;
   width?: string | number;
   height?: string | number;
   defaultTitle: string;
-  onRemove?: () => void;
-  setShowSetting?: (status: boolean) => void;
 }) => {
   return (
-    <div>
-      <IFRAMEHeader setShowSetting={setShowSetting} defaultTitle={defaultTitle} onRemove={onRemove} />
-      <iframe className={`iframe ${window.kintone ? 'iframe-deploy' : ''}`} title="iframe" src={url} style={{width, height}} />
+    <div className="iframe-container">
+      <IFRAMEHeader defaultTitle={defaultTitle} />
+      <iframe className="iframe" title="iframe" src={url} style={{width, height}} />
     </div>
   );
 };

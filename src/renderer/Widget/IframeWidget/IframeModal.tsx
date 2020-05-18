@@ -31,13 +31,22 @@ const IframeModal = ({
   const [heightUnit, setHeightUnit] = useState(defaultHeightUnit);
   const [iframeTitle, setIframeTitle] = useState(defaultTitle);
 
+  const resetSetting = () => {
+    setUrl(defaultUrl);
+    setIframeTitle(defaultTitle);
+    setWidthValue(defaultWidthValue);
+    setWidthUnit(defaultWidthUnit);
+    setHeightValue(defaultHeightValue);
+    setHeightUnit(defaultTitle);
+  };
+
   return (
     <Modal
       title="Iframe setting"
       visible={isVisible}
       okText="Save"
       onCancel={() => {
-        setUrl(defaultUrl);
+        resetSetting();
         onClose && onClose();
       }}
       onOk={() => {

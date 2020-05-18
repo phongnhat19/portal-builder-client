@@ -5,6 +5,7 @@ import WeatherModal from './WeatherModal';
 import './style.css';
 import {WEATHER_TYPE} from './constant';
 import FullWeather from './FullWeather';
+import axios from 'axios';
 
 const WeatherWidget = ({
   onSaveSetting,
@@ -45,8 +46,8 @@ const WeatherWidget = ({
 
   const handleSaveModel = async (item: WeatherModal) => {
     const weather = `http://api.openweathermap.org/data/2.5/weather?q=${item.city}&appid=${item.apiKey}`;
-    const weatherAPI: any = await fetch(weather);
-    const weatherDataAPI: any = await weatherAPI.json();
+    const weatherAPI: any = await axios.get(weather);
+    const weatherDataAPI: any = weatherAPI.data;
     if (weatherDataAPI.cod === 200) {
       setWeatherData({
         description: weatherDataAPI.weather[0].description,
@@ -77,7 +78,7 @@ const WeatherWidget = ({
 
   return (
     <div className="widget-weather">
-      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} />
+      <SettingsWidget onRemove={onRemove} showSetting={() => setShowSetting(true)} className="weather-setting-button" />
       <WeatherModal
         defaultAPIKey={openWeatherMapAPIKey}
         defaultCity={weatherCity}

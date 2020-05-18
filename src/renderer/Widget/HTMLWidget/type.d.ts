@@ -3,4 +3,5 @@ declare type HTMLWidgetProps = {
   height: string;
   htmlString: string;
   showSettingInit?: boolean;
+  htmlTitle: string;
 }
