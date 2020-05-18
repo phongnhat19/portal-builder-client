@@ -29,12 +29,9 @@
 }
 
 .iframe-header .title{
-    display: flex;
-    align-items: center;
+   line-height: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 85%;
     white-space: nowrap;
     padding-right: 55px;
 }
