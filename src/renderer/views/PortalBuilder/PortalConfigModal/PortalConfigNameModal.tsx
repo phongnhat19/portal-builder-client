@@ -29,7 +29,6 @@ const PortalConfigNameModal = ({portalName, isVisible = false, onClose, onSave}:
           onSave({
             name: name
           });
-          setName('');
         }
       }}
     >
