@@ -1,6 +1,6 @@
 import React from 'react';
 import HTMLHeader from './components/HTMLHeader';
-import './style.css';
+import './renderer.css';
 
 const HTML = ({width, height, htmlString, htmlTitle}: {htmlTitle: string;htmlString: string; width?: string | number; height?: string | number}) => {
   const createMarkupHTMLWidget = (newHtmlString: string) => {
@@ -8,16 +8,18 @@ const HTML = ({width, height, htmlString, htmlTitle}: {htmlTitle: string;htmlStr
   };
 
   return (
-    <div className="html-wrapper">
-      <HTMLHeader htmlTitle={htmlTitle} />
-      <div
-        className="html-content"
-        role="button"
-        tabIndex={0}
-        onDrop={(event) => event.stopPropagation()}
-        style={{width, height}}
-        dangerouslySetInnerHTML={createMarkupHTMLWidget(htmlString)}
-      />
+    <div className="html-container">
+      <div className="html-wrapper">
+        <HTMLHeader htmlTitle={htmlTitle} />
+        <div
+          className="html-content"
+          role="button"
+          tabIndex={0}
+          onDrop={(event) => event.stopPropagation()}
+          style={{width, height}}
+          dangerouslySetInnerHTML={createMarkupHTMLWidget(htmlString)}
+        />
+      </div>
     </div>
   );
 };

@@ -1,0 +1,23 @@
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
+.html-wrapper {
+  border: 1px solid #C4C4C4;
+  width: 100%;
+  position: relative;
+  background-color: #FFFFFF;
+  height: 100%;
+}
+
+.html-wrapper .html-content {
+  padding: 5px;
+  min-height: 52px;
+  box-sizing: border-box;
+}
+
+.html-container {
+  padding: 10px;
+  height: 100%;
+  box-sizing: border-box;
+}

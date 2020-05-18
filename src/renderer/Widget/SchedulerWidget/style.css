@@ -17,4 +17,8 @@
     font-weight: bold;
     color: #003489;
 }
-
+.scheduler-widget-container {
+    padding: 10px;
+    box-sizing: border-box;
+    height: 100%;
+}

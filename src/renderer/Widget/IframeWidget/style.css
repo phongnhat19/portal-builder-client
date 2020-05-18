@@ -8,8 +8,9 @@
 .iframe-header{
     position: relative;
     height: 50px;
-    border: 1px solid rgb(238, 238, 238);
-    border-width: 2px;
+    border: 1px solid #C4C4C4;
+    width: 100%;
+    background-color: #FFFFFF;
     border-bottom: none;
 }
 .iframe-header .icon {
@@ -27,7 +28,8 @@
 }
 
 .iframe {
-    border: 2px solid rgb(238, 238, 238);
+    border: 1px solid #C4C4C4;
+    background-color: #FFFFFF;
 }
 
 .iframe-header .title{
@@ -54,4 +56,10 @@
 .center-setting{
     top: 50%;
     transform: translateY(-50%);
+}
+
+.iframe-container {
+    padding: 10px;
+    height: 100%;
+    box-sizing: border-box;
 }
