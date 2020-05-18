@@ -21,7 +21,7 @@ Weather Widget is a simple widget that will display weather using [OpenWeatherMa
 - Type show: To select a type to show of the weather component (full or simple).
 - Unit: to select a unit to temperature of the weather component (Celcius (C), Fahrenheit (F)).
 - City: City to find the weather.
-- API Key: API key to call API OpenWeatherMap.
+- API Key: API key to call API OpenWeatherMap. ([Weather API](https://openweathermap.org/api))
 - To save updating setting by clicking on "Save" button.
 - To discard updating setting by clicking on "Cancel" button.
 

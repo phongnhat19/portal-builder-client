@@ -6,13 +6,13 @@ sidebar_label: Widget Configuration
 
 - Each widget will require config from user to display properly.
 - Default widgets:
-  - [Iframe Widget](widgetManagement/widgets/iframe)
-  - [HTML Widget](widgetManagement/widgets/html)
-  - [App / Space List Widget](widgetManagement/widgets/appSpaceList)
-  - [G Scheduler Widget](widgetManagement/widgets/garoonScheduler)
-  - [G Notifications Widget](widgetManagement/widgets/garoonNotifications)
-  - [Gmail Widget](widgetManagement/widgets/gmail)
-  - [Weather Widget](widgetManagement/widgets/weather)
+  - [Iframe Widget](widgets/iframe)
+  - [HTML Widget](widgets/html)
+  - [App / Space List Widget](widgets/appSpaceList)
+  - [G Scheduler Widget](widgets/garoonScheduler)
+  - [G Notifications Widget](widgets/garoonNotifications)
+  - [Gmail Widget](widgets/gmail)
+  - [Weather Widget](widgets/weather)
 
 :::note
 

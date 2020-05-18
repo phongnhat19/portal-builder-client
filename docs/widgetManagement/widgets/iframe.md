@@ -19,7 +19,7 @@ Iframe Widget is a simple widget that will display a web using iframe HTML tag
 - URL: Input URL of iframe.
 - Width: Input number to set width of iframe (CSS unit support: px, vw, %).
 - Height: Input number to set height of iframe (CSS unit support: px, vw, %).
-- To save updating setting by clicking on "OK" button.
+- To save updating setting by clicking on "Save" button.
 - To discard updating setting by clicking on "Cancel" button.
 
 ## Preview / On kintone Portal
