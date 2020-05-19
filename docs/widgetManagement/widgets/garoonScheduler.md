@@ -25,7 +25,7 @@ Currently, Supported only English.
 - View of calendar: 
   - day: Day view scheduler.
   - week: Week view scheduler.
-- To save updating setting by clicking on "OK" button.
+- To save updating setting by clicking on "Save" button.
 - To discard updating setting by clicking on "Cancel" button.
 
 ## Preview / On kintone Portal
